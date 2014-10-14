@@ -46,7 +46,17 @@ CREATE TABLE THE_FOREIGN_FOUR.Usuarios (
 )
 CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	cod_cliente			numeric(18,0)		IDENTITY(1,1) PRIMARY KEY,
+	nombre				varchar(255),
+	apellido			varchar(255),
+	tipo_doc			char(3)				DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
+	nro_doc				numeric(18,0),
+	mail				varchar(255),
+	telefono			varchar(60),
+	dom_calle			varchar(255),
+	nro_calle			varchar(255),
+	pais_origen			varchar(60),
 	nacionalidad		varchar(255),
+	fecha_nac			datetime,
 	baja_logica			char(1)				DEFAULT 'N' CHECK(baja_logica IN ('S', 'N')),
 	estado				char(1)				DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 )
