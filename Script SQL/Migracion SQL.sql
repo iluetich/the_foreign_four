@@ -98,8 +98,9 @@ CREATE TABLE THE_FOREIGN_FOUR.Reservas (
 	cod_tipo_hab		int					REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 	cod_regimen			int					REFERENCES THE_FOREIGN_FOUR.Regimenes,
 	cod_estado_reserva	int					REFERENCES THE_FOREIGN_FOUR.EstadosReserva,
-	fecha_inicio		datetime,
 	fecha_creacion		datetime,
+	fecha_desde			datetime,
+	fecha_hasta			datetime,
 	cant_noches			int,
 )
 CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
