@@ -112,7 +112,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 	fecha_factura		datetime,
 	total				numeric(18,2),
 )
-CREATE TABLE THE_FOREIGN_FOUR.ItemsFacturas (
+CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	nro_item		numeric(18,0)		IDENTITY(1,1) PRIMARY KEY,
 	nro_factura		numeric(18,0)		REFERENCES THE_FOREIGN_FOUR.Facturas,
 	cantidad		int,
