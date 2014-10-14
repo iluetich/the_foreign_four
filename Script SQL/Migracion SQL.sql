@@ -49,6 +49,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Hoteles (
 	nro_calle			bigint,
 	cant_estrellas		int,
 	recarga_estrellas	numeric(18,0),
+	baja_logica			char(1)			DEFAULT 'N' CHECK(baja_logica IN ('S', 'N')),
 	estado				char(1)			DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 )
 CREATE TABLE THE_FOREIGN_FOUR.InactividadHoteles (
