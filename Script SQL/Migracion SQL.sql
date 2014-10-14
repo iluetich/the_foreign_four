@@ -12,31 +12,6 @@ CREATE TABLE THE_FOREIGN_FOUR.FuncionalidadPorRol (
 	cod_rol				int					REFERENCES THE_FOREIGN_FOUR.Roles,
 	PRIMARY KEY(cod_funcion, cod_rol)
 )
-CREATE TABLE THE_FOREIGN_FOUR.Usuarios (
-	cod_usuario			numeric(18,0)		IDENTITY(1,1) PRIMARY KEY,
-	user_name			varchar(30),
-	cod_rol				int					REFERENCES THE_FOREIGN_FOUR.Roles,
-	password			varchar(30),
-	nombre				varchar(255),
-	apellido			varchar(255),
-	fecha_nac			datetime,
-	tipo_doc			varchar(3)			DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
-	nro_doc				numeric(18,0),
-	mail				varchar(255),
-	dom_calle			varchar(255),
-	nro_calle			numeric(18,0),
-	piso				numeric(18,0),
-	depto				varchar(50),
-	baja_logica			char(1)				DEFAULT 'N' CHECK(baja_logica IN ('S', 'N')),
-	estado				char(1)				DEFAULT 'H' CHECK(estado IN ('H', 'I')),
-)
-CREATE TABLE THE_FOREIGN_FOUR.Clientes (
-	cod_cliente			numeric(18,0)		IDENTITY(1,1) PRIMARY KEY,
-	cod_usuario			numeric(18,0)		REFERENCES THE_FOREIGN_FOUR.Usuarios,
-	nacionalidad		varchar(255),
-	baja_logica			char(1)				DEFAULT 'N' CHECK(baja_logica IN ('S', 'N')),
-	estado				char(1)				DEFAULT 'H' CHECK(estado IN ('H', 'I')),
-)
 CREATE TABLE THE_FOREIGN_FOUR.Hoteles (
 	cod_hotel			int 				IDENTITY(1,1) PRIMARY KEY,			
 	nombre				varchar(30),
@@ -49,6 +24,29 @@ CREATE TABLE THE_FOREIGN_FOUR.Hoteles (
 	nro_calle			bigint,
 	cant_estrellas		int,
 	recarga_estrellas	numeric(18,0),
+	baja_logica			char(1)				DEFAULT 'N' CHECK(baja_logica IN ('S', 'N')),
+	estado				char(1)				DEFAULT 'H' CHECK(estado IN ('H', 'I')),
+)
+CREATE TABLE THE_FOREIGN_FOUR.Usuarios (
+	cod_usuario			numeric(18,0)		IDENTITY(1,1) PRIMARY KEY,
+	cod_rol				int					REFERENCES THE_FOREIGN_FOUR.Roles,
+	cod_hotel			int					REFERENCES THE_FOREIGN_FOUR.Hoteles,
+	user_name			varchar(30),
+	password			varchar(30),
+	nombre				varchar(60),
+	apellido			varchar(60),
+	tipo_doc			varchar(3)			DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
+	nro_doc				numeric(18,0),
+	mail				varchar(60),
+	telefono			varchar(60),
+	direccion			varchar(60),
+	fecha_nac			datetime,
+	baja_logica			char(1)				DEFAULT 'N' CHECK(baja_logica IN ('S', 'N')),
+	estado				char(1)				DEFAULT 'H' CHECK(estado IN ('H', 'I')),
+)
+CREATE TABLE THE_FOREIGN_FOUR.Clientes (
+	cod_cliente			numeric(18,0)		IDENTITY(1,1) PRIMARY KEY,
+	nacionalidad		varchar(255),
 	baja_logica			char(1)				DEFAULT 'N' CHECK(baja_logica IN ('S', 'N')),
 	estado				char(1)				DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 )
