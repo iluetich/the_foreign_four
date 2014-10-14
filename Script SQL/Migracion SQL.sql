@@ -83,7 +83,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
 	cod_hotel			int					REFERENCES THE_FOREIGN_FOUR.Hoteles,
 	cod_tipo_hab		int					REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 	piso				int,
-	frente				varchar(50),
+	ubicacion			varchar(50),
 	descripcion			varchar(255),
 	estado				char(1)				DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 )
