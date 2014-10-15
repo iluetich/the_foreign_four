@@ -1,0 +1,29 @@
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.exe
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.pdb
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Properties.Resources.resources
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.csproj.GenerateResource.Cache
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.exe
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.pdb
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.CreacionRol.resources
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.ModificarYBorrarRol.resources
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.BorrarRol.resources
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.ModificarRol.resources
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.InicioDelSistema.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.exe
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.pdb
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.BorrarRol.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.CreacionRol.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.ModificarRol.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.ModificarYBorrarRol.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.CreacionDeUsuario.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.EliminarUsuario.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.ModificarUsuario.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.ModificarYBorrarUsuario.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.InicioDelSistema.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Login.Login.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Properties.Resources.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.csproj.GenerateResource.Cache
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.exe
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.pdb

@@ -1,0 +1,8 @@
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.exe
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.pdb
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Release\ResolveAssemblyReference.cache
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Rol.ABM_rol.resources
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Properties.Resources.resources
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.csproj.GenerateResource.Cache
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.exe
+C:\Users\ignacio\Downloads\Gestion de Datos\TP Hotel Frba 1.0 - 2C 2014\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.pdb
