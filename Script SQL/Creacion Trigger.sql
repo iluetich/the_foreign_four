@@ -1,5 +1,5 @@
 CREATE TRIGGER trg_clientes_error
-ON THE_FOREIGN_FOUR.Clietes
+ON THE_FOREIGN_FOUR.Clientes
 INSTEAD OF INSERT
 AS
 BEGIN
@@ -43,8 +43,9 @@ BEGIN
 
   END
 
-  CLOSE TrigUpdCursor;
-  DEALLOCATE TrigUpdCursor;
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
 
 END
 GO
+

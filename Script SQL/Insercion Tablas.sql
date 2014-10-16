@@ -1,44 +1,14 @@
-SELECT DISTINCT Cliente_Nombre AS 'Nombre',
-				Cliente_Apellido AS 'Apellido' , 
-				Cliente_Fecha_Nac AS 'Nacimiento',
-				Cliente_Pasaporte_Nro AS 'Pasaporte', 
-				Cliente_Mail AS 'e-mail'
+INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
+SELECT DISTINCT Cliente_Nombre, Cliente_Apellido, Cliente_Fecha_Nac, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, Cliente_Nacionalidad, Cliente_Pasaporte_Nro, Cliente_Mail
 FROM gd_esquema.Maestra
-ORDER BY 1,2
 
-SELECT DISTINCT Hotel_Calle AS 'Calle',
-				Hotel_Nro_Calle AS 'NroCalle',
-				Hotel_Ciudad AS 'Ciudad',
-				Hotel_CantEstrella AS 'Estrellas',
-				Hotel_Recarga_Estrella AS 'Recarga'
-FROM gd_esquema.Maestra
-ORDER BY 1,2
+SELECT *
+FROM THE_FOREIGN_FOUR.Clientes
 
-SELECT DISTINCT Reserva_Codigo AS 'Código',
-				Reserva_Fecha_Inicio AS 'Inicio',
-				Reserva_Cant_Noches AS 'Noches'
-FROM gd_esquema.Maestra
-ORDER BY 1
+SELECT *
+FROM THE_FOREIGN_FOUR.ClientesDefectuosos
 
-SELECT DISTINCT Factura_Nro AS 'NroFactura',
-				Factura_Fecha AS 'Fecha',
-				Factura_Total AS 'Total'
-FROM gd_esquema.Maestra
-ORDER BY 1,3
-
-
-SELECT DISTINCT Estadia_Fecha_Inicio AS 'Inicio',
-				Estadia_Cant_Noches AS 'Noches'
-FROM gd_esquema.Maestra
-ORDER BY 1,2
-
--------------------------------------------------------<<<
-
-SELECT DISTINCT Factura_Nro AS 'NroFactura',
-				Cliente_Nombre AS 'Nombre',
-				Cliente_Apellido AS 'Apellido',
-				Cliente_Pasaporte_Nro AS 'Pasaporte',
-				Factura_Fecha AS 'Fecha',
-				Factura_Total AS 'Total'
-FROM gd_esquema.Maestra
-ORDER BY NroFactura, Pasaporte, Apellido
+SELECT c.fecha_nac 'fechaposta', cd.fecha_nac 'fechatrucha', c.mail 'mailposta', cd.mail 'mailtrucho', c.nro_doc 'docposta', cd.nro_doc 'doctrucho'
+FROM THE_FOREIGN_FOUR.Clientes c, THE_FOREIGN_FOUR.ClientesDefectuosos cd
+WHERE c.nro_doc = cd.nro_doc
+OR c.mail = cd.mail 
