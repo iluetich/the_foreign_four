@@ -14,9 +14,9 @@ CREATE TABLE THE_FOREIGN_FOUR.FuncionalidadPorRol (
 )
 CREATE TABLE THE_FOREIGN_FOUR.Hoteles (
 	cod_hotel			int 					IDENTITY(1,1) PRIMARY KEY,			
-	nombre				nvarchar(30)				UNIQUE,
-	mail				nvarchar(60)				UNIQUE,
-	telefono			nvarchar(30)				UNIQUE,
+	nombre				nvarchar(30),
+	mail				nvarchar(60),
+	telefono			nvarchar(30),
 	nro_calle			bigint,
 	nom_calle			nvarchar(255),
 	cant_estrellas		int,
