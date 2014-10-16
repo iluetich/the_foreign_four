@@ -40,7 +40,7 @@
             this.textBoxBuscadorNombre = new System.Windows.Forms.TextBox();
             this.labelPais = new System.Windows.Forms.Label();
             this.labelCiudad = new System.Windows.Forms.Label();
-            this.labelApellido = new System.Windows.Forms.Label();
+            this.labelCantEstrellas = new System.Windows.Forms.Label();
             this.labelNombre = new System.Windows.Forms.Label();
             this.tituloBuscador = new System.Windows.Forms.Label();
             this.Titulo = new System.Windows.Forms.Label();
@@ -148,15 +148,15 @@
             this.labelCiudad.TabIndex = 22;
             this.labelCiudad.Text = "Ciudad:";
             // 
-            // labelApellido
+            // labelCantEstrellas
             // 
-            this.labelApellido.AutoSize = true;
-            this.labelApellido.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelApellido.Location = new System.Drawing.Point(216, 85);
-            this.labelApellido.Name = "labelApellido";
-            this.labelApellido.Size = new System.Drawing.Size(126, 15);
-            this.labelApellido.TabIndex = 21;
-            this.labelApellido.Text = "Cantidad de Estrellas:";
+            this.labelCantEstrellas.AutoSize = true;
+            this.labelCantEstrellas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCantEstrellas.Location = new System.Drawing.Point(216, 85);
+            this.labelCantEstrellas.Name = "labelCantEstrellas";
+            this.labelCantEstrellas.Size = new System.Drawing.Size(126, 15);
+            this.labelCantEstrellas.TabIndex = 21;
+            this.labelCantEstrellas.Text = "Cantidad de Estrellas:";
             // 
             // labelNombre
             // 
@@ -206,7 +206,7 @@
             this.Controls.Add(this.textBoxBuscadorNombre);
             this.Controls.Add(this.labelPais);
             this.Controls.Add(this.labelCiudad);
-            this.Controls.Add(this.labelApellido);
+            this.Controls.Add(this.labelCantEstrellas);
             this.Controls.Add(this.labelNombre);
             this.Controls.Add(this.tituloBuscador);
             this.Controls.Add(this.Titulo);
@@ -231,7 +231,7 @@
         private System.Windows.Forms.TextBox textBoxBuscadorNombre;
         private System.Windows.Forms.Label labelPais;
         private System.Windows.Forms.Label labelCiudad;
-        private System.Windows.Forms.Label labelApellido;
+        private System.Windows.Forms.Label labelCantEstrellas;
         private System.Windows.Forms.Label labelNombre;
         private System.Windows.Forms.Label tituloBuscador;
         private System.Windows.Forms.Label Titulo;
