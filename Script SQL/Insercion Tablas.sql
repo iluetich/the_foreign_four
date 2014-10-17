@@ -120,7 +120,7 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		WHERE r.descripcion = m.Regimen_Descripcion
 		AND r.precio = m.Regimen_Precio) AS 'cod_regimen',
 		
-		--hay que hacer una funcion o procedure para establecer el codigo de reserva
+		--hay que hacer una funcion o procedure para establecer el codigo de estado de reserva
 		
 		(m.Reserva_Fecha_Inicio + m.Reserva_Cant_Noches) AS 'fecha_hasta'
 FROM gd_esquema.Maestra m
