@@ -44,6 +44,12 @@ SELECT DISTINCT Habitacion_Piso,
 			    AND		ho.recarga_estrellas = m.Hotel_Recarga_Estrella) AS 'cod_hotel'
 FROM gd_esquema.Maestra m
 
+SELECT cod_hotel, COUNT(nro_habitacion) AS 'cant_habitaciones'
+FROM THE_FOREIGN_FOUR.Habitaciones
+GROUP BY cod_hotel
+ORDER BY 1
+
+
 --*********************************************
 
 INSERT INTO THE_FOREIGN_FOUR.Estadias (fecha_inicio, cant_noches, nro_habitacion, cod_reserva)
@@ -63,8 +69,15 @@ SELECT DISTINCT  m.Estadia_Fecha_Inicio,
 				 AND	ho.ciudad = m.Hotel_Ciudad
 				 AND	ho.nro_calle = m.Hotel_Nro_Calle
 				 AND	ho.recarga_estrellas = m.Hotel_Recarga_Estrella) AS 'nro_habitacion',
-				(SELECT Reserva_Codigo)
-				 
+				(SELECT cod_reserva
+				 FROM THE_FOREIGN_FOUR.Reservas r JOIN THE_FOREIGN_FOUR.Hoteles ho ON(r.cod_hotel = ho.cod_hotel)
+				 WHERE	r.cod_reserva = m.Reserva_Codigo
+				 AND	r.fecha_desde = m.Reserva_Fecha_Inicio
+				 AND	ho.nom_calle = m.Hotel_Calle
+				 AND	ho.cant_estrellas = m.Hotel_CantEstrella
+				 AND	ho.ciudad = m.Hotel_Ciudad
+				 AND	ho.nro_calle = m.Hotel_Nro_Calle
+				 AND	ho.recarga_estrellas = m.Hotel_Recarga_Estrella) AS 'cod_reserva'
 FROM gd_esquema.Maestra m
 
 --*********************************************
@@ -73,7 +86,6 @@ INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, fecha_desde, cant_noches, co
 SELECT	DISTINCT m.Reserva_Codigo,
 		m.Reserva_Fecha_Inicio,
 		m.Reserva_Cant_Noches,
-		
 	   (SELECT cod_hotel
 		FROM THE_FOREIGN_FOUR.Hoteles h
 		WHERE	h.nom_calle = m.Hotel_Calle

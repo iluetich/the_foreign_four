@@ -83,7 +83,9 @@ BEGIN
 		IF(	@cod_hotel IS NULL OR
 			@cod_cliente IS NULL OR
 			@cod_tipo_hab IS NULL OR
-			@cod_regimen IS NULL)
+			@cod_regimen IS NULL OR
+			@fecha_desde IS NULL OR
+			@cant_noches IS NULL)
 		BEGIN
 			INSERT INTO THE_FOREIGN_FOUR.ReservasDefectuosas (cod_reserva, cod_hotel, cod_cliente, 
 						cod_tipo_hab, cod_regimen, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
@@ -137,8 +139,8 @@ BEGIN
 		   @fecha_inicio IS NULL OR
 		   @cant_noches IS NULL OR
 		   @fecha_inicio > GETDATE() OR
-		  (SELECT DATEADD(day, @cant_noches, @fecha_inicio)) > GETDATE() 
-		   OR EXISTS (SELECT cod_estadia
+		  (SELECT DATEADD(day, @cant_noches, @fecha_inicio)) > GETDATE() OR
+		   EXISTS (SELECT cod_estadia
 					   FROM THE_FOREIGN_FOUR.Estadias
 					   WHERE cod_reserva = @cod_reserva
 					   AND nro_habitacion = @nro_habitacion
