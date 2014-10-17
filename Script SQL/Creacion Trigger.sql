@@ -49,3 +49,63 @@ BEGIN
 END
 GO
 
+--*****************************************************
+
+CREATE TRIGGER trg_reservas_error
+ON THE_FOREIGN_FOUR.Reservas
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, cod_estado_reserva, fecha_creacion, 
+			fecha_desde, fecha_hasta, cant_noches  
+	FROM inserted
+	DECLARE @cod_reserva numeric(18,0),
+			@cod_hotel int,
+			@cod_cliente numeric(18,0),
+			@cod_tipo_hab int,
+			@cod_regimen int,
+			@cod_estado_reserva int,
+			@fecha_creacion datetime, 
+			@fecha_desde datetime,
+			@fecha_hasta datetime,
+			@cant_noches int
+			
+	OPEN TrigInsCursor;
+
+	FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_tipo_hab, @cod_regimen, 
+										@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		IF(	@cod_hotel IS NULL OR
+			@cod_cliente IS NULL OR
+			@cod_tipo_hab IS NULL OR
+			@cod_regimen IS NULL
+			)
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.ReservasDefectuosas (cod_reserva, cod_hotel, cod_cliente, 
+						cod_tipo_hab, cod_regimen, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
+			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
+					@fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches);
+		END	
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.Reservas(cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, 
+						cod_regimen, cod_estado_reserva, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
+			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
+					@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches);
+		END			
+			
+		FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_tipo_hab, @cod_regimen, 
+											@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches      
+
+  END
+
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
+
+END
+GO

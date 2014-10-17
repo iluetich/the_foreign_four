@@ -120,6 +120,17 @@ CREATE TABLE THE_FOREIGN_FOUR.Reservas (
 	fecha_hasta			datetime,
 	cant_noches			int,
 )
+CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
+	cod_reserva			numeric(18,0)			PRIMARY KEY,
+	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
+	cod_cliente			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Clientes,
+	cod_tipo_hab		int						REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
+	cod_regimen			int						REFERENCES THE_FOREIGN_FOUR.Regimenes,
+	fecha_creacion		datetime,
+	fecha_desde			datetime,
+	fecha_hasta			datetime,
+	cant_noches			int,
+)
 CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
 	cod_tipo_pago		int						IDENTITY(1,1) PRIMARY KEY,
 	descripcion			nvarchar(255),
