@@ -10,6 +10,12 @@ INSERT INTO THE_FOREIGN_FOUR.Regimenes (descripcion, precio)
 SELECT DISTINCT Regimen_Descripcion, Regimen_Precio
 FROM gd_esquema.Maestra
 
+INSERT INTO THE_FOREIGN_FOUR.TipoHabitaciones (cod_tipo_hab, descripcion, recargo)
+SELECT DISTINCT Habitacion_Tipo_Codigo, Habitacion_Tipo_Descripcion, Habitacion_Tipo_Porcentual
+FROM gd_esquema.Maestra
+
+
+
 
 INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, fecha_desde, cant_noches, cod_hotel, cod_cliente )
 SELECT	DISTINCT m.Reserva_Codigo,
