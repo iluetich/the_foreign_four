@@ -131,3 +131,19 @@ SELECT DISTINCT	m.Factura_Nro,
 				AND		m.Cliente_Pasaporte_Nro = c.nro_doc)
 FROM gd_esquema.Maestra m
 
+--***ITEMS FACTURAS***************************************
+
+INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, precio_unitario, descripcion, nro_factura)
+SELECT DISTINCT	Item_Factura_Cantidad, 
+				Item_Factura_Monto, 
+			   (SELECT descripcion
+			    FROM THE_FOREIGN_FOUR.Consumibles c
+			    WHERE	m.Consumible_Codigo = c.cod_consumible
+			    AND		m.Consumible_Descripcion = c.descripcion
+			    AND		m.Consumible_Precio = c.precio) AS 'descripcion',
+			   (SELECT nro_factura
+				FROM THE_FOREIGN_FOUR.Facturas f
+				WHERE	m.Factura_Nro = f.nro_factura
+				AND		m.Factura_Fecha = f.fecha_factura
+				AND		m.Factura_Total = f.total) AS 'nro_factura'
+FROM gd_esquema.Maestra m
