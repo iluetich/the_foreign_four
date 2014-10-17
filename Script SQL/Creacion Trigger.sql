@@ -138,7 +138,6 @@ BEGIN
 		   @nro_habitacion IS NULL OR
 		   @fecha_inicio IS NULL OR
 		   @cant_noches IS NULL OR
-		   @fecha_inicio > GETDATE() OR
 		  (SELECT DATEADD(day, @cant_noches, @fecha_inicio)) > GETDATE() OR
 		   EXISTS (SELECT cod_estadia
 					   FROM THE_FOREIGN_FOUR.Estadias
@@ -216,3 +215,53 @@ BEGIN
 
 END
 GO
+
+--***********************************************
+
+CREATE TRIGGER trg_facturas_error
+ON THE_FOREIGN_FOUR.Facturas
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT nro_factura, fecha_factura, total, cod_estadia
+	FROM inserted
+	DECLARE @nro_factura numeric(18,0),
+			@fecha_factura datetime,
+			@total numeric(18,2),
+			@cod_estadia numeric(18,0)
+
+	OPEN TrigInsCursor;
+
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_estadia
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		IF(@nro_factura IS NULL OR
+		   @fecha_factura IS NULL OR
+		   @total IS NULL OR
+		   @cod_estadia IS NULL OR
+		   @fecha_factura > GETDATE())
+		   
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.FacturasDefectuosas (nro_factura, fecha_factura, total, cod_estadia)
+			VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia);
+		END	
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_estadia)
+			VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia);
+		END			
+			
+		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_estadia     
+
+  END
+
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
+
+END
+GO
+

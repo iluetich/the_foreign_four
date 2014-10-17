@@ -1,4 +1,5 @@
 --***CLIENTES********************************
+
 INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
 SELECT DISTINCT Cliente_Nombre, Cliente_Apellido, Cliente_Fecha_Nac, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, Cliente_Nacionalidad, Cliente_Pasaporte_Nro, Cliente_Mail
 FROM gd_esquema.Maestra
@@ -10,6 +11,7 @@ SELECT DISTINCT Hotel_Calle, Hotel_Ciudad, Hotel_Nro_Calle, Hotel_CantEstrella, 
 FROM gd_esquema.Maestra
 
 --***REGIMENES********************************
+
 INSERT INTO THE_FOREIGN_FOUR.Regimenes (descripcion, precio)
 SELECT DISTINCT Regimen_Descripcion, Regimen_Precio
 FROM gd_esquema.Maestra
@@ -104,7 +106,7 @@ SELECT DISTINCT  m.Estadia_Fecha_Inicio,
 				 AND	ho.ciudad = m.Hotel_Ciudad
 				 AND	ho.nro_calle = m.Hotel_Nro_Calle
 				 AND	ho.recarga_estrellas = m.Hotel_Recarga_Estrella) AS 'nro_habitacion',
-				(SELECT cod_reserva
+				 (SELECT cod_reserva
 				 FROM THE_FOREIGN_FOUR.Reservas r JOIN THE_FOREIGN_FOUR.Hoteles ho ON(r.cod_hotel = ho.cod_hotel)
 				 WHERE	r.cod_reserva = m.Reserva_Codigo
 				 AND	r.fecha_desde = m.Reserva_Fecha_Inicio
@@ -114,3 +116,18 @@ SELECT DISTINCT  m.Estadia_Fecha_Inicio,
 				 AND	ho.nro_calle = m.Hotel_Nro_Calle
 				 AND	ho.recarga_estrellas = m.Hotel_Recarga_Estrella) AS 'cod_reserva'
 FROM gd_esquema.Maestra m
+
+--***FACTURAS***************************************
+
+INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_estadia)
+SELECT DISTINCT	m.Factura_Nro,
+				m.Factura_Fecha,
+				m.Factura_Total,
+				(SELECT cod_estadia
+				FROM THE_FOREIGN_FOUR.Estadias e JOIN THE_FOREIGN_FOUR.Reservas r ON(e.cod_reserva = r.cod_reserva)
+												 JOIN THE_FOREIGN_FOUR.Clientes c ON(r.cod_cliente = c.cod_cliente)
+				WHERE	e.cod_reserva = m.Reserva_Codigo
+				AND		m.Cliente_Mail = c.mail
+				AND		m.Cliente_Pasaporte_Nro = c.nro_doc)
+FROM gd_esquema.Maestra m
+
