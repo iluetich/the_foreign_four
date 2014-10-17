@@ -44,22 +44,6 @@ CREATE TABLE THE_FOREIGN_FOUR.Usuarios (
 	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('S', 'N')),
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 )
-CREATE TABLE THE_FOREIGN_FOUR.ClientesDefectuosos (
-	cod_cliente			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
-	nombre				nvarchar(255),
-	apellido			nvarchar(255),
-	tipo_doc			char(3)					DEFAULT 'PAS',
-	nro_doc				numeric(18,0),
-	mail				nvarchar(255),
-	telefono			nvarchar(60),
-	nom_calle			nvarchar(255),
-	nro_calle			numeric(18,0),
-	pais_origen			nvarchar(60),
-	nacionalidad		nvarchar(255),
-	piso				numeric(18,0),
-	depto				nvarchar(50),
-	fecha_nac			datetime,
-)
 CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	cod_cliente			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nombre				nvarchar(255),
@@ -76,6 +60,22 @@ CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	depto				nvarchar(50),
 	fecha_nac			datetime,
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
+)
+CREATE TABLE THE_FOREIGN_FOUR.ClientesDefectuosos (
+	cod_cliente			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
+	nombre				nvarchar(255),
+	apellido			nvarchar(255),
+	tipo_doc			char(3)					DEFAULT 'PAS',
+	nro_doc				numeric(18,0),
+	mail				nvarchar(255),
+	telefono			nvarchar(60),
+	nom_calle			nvarchar(255),
+	nro_calle			numeric(18,0),
+	pais_origen			nvarchar(60),
+	nacionalidad		nvarchar(255),
+	piso				numeric(18,0),
+	depto				nvarchar(50),
+	fecha_nac			datetime,
 )
 CREATE TABLE THE_FOREIGN_FOUR.InactividadHoteles (
 	cod_tarea			int						IDENTITY(1,1) PRIMARY KEY,
@@ -137,6 +137,13 @@ CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
 	nro_tarjeta			numeric(18,0),
 )
 CREATE TABLE THE_FOREIGN_FOUR.Estadias (
+	cod_estadia			numeric(18,0)			IDENTITY (1,1) PRIMARY KEY,
+	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
+	nro_habitacion		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Habitaciones,
+	fecha_inicio		datetime,
+	cant_noches			numeric(18,0),
+)
+CREATE TABLE THE_FOREIGN_FOUR.EstadiasDefectuosas (
 	cod_estadia			numeric(18,0)			IDENTITY (1,1) PRIMARY KEY,
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
 	nro_habitacion		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Habitaciones,

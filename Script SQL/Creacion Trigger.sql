@@ -109,3 +109,51 @@ BEGIN
 
 END
 GO
+
+--*****************************************************
+
+CREATE TRIGGER trg_estadias_error
+ON THE_FOREIGN_FOUR.Estadias
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT cod_estadia, cod_reserva, nro_habitacion, fecha_inicio, cant_noches
+	FROM inserted
+	DECLARE @cod_estadia numeric(18,0),
+			@cod_reserva numeric(18,0),
+			@nro_habitacion numeric(18,0),
+			@fecha_inicio datetime,
+			@cant_noches numeric(18,0)
+
+	OPEN TrigInsCursor;
+
+	FETCH NEXT FROM TrigInsCursor INTO @nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		IF(NOT EXISTS (SELECT nro_doc
+						FROM THE_FOREIGN_FOUR.Clientes
+						WHERE nro_doc = @nro_doc
+						OR mail = @mail))
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
+			VALUES (@nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail);
+		END	
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.ClientesDefectuosos (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
+			VALUES (@nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail);
+		END			
+			
+		FETCH NEXT FROM TrigInsCursor INTO @nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail      
+
+  END
+
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
+
+END
+GO
