@@ -165,3 +165,52 @@ BEGIN
 END
 GO
 
+--*****************************************************
+
+CREATE TRIGGER trg_habitaciones_error
+ON THE_FOREIGN_FOUR.Habitaciones
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel
+	FROM inserted
+	DECLARE @piso int,
+			@ubicacion nvarchar(255),
+			@cod_tipo_hab int,
+			@nro_habitacion numeric(18,0),
+			@cod_hotel int
+
+	OPEN TrigInsCursor;
+
+	FETCH NEXT FROM TrigInsCursor INTO @piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		IF(@piso IS NULL OR
+		   @ubicacion IS NULL OR
+		   @cod_tipo_hab IS NULL OR
+		   @nro_habitacion IS NULL OR
+		   @cod_hotel IS NULL)
+		   
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.HabitacionesDefectuosas (piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel)
+			VALUES (@piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel);
+		END	
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.Habitaciones (piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel)
+			VALUES (@piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel);
+		END			
+			
+		FETCH NEXT FROM TrigInsCursor INTO @piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel     
+
+  END
+
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
+
+END
+GO

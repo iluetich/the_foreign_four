@@ -91,26 +91,28 @@ CREATE TABLE THE_FOREIGN_FOUR.Regimenes (
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 )
 CREATE TABLE THE_FOREIGN_FOUR.TipoHabitaciones (
-	cod_tipo_hab			int					PRIMARY KEY,
+	cod_tipo_hab		int						PRIMARY KEY,
 	descripcion			nvarchar(255),
 	recargo				numeric (18,2),
 )
 CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
-	nro_habitacion		numeric(18,0)			PRIMARY KEY,
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
 	cod_tipo_hab		int						REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
+	nro_habitacion		numeric(18,0),
 	piso				int,
 	ubicacion			nvarchar(50),
 	descripcion			nvarchar(255),
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
+	PRIMARY KEY(nro_habitacion, cod_hotel)
 )
 CREATE TABLE THE_FOREIGN_FOUR.HabitacionesDefectuosas (
-	nro_habitacion		numeric(18,0)			PRIMARY KEY,
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
 	cod_tipo_hab		int						REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
+	nro_habitacion		numeric(18,0),
 	piso				int,
 	ubicacion			nvarchar(50),
 	descripcion			nvarchar(255),
+	PRIMARY KEY(nro_habitacion, cod_hotel)
 )
 CREATE TABLE THE_FOREIGN_FOUR.EstadosReserva (
 	cod_estado			int						IDENTITY(1,1) PRIMARY KEY,
@@ -147,14 +149,14 @@ CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
 CREATE TABLE THE_FOREIGN_FOUR.Estadias (
 	cod_estadia			numeric(18,0)			IDENTITY (1,1) PRIMARY KEY,
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
-	nro_habitacion		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Habitaciones,
+	nro_habitacion		numeric(18,0),
 	fecha_inicio		datetime,
 	cant_noches			numeric(18,0),
 )
 CREATE TABLE THE_FOREIGN_FOUR.EstadiasDefectuosas (
 	cod_estadia			numeric(18,0)			IDENTITY (1,1) PRIMARY KEY,
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
-	nro_habitacion		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Habitaciones,
+	nro_habitacion		numeric(18,0),
 	fecha_inicio		datetime,
 	cant_noches			numeric(18,0),
 )
@@ -194,7 +196,7 @@ CREATE TABLE THE_FOREIGN_FOUR.RegimenPorHotel (
 	PRIMARY KEY (cod_hotel, cod_regimen)
 )
 CREATE TABLE THE_FOREIGN_FOUR.ReservasPorTipoHabitacion (
-	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Habitaciones,
+	cod_tipo_hab		int						REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
 	cantidad			int,
 	PRIMARY KEY (cod_tipo_hab, cod_reserva)
