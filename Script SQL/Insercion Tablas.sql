@@ -22,6 +22,14 @@ FROM gd_esquema.Maestra
 
 --*********************************************
 
+INSERT INTO THE_FOREIGN_FOUR.Consumibles (cod_consumible, descripcion, precio)
+SELECT DISTINCT Consumible_Codigo, Consumible_Descripcion, Consumible_Precio
+FROM gd_esquema.Maestra
+WHERE Consumible_Codigo IS NOT NULL
+AND Consumible_Descripcion IS NOT NULL
+
+--*********************************************
+
 INSERT INTO THE_FOREIGN_FOUR.Estadias (fecha_inicio, cant_noches, nro_habitacion, cod_reserva)
 SELECT DISTINCT  m.Estadia_Fecha_Inicio,
 				 m.Estadia_Cant_Noches,
