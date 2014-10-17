@@ -26,9 +26,9 @@ BEGIN
 	BEGIN
 	
 		IF(NOT EXISTS (SELECT nro_doc
-						FROM THE_FOREIGN_FOUR.Clientes
-						WHERE nro_doc = @nro_doc
-						OR mail = @mail))
+					   FROM THE_FOREIGN_FOUR.Clientes
+					   WHERE nro_doc = @nro_doc
+					   OR mail = @mail))
 		BEGIN
 			INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
 			VALUES (@nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail);
@@ -59,7 +59,7 @@ BEGIN
 
 	DECLARE TrigInsCursor CURSOR FOR
 	SELECT cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, cod_estado_reserva, fecha_creacion, 
-			fecha_desde, fecha_hasta, cant_noches  
+		   fecha_desde, fecha_hasta, cant_noches  
 	FROM inserted
 	DECLARE @cod_reserva numeric(18,0),
 			@cod_hotel int,
@@ -132,12 +132,12 @@ BEGIN
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-		IF(@cod_reserva IS NULL
-		   OR @nro_habitacion IS NULL
-		   OR @fecha_inicio IS NULL
-		   OR @cant_noches IS NULL
-		   OR @fecha_inicio > GETDATE()
-		   OR (SELECT DATEADD(day, @cant_noches, @fecha_inicio)) > GETDATE()
+		IF(@cod_reserva IS NULL OR
+		   @nro_habitacion IS NULL OR
+		   @fecha_inicio IS NULL OR
+		   @cant_noches IS NULL OR
+		   @fecha_inicio > GETDATE() OR
+		  (SELECT DATEADD(day, @cant_noches, @fecha_inicio)) > GETDATE() 
 		   OR EXISTS (SELECT cod_estadia
 					   FROM THE_FOREIGN_FOUR.Estadias
 					   WHERE cod_reserva = @cod_reserva

@@ -23,8 +23,8 @@ FROM gd_esquema.Maestra
 --*********************************************
 
 INSERT INTO THE_FOREIGN_FOUR.Estadias (fecha_inicio, cant_noches, nro_habitacion, cod_reserva)
-SELECT DISTINCT  Estadia_Fecha_Inicio,
-				 Estadia_Cant_Noches,
+SELECT DISTINCT  m.Estadia_Fecha_Inicio,
+				 m.Estadia_Cant_Noches,
 			    (SELECT nro_habitacion
 				 FROM THE_FOREIGN_FOUR.Habitaciones ha JOIN THE_FOREIGN_FOUR.Hoteles ho ON(ha.cod_hotel = ho.cod_hotel)
 													   JOIN THE_FOREIGN_FOUR.TipoHabitaciones t ON(ha.cod_tipo_hab = t.cod_tipo_hab)
@@ -52,14 +52,14 @@ INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, fecha_desde, cant_noches, co
 SELECT	DISTINCT m.Reserva_Codigo,
 		m.Reserva_Fecha_Inicio,
 		m.Reserva_Cant_Noches,
-		(SELECT cod_hotel
+	   (SELECT cod_hotel
 		FROM THE_FOREIGN_FOUR.Hoteles h
 		WHERE	h.nom_calle = m.Hotel_Calle
 		AND		h.nro_calle = m.Hotel_Nro_Calle
 		AND		h.ciudad = m.Hotel_Ciudad
 		AND		h.cant_estrellas = m.Hotel_CantEstrella
 		AND		h.recarga_estrellas = m.Hotel_Recarga_Estrella),
-		(SELECT cod_cliente
+       (SELECT cod_cliente
 		FROM THE_FOREIGN_FOUR.Clientes c
 		WHERE	c.nombre = m.Cliente_Nombre
 		AND		c.apellido = m.Cliente_Apellido
