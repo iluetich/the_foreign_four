@@ -6,6 +6,10 @@ INSERT INTO THE_FOREIGN_FOUR.Hoteles (nom_calle, ciudad, nro_calle, cant_estrell
 SELECT DISTINCT Hotel_Calle, Hotel_Ciudad, Hotel_Nro_Calle, Hotel_CantEstrella, Hotel_Recarga_Estrella
 FROM gd_esquema.Maestra
 
+INSERT INTO THE_FOREIGN_FOUR.Regimenes (descripcion, precio)
+SELECT DISTINCT Regimen_Descripcion, Regimen_Precio
+FROM gd_esquema.Maestra
+
 
 INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, fecha_desde, cant_noches, cod_hotel, cod_cliente )
 SELECT	DISTINCT m.Reserva_Codigo,
