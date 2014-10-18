@@ -1,0 +1,17 @@
+ejecucion consulta: 3:46
+
+Facturas: 34613
+FacturasDefectuosas: 89877
+ItemsFactura: 114680
+Clientes: 87273
+ClientesDefectuosos: 13467
+Reservas: 87273
+ReservasDefectuosas: 13467
+Consumibles: 4
+Habitaciones: 345
+HabitacionesDefectuosas: 0
+Hoteles: 16
+Regimenes: 4
+TipoHabitaciones: 5
+Estadias: 34886
+EstadiasDefectuosas: 139209
