@@ -27,3 +27,19 @@ C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Proper
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.csproj.GenerateResource.Cache
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.exe
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.pdb
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.exe
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.pdb
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.BorrarRol.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.CreacionRol.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.ModificarRol.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Rol.ModificarYBorrarRol.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.CreacionDeUsuario.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.EliminarUsuario.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.ModificarUsuario.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.ModificarYBorrarUsuario.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Generar_Modificar_Reserva.GenerarReserva.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.InicioDelSistema.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Login.Login.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Properties.Resources.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.csproj.GenerateResource.Cache

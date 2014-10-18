@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using FrbaHotel.Generar_Modificar_Reserva;
 
 namespace FrbaHotel
 {
@@ -15,7 +16,8 @@ namespace FrbaHotel
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new InicioDelSistema());
+            //Application.Run(new InicioDelSistema());
+            Application.Run(new GenerarReserva());
         }
     }
 }
