@@ -23,6 +23,7 @@ SELECT DISTINCT Habitacion_Tipo_Codigo, Habitacion_Tipo_Descripcion, Habitacion_
 FROM gd_esquema.Maestra
 
 --***CONSUMIBLES**************************************
+--Para que tenemos una tabla consumibles defectuosos si no hay trigger?
 
 INSERT INTO THE_FOREIGN_FOUR.Consumibles (cod_consumible, descripcion, precio)
 SELECT DISTINCT Consumible_Codigo, Consumible_Descripcion, Consumible_Precio
@@ -88,34 +89,18 @@ SELECT	DISTINCT m.Reserva_Codigo,
 FROM gd_esquema.Maestra m
 
 --***ESTADIAS***************************************
+--no hace falta validar todos los datos de la reserva mas que el codigo, ni el tipo porque ya esta implicito en el cod_reserva
+--Tampoco hace falta la validacion de los datos del hotel ya que tambien se encuentran implicitos en la reserva
 
 INSERT INTO THE_FOREIGN_FOUR.Estadias (fecha_inicio, cant_noches, nro_habitacion, cod_reserva)
 SELECT DISTINCT  m.Estadia_Fecha_Inicio,
 				 m.Estadia_Cant_Noches,
-			    (SELECT nro_habitacion
-				 FROM THE_FOREIGN_FOUR.Habitaciones ha JOIN THE_FOREIGN_FOUR.Hoteles ho ON(ha.cod_hotel = ho.cod_hotel)
-													   JOIN THE_FOREIGN_FOUR.TipoHabitaciones t ON(ha.cod_tipo_hab = t.cod_tipo_hab)
-				 WHERE  ha.nro_habitacion = m.Habitacion_Numero
-				 AND	ha.ubicacion = m.Habitacion_Frente
-				 AND	ha.cod_tipo_hab = m.Habitacion_Tipo_Codigo
-				 AND	ha.piso = m.Habitacion_Piso
-				 AND	t.recargo = m.Habitacion_Tipo_Porcentual
-				 AND	t.descripcion = m.Habitacion_Tipo_Descripcion
-				 AND	ho.nom_calle = m.Hotel_Calle
-				 AND	ho.cant_estrellas = m.Hotel_CantEstrella
-				 AND	ho.ciudad = m.Hotel_Ciudad
-				 AND	ho.nro_calle = m.Hotel_Nro_Calle
-				 AND	ho.recarga_estrellas = m.Hotel_Recarga_Estrella) AS 'nro_habitacion',
+			     m.Habitacion_Numero,
 				 (SELECT cod_reserva
-				 FROM THE_FOREIGN_FOUR.Reservas r JOIN THE_FOREIGN_FOUR.Hoteles ho ON(r.cod_hotel = ho.cod_hotel)
-				 WHERE	r.cod_reserva = m.Reserva_Codigo
-				 AND	r.fecha_desde = m.Reserva_Fecha_Inicio
-				 AND	ho.nom_calle = m.Hotel_Calle
-				 AND	ho.cant_estrellas = m.Hotel_CantEstrella
-				 AND	ho.ciudad = m.Hotel_Ciudad
-				 AND	ho.nro_calle = m.Hotel_Nro_Calle
-				 AND	ho.recarga_estrellas = m.Hotel_Recarga_Estrella) AS 'cod_reserva'
+				 FROM THE_FOREIGN_FOUR.Reservas r
+				 WHERE	r.cod_reserva = m.Reserva_Codigo) AS 'cod_reserva'
 FROM gd_esquema.Maestra m
+
 
 --***FACTURAS***************************************
 
@@ -125,10 +110,7 @@ SELECT DISTINCT	m.Factura_Nro,
 				m.Factura_Total,
 				(SELECT cod_estadia
 				FROM THE_FOREIGN_FOUR.Estadias e JOIN THE_FOREIGN_FOUR.Reservas r ON(e.cod_reserva = r.cod_reserva)
-												 JOIN THE_FOREIGN_FOUR.Clientes c ON(r.cod_cliente = c.cod_cliente)
-				WHERE	e.cod_reserva = m.Reserva_Codigo
-				AND		m.Cliente_Mail = c.mail
-				AND		m.Cliente_Pasaporte_Nro = c.nro_doc)
+				WHERE	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
 
 --***ITEMS FACTURAS***************************************
@@ -138,9 +120,7 @@ SELECT DISTINCT	Item_Factura_Cantidad,
 				Item_Factura_Monto, 
 			   (SELECT descripcion
 			    FROM THE_FOREIGN_FOUR.Consumibles c
-			    WHERE	m.Consumible_Codigo = c.cod_consumible
-			    AND		m.Consumible_Descripcion = c.descripcion
-			    AND		m.Consumible_Precio = c.precio) AS 'descripcion',
+			    WHERE	m.Consumible_Codigo = c.cod_consumible) AS 'descripcion',
 			   (SELECT nro_factura
 				FROM THE_FOREIGN_FOUR.Facturas f
 				WHERE	m.Factura_Nro = f.nro_factura
