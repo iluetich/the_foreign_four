@@ -9,16 +9,43 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
-    public partial class cliente : Form
+    public partial class frmCliente : Form
     {
-        public cliente()
+
+        Form frmPadreReserva;
+
+
+        public frmCliente(Form newFrm)
         {
             InitializeComponent();
+            frmPadreReserva = newFrm;
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
+        public void btnVolver_Click(object sender, EventArgs e)
         {
-
+            this.Close();
+           
         }
+
+        public void btnRegistrado_Click(object sender, EventArgs e)
+        {
+            new frmBuscadorCliente(this).Show();
+            this.Enabled = false;
+        }
+
+        private void Cliente_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            frmPadreReserva.Enabled = true;
+            frmPadreReserva.Focus();
+        }
+
+        
+
+
     }
+
+
+    
+        
 }
+
