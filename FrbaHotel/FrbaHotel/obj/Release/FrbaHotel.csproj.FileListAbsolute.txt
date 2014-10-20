@@ -35,3 +35,5 @@ C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmBuscadorCliente.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmCliente.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmGenerarReserva.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmModificarReserva.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmModificarRerserva.resources

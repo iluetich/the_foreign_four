@@ -16,17 +16,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
         private void btnConfirReser_Click(object sender, EventArgs e){
-            if (validarDatosCompletos()){
-                new frmCliente(this).Show();
-                this.Enabled = false;
-            }else{
-                MessageBox.Show("Complete todos los campos","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+            if (validarDatosCompletos() &
+                validarFechas()){
+                    new frmCliente(this).Show();
+                    this.Enabled = false;
             }
         }
 
         private void frmGenerarReserva_FormClosing(Object sender, FormClosingEventArgs e){
             DialogResult dialogo = MessageBox.Show("¿ Desea Salir de la Aplicacion S/N ?",
-                "Salir", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                "Salir", MessageBoxButtons.OKCancel, MessageBoxIcon.None);
             if (dialogo == DialogResult.OK) {
             
             }else { 
@@ -39,11 +38,31 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 cmbFechaDesde.Value != null &
                 cmbFechaHasta.Value != null &
                 cmbTipoHab.SelectedIndex != -1 &
-                cmbTipoReg.SelectedIndex != -1)
-                return true;
-            return false;
+                cmbTipoReg.SelectedIndex != -1){
+                    return true;
+            }else{
+                    MessageBox.Show("Complete todos los campos","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                    return false;
+            }
         }
 
+        private bool validarFechas(){
+            if (cmbFechaDesde.Value < cmbFechaHasta.Value){
+                return true;
+            }else{
+                MessageBox.Show("Fecha inicio debe ser menor a fecha final", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+        }
+
+        private void txtCantHues_KeyPress(object sender,KeyPressEventArgs e){
+            FrbaHotel.Utils.allowNumbers(e);
+        }
+
+        private void frmGenerarReserva_Load(object sender, EventArgs e)
+        {
+
+        }
       
     }
 }
