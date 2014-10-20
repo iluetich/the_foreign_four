@@ -127,3 +127,63 @@ SELECT DISTINCT	Item_Factura_Cantidad,
 				AND		m.Factura_Fecha = f.fecha_factura
 				AND		m.Factura_Total = f.total) AS 'nro_factura'
 FROM gd_esquema.Maestra m
+
+--**ROLES********************************
+
+INSERT INTO THE_FOREIGN_FOUR.Roles (nombre)
+VALUES	('Administrador'),
+		('Recepcionista'),
+		('Guest')
+
+--**FUNCIONALIDADES********************************
+
+INSERT INTO THE_FOREIGN_FOUR.Funcionalidades (nombre)
+VALUES	('Login y Seguridad'),
+		('ABM Usuario'),
+		('ABM Cliente'),
+		('ABM Rol'),
+		('ABM Hotel'),
+		('ABM Habitacion'),
+		('ABM Régimen'),
+		('Generar/Modificar Reserva'),
+		('Cancelar Reserva'), 
+		('Registrar Estadía'),
+		('Registrar Consumibles'),
+		('Facturar Estadías'),
+		('Generar Listado Estadístico')
+		
+--**FUNCIONALIDADES POR ROL********************************	
+
+INSERT INTO THE_FOREIGN_FOUR.FuncionalidadPorRol (cod_rol, cod_funcion)
+VALUES	(1,1),	(2,1),	(3,8),
+		(1,2),	(2,3),	(3,9),
+		(1,3),	(2,8),
+		(1,4),	(2,9),
+		(1,5),	(2,10),
+		(1,6),	(2,11),
+		(1,7),	(2,12),
+		(1,8),
+		(1,9),
+		(1,10),
+		(1,11),
+		(1,12),
+		(1,13)
+		
+--**TIPOS PAGO********************************	
+
+INSERT INTO THE_FOREIGN_FOUR.TiposPago (descripcion)
+VALUES	('Contado'),
+		('Tarjeta de Crédito')
+		
+--**USUARIOS********************************
+
+INSERT INTO THE_FOREIGN_FOUR.Usuarios (user_name, password)
+VALUES	('THE_FOREIGN_FOUR', 'THE_FOREIGN_FOUR')
+
+--**USUARIOS POR HOTEL********************************
+
+INSERT INTO THE_FOREIGN_FOUR.UsuariosPorHotel (cod_usuario, cod_hotel)
+VALUES	(1, 1)
+		
+		
+		
