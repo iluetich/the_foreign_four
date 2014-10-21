@@ -55,7 +55,7 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		m.Reserva_Fecha_Inicio,
 		m.Reserva_Cant_Noches,
 		
-	   (SELECT DISTINCT cod_hotel
+	   (SELECT  cod_hotel
 		FROM THE_FOREIGN_FOUR.Hoteles h
 		WHERE	h.nom_calle = m.Hotel_Calle
 		AND		h.nro_calle = m.Hotel_Nro_Calle
@@ -63,7 +63,7 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		AND		h.cant_estrellas = m.Hotel_CantEstrella
 		AND		h.recarga_estrellas = m.Hotel_Recarga_Estrella) AS 'cod_hotel',
 		
-       (SELECT DISTINCT cod_cliente
+       (SELECT  cod_cliente
 		FROM THE_FOREIGN_FOUR.Clientes c
 		WHERE	c.nombre = m.Cliente_Nombre
 		AND		c.apellido = m.Cliente_Apellido
@@ -78,10 +78,10 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		
 		m.Habitacion_Tipo_Codigo,
 		
-		(SELECT DISTINCT cod_regimen
+		(SELECT cod_regimen
 		FROM THE_FOREIGN_FOUR.Regimenes r
-		WHERE r.descripcion = m.Regimen_Descripcion
-		AND r.precio = m.Regimen_Precio) AS 'cod_regimen',
+		WHERE	r.descripcion = m.Regimen_Descripcion
+		AND		r.precio = m.Regimen_Precio) AS 'cod_regimen',
 		
 		--hay que hacer una funcion o procedure para establecer el codigo de estado de reserva
 		
@@ -109,8 +109,8 @@ SELECT DISTINCT	m.Factura_Nro,
 				m.Factura_Fecha,
 				m.Factura_Total,
 				(SELECT cod_estadia
-				FROM THE_FOREIGN_FOUR.Estadias e JOIN THE_FOREIGN_FOUR.Reservas r ON(e.cod_reserva = r.cod_reserva)
-				WHERE	e.cod_reserva = m.Reserva_Codigo)
+				FROM THE_FOREIGN_FOUR.Estadias e
+				WHERE	e.cod_reserva = m.Reserva_Codigo) AS 'cod_estadia'
 FROM gd_esquema.Maestra m
 
 --***ITEMS FACTURAS***************************************
