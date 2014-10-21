@@ -17,9 +17,9 @@ CREATE TABLE THE_FOREIGN_FOUR.Hoteles (
 	nombre				nvarchar(30),
 	mail				nvarchar(60),
 	telefono			nvarchar(30),
-	nro_calle			bigint,
+	nro_calle			numeric(18,0),
 	nom_calle			nvarchar(255),
-	cant_estrellas		int,
+	cant_estrellas		numeric(18,0),
 	ciudad				nvarchar(255),
 	pais				nvarchar(30),
 	fecha_creacion		datetime,
@@ -89,15 +89,15 @@ CREATE TABLE THE_FOREIGN_FOUR.Regimenes (
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 )
 CREATE TABLE THE_FOREIGN_FOUR.TipoHabitaciones (
-	cod_tipo_hab		int						PRIMARY KEY,
+	cod_tipo_hab		numeric(18,0)			PRIMARY KEY,
 	descripcion			nvarchar(255),
 	recargo				numeric (18,2),
 )
 CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
-	cod_tipo_hab		int						REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
+	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 	nro_habitacion		numeric(18,0),
-	piso				int,
+	piso				numeric(18,0),
 	ubicacion			nvarchar(50),
 	descripcion			nvarchar(255),
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
@@ -105,7 +105,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
 )
 CREATE TABLE THE_FOREIGN_FOUR.HabitacionesDefectuosas (
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
-	cod_tipo_hab		int						REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
+	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 	nro_habitacion		numeric(18,0),
 	piso				int,
 	ubicacion			nvarchar(50),
@@ -126,7 +126,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Reservas (
 	fecha_creacion		datetime,
 	fecha_desde			datetime,
 	fecha_hasta			datetime,
-	cant_noches			int,
+	cant_noches			numeric(18,0),
 )
 CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
 	cod_reserva			numeric(18,0)			PRIMARY KEY,
@@ -137,7 +137,7 @@ CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
 	fecha_creacion		datetime,
 	fecha_desde			datetime,
 	fecha_hasta			datetime,
-	cant_noches			int,
+	cant_noches			numeric(18,0),
 )
 CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
 	cod_tipo_pago		int						IDENTITY(1,1) PRIMARY KEY,
@@ -175,8 +175,8 @@ CREATE TABLE THE_FOREIGN_FOUR.FacturasDefectuosas (
 CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nro_factura			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Facturas,
-	cantidad			int,
-	precio_unitario		decimal(6,2),
+	cantidad			numeric(18,0),
+	precio_unitario		numeric(18,2),
 	descripcion			nvarchar(255),
 )
 CREATE TABLE THE_FOREIGN_FOUR.Consumibles (
@@ -201,7 +201,7 @@ CREATE TABLE THE_FOREIGN_FOUR.RegimenPorHotel (
 	PRIMARY KEY (cod_hotel, cod_regimen)
 )
 CREATE TABLE THE_FOREIGN_FOUR.ReservasPorTipoHabitacion (
-	cod_tipo_hab		int						REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
+	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
 	cantidad			int,
 	PRIMARY KEY (cod_tipo_hab, cod_reserva)
