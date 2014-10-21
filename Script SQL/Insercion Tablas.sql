@@ -126,6 +126,7 @@ SELECT	Item_Factura_Cantidad,
 		AND		m.Factura_Total = f.total) AS 'nro_factura'
 FROM gd_esquema.Maestra m
 
+
 --**ROLES********************************
 
 INSERT INTO THE_FOREIGN_FOUR.Roles (nombre)

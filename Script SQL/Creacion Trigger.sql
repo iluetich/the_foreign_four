@@ -287,10 +287,20 @@ BEGIN
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-	
-		IF(@nro_factura IS NULL OR
-		   @cantidad IS NULL OR
-		   @precio_unitario IS NULL)
+		
+		IF(	@nro_factura IS NULL AND
+			@descripcion IS NULL AND
+			@cantidad IS NULL AND
+			@precio_unitario IS NULL)
+			--si todo es null, no tiene uso potencial alguno ingresar filas nulas
+			--a una tabla auxiliar
+		BEGIN
+			FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @descripcion, @cantidad, @precio_unitario
+			CONTINUE
+		END
+		IF(	@nro_factura IS NULL OR
+			@cantidad IS NULL OR
+			@precio_unitario IS NULL)
 		   --suponemos que si la descripción es nula, es porque el item refiere
 		   --a una estadía
 		   
