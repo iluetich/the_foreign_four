@@ -58,11 +58,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void txtCantHues_KeyPress(object sender,KeyPressEventArgs e){
             FrbaHotel.Utils.allowNumbers(e);
         }
-
-        private void frmGenerarReserva_Load(object sender, EventArgs e)
-        {
-
-        }
       
     }
 }

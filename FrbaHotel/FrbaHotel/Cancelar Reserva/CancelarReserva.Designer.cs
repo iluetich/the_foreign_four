@@ -30,15 +30,15 @@
         {
             this.lblNroReserva = new System.Windows.Forms.Label();
             this.groupCancelar = new System.Windows.Forms.GroupBox();
-            this.lblMotivo = new System.Windows.Forms.Label();
-            this.lblFechaCancel = new System.Windows.Forms.Label();
-            this.lblUser = new System.Windows.Forms.Label();
-            this.txtNroReserva = new System.Windows.Forms.TextBox();
-            this.txtMotivo = new System.Windows.Forms.TextBox();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.btnCancelarReserva = new System.Windows.Forms.Button();
             this.dtpFechaCancel = new System.Windows.Forms.DateTimePicker();
+            this.btnCancelarReserva = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtMotivo = new System.Windows.Forms.TextBox();
+            this.txtNroReserva = new System.Windows.Forms.TextBox();
+            this.lblUser = new System.Windows.Forms.Label();
+            this.lblFechaCancel = new System.Windows.Forms.Label();
+            this.lblMotivo = new System.Windows.Forms.Label();
             this.groupCancelar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,62 +70,12 @@
             this.groupCancelar.TabStop = false;
             this.groupCancelar.Text = "Datos reserva";
             // 
-            // lblMotivo
+            // dtpFechaCancel
             // 
-            this.lblMotivo.AutoSize = true;
-            this.lblMotivo.Location = new System.Drawing.Point(26, 70);
-            this.lblMotivo.Name = "lblMotivo";
-            this.lblMotivo.Size = new System.Drawing.Size(42, 13);
-            this.lblMotivo.TabIndex = 1;
-            this.lblMotivo.Text = "Motivo:";
-            // 
-            // lblFechaCancel
-            // 
-            this.lblFechaCancel.AutoSize = true;
-            this.lblFechaCancel.Location = new System.Drawing.Point(26, 103);
-            this.lblFechaCancel.Name = "lblFechaCancel";
-            this.lblFechaCancel.Size = new System.Drawing.Size(101, 13);
-            this.lblFechaCancel.TabIndex = 2;
-            this.lblFechaCancel.Text = "Fecha cancelacion:";
-            // 
-            // lblUser
-            // 
-            this.lblUser.AutoSize = true;
-            this.lblUser.Location = new System.Drawing.Point(26, 136);
-            this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(46, 13);
-            this.lblUser.TabIndex = 3;
-            this.lblUser.Text = "Usuario:";
-            // 
-            // txtNroReserva
-            // 
-            this.txtNroReserva.Location = new System.Drawing.Point(150, 30);
-            this.txtNroReserva.Name = "txtNroReserva";
-            this.txtNroReserva.Size = new System.Drawing.Size(200, 20);
-            this.txtNroReserva.TabIndex = 4;
-            // 
-            // txtMotivo
-            // 
-            this.txtMotivo.Location = new System.Drawing.Point(150, 63);
-            this.txtMotivo.Name = "txtMotivo";
-            this.txtMotivo.Size = new System.Drawing.Size(200, 20);
-            this.txtMotivo.TabIndex = 5;
-            // 
-            // txtUsuario
-            // 
-            this.txtUsuario.Location = new System.Drawing.Point(150, 129);
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(100, 20);
-            this.txtUsuario.TabIndex = 7;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Location = new System.Drawing.Point(68, 180);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(115, 38);
-            this.btnVolver.TabIndex = 8;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
+            this.dtpFechaCancel.Location = new System.Drawing.Point(150, 96);
+            this.dtpFechaCancel.Name = "dtpFechaCancel";
+            this.dtpFechaCancel.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaCancel.TabIndex = 10;
             // 
             // btnCancelarReserva
             // 
@@ -136,12 +86,63 @@
             this.btnCancelarReserva.Text = "Cancelar Reserva";
             this.btnCancelarReserva.UseVisualStyleBackColor = true;
             // 
-            // dtpFechaCancel
+            // btnVolver
             // 
-            this.dtpFechaCancel.Location = new System.Drawing.Point(150, 96);
-            this.dtpFechaCancel.Name = "dtpFechaCancel";
-            this.dtpFechaCancel.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaCancel.TabIndex = 10;
+            this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnVolver.Location = new System.Drawing.Point(68, 180);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(115, 38);
+            this.btnVolver.TabIndex = 8;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            // 
+            // txtUsuario
+            // 
+            this.txtUsuario.Location = new System.Drawing.Point(150, 129);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(100, 20);
+            this.txtUsuario.TabIndex = 7;
+            // 
+            // txtMotivo
+            // 
+            this.txtMotivo.Location = new System.Drawing.Point(150, 63);
+            this.txtMotivo.Name = "txtMotivo";
+            this.txtMotivo.Size = new System.Drawing.Size(200, 20);
+            this.txtMotivo.TabIndex = 5;
+            // 
+            // txtNroReserva
+            // 
+            this.txtNroReserva.Location = new System.Drawing.Point(150, 30);
+            this.txtNroReserva.Name = "txtNroReserva";
+            this.txtNroReserva.Size = new System.Drawing.Size(200, 20);
+            this.txtNroReserva.TabIndex = 4;
+            // 
+            // lblUser
+            // 
+            this.lblUser.AutoSize = true;
+            this.lblUser.Location = new System.Drawing.Point(26, 134);
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new System.Drawing.Size(46, 13);
+            this.lblUser.TabIndex = 3;
+            this.lblUser.Text = "Usuario:";
+            // 
+            // lblFechaCancel
+            // 
+            this.lblFechaCancel.AutoSize = true;
+            this.lblFechaCancel.Location = new System.Drawing.Point(26, 103);
+            this.lblFechaCancel.Name = "lblFechaCancel";
+            this.lblFechaCancel.Size = new System.Drawing.Size(101, 13);
+            this.lblFechaCancel.TabIndex = 2;
+            this.lblFechaCancel.Text = "Fecha cancelacion:";
+            // 
+            // lblMotivo
+            // 
+            this.lblMotivo.AutoSize = true;
+            this.lblMotivo.Location = new System.Drawing.Point(26, 70);
+            this.lblMotivo.Name = "lblMotivo";
+            this.lblMotivo.Size = new System.Drawing.Size(42, 13);
+            this.lblMotivo.TabIndex = 1;
+            this.lblMotivo.Text = "Motivo:";
             // 
             // frmCancelarReserva
             // 
@@ -154,6 +155,7 @@
             this.MaximizeBox = false;
             this.Name = "frmCancelarReserva";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cancelar Reserva";
             this.Load += new System.EventHandler(this.frmCancelarReserva_Load);
             this.groupCancelar.ResumeLayout(false);

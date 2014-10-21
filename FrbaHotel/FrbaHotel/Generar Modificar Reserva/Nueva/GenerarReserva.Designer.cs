@@ -322,7 +322,6 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nueva Reserva";
-            this.Load += new System.EventHandler(this.frmGenerarReserva_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmGenerarReserva_FormClosing);
             this.grbPanel1.ResumeLayout(false);
             this.grbPanel1.PerformLayout();
