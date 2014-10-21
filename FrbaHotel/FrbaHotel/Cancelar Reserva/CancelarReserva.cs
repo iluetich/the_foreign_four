@@ -9,11 +9,16 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.Cancelar_Reserva
 {
-    public partial class Form1 : Form
+    public partial class frmCancelarReserva : Form
     {
-        public Form1()
+        public frmCancelarReserva()
         {
             InitializeComponent();
+        }
+
+        private void frmCancelarReserva_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
