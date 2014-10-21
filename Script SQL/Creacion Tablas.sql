@@ -120,7 +120,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Reservas (
 	cod_reserva			numeric(18,0)			PRIMARY KEY,
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
 	cod_cliente			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Clientes,
-	cod_tipo_hab		int						REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
+	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 	cod_regimen			int						REFERENCES THE_FOREIGN_FOUR.Regimenes,
 	cod_estado_reserva	int						REFERENCES THE_FOREIGN_FOUR.EstadosReserva,
 	fecha_creacion		datetime,
@@ -132,7 +132,7 @@ CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
 	cod_reserva			numeric(18,0)			PRIMARY KEY,
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
 	cod_cliente			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Clientes,
-	cod_tipo_hab		int						REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
+	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 	cod_regimen			int						REFERENCES THE_FOREIGN_FOUR.Regimenes,
 	fecha_creacion		datetime,
 	fecha_desde			datetime,
@@ -173,6 +173,13 @@ CREATE TABLE THE_FOREIGN_FOUR.FacturasDefectuosas (
 	total				numeric(18,2),
 )
 CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
+	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
+	nro_factura			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Facturas,
+	cantidad			numeric(18,0),
+	precio_unitario		numeric(18,2),
+	descripcion			nvarchar(255),
+)
+CREATE TABLE THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (
 	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nro_factura			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Facturas,
 	cantidad			numeric(18,0),

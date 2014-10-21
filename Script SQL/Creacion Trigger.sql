@@ -64,7 +64,7 @@ BEGIN
 	DECLARE @cod_reserva numeric(18,0),
 			@cod_hotel int,
 			@cod_cliente numeric(18,0),
-			@cod_tipo_hab int,
+			@cod_tipo_hab numeric(18,0),
 			@cod_regimen int,
 			@cod_estado_reserva int,
 			@fecha_creacion datetime, 
@@ -179,7 +179,7 @@ BEGIN
 	FROM inserted
 	DECLARE @piso int,
 			@ubicacion nvarchar(255),
-			@cod_tipo_hab int,
+			@cod_tipo_hab numeric(18,0),
 			@nro_habitacion numeric(18,0),
 			@cod_hotel int
 
@@ -265,3 +265,51 @@ BEGIN
 END
 GO
 
+--********************************************
+
+CREATE TRIGGER trg_itemsFactura_error
+ON THE_FOREIGN_FOUR.ItemsFactura
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT nro_factura, descripcion, cantidad, precio_unitario
+	FROM inserted
+	DECLARE @nro_factura numeric(18,0),
+			@descripcion nvarchar(255),
+			@cantidad numeric(18,0),
+			@precio_unitario numeric(18,2)
+
+	OPEN TrigInsCursor;
+
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @descripcion, @cantidad, @precio_unitario
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		IF(@nro_factura IS NULL OR
+		   @cantidad IS NULL OR
+		   @precio_unitario IS NULL)
+		   --suponemos que si la descripción es nula, es porque el item refiere
+		   --a una estadía
+		   
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (nro_factura, descripcion, cantidad, precio_unitario)
+			VALUES (@nro_factura, @descripcion, @cantidad, @precio_unitario);
+		END	
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.ItemsFactura(nro_factura, descripcion, cantidad, precio_unitario)
+			VALUES (@nro_factura, @descripcion, @cantidad, @precio_unitario);
+		END			
+			
+		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @descripcion, @cantidad, @precio_unitario     
+
+  END
+
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
+
+END
+GO
