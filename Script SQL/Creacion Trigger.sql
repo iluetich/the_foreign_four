@@ -138,7 +138,6 @@ BEGIN
 		   @nro_habitacion IS NULL OR
 		   @fecha_inicio IS NULL OR
 		   @cant_noches IS NULL OR
-		  (SELECT DATEADD(day, @cant_noches, @fecha_inicio)) > GETDATE() OR
 		   EXISTS (SELECT cod_estadia
 					   FROM THE_FOREIGN_FOUR.Estadias
 					   WHERE cod_reserva = @cod_reserva
@@ -242,9 +241,7 @@ BEGIN
 		IF(@nro_factura IS NULL OR
 		   @fecha_factura IS NULL OR
 		   @total IS NULL OR
-		   @cod_estadia IS NULL OR
-		   @fecha_factura > GETDATE())
-		   
+		   @cod_estadia IS NULL)		   
 		BEGIN
 			INSERT INTO THE_FOREIGN_FOUR.FacturasDefectuosas (nro_factura, fecha_factura, total, cod_estadia)
 			VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia);
