@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.Registrar_Estadia
 {
-    public partial class frmRegistrarHuespedesRestantes : Form
+    public partial class frmRegistrarHuespedesRestantes : Form, IForm
     {
 
         Form frmRegistrarEstadiaPadre;
@@ -86,6 +86,7 @@ namespace FrbaHotel.Registrar_Estadia
         public void actualizarTxts(int index, String nombre, String apellido)
         {
             this.listTxtApe[index].Text = nombre;
+            this.listTxtNom[index].Text = nombre;
 
         }
 

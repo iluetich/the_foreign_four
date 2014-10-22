@@ -31,6 +31,8 @@
             this.groupHues = new System.Windows.Forms.GroupBox();
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
+            this.groupBotonera = new System.Windows.Forms.GroupBox();
+            this.groupBotonera.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupHues
@@ -38,7 +40,7 @@
             this.groupHues.AutoSize = true;
             this.groupHues.Location = new System.Drawing.Point(13, 13);
             this.groupHues.Name = "groupHues";
-            this.groupHues.Size = new System.Drawing.Size(433, 211);
+            this.groupHues.Size = new System.Drawing.Size(433, 230);
             this.groupHues.TabIndex = 0;
             this.groupHues.TabStop = false;
             this.groupHues.Text = "Huespedes";
@@ -46,7 +48,7 @@
             // btnVolver
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnVolver.Location = new System.Drawing.Point(124, 260);
+            this.btnVolver.Location = new System.Drawing.Point(108, 34);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(104, 42);
             this.btnVolver.TabIndex = 1;
@@ -56,12 +58,22 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(234, 260);
+            this.btnAceptar.Location = new System.Drawing.Point(221, 34);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(104, 42);
             this.btnAceptar.TabIndex = 2;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
+            // 
+            // groupBotonera
+            // 
+            this.groupBotonera.Controls.Add(this.btnAceptar);
+            this.groupBotonera.Controls.Add(this.btnVolver);
+            this.groupBotonera.Location = new System.Drawing.Point(13, 260);
+            this.groupBotonera.Name = "groupBotonera";
+            this.groupBotonera.Size = new System.Drawing.Size(433, 100);
+            this.groupBotonera.TabIndex = 3;
+            this.groupBotonera.TabStop = false;
             // 
             // frmRegistrarHuespedesRestantes
             // 
@@ -69,9 +81,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(458, 343);
-            this.Controls.Add(this.btnAceptar);
-            this.Controls.Add(this.btnVolver);
+            this.ClientSize = new System.Drawing.Size(458, 384);
+            this.Controls.Add(this.groupBotonera);
             this.Controls.Add(this.groupHues);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -80,6 +91,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registrar Huespedes Restantes";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRegistrarHuespedes_FormClosing);
+            this.groupBotonera.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -90,5 +102,6 @@
         private System.Windows.Forms.GroupBox groupHues;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnAceptar;
+        private System.Windows.Forms.GroupBox groupBotonera;
     }
 }
