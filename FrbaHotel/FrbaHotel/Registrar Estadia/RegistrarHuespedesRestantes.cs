@@ -9,16 +9,17 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.Registrar_Estadia
 {
-    public partial class frmRegistrarHuespedesRestantes : Form, IForm
+    public partial class frmRegistrarHuespedesRestantes : Form
     {
 
-        Form frmRegistrarEstadiaPadre;
-        List<TextBox>listTxtNom = new List<TextBox>();
-        List<TextBox> listTxtApe = new List<TextBox>();
-        List<Label>listLbl = new List<Label>();
-        List<Button> listBtn = new List<Button>(4);
+        frmRegistrarEstadia frmRegistrarEstadiaPadre;
+        List<TextBox>listTxtNom = new List<TextBox>(5);
+        List<TextBox> listTxtApe = new List<TextBox>(5);
+        List<Label>listLbl = new List<Label>(5);
+        List<Button> listBtn = new List<Button>(5);
 
-        public frmRegistrarHuespedesRestantes(Form newFrm, int cantHuespedes){
+        public frmRegistrarHuespedesRestantes(frmRegistrarEstadia newFrm, int cantHuespedes)
+        {
             InitializeComponent();
             frmRegistrarEstadiaPadre = newFrm;
             cargarControles(cantHuespedes);
@@ -57,7 +58,8 @@ namespace FrbaHotel.Registrar_Estadia
                 btnNewHues.AutoSize = true;
                 btnNewHues.Text = "Agregar...";
                 btnNewHues.Location = new Point(txtApe.Location.X + txtApe.Width + 5, y);
-                btnNewHues.Click += (sender, args) => listBtnClick(i);
+                //btnNewHues.Click += (sender, args) => listBtnClick(i);
+                listBtn[i].Click += (sender, args) => listBtnClick(i);
                 this.listBtn.Add(btnNewHues);
                 this.Controls.Add(btnNewHues);
                 this.groupHues.Controls.Add(btnNewHues);
@@ -83,10 +85,10 @@ namespace FrbaHotel.Registrar_Estadia
             new frmNuevoCliente(this,index).Show();
         }
 
-        private void actualizarTxts(int index, String nombre, String apellido)
+        public void actualizarTxts(int index, String nombre, String apellido)
         {
-            this.listTxtApe[index].Text = nombre;
             this.listTxtNom[index].Text = nombre;
+            this.listTxtApe[index].Text = apellido;            
 
         }
 
