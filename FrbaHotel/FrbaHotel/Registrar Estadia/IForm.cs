@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FrbaHotel.Registrar_Estadia
 {
-    interface IForm
+    public interface IForm
     {
         void actualizarTxts(int index, String nombre, String apellido);
     }

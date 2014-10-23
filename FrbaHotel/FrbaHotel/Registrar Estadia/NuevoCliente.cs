@@ -12,19 +12,18 @@ namespace FrbaHotel.Registrar_Estadia
     public partial class frmNuevoCliente : Form
     {
         Form frmRegistrarHuespedPadre;
-        IForm formInterface;
         int indexBtn;
 
         public frmNuevoCliente(Form newFrm, int index)
         {
             InitializeComponent();
-            formInterface = this.Owner as IForm;
             frmRegistrarHuespedPadre = newFrm;
             indexBtn = index;
         }
       
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            IForm formInterface = this.Owner as IForm;
             formInterface.actualizarTxts(indexBtn, txtNombre.Text, txtApellido.Text);
             this.Close();
         }

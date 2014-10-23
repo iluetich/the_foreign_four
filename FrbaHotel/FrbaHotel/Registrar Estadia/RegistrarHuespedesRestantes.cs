@@ -83,7 +83,7 @@ namespace FrbaHotel.Registrar_Estadia
             new frmNuevoCliente(this,index).Show();
         }
 
-        public void actualizarTxts(int index, String nombre, String apellido)
+        private void actualizarTxts(int index, String nombre, String apellido)
         {
             this.listTxtApe[index].Text = nombre;
             this.listTxtNom[index].Text = nombre;
