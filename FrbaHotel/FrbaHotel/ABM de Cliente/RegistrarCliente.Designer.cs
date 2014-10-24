@@ -184,6 +184,7 @@
             this.botonRegistrar.TabIndex = 12;
             this.botonRegistrar.Text = "Registrar";
             this.botonRegistrar.UseVisualStyleBackColor = true;
+            this.botonRegistrar.Click += new System.EventHandler(this.botonRegistrar_Click);
             // 
             // botonLimpiar
             // 
@@ -202,6 +203,7 @@
             this.botonVolver.TabIndex = 14;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
             // 
             // textBoxNombre
             // 
@@ -305,6 +307,7 @@
             this.Controls.Add(this.labelTitulo);
             this.Name = "RegistrarCliente";
             this.Text = "Registrar Cliente";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RegistrarCliente_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

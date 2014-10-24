@@ -29,21 +29,68 @@
         private void InitializeComponent()
         {
             this.groupHues = new System.Windows.Forms.GroupBox();
+            this.btnBuscarCliente = new System.Windows.Forms.Button();
+            this.gridDatosHuespedes = new System.Windows.Forms.DataGridView();
+            this.btnNuevoCliente = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.groupBotonera = new System.Windows.Forms.GroupBox();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupHues.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridDatosHuespedes)).BeginInit();
             this.groupBotonera.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupHues
             // 
             this.groupHues.AutoSize = true;
-            this.groupHues.Location = new System.Drawing.Point(13, 13);
+            this.groupHues.Controls.Add(this.btnBuscarCliente);
+            this.groupHues.Controls.Add(this.gridDatosHuespedes);
+            this.groupHues.Controls.Add(this.btnNuevoCliente);
+            this.groupHues.Location = new System.Drawing.Point(13, 23);
             this.groupHues.Name = "groupHues";
-            this.groupHues.Size = new System.Drawing.Size(433, 230);
+            this.groupHues.Size = new System.Drawing.Size(433, 236);
             this.groupHues.TabIndex = 0;
             this.groupHues.TabStop = false;
             this.groupHues.Text = "Huespedes";
+            // 
+            // btnBuscarCliente
+            // 
+            this.btnBuscarCliente.AutoSize = true;
+            this.btnBuscarCliente.Location = new System.Drawing.Point(133, 32);
+            this.btnBuscarCliente.Name = "btnBuscarCliente";
+            this.btnBuscarCliente.Size = new System.Drawing.Size(85, 23);
+            this.btnBuscarCliente.TabIndex = 0;
+            this.btnBuscarCliente.Text = "Buscar Cliente";
+            this.btnBuscarCliente.UseVisualStyleBackColor = true;
+            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
+            // 
+            // gridDatosHuespedes
+            // 
+            this.gridDatosHuespedes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridDatosHuespedes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4});
+            this.gridDatosHuespedes.Location = new System.Drawing.Point(30, 67);
+            this.gridDatosHuespedes.Name = "gridDatosHuespedes";
+            this.gridDatosHuespedes.Size = new System.Drawing.Size(377, 150);
+            this.gridDatosHuespedes.TabIndex = 5;
+            // 
+            // btnNuevoCliente
+            // 
+            this.btnNuevoCliente.AutoSize = true;
+            this.btnNuevoCliente.Location = new System.Drawing.Point(221, 32);
+            this.btnNuevoCliente.Name = "btnNuevoCliente";
+            this.btnNuevoCliente.Size = new System.Drawing.Size(84, 23);
+            this.btnNuevoCliente.TabIndex = 1;
+            this.btnNuevoCliente.Text = "Nuevo Cliente";
+            this.btnNuevoCliente.UseVisualStyleBackColor = true;
+            this.btnNuevoCliente.Click += new System.EventHandler(this.btnNuevoCliente_Click);
             // 
             // btnVolver
             // 
@@ -75,6 +122,30 @@
             this.groupBotonera.TabIndex = 3;
             this.groupBotonera.TabStop = false;
             // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Tipo Documento";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Documento";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Apellido";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Nombre";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
             // frmRegistrarHuespedesRestantes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -91,6 +162,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registrar Huespedes Restantes";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRegistrarHuespedes_FormClosing);
+            this.groupHues.ResumeLayout(false);
+            this.groupHues.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridDatosHuespedes)).EndInit();
             this.groupBotonera.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -103,5 +177,12 @@
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.GroupBox groupBotonera;
+        private System.Windows.Forms.DataGridView gridDatosHuespedes;
+        private System.Windows.Forms.Button btnNuevoCliente;
+        private System.Windows.Forms.Button btnBuscarCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
     }
 }

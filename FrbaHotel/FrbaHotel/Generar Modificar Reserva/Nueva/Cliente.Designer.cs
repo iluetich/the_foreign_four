@@ -53,6 +53,7 @@
             this.btnNuevlClt.TabIndex = 0;
             this.btnNuevlClt.Text = "Nuevo Cliente";
             this.btnNuevlClt.UseVisualStyleBackColor = true;
+            this.btnNuevlClt.Click += new System.EventHandler(this.btnNuevlClt_Click);
             // 
             // btnRegistrado
             // 

@@ -6,19 +6,20 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.ABM_de_Cliente;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class frmCliente : Form
     {
 
-        Form frmPadreReserva;
+        frmGenerarReserva frmGenerarReservaPadre;
 
 
-        public frmCliente(Form newFrm)
+        public frmCliente(frmGenerarReserva newFrm)
         {
             InitializeComponent();
-            frmPadreReserva = newFrm;
+            frmGenerarReservaPadre = newFrm;
         }
 
         public void btnVolver_Click(object sender, EventArgs e)
@@ -29,14 +30,19 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         public void btnRegistrado_Click(object sender, EventArgs e)
         {
-            new frmBuscadorCliente(this).Show();
+            new frmBuscarCliente(this).Show();
             this.Enabled = false;
         }
 
         private void Cliente_FormClosing(object sender, FormClosingEventArgs e)
         {
-            frmPadreReserva.Enabled = true;
-            frmPadreReserva.Focus();
+            frmGenerarReservaPadre.Enabled = true;
+            frmGenerarReservaPadre.Focus();
+        }
+
+        private void btnNuevlClt_Click(object sender, EventArgs e)
+        {
+            new RegistrarCliente().Show();
         }
 
         

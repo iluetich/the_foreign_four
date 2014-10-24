@@ -6,18 +6,26 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Registrar_Estadia;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
-    public partial class frmBuscadorCliente : Form
+    public partial class frmBuscarCliente : Form
     {
 
-        Form frmPadreCliente;
+        frmCliente frmClientePadre;
+        frmRegistrarHuespedesRestantes frmRegistrarHuespedesRestantesPadre;
 
-        public frmBuscadorCliente(Form newFrm)
+        public frmBuscarCliente(frmRegistrarHuespedesRestantes newForm)
         {
             InitializeComponent();
-            frmPadreCliente = newFrm;
+            frmRegistrarHuespedesRestantesPadre = newForm;
+        }
+
+        public frmBuscarCliente(frmCliente newFrm)
+        {
+            InitializeComponent();
+            frmClientePadre = newFrm;
         }
 
         private void btnVolver_Click(object sender, EventArgs e){
@@ -25,8 +33,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
         private void frmBuscadorCliente_FormClosing(object sender, FormClosingEventArgs e) {
-            frmPadreCliente.Enabled = true;
-            frmPadreCliente.Focus();
+            if (frmClientePadre != null)
+            {
+                frmClientePadre.Enabled = true;
+                frmClientePadre.Focus();
+            }
+            if (frmRegistrarHuespedesRestantesPadre != null)
+            {
+                frmRegistrarHuespedesRestantesPadre.Enabled = true;
+                frmRegistrarHuespedesRestantesPadre.Focus();
+            }
         }
     }
 }

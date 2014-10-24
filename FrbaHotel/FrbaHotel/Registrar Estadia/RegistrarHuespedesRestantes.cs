@@ -6,68 +6,21 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.ABM_de_Cliente;
+using FrbaHotel.Generar_Modificar_Reserva;
 
 namespace FrbaHotel.Registrar_Estadia
 {
     public partial class frmRegistrarHuespedesRestantes : Form
     {
-
         frmRegistrarEstadia frmRegistrarEstadiaPadre;
-        List<TextBox>listTxtNom = new List<TextBox>(5);
-        List<TextBox> listTxtApe = new List<TextBox>(5);
-        List<Label>listLbl = new List<Label>(5);
-        List<Button> listBtn = new List<Button>(5);
-
+      
         public frmRegistrarHuespedesRestantes(frmRegistrarEstadia newFrm, int cantHuespedes)
         {
             InitializeComponent();
             frmRegistrarEstadiaPadre = newFrm;
-            cargarControles(cantHuespedes);
         }
 
-        private void cargarControles(int cant)
-        {
-            int y = 25;
-            for (int i = 0; i < cant; i++)
-            {
-                Label lbl = new Label();
-                lbl.Text = "Huesped nº: " + i;
-                lbl.AutoSize = true;
-                lbl.Location = new Point(25, y);
-                this.Controls.Add(lbl);
-                this.listLbl.Add(lbl);
-                this.groupHues.Controls.Add(lbl);
-
-                TextBox txtNom = new TextBox();
-                txtNom.ReadOnly = true;
-                txtNom.TabStop = false;
-                txtNom.Location = new Point((lbl.Location.X + lbl.Width + 5), y);
-                this.listTxtNom.Add(txtNom);
-                this.Controls.Add(txtNom);
-                this.groupHues.Controls.Add(txtNom);
-
-                TextBox txtApe = new TextBox();
-                txtApe.TabStop = false;
-                txtApe.ReadOnly = true;
-                txtApe.Location = new Point((txtNom.Location.X + txtNom.Width + 5), y);
-                this.listTxtApe.Add(txtApe);
-                this.Controls.Add(txtApe);
-                this.groupHues.Controls.Add(txtApe);
-
-                Button btnNewHues = new Button();
-                btnNewHues.AutoSize = true;
-                btnNewHues.Text = "Agregar...";
-                btnNewHues.Location = new Point(txtApe.Location.X + txtApe.Width + 5, y);
-                //btnNewHues.Click += (sender, args) => listBtnClick(i);
-                listBtn[i].Click += (sender, args) => listBtnClick(i);
-                this.listBtn.Add(btnNewHues);
-                this.Controls.Add(btnNewHues);
-                this.groupHues.Controls.Add(btnNewHues);
-
-                y += 25;
-
-            }
-        }
 
         private void frmRegistrarHuespedes_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -80,18 +33,29 @@ namespace FrbaHotel.Registrar_Estadia
             this.Close();
         }
 
-        private void listBtnClick(int index)
+        private void btnNuevoCliente_Click(object sender, EventArgs e)
         {
-            new frmNuevoCliente(this,index).Show();
+            new RegistrarCliente(this).Show();
+            this.Enabled = false;
         }
 
-        public void actualizarTxts(int index, String nombre, String apellido)
+        private void btnBuscarCliente_Click(object sender, EventArgs e)
         {
-            this.listTxtNom[index].Text = nombre;
-            this.listTxtApe[index].Text = apellido;            
+            new frmBuscarCliente(this).Show();
+            this.Enabled = false;
+        }
+
+        public void llenarGrid(RegistrarCliente form)
+        {
+            string nombre = form.Controls["textBoxNombre"].Text;
+            string apellido = form.Controls["textBoxApellido"].Text;
+            string tipoDocumento = form.Controls["textBoxTipoDoc"].Text;
+            string documento = form.Controls["textBoxNroDoc"].Text;
+            gridDatosHuespedes.Rows.Add(new[] { tipoDocumento, documento, apellido, nombre });
 
         }
 
+    
 
     }
 }
