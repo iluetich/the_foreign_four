@@ -16,7 +16,8 @@ BEGIN
 			@depto nvarchar(50),
 			@nacionalidad nvarchar(255),
 			@nro_doc numeric(18,0), 
-			@mail nvarchar(255)
+			@mail nvarchar(255),
+			@baja_logica char(1)
 
 	OPEN TrigInsCursor;
 
@@ -30,15 +31,15 @@ BEGIN
 					   WHERE nro_doc = @nro_doc
 					   OR mail = @mail))
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
-			VALUES (@nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail);
+				SET @baja_logica = 'N'
 		END	
-		ELSE
-		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.ClientesDefectuosos (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
-			VALUES (@nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail);
-		END			
-			
+		BEGIN 
+				SET @baja_logica = 'S'
+		END
+		
+		INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail, baja_logica)
+		VALUES (@nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail, @baja_logica)
+		
 		FETCH NEXT FROM TrigInsCursor INTO @nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail      
 
   END
