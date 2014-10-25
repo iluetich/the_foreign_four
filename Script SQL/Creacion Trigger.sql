@@ -235,7 +235,8 @@ BEGIN
 	DECLARE @nro_factura numeric(18,0),
 			@fecha_factura datetime,
 			@total numeric(18,2),
-			@cod_estadia numeric(18,0)
+			@cod_estadia numeric(18,0),
+			@baja_logica char(1)
 
 	OPEN TrigInsCursor;
 
@@ -247,16 +248,18 @@ BEGIN
 		IF(@nro_factura IS NULL OR
 		   @fecha_factura IS NULL OR
 		   @total IS NULL OR
-		   @cod_estadia IS NULL)		   
+		   @cod_estadia IS NULL)
+		   		   
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.FacturasDefectuosas (nro_factura, fecha_factura, total, cod_estadia)
-			VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia);
-		END	
-		ELSE
-		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_estadia)
-			VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia);
-		END			
+				SET @baja_logica = 'S'
+		END
+		ELSE	
+		BEGIN 
+				SET @baja_logica = 'N'
+		END
+			
+		INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_estadia, baja_logica)
+		VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia, @baja_logica);
 			
 		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_estadia     
 
