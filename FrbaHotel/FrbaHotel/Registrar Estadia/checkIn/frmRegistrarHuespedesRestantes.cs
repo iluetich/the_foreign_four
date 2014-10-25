@@ -13,9 +13,9 @@ namespace FrbaHotel.Registrar_Estadia
 {
     public partial class frmRegistrarHuespedesRestantes : Form
     {
-        frmRegistrarEstadia frmRegistrarEstadiaPadre;
+        frmInicioEstadia frmRegistrarEstadiaPadre;
       
-        public frmRegistrarHuespedesRestantes(frmRegistrarEstadia newFrm, int cantHuespedes)
+        public frmRegistrarHuespedesRestantes(frmInicioEstadia newFrm)
         {
             InitializeComponent();
             frmRegistrarEstadiaPadre = newFrm;
@@ -52,6 +52,11 @@ namespace FrbaHotel.Registrar_Estadia
             string tipoDocumento = form.Controls["textBoxTipoDoc"].Text;
             string documento = form.Controls["textBoxNroDoc"].Text;
             gridDatosHuespedes.Rows.Add(new[] { tipoDocumento, documento, apellido, nombre });
+
+        }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
 
         }
 

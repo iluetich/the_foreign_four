@@ -333,11 +333,14 @@
       <DependentUpon>frmInicioRegistrarConsumible.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Registrar Estadia\RegistrarEstadia.resx">
-      <DependentUpon>RegistrarEstadia.cs</DependentUpon>
+    <EmbeddedResource Include="Registrar Estadia\checkOut\frmCheckout.resx">
+      <DependentUpon>frmCheckout.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Registrar Estadia\RegistrarHuespedesRestantes.resx">
-      <DependentUpon>RegistrarHuespedesRestantes.cs</DependentUpon>
+    <EmbeddedResource Include="Registrar Estadia\frmInicioEstadia.resx">
+      <DependentUpon>frmInicioEstadia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Estadia\checkIn\frmRegistrarHuespedesRestantes.resx">
+      <DependentUpon>frmRegistrarHuespedesRestantes.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -370,22 +373,25 @@
     <Compile Include="Registrar Consumible\frmInicioRegistrarConsumible.Designer.cs">
       <DependentUpon>frmInicioRegistrarConsumible.cs</DependentUpon>
     </Compile>
-    <Compile Include="Registrar Estadia\RegistrarHuespedesRestantes.cs">
+    <Compile Include="Registrar Estadia\checkIn\frmRegistrarHuespedesRestantes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registrar Estadia\RegistrarHuespedesRestantes.Designer.cs">
-      <DependentUpon>RegistrarHuespedesRestantes.cs</DependentUpon>
+    <Compile Include="Registrar Estadia\checkIn\frmRegistrarHuespedesRestantes.Designer.cs">
+      <DependentUpon>frmRegistrarHuespedesRestantes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Registrar Estadia\RegistrarEstadia.cs">
+    <Compile Include="Registrar Estadia\checkOut\frmCheckout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registrar Estadia\RegistrarEstadia.Designer.cs">
-      <DependentUpon>RegistrarEstadia.cs</DependentUpon>
+    <Compile Include="Registrar Estadia\checkOut\frmCheckout.Designer.cs">
+      <DependentUpon>frmCheckout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registrar Estadia\frmInicioEstadia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registrar Estadia\frmInicioEstadia.Designer.cs">
+      <DependentUpon>frmInicioEstadia.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Utilss.cs">
     </Compile>
   </ItemGroup>
   <ItemGroup>

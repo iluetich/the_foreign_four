@@ -6,12 +6,16 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Registrar_Estadia;
+using FrbaHotel.Registrar_Estadia.checkOut;
 
 namespace FrbaHotel.Registrar_Consumible
 {
     public partial class frmRegistrarConsumible : Form
     {
         frmInicioRegistrarConsumible frmInicioRegistrarConsumiblePadre;
+        frmInicioEstadia frmInicioEstadiaPadre;
+        frmCheckout frmCheckoutPadre;
         int fila;
 
         public frmRegistrarConsumible(){InitializeComponent();}
@@ -22,6 +26,15 @@ namespace FrbaHotel.Registrar_Consumible
             frmInicioRegistrarConsumiblePadre = newForm;
             lblResultCodEstadia.Text = newForm.Controls["groupRegEst"].Controls["txtCodEstadia"].Text;
             
+        }
+
+        public frmRegistrarConsumible(frmCheckout newForm, frmInicioEstadia newFormInicioEstadia)
+        {
+            InitializeComponent();
+            frmCheckoutPadre = newForm;
+            frmInicioEstadiaPadre = newFormInicioEstadia;
+            lblResultCodEstadia.Text = frmInicioEstadiaPadre.Controls["groupCheckout"].Controls["txtCodEstadia"].Text;
+
         }
 
         private void bntAceptar_Click(object sender, EventArgs e)
@@ -66,14 +79,24 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void frmRegistrarConsumible_FormClosing(object sender, FormClosingEventArgs e)
         {
-            frmInicioRegistrarConsumiblePadre.Enabled = true;
-            frmInicioRegistrarConsumiblePadre.Focus();
+            if (frmInicioRegistrarConsumiblePadre != null)
+            {
+                frmInicioRegistrarConsumiblePadre.Enabled = true;
+                frmInicioRegistrarConsumiblePadre.Focus();
+            }
+            if (frmCheckoutPadre != null)
+            {
+                frmCheckoutPadre.Enabled = true;
+                frmCheckoutPadre.Focus();
+            }
+
         }
 
-        private void groupRegConsu_Enter(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
+
  
     }
 }

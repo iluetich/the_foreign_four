@@ -31,14 +31,14 @@
             this.groupHues = new System.Windows.Forms.GroupBox();
             this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.gridDatosHuespedes = new System.Windows.Forms.DataGridView();
-            this.btnNuevoCliente = new System.Windows.Forms.Button();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.btnAceptar = new System.Windows.Forms.Button();
-            this.groupBotonera = new System.Windows.Forms.GroupBox();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnNuevoCliente = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.btnAceptar = new System.Windows.Forms.Button();
+            this.groupBotonera = new System.Windows.Forms.GroupBox();
             this.groupHues.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridDatosHuespedes)).BeginInit();
             this.groupBotonera.SuspendLayout();
@@ -81,6 +81,30 @@
             this.gridDatosHuespedes.Size = new System.Drawing.Size(377, 150);
             this.gridDatosHuespedes.TabIndex = 5;
             // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Tipo Documento";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Documento";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Apellido";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Nombre";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
             // btnNuevoCliente
             // 
             this.btnNuevoCliente.AutoSize = true;
@@ -111,6 +135,7 @@
             this.btnAceptar.TabIndex = 2;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // groupBotonera
             // 
@@ -121,30 +146,6 @@
             this.groupBotonera.Size = new System.Drawing.Size(433, 100);
             this.groupBotonera.TabIndex = 3;
             this.groupBotonera.TabStop = false;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Tipo Documento";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Documento";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Apellido";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Nombre";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
             // 
             // frmRegistrarHuespedesRestantes
             // 
