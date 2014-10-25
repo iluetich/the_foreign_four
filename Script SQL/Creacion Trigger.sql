@@ -33,6 +33,7 @@ BEGIN
 		BEGIN
 				SET @baja_logica = 'N'
 		END	
+		ELSE
 		BEGIN 
 				SET @baja_logica = 'S'
 		END
@@ -71,7 +72,8 @@ BEGIN
 			@fecha_creacion datetime, 
 			@fecha_desde datetime,
 			@fecha_hasta datetime,
-			@cant_noches int
+			@cant_noches int,
+			@baja_logica char(1)
 			
 	OPEN TrigInsCursor;
 
@@ -88,18 +90,16 @@ BEGIN
 			@fecha_desde IS NULL OR
 			@cant_noches IS NULL)
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.ReservasDefectuosas (cod_reserva, cod_hotel, cod_cliente, 
-						cod_tipo_hab, cod_regimen, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
-			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
-					@fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches);
+				SET @baja_logica = 'S'
 		END	
 		ELSE
-		BEGIN
+		BEGIN 
+				SET @baja_logica = 'N'
+		END
 			INSERT INTO THE_FOREIGN_FOUR.Reservas(cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, 
-						cod_regimen, cod_estado_reserva, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
+						cod_regimen, cod_estado_reserva, fecha_creacion, fecha_desde, fecha_hasta, cant_noches, baja_logica)
 			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
-					@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches);
-		END			
+					@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches, @baja_logica);
 			
 		FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_tipo_hab, @cod_regimen, 
 											@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches      
