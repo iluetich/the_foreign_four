@@ -322,6 +322,14 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Consumible\frmRegistrarConsumible.resx">
+      <DependentUpon>frmRegistrarConsumible.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Consumible\frmInicioRegistrarConsumible.resx">
+      <DependentUpon>frmInicioRegistrarConsumible.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Registrar Estadia\RegistrarEstadia.resx">
       <DependentUpon>RegistrarEstadia.cs</DependentUpon>
     </EmbeddedResource>
@@ -341,11 +349,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Registrar Consumible\Form1.cs">
+    <Compile Include="Registrar Consumible\frmRegistrarConsumible.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Registrar Consumible\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+      <DependentUpon>frmRegistrarConsumible.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registrar Consumible\frmInicioRegistrarConsumible.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registrar Consumible\frmInicioRegistrarConsumible.Designer.cs">
+      <DependentUpon>frmInicioRegistrarConsumible.cs</DependentUpon>
     </Compile>
     <Compile Include="Registrar Estadia\RegistrarHuespedesRestantes.cs">
       <SubType>Form</SubType>
