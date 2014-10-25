@@ -58,7 +58,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	depto				nvarchar(50),
 	fecha_nac			datetime,
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
-	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S')
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 )
 CREATE TABLE THE_FOREIGN_FOUR.InactividadHoteles (
 	cod_tarea			int						IDENTITY(1,1) PRIMARY KEY,
@@ -86,7 +86,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
 	ubicacion			nvarchar(50),
 	descripcion			nvarchar(255),
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
-	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S')
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 	PRIMARY KEY(nro_habitacion, cod_hotel)
 )
 CREATE TABLE THE_FOREIGN_FOUR.EstadosReserva (
@@ -104,7 +104,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Reservas (
 	fecha_desde			datetime,
 	fecha_hasta			datetime,
 	cant_noches			numeric(18,0),
-	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S')
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 )
 CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
 	cod_tipo_pago		int						IDENTITY(1,1) PRIMARY KEY,
@@ -117,7 +117,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Estadias (
 	nro_habitacion		numeric(18,0),
 	fecha_inicio		datetime,
 	cant_noches			numeric(18,0),
-	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S')
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 )
 CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 	nro_factura			numeric(18,0)			PRIMARY KEY,
@@ -125,7 +125,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 	cod_tipo_pago		int						REFERENCES THE_FOREIGN_FOUR.TiposPago,
 	fecha_factura		datetime,
 	total				numeric(18,2),
-	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S')
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 )
 CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
@@ -133,7 +133,7 @@ CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	cantidad			numeric(18,0),
 	precio_unitario		numeric(18,2),
 	descripcion			nvarchar(255),
-	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S')
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 )
 CREATE TABLE THE_FOREIGN_FOUR.Consumibles (
 	cod_consumible		numeric(18,0)			PRIMARY KEY,
