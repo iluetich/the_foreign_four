@@ -47,23 +47,6 @@ CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	nombre				nvarchar(255),
 	apellido			nvarchar(255),
 	tipo_doc			char(3)					DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
-	nro_doc				numeric(18,0)			UNIQUE,
-	mail				nvarchar(255)			UNIQUE,
-	telefono			nvarchar(60),
-	nom_calle			nvarchar(255),
-	nro_calle			numeric(18,0),
-	pais_origen			nvarchar(60),
-	nacionalidad		nvarchar(255),
-	piso				numeric(18,0),
-	depto				nvarchar(50),
-	fecha_nac			datetime,
-	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
-)
-CREATE TABLE THE_FOREIGN_FOUR.ClientesDefectuosos (
-	cod_cliente			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
-	nombre				nvarchar(255),
-	apellido			nvarchar(255),
-	tipo_doc			char(3)					DEFAULT 'PAS',
 	nro_doc				numeric(18,0),
 	mail				nvarchar(255),
 	telefono			nvarchar(60),
@@ -74,6 +57,9 @@ CREATE TABLE THE_FOREIGN_FOUR.ClientesDefectuosos (
 	piso				numeric(18,0),
 	depto				nvarchar(50),
 	fecha_nac			datetime,
+	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
+	UNIQUE(nro_doc, fecha_nac, mail)
 )
 CREATE TABLE THE_FOREIGN_FOUR.InactividadHoteles (
 	cod_tarea			int						IDENTITY(1,1) PRIMARY KEY,
@@ -101,15 +87,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
 	ubicacion			nvarchar(50),
 	descripcion			nvarchar(255),
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
-	PRIMARY KEY(nro_habitacion, cod_hotel)
-)
-CREATE TABLE THE_FOREIGN_FOUR.HabitacionesDefectuosas (
-	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
-	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
-	nro_habitacion		numeric(18,0),
-	piso				int,
-	ubicacion			nvarchar(50),
-	descripcion			nvarchar(255),
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 	PRIMARY KEY(nro_habitacion, cod_hotel)
 )
 CREATE TABLE THE_FOREIGN_FOUR.EstadosReserva (
@@ -127,17 +105,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Reservas (
 	fecha_desde			datetime,
 	fecha_hasta			datetime,
 	cant_noches			numeric(18,0),
-)
-CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
-	cod_reserva			numeric(18,0)			PRIMARY KEY,
-	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
-	cod_cliente			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Clientes,
-	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
-	cod_regimen			int						REFERENCES THE_FOREIGN_FOUR.Regimenes,
-	fecha_creacion		datetime,
-	fecha_desde			datetime,
-	fecha_hasta			datetime,
-	cant_noches			numeric(18,0),
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 )
 CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
 	cod_tipo_pago		int						IDENTITY(1,1) PRIMARY KEY,
@@ -150,13 +118,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Estadias (
 	nro_habitacion		numeric(18,0),
 	fecha_inicio		datetime,
 	cant_noches			numeric(18,0),
-)
-CREATE TABLE THE_FOREIGN_FOUR.EstadiasDefectuosas (
-	cod_estadia			numeric(18,0)			IDENTITY (1,1) PRIMARY KEY,
-	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
-	nro_habitacion		numeric(18,0),
-	fecha_inicio		datetime,
-	cant_noches			numeric(18,0),
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 )
 CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 	nro_factura			numeric(18,0)			PRIMARY KEY,
@@ -164,13 +126,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 	cod_tipo_pago		int						REFERENCES THE_FOREIGN_FOUR.TiposPago,
 	fecha_factura		datetime,
 	total				numeric(18,2),
-)
-CREATE TABLE THE_FOREIGN_FOUR.FacturasDefectuosas (
-	nro_factura			numeric(18,0),
-	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
-	cod_tipo_pago		int						REFERENCES THE_FOREIGN_FOUR.TiposPago,
-	fecha_factura		datetime,
-	total				numeric(18,2),
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 )
 CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
@@ -178,13 +134,7 @@ CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	cantidad			numeric(18,0),
 	precio_unitario		numeric(18,2),
 	descripcion			nvarchar(255),
-)
-CREATE TABLE THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (
-	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
-	nro_factura			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Facturas,
-	cantidad			numeric(18,0),
-	precio_unitario		numeric(18,2),
-	descripcion			nvarchar(255),
+	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
 )
 CREATE TABLE THE_FOREIGN_FOUR.Consumibles (
 	cod_consumible		numeric(18,0)			PRIMARY KEY,
