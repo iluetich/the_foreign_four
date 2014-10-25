@@ -285,7 +285,8 @@ BEGIN
 	DECLARE @nro_factura numeric(18,0),
 			@descripcion nvarchar(255),
 			@cantidad numeric(18,0),
-			@precio_unitario numeric(18,2)
+			@precio_unitario numeric(18,2),
+			@baja_logica char(1)
 
 	OPEN TrigInsCursor;
 
@@ -294,31 +295,22 @@ BEGIN
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 		
-		IF(	@nro_factura IS NULL AND
-			@descripcion IS NULL AND
-			@cantidad IS NULL AND
-			@precio_unitario IS NULL)
-			--si todo es null, no tiene uso potencial alguno ingresar filas nulas
-			--a una tabla auxiliar
-		BEGIN
-			FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @descripcion, @cantidad, @precio_unitario
-			CONTINUE
-		END
 		IF(	@nro_factura IS NULL OR
 			@cantidad IS NULL OR
 			@precio_unitario IS NULL)
-		   --suponemos que si la descripción es nula, es porque el item refiere
-		   --a una estadía
-		   
+			--si todo es null, no tiene uso potencial alguno ingresar filas nulas
+			--a una tabla auxiliar
+			
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (nro_factura, descripcion, cantidad, precio_unitario)
-			VALUES (@nro_factura, @descripcion, @cantidad, @precio_unitario);
+				SET @baja_logica = 'S'
 		END	
 		ELSE
-		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.ItemsFactura(nro_factura, descripcion, cantidad, precio_unitario)
-			VALUES (@nro_factura, @descripcion, @cantidad, @precio_unitario);
-		END			
+		BEGIN 
+				SET @baja_logica = 'N'
+		END
+		
+		INSERT INTO THE_FOREIGN_FOUR.ItemsFactura(nro_factura, descripcion, cantidad, precio_unitario, baja_logica)
+		VALUES (@nro_factura, @descripcion, @cantidad, @precio_unitario, @baja_logica);
 			
 		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @descripcion, @cantidad, @precio_unitario     
 
