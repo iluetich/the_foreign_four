@@ -29,8 +29,6 @@ CREATE TABLE THE_FOREIGN_FOUR.Hoteles (
 )
 CREATE TABLE THE_FOREIGN_FOUR.Usuarios (
 	cod_usuario			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
-	cod_rol				int						REFERENCES THE_FOREIGN_FOUR.Roles,
-	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
 	user_name			nvarchar(30)			UNIQUE,
 	password			nvarchar(30),
 	nombre				nvarchar(60),
@@ -211,5 +209,6 @@ CREATE TABLE THE_FOREIGN_FOUR.ReservasPorTipoHabitacion (
 CREATE TABLE THE_FOREIGN_FOUR.UsuariosPorHotel (
 	cod_usuario			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Usuarios,
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
+	cod_rol				int						REFERENCES THE_FOREIGN_FOUR.Roles
 	PRIMARY KEY(cod_usuario, cod_hotel)
 )
