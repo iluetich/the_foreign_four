@@ -47,8 +47,8 @@ CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	nombre				nvarchar(255),
 	apellido			nvarchar(255),
 	tipo_doc			char(3)					DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
-	nro_doc				numeric(18,0)			UNIQUE,
-	mail				nvarchar(255)			UNIQUE,
+	nro_doc				numeric(18,0),
+	mail				nvarchar(255),
 	telefono			nvarchar(60),
 	nom_calle			nvarchar(255),
 	nro_calle			numeric(18,0),
@@ -59,6 +59,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	fecha_nac			datetime,
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 	baja_logica			char(1)					DEFAULT 'N' CHECK(baja_logica IN ('N', 'S'))
+	UNIQUE(nro_doc, fecha_nac, mail)
 )
 CREATE TABLE THE_FOREIGN_FOUR.InactividadHoteles (
 	cod_tarea			int						IDENTITY(1,1) PRIMARY KEY,
