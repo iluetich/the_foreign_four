@@ -13,6 +13,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     public partial class frmModificarRerserva : Form
     {
         Form frmBuscarPadre;
+        bool verifico = false;
 
         public frmModificarRerserva(Form newFrm)
         {
@@ -22,10 +23,18 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            if (validarDatosCompletos() &
-               validarFechas()){
-               MessageBox.Show("Reserva modificada","Exito",MessageBoxButtons.OK,MessageBoxIcon.Information);
-               this.Close();
+            if (verifico)
+            {
+                if (validarDatosCompletos() &
+                    validarFechas())
+                {
+                    MessageBox.Show("Reserva modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Verifica disponibilidad antes", "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -64,6 +73,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 MessageBox.Show("Fecha inicio debe ser menor a fecha final", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
+        }
+
+        private void btnVerficarDisponibilidad_Click(object sender, EventArgs e)
+        {
+            verifico = true;
         }
 
         

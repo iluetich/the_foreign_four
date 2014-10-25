@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupRegConsu = new System.Windows.Forms.GroupBox();
+            this.lblResultCodEstadia = new System.Windows.Forms.Label();
+            this.lblCodEstadia = new System.Windows.Forms.Label();
             this.btnRegistrarCons = new System.Windows.Forms.Button();
             this.lblNroHabitacion = new System.Windows.Forms.Label();
             this.txtHabitacion = new System.Windows.Forms.TextBox();
@@ -42,11 +44,9 @@
             this.colCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bntAceptar = new System.Windows.Forms.Button();
+            this.bntFacturar = new System.Windows.Forms.Button();
             this.groupBotonera = new System.Windows.Forms.GroupBox();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.lblCodEstadia = new System.Windows.Forms.Label();
-            this.lblResultCodEstadia = new System.Windows.Forms.Label();
             this.groupRegConsu.SuspendLayout();
             this.groupConsumible.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsumibles)).BeginInit();
@@ -71,6 +71,23 @@
             this.groupRegConsu.TabStop = false;
             this.groupRegConsu.Text = "Ingresar datos";
             this.groupRegConsu.Enter += new System.EventHandler(this.groupRegConsu_Enter);
+            // 
+            // lblResultCodEstadia
+            // 
+            this.lblResultCodEstadia.AutoSize = true;
+            this.lblResultCodEstadia.Location = new System.Drawing.Point(102, 26);
+            this.lblResultCodEstadia.Name = "lblResultCodEstadia";
+            this.lblResultCodEstadia.Size = new System.Drawing.Size(0, 13);
+            this.lblResultCodEstadia.TabIndex = 8;
+            // 
+            // lblCodEstadia
+            // 
+            this.lblCodEstadia.AutoSize = true;
+            this.lblCodEstadia.Location = new System.Drawing.Point(16, 26);
+            this.lblCodEstadia.Name = "lblCodEstadia";
+            this.lblCodEstadia.Size = new System.Drawing.Size(80, 13);
+            this.lblCodEstadia.TabIndex = 7;
+            this.lblCodEstadia.Text = "Codigo estadia:";
             // 
             // btnRegistrarCons
             // 
@@ -178,20 +195,21 @@
             this.colDescripcion.Name = "colDescripcion";
             this.colDescripcion.ReadOnly = true;
             // 
-            // bntAceptar
+            // bntFacturar
             // 
-            this.bntAceptar.Location = new System.Drawing.Point(135, 24);
-            this.bntAceptar.Name = "bntAceptar";
-            this.bntAceptar.Size = new System.Drawing.Size(75, 23);
-            this.bntAceptar.TabIndex = 2;
-            this.bntAceptar.Text = "Finalizar";
-            this.bntAceptar.UseVisualStyleBackColor = true;
-            this.bntAceptar.Click += new System.EventHandler(this.bntAceptar_Click);
+            this.bntFacturar.AutoSize = true;
+            this.bntFacturar.Location = new System.Drawing.Point(123, 24);
+            this.bntFacturar.Name = "bntFacturar";
+            this.bntFacturar.Size = new System.Drawing.Size(104, 23);
+            this.bntFacturar.TabIndex = 2;
+            this.bntFacturar.Text = "Iniciar Facturacion";
+            this.bntFacturar.UseVisualStyleBackColor = true;
+            this.bntFacturar.Click += new System.EventHandler(this.bntAceptar_Click);
             // 
             // groupBotonera
             // 
             this.groupBotonera.Controls.Add(this.btnCancelar);
-            this.groupBotonera.Controls.Add(this.bntAceptar);
+            this.groupBotonera.Controls.Add(this.bntFacturar);
             this.groupBotonera.Location = new System.Drawing.Point(12, 300);
             this.groupBotonera.Name = "groupBotonera";
             this.groupBotonera.Size = new System.Drawing.Size(272, 60);
@@ -200,29 +218,12 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(49, 24);
+            this.btnCancelar.Location = new System.Drawing.Point(40, 24);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 3;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            // 
-            // lblCodEstadia
-            // 
-            this.lblCodEstadia.AutoSize = true;
-            this.lblCodEstadia.Location = new System.Drawing.Point(16, 26);
-            this.lblCodEstadia.Name = "lblCodEstadia";
-            this.lblCodEstadia.Size = new System.Drawing.Size(80, 13);
-            this.lblCodEstadia.TabIndex = 7;
-            this.lblCodEstadia.Text = "Codigo estadia:";
-            // 
-            // lblResultCodEstadia
-            // 
-            this.lblResultCodEstadia.AutoSize = true;
-            this.lblResultCodEstadia.Location = new System.Drawing.Point(102, 26);
-            this.lblResultCodEstadia.Name = "lblResultCodEstadia";
-            this.lblResultCodEstadia.Size = new System.Drawing.Size(0, 13);
-            this.lblResultCodEstadia.TabIndex = 8;
             // 
             // frmRegistrarConsumible
             // 
@@ -244,6 +245,7 @@
             this.groupConsumible.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsumibles)).EndInit();
             this.groupBotonera.ResumeLayout(false);
+            this.groupBotonera.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -260,7 +262,7 @@
         private System.Windows.Forms.Button btnRegistrarCons;
         private System.Windows.Forms.GroupBox groupConsumible;
         private System.Windows.Forms.DataGridView dgvConsumibles;
-        private System.Windows.Forms.Button bntAceptar;
+        private System.Windows.Forms.Button bntFacturar;
         private System.Windows.Forms.GroupBox groupBotonera;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCodigo;

@@ -71,9 +71,9 @@
             this.lblNroReserva.AutoSize = true;
             this.lblNroReserva.Location = new System.Drawing.Point(30, 38);
             this.lblNroReserva.Name = "lblNroReserva";
-            this.lblNroReserva.Size = new System.Drawing.Size(85, 13);
+            this.lblNroReserva.Size = new System.Drawing.Size(81, 13);
             this.lblNroReserva.TabIndex = 0;
-            this.lblNroReserva.Text = "Numero reserva:";
+            this.lblNroReserva.Text = "Codigo reserva:";
             // 
             // frmRegistrarEstadia
             // 

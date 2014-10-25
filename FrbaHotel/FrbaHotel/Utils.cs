@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FrbaHotel 
+namespace FrbaHotel
 {
-    public abstract class Utils : Form
+    public abstract class Utils
     {
+        
         //Para que el textBox solo permita el tipeo de numeros
         internal static void allowNumbers(KeyPressEventArgs e)
         {
@@ -17,11 +18,5 @@ namespace FrbaHotel
                 char.IsPunctuation(e.KeyChar)) //Puntuacion
                 e.Handled = true; //No permitir
         }
-
-
-
-
-
-      
     }
 }

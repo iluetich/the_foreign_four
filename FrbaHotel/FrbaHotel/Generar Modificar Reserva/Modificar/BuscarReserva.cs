@@ -26,7 +26,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
 
         }
-
+        
         private void txtCodRes_KeyPress(object sender, KeyPressEventArgs e)
         {
             FrbaHotel.Utils.allowNumbers(e);

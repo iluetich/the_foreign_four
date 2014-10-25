@@ -26,9 +26,10 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void bntAceptar_Click(object sender, EventArgs e)
         {
+            new frmFacturacion(this).Show();
+            this.Enabled = false;
         }
-
-
+        
         public bool validarCampos(){
             if( txtCodProducto.Text != "" & 
                 txtCantidad.Text    != "" &
