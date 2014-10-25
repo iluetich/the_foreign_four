@@ -184,7 +184,8 @@ BEGIN
 			@ubicacion nvarchar(255),
 			@cod_tipo_hab numeric(18,0),
 			@nro_habitacion numeric(18,0),
-			@cod_hotel int
+			@cod_hotel int,
+			@baja_logica char(1)
 
 	OPEN TrigInsCursor;
 
@@ -200,14 +201,15 @@ BEGIN
 		   @cod_hotel IS NULL)
 		   
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.HabitacionesDefectuosas (piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel)
-			VALUES (@piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel);
+				SET @baja_logica = 'S'
 		END	
 		ELSE
-		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.Habitaciones (piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel)
-			VALUES (@piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel);
-		END			
+		BEGIN 
+				SET @baja_logica = 'N'
+		END
+		
+		INSERT INTO THE_FOREIGN_FOUR.Habitaciones (piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel, baja_logica)
+		VALUES (@piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel, @baja_logica);
 			
 		FETCH NEXT FROM TrigInsCursor INTO @piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel     
 
