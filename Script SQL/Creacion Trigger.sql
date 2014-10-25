@@ -96,9 +96,10 @@ BEGIN
 		BEGIN 
 				SET @baja_logica = 'N'
 		END
-			INSERT INTO THE_FOREIGN_FOUR.Reservas(cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, 
+			
+		INSERT INTO THE_FOREIGN_FOUR.Reservas(cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, 
 						cod_regimen, cod_estado_reserva, fecha_creacion, fecha_desde, fecha_hasta, cant_noches, baja_logica)
-			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
+		VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
 					@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches, @baja_logica);
 			
 		FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_tipo_hab, @cod_regimen, 
@@ -126,7 +127,8 @@ BEGIN
 	DECLARE @cod_reserva numeric(18,0),
 			@nro_habitacion numeric(18,0),
 			@fecha_inicio datetime,
-			@cant_noches numeric(18,0)
+			@cant_noches numeric(18,0),
+			@baja_logica char(1)
 
 	OPEN TrigInsCursor;
 
@@ -147,14 +149,15 @@ BEGIN
 					   AND cant_noches = @cant_noches))
 		   
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.EstadiasDefectuosas (cod_reserva, nro_habitacion, fecha_inicio, cant_noches)
-			VALUES (@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches);
+				SET @baja_logica = 'N'
 		END	
 		ELSE
-		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, nro_habitacion, fecha_inicio, cant_noches)
-			VALUES (@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches);
-		END			
+		BEGIN 
+				SET @baja_logica = 'S'
+		END
+			
+		INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, nro_habitacion, fecha_inicio, cant_noches, baja_logica)
+		VALUES (@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches, @baja_logica);
 			
 		FETCH NEXT FROM TrigInsCursor INTO @cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches      
 
