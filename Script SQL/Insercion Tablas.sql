@@ -55,7 +55,7 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		m.Reserva_Fecha_Inicio,
 		m.Reserva_Cant_Noches,
 		
-	   (SELECT  cod_hotel
+	   (SELECT DISTINCT cod_hotel
 		FROM THE_FOREIGN_FOUR.Hoteles h
 		WHERE	h.nom_calle = m.Hotel_Calle
 		AND		h.nro_calle = m.Hotel_Nro_Calle
@@ -63,7 +63,7 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		AND		h.cant_estrellas = m.Hotel_CantEstrella
 		AND		h.recarga_estrellas = m.Hotel_Recarga_Estrella) AS 'cod_hotel',
 		
-       (SELECT  cod_cliente
+       (SELECT DISTINCT cod_cliente
 		FROM THE_FOREIGN_FOUR.Clientes c
 		WHERE	c.nombre = m.Cliente_Nombre
 		AND		c.apellido = m.Cliente_Apellido
@@ -78,10 +78,10 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		
 		m.Habitacion_Tipo_Codigo,
 		
-		(SELECT cod_regimen
+		(SELECT DISTINCT cod_regimen
 		FROM THE_FOREIGN_FOUR.Regimenes r
-		WHERE	r.descripcion = m.Regimen_Descripcion
-		AND		r.precio = m.Regimen_Precio) AS 'cod_regimen',
+		WHERE r.descripcion = m.Regimen_Descripcion
+		AND r.precio = m.Regimen_Precio) AS 'cod_regimen',
 		
 		--hay que hacer una funcion o procedure para establecer el codigo de estado de reserva
 		
@@ -109,80 +109,23 @@ SELECT DISTINCT	m.Factura_Nro,
 				m.Factura_Fecha,
 				m.Factura_Total,
 				(SELECT cod_estadia
-				FROM THE_FOREIGN_FOUR.Estadias e
-				WHERE	e.cod_reserva = m.Reserva_Codigo) AS 'cod_estadia'
+				FROM THE_FOREIGN_FOUR.Estadias e JOIN THE_FOREIGN_FOUR.Reservas r ON(e.cod_reserva = r.cod_reserva)
+				WHERE	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
 
 --***ITEMS FACTURAS***************************************
 
 INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, precio_unitario, descripcion, nro_factura)
-SELECT	Item_Factura_Cantidad, 
-		Item_Factura_Monto, 
-		Consumible_Descripcion,
-		(SELECT nro_factura
-		FROM THE_FOREIGN_FOUR.Facturas f
-		WHERE	m.Factura_Nro = f.nro_factura
-		AND		m.Factura_Fecha = f.fecha_factura
-		AND		m.Factura_Total = f.total) AS 'nro_factura'
+SELECT DISTINCT	Item_Factura_Cantidad, 
+				Item_Factura_Monto, 
+			   (SELECT descripcion
+			    FROM THE_FOREIGN_FOUR.Consumibles c
+			    WHERE	m.Consumible_Codigo = c.cod_consumible) AS 'descripcion',
+			   (SELECT nro_factura
+				FROM THE_FOREIGN_FOUR.Facturas f
+				WHERE	m.Factura_Nro = f.nro_factura
+				AND		m.Factura_Fecha = f.fecha_factura
+				AND		m.Factura_Total = f.total) AS 'nro_factura'
 FROM gd_esquema.Maestra m
 
 
---**ROLES********************************
-
-INSERT INTO THE_FOREIGN_FOUR.Roles (nombre)
-VALUES	('Administrador'),
-		('Recepcionista'),
-		('Guest')
-
---**FUNCIONALIDADES********************************
-
-INSERT INTO THE_FOREIGN_FOUR.Funcionalidades (nombre)
-VALUES	('Login y Seguridad'),
-		('ABM Usuario'),
-		('ABM Cliente'),
-		('ABM Rol'),
-		('ABM Hotel'),
-		('ABM Habitacion'),
-		('ABM Régimen'),
-		('Generar/Modificar Reserva'),
-		('Cancelar Reserva'), 
-		('Registrar Estadía'),
-		('Registrar Consumibles'),
-		('Facturar Estadías'),
-		('Generar Listado Estadístico')
-		
---**FUNCIONALIDADES POR ROL********************************	
-
-INSERT INTO THE_FOREIGN_FOUR.FuncionalidadPorRol (cod_rol, cod_funcion)
-VALUES	(1,1),	(2,1),	(3,8),
-		(1,2),	(2,3),	(3,9),
-		(1,3),	(2,8),
-		(1,4),	(2,9),
-		(1,5),	(2,10),
-		(1,6),	(2,11),
-		(1,7),	(2,12),
-		(1,8),
-		(1,9),
-		(1,10),
-		(1,11),
-		(1,12),
-		(1,13)
-		
---**TIPOS PAGO********************************	
-
-INSERT INTO THE_FOREIGN_FOUR.TiposPago (descripcion)
-VALUES	('Contado'),
-		('Tarjeta de Crédito')
-		
---**USUARIOS********************************
-
-INSERT INTO THE_FOREIGN_FOUR.Usuarios (user_name, password)
-VALUES	('THE_FOREIGN_FOUR', 'THE_FOREIGN_FOUR')
-
---**USUARIOS POR HOTEL********************************
-
-INSERT INTO THE_FOREIGN_FOUR.UsuariosPorHotel (cod_usuario, cod_hotel)
-VALUES	(1, 1)
-		
-		
-		

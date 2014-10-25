@@ -16,8 +16,7 @@ BEGIN
 			@depto nvarchar(50),
 			@nacionalidad nvarchar(255),
 			@nro_doc numeric(18,0), 
-			@mail nvarchar(255),
-			@baja_logica char(1)
+			@mail nvarchar(255)
 
 	OPEN TrigInsCursor;
 
@@ -31,16 +30,15 @@ BEGIN
 					   WHERE nro_doc = @nro_doc
 					   OR mail = @mail))
 		BEGIN
-				SET @baja_logica = 'N'
+			INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
+			VALUES (@nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail);
 		END	
 		ELSE
-		BEGIN 
-				SET @baja_logica = 'S'
-		END
-		
-		INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail, baja_logica)
-		VALUES (@nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail, @baja_logica)
-		
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.ClientesDefectuosos (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
+			VALUES (@nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail);
+		END			
+			
 		FETCH NEXT FROM TrigInsCursor INTO @nombre, @apellido, @fecha_nac, @nom_calle, @nro_calle, @piso, @depto, @nacionalidad, @nro_doc, @mail      
 
   END
@@ -66,14 +64,13 @@ BEGIN
 	DECLARE @cod_reserva numeric(18,0),
 			@cod_hotel int,
 			@cod_cliente numeric(18,0),
-			@cod_tipo_hab numeric(18,0),
+			@cod_tipo_hab int,
 			@cod_regimen int,
 			@cod_estado_reserva int,
 			@fecha_creacion datetime, 
 			@fecha_desde datetime,
 			@fecha_hasta datetime,
-			@cant_noches int,
-			@baja_logica char(1)
+			@cant_noches int
 			
 	OPEN TrigInsCursor;
 
@@ -90,17 +87,18 @@ BEGIN
 			@fecha_desde IS NULL OR
 			@cant_noches IS NULL)
 		BEGIN
-				SET @baja_logica = 'S'
+			INSERT INTO THE_FOREIGN_FOUR.ReservasDefectuosas (cod_reserva, cod_hotel, cod_cliente, 
+						cod_tipo_hab, cod_regimen, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
+			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
+					@fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches);
 		END	
 		ELSE
-		BEGIN 
-				SET @baja_logica = 'N'
-		END
-			
-		INSERT INTO THE_FOREIGN_FOUR.Reservas(cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, 
-						cod_regimen, cod_estado_reserva, fecha_creacion, fecha_desde, fecha_hasta, cant_noches, baja_logica)
-		VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
-					@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches, @baja_logica);
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.Reservas(cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, 
+						cod_regimen, cod_estado_reserva, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
+			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
+					@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches);
+		END			
 			
 		FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_tipo_hab, @cod_regimen, 
 											@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches      
@@ -127,8 +125,7 @@ BEGIN
 	DECLARE @cod_reserva numeric(18,0),
 			@nro_habitacion numeric(18,0),
 			@fecha_inicio datetime,
-			@cant_noches numeric(18,0),
-			@baja_logica char(1)
+			@cant_noches numeric(18,0)
 
 	OPEN TrigInsCursor;
 
@@ -141,6 +138,7 @@ BEGIN
 		   @nro_habitacion IS NULL OR
 		   @fecha_inicio IS NULL OR
 		   @cant_noches IS NULL OR
+		  (SELECT DATEADD(day, @cant_noches, @fecha_inicio)) > GETDATE() OR
 		   EXISTS (SELECT cod_estadia
 					   FROM THE_FOREIGN_FOUR.Estadias
 					   WHERE cod_reserva = @cod_reserva
@@ -149,15 +147,14 @@ BEGIN
 					   AND cant_noches = @cant_noches))
 		   
 		BEGIN
-				SET @baja_logica = 'N'
+			INSERT INTO THE_FOREIGN_FOUR.EstadiasDefectuosas (cod_reserva, nro_habitacion, fecha_inicio, cant_noches)
+			VALUES (@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches);
 		END	
 		ELSE
-		BEGIN 
-				SET @baja_logica = 'S'
-		END
-			
-		INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, nro_habitacion, fecha_inicio, cant_noches, baja_logica)
-		VALUES (@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches, @baja_logica);
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, nro_habitacion, fecha_inicio, cant_noches)
+			VALUES (@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches);
+		END			
 			
 		FETCH NEXT FROM TrigInsCursor INTO @cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches      
 
@@ -182,10 +179,9 @@ BEGIN
 	FROM inserted
 	DECLARE @piso int,
 			@ubicacion nvarchar(255),
-			@cod_tipo_hab numeric(18,0),
+			@cod_tipo_hab int,
 			@nro_habitacion numeric(18,0),
-			@cod_hotel int,
-			@baja_logica char(1)
+			@cod_hotel int
 
 	OPEN TrigInsCursor;
 
@@ -201,15 +197,14 @@ BEGIN
 		   @cod_hotel IS NULL)
 		   
 		BEGIN
-				SET @baja_logica = 'S'
+			INSERT INTO THE_FOREIGN_FOUR.HabitacionesDefectuosas (piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel)
+			VALUES (@piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel);
 		END	
 		ELSE
-		BEGIN 
-				SET @baja_logica = 'N'
-		END
-		
-		INSERT INTO THE_FOREIGN_FOUR.Habitaciones (piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel, baja_logica)
-		VALUES (@piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel, @baja_logica);
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.Habitaciones (piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel)
+			VALUES (@piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel);
+		END			
 			
 		FETCH NEXT FROM TrigInsCursor INTO @piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel     
 
@@ -235,8 +230,7 @@ BEGIN
 	DECLARE @nro_factura numeric(18,0),
 			@fecha_factura datetime,
 			@total numeric(18,2),
-			@cod_estadia numeric(18,0),
-			@baja_logica char(1)
+			@cod_estadia numeric(18,0)
 
 	OPEN TrigInsCursor;
 
@@ -248,18 +242,18 @@ BEGIN
 		IF(@nro_factura IS NULL OR
 		   @fecha_factura IS NULL OR
 		   @total IS NULL OR
-		   @cod_estadia IS NULL)
-		   		   
+		   @cod_estadia IS NULL OR
+		   @fecha_factura > GETDATE())
+		   
 		BEGIN
-				SET @baja_logica = 'S'
-		END
-		ELSE	
-		BEGIN 
-				SET @baja_logica = 'N'
-		END
-			
-		INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_estadia, baja_logica)
-		VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia, @baja_logica);
+			INSERT INTO THE_FOREIGN_FOUR.FacturasDefectuosas (nro_factura, fecha_factura, total, cod_estadia)
+			VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia);
+		END	
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_estadia)
+			VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia);
+		END			
 			
 		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_estadia     
 
@@ -271,53 +265,3 @@ BEGIN
 END
 GO
 
---********************************************
-
-CREATE TRIGGER trg_itemsFactura_error
-ON THE_FOREIGN_FOUR.ItemsFactura
-INSTEAD OF INSERT
-AS
-BEGIN
-
-	DECLARE TrigInsCursor CURSOR FOR
-	SELECT nro_factura, descripcion, cantidad, precio_unitario
-	FROM inserted
-	DECLARE @nro_factura numeric(18,0),
-			@descripcion nvarchar(255),
-			@cantidad numeric(18,0),
-			@precio_unitario numeric(18,2),
-			@baja_logica char(1)
-
-	OPEN TrigInsCursor;
-
-	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @descripcion, @cantidad, @precio_unitario
-
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-		
-		IF(	@nro_factura IS NULL OR
-			@cantidad IS NULL OR
-			@precio_unitario IS NULL)
-			--si todo es null, no tiene uso potencial alguno ingresar filas nulas
-			--a una tabla auxiliar
-			
-		BEGIN
-				SET @baja_logica = 'S'
-		END	
-		ELSE
-		BEGIN 
-				SET @baja_logica = 'N'
-		END
-		
-		INSERT INTO THE_FOREIGN_FOUR.ItemsFactura(nro_factura, descripcion, cantidad, precio_unitario, baja_logica)
-		VALUES (@nro_factura, @descripcion, @cantidad, @precio_unitario, @baja_logica);
-			
-		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @descripcion, @cantidad, @precio_unitario     
-
-  END
-
-  CLOSE TrigInsCursor;
-  DEALLOCATE TrigInsCursor;
-
-END
-GO
