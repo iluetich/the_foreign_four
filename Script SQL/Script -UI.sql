@@ -30,7 +30,31 @@ RETURN(
 
 DROP FUNCTION THE_FOREIGN_FOUR.login_password
 DROP FUNCTION THE_FOREIGN_FOUR. login_funcionalidades
+DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes
 
+CREATE FUNCTION THE_FOREIGN_FOUR.buscar_clientes(
+				@nombre nvarchar(255),
+				@apellido nvarchar(255),
+				@tipo_doc char(3),
+				@nro_doc numeric(18,0),
+				@mail nvarchar(255) )
+RETURNS TABLE
+AS
+RETURN(
+
+	SELECT nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, nacionalidad
+	FROM THE_FOREIGN_FOUR.Clientes
+	WHERE nombre LIKE 
+		(CASE WHEN @nombre IS NULL  THEN '%'ELSE @nombre END)
+	AND apellido =
+		(CASE WHEN @apellido IS NULL THEN '%' ELSE @apellido END)
+	AND tipo_doc = 
+		(CASE WHEN @tipo_doc IS NULL THEN '%' ELSE  @tipo_doc END)
+	--AND nro_doc = 
+	--	(CASE WHEN @nro_doc IS NOT NULL THEN @nro_doc ELSE '%' END)
+	AND mail = 
+		(CASE WHEN @mail IS NULL THEN '%' ELSE @mail   END)
+)
 
 
 --**********************************
@@ -49,3 +73,14 @@ SELECT * FROM THE_FOREIGN_FOUR.UsuariosPorHotel
 
 SELECT * 
 FROM THE_FOREIGN_FOUR.login_password('Ani', '124')
+
+
+
+
+SELECT *
+FROM THE_FOREIGN_FOUR.buscar_clientes('AARON', NULL, 'PAS' ,NULL , 'aaron_Alonso@gmail.com')
+
+
+
+SELECT * FROM THE_FOREIGN_FOUR.Clientes
+WHERE nombre LIKE '%'
