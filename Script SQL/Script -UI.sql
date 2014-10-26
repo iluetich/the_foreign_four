@@ -28,10 +28,6 @@ RETURN(
 	AND		f.cod_funcion = fr.cod_funcion
 )
 
-DROP FUNCTION THE_FOREIGN_FOUR.login_password
-DROP FUNCTION THE_FOREIGN_FOUR. login_funcionalidades
-DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes
-
 CREATE FUNCTION THE_FOREIGN_FOUR.buscar_clientes(
 				@nombre nvarchar(255),
 				@apellido nvarchar(255),
@@ -56,7 +52,16 @@ RETURN(
 		(CASE WHEN @mail IS NULL THEN '%' ELSE @mail   END)
 )
 
+CREATE VIEW THE_FOREIGN_FOUR.view_todos_los_clientes 
+AS
+SELECT nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, nacionalidad
+FROM THE_FOREIGN_FOUR.Clientes
 
+
+DROP FUNCTION THE_FOREIGN_FOUR.login_password
+DROP FUNCTION THE_FOREIGN_FOUR. login_funcionalidades
+DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes
+DROP VIEW THE_FOREIGN_FOUR.view_todos_los_clientes
 --**********************************
 --****DATOS PARA TESTEAR************
 INSERT INTO THE_FOREIGN_FOUR.Usuarios
@@ -74,13 +79,7 @@ SELECT * FROM THE_FOREIGN_FOUR.UsuariosPorHotel
 SELECT * 
 FROM THE_FOREIGN_FOUR.login_password('Ani', '124')
 
-
-
-
 SELECT *
 FROM THE_FOREIGN_FOUR.buscar_clientes('AARON', NULL, NULL ,NULL , NULL)
 
-
-
-SELECT * FROM THE_FOREIGN_FOUR.Clientes
-WHERE nombre LIKE '%'
+SELECT * FROM THE_FOREIGN_FOUR.view_todos_los_clientes
