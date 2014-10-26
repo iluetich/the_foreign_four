@@ -21,10 +21,8 @@ namespace FrbaHotel
             //Application.Run(new InicioDelSistema());
             //Application.Run(new frmGenerarReserva());
             //Application.Run(new frmModificarReserva());
-            //Application.Run(new frmRegistrarEstadia());
-            //Application.Run(new frmRegistrarConsumible());
-            //Application.Run(new frmInicioRegistrarConsumible());
-            Application.Run(new frmInicioEstadia());
+            Application.Run(new frmInicioRegistrarConsumible());
+            //Application.Run(new frmInicioEstadia());
            
         }
     }

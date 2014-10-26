@@ -14,58 +14,32 @@ namespace FrbaHotel.Registrar_Estadia
     {
         public frmInicioEstadia(){InitializeComponent();}
 
-        private void btnRegistrar_Click(object sender, EventArgs e)
+        //Evento click boton check in
+        private void btnCheckin_Click(object sender, EventArgs e)
         {
-            if (validarDatosCompletosCheckin())
+            if (FrbaHotel.Utils.validarTextBoxCompleto(txtCodReserva,"Codigo reserva")) //valida text box completo
             {
                 new frmRegistrarHuespedesRestantes(this).Show();
                 this.Enabled = false;
             }
+
         }
 
-        private void txtNroReserva_KeyPress(object sender, KeyPressEventArgs e){
-            FrbaHotel.Utils.allowNumbers(e);
-        }
-
+        //evento click boton check  out
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            if (validarDatosCompletosCheckout())
+            if (FrbaHotel.Utils.validarTextBoxCompleto(txtCodEstadia,"Codigo estadia"))
             {
                 new frmCheckout(this).Show();
                 this.Enabled = false;
             }
         }
 
-        private bool validarDatosCompletosCheckin()
-        {
-            if (txtCodReserva.Text != "")
-            {
-                return true;
-            }
-            else
-            {
-                MessageBox.Show("Complete todos los campos", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-        }
+        //evento para cuando se escribe en un text box, permita solo numeros
+        private void txtCodEstadia_KeyPress(object sender, KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
+        private void txtNroReserva_KeyPress(object sender, KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
 
-        private bool validarDatosCompletosCheckout()
-        {
-            if (txtCodEstadia.Text != "")
-            {
-                return true;
-            }
-            else
-            {
-                MessageBox.Show("Complete todos los campos", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-        }
-
-        private void txtCodEstadia_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            FrbaHotel.Utils.allowNumbers(e);
-        }
+        
 
 
     }

@@ -17,7 +17,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnConfirReser_Click(object sender, EventArgs e){
             if (validarDatosCompletos() &
-                validarFechas()){
+                FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)){
                     new frmCliente(this).Show();
                     this.Enabled = false;
             }
@@ -34,30 +34,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
         private bool validarDatosCompletos(){
-            if (txtCantHues.Text != "" &
-                cmbFechaDesde.Value != null &
-                cmbFechaHasta.Value != null &
-                cmbTipoHab.SelectedIndex != -1 &
-                cmbTipoReg.SelectedIndex != -1){
-                    return true;
-            }else{
-                    MessageBox.Show("Complete todos los campos","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-                    return false;
-            }
+            return (
+            FrbaHotel.Utils.validarTextBoxCompleto(txtCantHues,"cantidad huspedes") &
+            FrbaHotel.Utils.validarComboBoxCompleto(cmbTipoHab,"Tipo habitacion") &
+            FrbaHotel.Utils.validarComboBoxCompleto(cmbTipoReg,"Tipo regimen") &
+            FrbaHotel.Utils.validarDataTimePickerCompleto(dtpFechaDesde,"Fecha desde") &
+            FrbaHotel.Utils.validarDataTimePickerCompleto(dtpFechaHasta,"Fecha hasata")
+            );
         }
 
-        private bool validarFechas(){
-            if (cmbFechaDesde.Value < cmbFechaHasta.Value){
-                return true;
-            }else{
-                MessageBox.Show("Fecha inicio debe ser menor a fecha final", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-        }
-
-        private void txtCantHues_KeyPress(object sender,KeyPressEventArgs e){
-            FrbaHotel.Utils.allowNumbers(e);
-        }
+        private void txtCantHues_KeyPress(object sender,KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
       
     }
 }

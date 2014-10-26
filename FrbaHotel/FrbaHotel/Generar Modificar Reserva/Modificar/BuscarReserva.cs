@@ -16,20 +16,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (txtCodRes.Text != ""){
+            if (FrbaHotel.Utils.validarTextBoxCompleto(txtCodRes,"Codigo reserva"))
+            {
                 new frmModificarRerserva(this).Show();
-                this.Enabled = false;}
-            else{
-                MessageBox.Show("Complete el campo","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                this.Enabled = false;
             }
-
         }
         
-        private void txtCodRes_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            FrbaHotel.Utils.allowNumbers(e);
-        }
+        private void txtCodRes_KeyPress(object sender, KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
+
     }
 }

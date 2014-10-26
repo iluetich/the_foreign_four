@@ -13,7 +13,7 @@ namespace FrbaHotel.Registrar_Consumible
     {
         frmRegistrarConsumible frmRegistrarConsumiblePadre;
 
-        public frmFacturacion() { InitializeComponent(); }
+        public frmFacturacion(){ InitializeComponent();}
         public frmFacturacion(frmRegistrarConsumible newForm)
         {
             InitializeComponent();
@@ -30,6 +30,11 @@ namespace FrbaHotel.Registrar_Consumible
         {
             frmRegistrarConsumiblePadre.Enabled = true;
             frmRegistrarConsumiblePadre.Focus();
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

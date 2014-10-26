@@ -26,7 +26,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             if (verifico)
             {
                 if (validarDatosCompletos() &
-                    validarFechas())
+                    FrbaHotel.Utils.validarFechas(dtpFechaDesde,dtpFechaHasta))
                 {
                     MessageBox.Show("Reserva modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
@@ -51,28 +51,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
         private bool validarDatosCompletos(){
-            if (dtpFechaDesde.Value != null &
-                dtpFechaHasta.Value != null &
-                cmbTipoHab.SelectedIndex != -1 &
-                cmbTipoReg.SelectedIndex != -1){
-                    return true;
-            }else{
-                MessageBox.Show("Complete todos los campos", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-        }
-
-        private bool validarFechas()
-        {
-            if (dtpFechaDesde.Value < dtpFechaHasta.Value)
-            {
-                return true;
-            }
-            else
-            {
-                MessageBox.Show("Fecha inicio debe ser menor a fecha final", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
+            return (
+            FrbaHotel.Utils.validarComboBoxCompleto(cmbTipoHab, "Tipo habitacion") &
+            FrbaHotel.Utils.validarComboBoxCompleto(cmbTipoReg, "Tipo regimen") &
+            FrbaHotel.Utils.validarDataTimePickerCompleto(dtpFechaDesde, "Fecha desde") &
+            FrbaHotel.Utils.validarDataTimePickerCompleto(dtpFechaHasta, "Fecha hasata")
+            );
         }
 
         private void btnVerficarDisponibilidad_Click(object sender, EventArgs e)

@@ -18,23 +18,10 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void btnContinuar_Click(object sender, EventArgs e)
         {
-            if (validarCampos())
+            if (FrbaHotel.Utils.validarTextBoxCompleto(txtCodEstadia,"Codigo estadia"))
             {
                 new frmRegistrarConsumible(this).Show();
                 this.Enabled = false;
-            }
-        }
-
-        public bool validarCampos()
-        {
-            if (txtCodEstadia.Text != "")
-            {
-                return true;
-            }
-            else
-            {
-                MessageBox.Show("Complete todos los campos", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
             }
         }
 

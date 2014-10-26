@@ -57,9 +57,10 @@
             this.btnCheckin.Location = new System.Drawing.Point(359, 23);
             this.btnCheckin.Name = "btnCheckin";
             this.btnCheckin.Size = new System.Drawing.Size(114, 43);
-            this.btnCheckin.TabIndex = 2;
+            this.btnCheckin.TabIndex = 1;
             this.btnCheckin.Text = "Check IN";
             this.btnCheckin.UseVisualStyleBackColor = true;
+            this.btnCheckin.Click += new System.EventHandler(this.btnCheckin_Click);
             // 
             // txtCodReserva
             // 
@@ -67,7 +68,7 @@
             this.txtCodReserva.MaxLength = 10;
             this.txtCodReserva.Name = "txtCodReserva";
             this.txtCodReserva.Size = new System.Drawing.Size(128, 20);
-            this.txtCodReserva.TabIndex = 1;
+            this.txtCodReserva.TabIndex = 0;
             this.txtCodReserva.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNroReserva_KeyPress);
             // 
             // lblNroReserva
@@ -106,7 +107,7 @@
             this.txtCodEstadia.Location = new System.Drawing.Point(195, 43);
             this.txtCodEstadia.Name = "txtCodEstadia";
             this.txtCodEstadia.Size = new System.Drawing.Size(128, 20);
-            this.txtCodEstadia.TabIndex = 5;
+            this.txtCodEstadia.TabIndex = 2;
             this.txtCodEstadia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodEstadia_KeyPress);
             // 
             // lblCodEstadia

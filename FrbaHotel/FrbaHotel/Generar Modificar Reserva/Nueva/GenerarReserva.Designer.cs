@@ -35,14 +35,16 @@
             this.lblTipoReg = new System.Windows.Forms.Label();
             this.cmbTipoReg = new System.Windows.Forms.ComboBox();
             this.btnCheckRes = new System.Windows.Forms.Button();
-            this.cmbFechaDesde = new System.Windows.Forms.DateTimePicker();
-            this.cmbFechaHasta = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
             this.btnRegimenes = new System.Windows.Forms.Button();
             this.grbPanel1 = new System.Windows.Forms.GroupBox();
+            this.txtCostoXDia = new System.Windows.Forms.TextBox();
+            this.lblCostoXDia = new System.Windows.Forms.Label();
             this.cmbHotel = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblSeleccionarHotel = new System.Windows.Forms.Label();
             this.txtCantHues = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblCantHues = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.grbPanel2 = new System.Windows.Forms.GroupBox();
             this.txtCostoTotal = new System.Windows.Forms.TextBox();
@@ -50,8 +52,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnConfirReser = new System.Windows.Forms.Button();
-            this.lblCostoXDia = new System.Windows.Forms.Label();
-            this.txtCostoXDia = new System.Windows.Forms.TextBox();
             this.grbPanel1.SuspendLayout();
             this.grbPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -94,6 +94,7 @@
             "3"});
             this.cmbTipoHab.Location = new System.Drawing.Point(138, 134);
             this.cmbTipoHab.Name = "cmbTipoHab";
+            this.cmbTipoHab.Tag = "Tipo habitacion";
             this.cmbTipoHab.Size = new System.Drawing.Size(200, 21);
             this.cmbTipoHab.TabIndex = 4;
             // 
@@ -116,6 +117,7 @@
             "3"});
             this.cmbTipoReg.Location = new System.Drawing.Point(138, 161);
             this.cmbTipoReg.Name = "cmbTipoReg";
+            this.cmbTipoReg.Tag = "Tipo regimiento";
             this.cmbTipoReg.Size = new System.Drawing.Size(200, 21);
             this.cmbTipoReg.TabIndex = 5;
             // 
@@ -128,19 +130,21 @@
             this.btnCheckRes.Text = "Verificar disponibilidad";
             this.btnCheckRes.UseVisualStyleBackColor = true;
             // 
-            // cmbFechaDesde
+            // dtpFechaDesde
             // 
-            this.cmbFechaDesde.Location = new System.Drawing.Point(138, 55);
-            this.cmbFechaDesde.Name = "cmbFechaDesde";
-            this.cmbFechaDesde.Size = new System.Drawing.Size(200, 20);
-            this.cmbFechaDesde.TabIndex = 1;
+            this.dtpFechaDesde.Location = new System.Drawing.Point(138, 55);
+            this.dtpFechaDesde.Name = "dtpFechaDesde";
+            this.dtpFechaDesde.Tag = "Fecha desde";
+            this.dtpFechaDesde.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaDesde.TabIndex = 1;
             // 
-            // cmbFechaHasta
+            // dtpFechaHasta
             // 
-            this.cmbFechaHasta.Location = new System.Drawing.Point(138, 82);
-            this.cmbFechaHasta.Name = "cmbFechaHasta";
-            this.cmbFechaHasta.Size = new System.Drawing.Size(200, 20);
-            this.cmbFechaHasta.TabIndex = 2;
+            this.dtpFechaHasta.Location = new System.Drawing.Point(138, 82);
+            this.dtpFechaHasta.Name = "dtpFechaHasta";
+            this.dtpFechaHasta.Tag = "Fecha hasta";
+            this.dtpFechaHasta.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaHasta.TabIndex = 2;
             // 
             // btnRegimenes
             // 
@@ -158,14 +162,14 @@
             this.grbPanel1.Controls.Add(this.txtCostoXDia);
             this.grbPanel1.Controls.Add(this.lblCostoXDia);
             this.grbPanel1.Controls.Add(this.cmbHotel);
-            this.grbPanel1.Controls.Add(this.label3);
+            this.grbPanel1.Controls.Add(this.lblSeleccionarHotel);
             this.grbPanel1.Controls.Add(this.txtCantHues);
-            this.grbPanel1.Controls.Add(this.label1);
+            this.grbPanel1.Controls.Add(this.lblCantHues);
             this.grbPanel1.Controls.Add(this.btnRegimenes);
             this.grbPanel1.Controls.Add(this.lblFechaDesd);
-            this.grbPanel1.Controls.Add(this.cmbFechaHasta);
+            this.grbPanel1.Controls.Add(this.dtpFechaHasta);
             this.grbPanel1.Controls.Add(this.lblFechaHast);
-            this.grbPanel1.Controls.Add(this.cmbFechaDesde);
+            this.grbPanel1.Controls.Add(this.dtpFechaDesde);
             this.grbPanel1.Controls.Add(this.lblTipoHab);
             this.grbPanel1.Controls.Add(this.cmbTipoHab);
             this.grbPanel1.Controls.Add(this.cmbTipoReg);
@@ -176,6 +180,23 @@
             this.grbPanel1.TabIndex = 0;
             this.grbPanel1.TabStop = false;
             this.grbPanel1.Text = "Datos Reserva";
+            // 
+            // txtCostoXDia
+            // 
+            this.txtCostoXDia.Enabled = false;
+            this.txtCostoXDia.Location = new System.Drawing.Point(138, 215);
+            this.txtCostoXDia.Name = "txtCostoXDia";
+            this.txtCostoXDia.Size = new System.Drawing.Size(199, 20);
+            this.txtCostoXDia.TabIndex = 7;
+            // 
+            // lblCostoXDia
+            // 
+            this.lblCostoXDia.AutoSize = true;
+            this.lblCostoXDia.Location = new System.Drawing.Point(19, 219);
+            this.lblCostoXDia.Name = "lblCostoXDia";
+            this.lblCostoXDia.Size = new System.Drawing.Size(72, 13);
+            this.lblCostoXDia.TabIndex = 15;
+            this.lblCostoXDia.Text = "Costo por dia:";
             // 
             // cmbHotel
             // 
@@ -188,17 +209,18 @@
             "Faena"});
             this.cmbHotel.Location = new System.Drawing.Point(138, 27);
             this.cmbHotel.Name = "cmbHotel";
+            this.cmbHotel.Tag = "Hotel";
             this.cmbHotel.Size = new System.Drawing.Size(199, 21);
             this.cmbHotel.TabIndex = 0;
             // 
-            // label3
+            // lblSeleccionarHotel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 35);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 13);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Seleccionar Hotel:";
+            this.lblSeleccionarHotel.AutoSize = true;
+            this.lblSeleccionarHotel.Location = new System.Drawing.Point(21, 35);
+            this.lblSeleccionarHotel.Name = "lblSeleccionarHotel";            
+            this.lblSeleccionarHotel.Size = new System.Drawing.Size(94, 13);
+            this.lblSeleccionarHotel.TabIndex = 14;
+            this.lblSeleccionarHotel.Text = "Seleccionar Hotel:";
             // 
             // txtCantHues
             // 
@@ -207,16 +229,17 @@
             this.txtCantHues.Name = "txtCantHues";
             this.txtCantHues.Size = new System.Drawing.Size(200, 20);
             this.txtCantHues.TabIndex = 3;
+            this.txtCantHues.Tag = "Cantidad de huespedes";
             this.txtCantHues.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantHues_KeyPress);
             // 
-            // label1
+            // lblCantHues
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 115);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Cantidad Huespedes:";
+            this.lblCantHues.AutoSize = true;
+            this.lblCantHues.Location = new System.Drawing.Point(19, 115);
+            this.lblCantHues.Name = "lblCantHues";
+            this.lblCantHues.Size = new System.Drawing.Size(109, 13);
+            this.lblCantHues.TabIndex = 1;
+            this.lblCantHues.Text = "Cantidad Huespedes:";
             // 
             // textBox1
             // 
@@ -288,23 +311,6 @@
             this.btnConfirReser.UseVisualStyleBackColor = true;
             this.btnConfirReser.Click += new System.EventHandler(this.btnConfirReser_Click);
             // 
-            // lblCostoXDia
-            // 
-            this.lblCostoXDia.AutoSize = true;
-            this.lblCostoXDia.Location = new System.Drawing.Point(19, 219);
-            this.lblCostoXDia.Name = "lblCostoXDia";
-            this.lblCostoXDia.Size = new System.Drawing.Size(72, 13);
-            this.lblCostoXDia.TabIndex = 15;
-            this.lblCostoXDia.Text = "Costo por dia:";
-            // 
-            // txtCostoXDia
-            // 
-            this.txtCostoXDia.Enabled = false;
-            this.txtCostoXDia.Location = new System.Drawing.Point(138, 215);
-            this.txtCostoXDia.Name = "txtCostoXDia";
-            this.txtCostoXDia.Size = new System.Drawing.Size(199, 20);
-            this.txtCostoXDia.TabIndex = 7;
-            // 
             // frmGenerarReserva
             // 
             this.AcceptButton = this.btnCheckRes;
@@ -343,20 +349,20 @@
         private System.Windows.Forms.Label lblTipoReg;
         private System.Windows.Forms.ComboBox cmbTipoReg;
         private System.Windows.Forms.Button btnCheckRes;
-        private System.Windows.Forms.DateTimePicker cmbFechaDesde;
-        private System.Windows.Forms.DateTimePicker cmbFechaHasta;
+        private System.Windows.Forms.DateTimePicker dtpFechaDesde;
+        private System.Windows.Forms.DateTimePicker dtpFechaHasta;
         private System.Windows.Forms.Button btnRegimenes;
         private System.Windows.Forms.GroupBox grbPanel1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox grbPanel2;
         private System.Windows.Forms.TextBox txtCantHues;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblCantHues;
         private System.Windows.Forms.TextBox txtCostoTotal;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnConfirReser;
         private System.Windows.Forms.ComboBox cmbHotel;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblSeleccionarHotel;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblCostoXDia;
         private System.Windows.Forms.TextBox txtCostoXDia;

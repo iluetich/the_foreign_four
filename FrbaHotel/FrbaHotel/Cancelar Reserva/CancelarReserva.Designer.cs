@@ -35,7 +35,7 @@
             this.btnVolver = new System.Windows.Forms.Button();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.txtMotivo = new System.Windows.Forms.TextBox();
-            this.txtNroReserva = new System.Windows.Forms.TextBox();
+            this.txtCodReserva = new System.Windows.Forms.TextBox();
             this.lblUser = new System.Windows.Forms.Label();
             this.lblFechaCancel = new System.Windows.Forms.Label();
             this.lblMotivo = new System.Windows.Forms.Label();
@@ -58,7 +58,7 @@
             this.groupCancelar.Controls.Add(this.btnVolver);
             this.groupCancelar.Controls.Add(this.txtUsuario);
             this.groupCancelar.Controls.Add(this.txtMotivo);
-            this.groupCancelar.Controls.Add(this.txtNroReserva);
+            this.groupCancelar.Controls.Add(this.txtCodReserva);
             this.groupCancelar.Controls.Add(this.lblUser);
             this.groupCancelar.Controls.Add(this.lblFechaCancel);
             this.groupCancelar.Controls.Add(this.lblMotivo);
@@ -85,6 +85,7 @@
             this.btnCancelarReserva.TabIndex = 9;
             this.btnCancelarReserva.Text = "Cancelar Reserva";
             this.btnCancelarReserva.UseVisualStyleBackColor = true;
+            this.btnCancelarReserva.Click += new System.EventHandler(this.btnCancelarReserva_Click);
             // 
             // btnVolver
             // 
@@ -110,12 +111,12 @@
             this.txtMotivo.Size = new System.Drawing.Size(200, 20);
             this.txtMotivo.TabIndex = 5;
             // 
-            // txtNroReserva
+            // txtCodReserva
             // 
-            this.txtNroReserva.Location = new System.Drawing.Point(150, 30);
-            this.txtNroReserva.Name = "txtNroReserva";
-            this.txtNroReserva.Size = new System.Drawing.Size(200, 20);
-            this.txtNroReserva.TabIndex = 4;
+            this.txtCodReserva.Location = new System.Drawing.Point(150, 30);
+            this.txtCodReserva.Name = "txtCodReserva";
+            this.txtCodReserva.Size = new System.Drawing.Size(200, 20);
+            this.txtCodReserva.TabIndex = 4;
             // 
             // lblUser
             // 
@@ -157,7 +158,6 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cancelar Reserva";
-            this.Load += new System.EventHandler(this.frmCancelarReserva_Load);
             this.groupCancelar.ResumeLayout(false);
             this.groupCancelar.PerformLayout();
             this.ResumeLayout(false);
@@ -173,7 +173,7 @@
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.TextBox txtMotivo;
-        private System.Windows.Forms.TextBox txtNroReserva;
+        private System.Windows.Forms.TextBox txtCodReserva;
         private System.Windows.Forms.Label lblUser;
         private System.Windows.Forms.Label lblFechaCancel;
         private System.Windows.Forms.Label lblMotivo;

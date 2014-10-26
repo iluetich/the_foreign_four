@@ -94,7 +94,7 @@
             this.btnRegistrarCons.Location = new System.Drawing.Point(76, 221);
             this.btnRegistrarCons.Name = "btnRegistrarCons";
             this.btnRegistrarCons.Size = new System.Drawing.Size(116, 37);
-            this.btnRegistrarCons.TabIndex = 6;
+            this.btnRegistrarCons.TabIndex = 4;
             this.btnRegistrarCons.Text = "Registrar Consumible";
             this.btnRegistrarCons.UseVisualStyleBackColor = true;
             this.btnRegistrarCons.Click += new System.EventHandler(this.btnRegistrarCons_Click);
@@ -113,7 +113,7 @@
             this.txtHabitacion.Location = new System.Drawing.Point(16, 133);
             this.txtHabitacion.Name = "txtHabitacion";
             this.txtHabitacion.Size = new System.Drawing.Size(100, 20);
-            this.txtHabitacion.TabIndex = 4;
+            this.txtHabitacion.TabIndex = 1;
             this.txtHabitacion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtHabitacion_KeyPress);
             // 
             // lblCantidad
@@ -130,7 +130,7 @@
             this.txtCantidad.Location = new System.Drawing.Point(16, 179);
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(100, 20);
-            this.txtCantidad.TabIndex = 2;
+            this.txtCantidad.TabIndex = 3;
             this.txtCantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad_KeyPress);
             // 
             // lblCodProducto
@@ -172,6 +172,7 @@
             this.dgvConsumibles.Name = "dgvConsumibles";
             this.dgvConsumibles.Size = new System.Drawing.Size(403, 299);
             this.dgvConsumibles.TabIndex = 0;
+            this.dgvConsumibles.TabStop = false;
             // 
             // colCodigo
             // 
@@ -200,7 +201,7 @@
             this.bntFacturar.Location = new System.Drawing.Point(123, 24);
             this.bntFacturar.Name = "bntFacturar";
             this.bntFacturar.Size = new System.Drawing.Size(104, 23);
-            this.bntFacturar.TabIndex = 2;
+            this.bntFacturar.TabIndex = 5;
             this.bntFacturar.Text = "Iniciar Facturacion";
             this.bntFacturar.UseVisualStyleBackColor = true;
             this.bntFacturar.Click += new System.EventHandler(this.bntAceptar_Click);
@@ -220,7 +221,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(40, 24);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 3;
+            this.btnCancelar.TabIndex = 6;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -229,6 +230,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancelar;
             this.ClientSize = new System.Drawing.Size(784, 372);
             this.Controls.Add(this.groupBotonera);
             this.Controls.Add(this.groupConsumible);

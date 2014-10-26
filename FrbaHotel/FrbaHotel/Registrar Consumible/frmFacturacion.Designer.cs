@@ -31,15 +31,15 @@
             this.groupFacturaDetalle = new System.Windows.Forms.GroupBox();
             this.dgvFacturaDetalle = new System.Windows.Forms.DataGridView();
             this.groupDetalleDias = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtDiasAlojados = new System.Windows.Forms.TextBox();
-            this.txtDiasNoAlojados = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtDiasNoAlojados = new System.Windows.Forms.TextBox();
+            this.txtDiasAlojados = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBotonera = new System.Windows.Forms.GroupBox();
-            this.btnEmitirFactura = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnEmitirFactura = new System.Windows.Forms.Button();
             this.groupFacturaDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturaDetalle)).BeginInit();
             this.groupDetalleDias.SuspendLayout();
@@ -79,39 +79,13 @@
             this.groupDetalleDias.TabStop = false;
             this.groupDetalleDias.Text = "Informacion";
             // 
-            // label1
+            // comboBox1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(74, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Dias alojados:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 59);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Dias no alojados:";
-            // 
-            // txtDiasAlojados
-            // 
-            this.txtDiasAlojados.Location = new System.Drawing.Point(168, 25);
-            this.txtDiasAlojados.Name = "txtDiasAlojados";
-            this.txtDiasAlojados.ReadOnly = true;
-            this.txtDiasAlojados.Size = new System.Drawing.Size(100, 20);
-            this.txtDiasAlojados.TabIndex = 2;
-            // 
-            // txtDiasNoAlojados
-            // 
-            this.txtDiasNoAlojados.Location = new System.Drawing.Point(168, 52);
-            this.txtDiasNoAlojados.Name = "txtDiasNoAlojados";
-            this.txtDiasNoAlojados.ReadOnly = true;
-            this.txtDiasNoAlojados.Size = new System.Drawing.Size(100, 20);
-            this.txtDiasNoAlojados.TabIndex = 3;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(422, 51);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 5;
             // 
             // label3
             // 
@@ -122,13 +96,39 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Formas de pago:";
             // 
-            // comboBox1
+            // txtDiasNoAlojados
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(422, 51);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 5;
+            this.txtDiasNoAlojados.Location = new System.Drawing.Point(168, 52);
+            this.txtDiasNoAlojados.Name = "txtDiasNoAlojados";
+            this.txtDiasNoAlojados.ReadOnly = true;
+            this.txtDiasNoAlojados.Size = new System.Drawing.Size(100, 20);
+            this.txtDiasNoAlojados.TabIndex = 3;
+            // 
+            // txtDiasAlojados
+            // 
+            this.txtDiasAlojados.Location = new System.Drawing.Point(168, 25);
+            this.txtDiasAlojados.Name = "txtDiasAlojados";
+            this.txtDiasAlojados.ReadOnly = true;
+            this.txtDiasAlojados.Size = new System.Drawing.Size(100, 20);
+            this.txtDiasAlojados.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(74, 59);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Dias no alojados:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(74, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Dias alojados:";
             // 
             // groupBotonera
             // 
@@ -140,6 +140,16 @@
             this.groupBotonera.TabIndex = 2;
             this.groupBotonera.TabStop = false;
             // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(219, 32);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(123, 46);
+            this.btnCancelar.TabIndex = 1;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
             // btnEmitirFactura
             // 
             this.btnEmitirFactura.AutoSize = true;
@@ -150,15 +160,6 @@
             this.btnEmitirFactura.Text = "Emitir Factura";
             this.btnEmitirFactura.UseVisualStyleBackColor = true;
             this.btnEmitirFactura.Click += new System.EventHandler(this.btnEmitirFactura_Click);
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.Location = new System.Drawing.Point(219, 32);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(123, 46);
-            this.btnCancelar.TabIndex = 1;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
             // 
             // frmFacturacion
             // 
@@ -172,8 +173,9 @@
             this.MaximizeBox = false;
             this.Name = "frmFacturacion";
             this.ShowIcon = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Emitir Factura";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmFacturacion_FormClosing);
             this.groupFacturaDetalle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturaDetalle)).EndInit();
             this.groupDetalleDias.ResumeLayout(false);

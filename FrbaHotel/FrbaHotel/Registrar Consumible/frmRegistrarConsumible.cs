@@ -42,17 +42,6 @@ namespace FrbaHotel.Registrar_Consumible
             new frmFacturacion(this).Show();
             this.Enabled = false;
         }
-        
-        public bool validarCampos(){
-            if( txtCodProducto.Text != "" & 
-                txtCantidad.Text    != "" &
-                txtHabitacion.Text  != ""){
-                return true;
-            }else{
-                MessageBox.Show("Complete todos los campos","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-                return false;
-            }
-        }
 
         private void txtCodProducto_KeyPress(object sender, KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
         private void txtCantidad_KeyPress(object sender, KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
@@ -60,7 +49,9 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void btnRegistrarCons_Click(object sender, EventArgs e)
         {
-            if (validarCampos())
+            if (FrbaHotel.Utils .validarTextBoxCompleto(txtCodProducto,"Codigo producto")&
+                FrbaHotel.Utils.validarTextBoxCompleto(txtCantidad,"Cantidad")&
+                FrbaHotel.Utils.validarTextBoxCompleto(txtHabitacion,"Nro habitacion"))
             {
                 agregarConsumible(txtCodProducto.Text, txtCantidad.Text, txtHabitacion.Text);
             }

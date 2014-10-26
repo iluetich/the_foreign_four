@@ -16,9 +16,23 @@ namespace FrbaHotel.Cancelar_Reserva
             InitializeComponent();
         }
 
-        private void frmCancelarReserva_Load(object sender, EventArgs e)
+        private void btnCancelarReserva_Click(object sender, EventArgs e)
         {
+            if (validarDatosCompletos())
+            {
+            }
 
         }
+
+        private bool validarDatosCompletos()
+        {
+            return (
+            FrbaHotel.Utils.validarTextBoxCompleto(txtCodReserva, "Codigo reserva")             &   
+            FrbaHotel.Utils.validarTextBoxCompleto(txtMotivo, "Motivo")                         &
+            FrbaHotel.Utils.validarDataTimePickerCompleto(dtpFechaCancel, "Fecha cancelacion") 
+            );
+        }
+
+
     }
 }
