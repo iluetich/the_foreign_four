@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtMail = new System.Windows.Forms.TextBox();
+            this.txtIdentificacion = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -50,8 +50,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.txtMail);
+            this.groupBox1.Controls.Add(this.txtIdentificacion);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
@@ -63,19 +63,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Buscar cliente";
             // 
-            // textBox2
+            // txtMail
             // 
-            this.textBox2.Location = new System.Drawing.Point(273, 20);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(121, 20);
-            this.textBox2.TabIndex = 1;
+            this.txtMail.Location = new System.Drawing.Point(273, 20);
+            this.txtMail.Name = "txtMail";
+            this.txtMail.Size = new System.Drawing.Size(121, 20);
+            this.txtMail.TabIndex = 1;
             // 
-            // textBox1
+            // txtIdentificacion
             // 
-            this.textBox1.Location = new System.Drawing.Point(131, 45);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(88, 20);
-            this.textBox1.TabIndex = 2;
+            this.txtIdentificacion.Location = new System.Drawing.Point(131, 45);
+            this.txtIdentificacion.Name = "txtIdentificacion";
+            this.txtIdentificacion.Size = new System.Drawing.Size(88, 20);
+            this.txtIdentificacion.TabIndex = 2;
             // 
             // comboBox1
             // 
@@ -120,6 +120,7 @@
             this.btnLimpiar.TabIndex = 5;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnBuscar
             // 
@@ -180,6 +181,7 @@
             // 
             // btnVolver
             // 
+            this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnVolver.Location = new System.Drawing.Point(380, 411);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(75, 23);
@@ -188,7 +190,7 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // frmBuscadorCliente
+            // frmBuscarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -202,7 +204,7 @@
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "frmBuscadorCliente";
+            this.Name = "frmBuscarCliente";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -223,8 +225,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtMail;
+        private System.Windows.Forms.TextBox txtIdentificacion;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;

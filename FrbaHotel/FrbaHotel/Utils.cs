@@ -63,5 +63,10 @@ namespace FrbaHotel
             }
             return true;
         }
+
+        internal static void limpiarControl(TextBox txt)
+        {
+            txt.Text = "";
+        }
     }
 }

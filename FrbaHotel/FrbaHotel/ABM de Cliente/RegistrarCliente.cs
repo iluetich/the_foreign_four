@@ -47,5 +47,17 @@ namespace FrbaHotel.ABM_de_Cliente
             }
 
         }
+
+        private void botonLimpiar_Click(object sender, EventArgs e)
+        {
+            FrbaHotel.Utils.limpiarControl(textBoxNombre);
+            FrbaHotel.Utils.limpiarControl(textBoxApellido);
+            FrbaHotel.Utils.limpiarControl(textBoxNroDoc);
+            FrbaHotel.Utils.limpiarControl(textBoxMail);
+            FrbaHotel.Utils.limpiarControl(textBoxTelefono);
+            FrbaHotel.Utils.limpiarControl(textBoxCalle);
+            FrbaHotel.Utils.limpiarControl(textBoxLocalidad);
+            FrbaHotel.Utils.limpiarControl(textBoxNacionalidad);
+        }
     }
 }

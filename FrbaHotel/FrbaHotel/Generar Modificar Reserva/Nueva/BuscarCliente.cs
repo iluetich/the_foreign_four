@@ -44,5 +44,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 frmRegistrarHuespedesRestantesPadre.Focus();
             }
         }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            FrbaHotel.Utils.limpiarControl(txtMail);
+            FrbaHotel.Utils.limpiarControl(txtIdentificacion);
+        }
     }
 }
