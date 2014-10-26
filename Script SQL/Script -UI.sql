@@ -46,13 +46,13 @@ RETURN(
 	FROM THE_FOREIGN_FOUR.Clientes
 	WHERE nombre LIKE 
 		(CASE WHEN @nombre IS NULL  THEN '%'ELSE @nombre END)
-	AND apellido =
+	AND apellido LIKE
 		(CASE WHEN @apellido IS NULL THEN '%' ELSE @apellido END)
-	AND tipo_doc = 
+	AND tipo_doc LIKE 
 		(CASE WHEN @tipo_doc IS NULL THEN '%' ELSE  @tipo_doc END)
-	--AND nro_doc = 
-	--	(CASE WHEN @nro_doc IS NOT NULL THEN @nro_doc ELSE '%' END)
-	AND mail = 
+	AND CAST(nro_doc AS nvarchar(10)) LIKE 
+		(CASE WHEN @nro_doc IS NULL THEN '%' ELSE CAST(@nro_doc AS nvarchar(10)) END)
+	AND mail LIKE 
 		(CASE WHEN @mail IS NULL THEN '%' ELSE @mail   END)
 )
 
@@ -78,7 +78,7 @@ FROM THE_FOREIGN_FOUR.login_password('Ani', '124')
 
 
 SELECT *
-FROM THE_FOREIGN_FOUR.buscar_clientes('AARON', NULL, 'PAS' ,NULL , 'aaron_Alonso@gmail.com')
+FROM THE_FOREIGN_FOUR.buscar_clientes('AARON', NULL, NULL ,NULL , NULL)
 
 
 
