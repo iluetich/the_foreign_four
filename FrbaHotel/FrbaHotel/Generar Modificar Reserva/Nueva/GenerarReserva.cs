@@ -15,9 +15,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             InitializeComponent();
         }
 
-        private void btnConfirReser_Click(object sender, EventArgs e){
+        private void btnConfirReser_Click(object sender, EventArgs e)
+        {
             if (validarDatosCompletos() &
                 FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)){
+                    Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     new frmCliente(this).Show();
                     this.Enabled = false;
             }
@@ -35,11 +37,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private bool validarDatosCompletos(){
             return (
-            FrbaHotel.Utils.validarTextBoxCompleto(txtCantHues,"cantidad huspedes") &
-            FrbaHotel.Utils.validarComboBoxCompleto(cmbTipoHab,"Tipo habitacion") &
-            FrbaHotel.Utils.validarComboBoxCompleto(cmbTipoReg,"Tipo regimen") &
-            FrbaHotel.Utils.validarDataTimePickerCompleto(dtpFechaDesde,"Fecha desde") &
-            FrbaHotel.Utils.validarDataTimePickerCompleto(dtpFechaHasta,"Fecha hasata")
+            FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(txtCantHues, "cantidad huespedes") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoReg, "Tipo regimen") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata")
             );
         }
 

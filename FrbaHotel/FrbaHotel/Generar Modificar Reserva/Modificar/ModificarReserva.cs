@@ -52,10 +52,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private bool validarDatosCompletos(){
             return (
-            FrbaHotel.Utils.validarComboBoxCompleto(cmbTipoHab, "Tipo habitacion") &
-            FrbaHotel.Utils.validarComboBoxCompleto(cmbTipoReg, "Tipo regimen") &
-            FrbaHotel.Utils.validarDataTimePickerCompleto(dtpFechaDesde, "Fecha desde") &
-            FrbaHotel.Utils.validarDataTimePickerCompleto(dtpFechaHasta, "Fecha hasata")
+            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoReg, "Tipo regimen") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata")
             );
         }
 

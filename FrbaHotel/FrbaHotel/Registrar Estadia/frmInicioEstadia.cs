@@ -17,7 +17,7 @@ namespace FrbaHotel.Registrar_Estadia
         //Evento click boton check in
         private void btnCheckin_Click(object sender, EventArgs e)
         {
-            if (FrbaHotel.Utils.validarTextBoxCompleto(txtCodReserva,"Codigo reserva")) //valida text box completo
+            if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodReserva, "Codigo reserva")) //valida text box completo
             {
                 new frmRegistrarHuespedesRestantes(this).Show();
                 this.Enabled = false;
@@ -28,7 +28,7 @@ namespace FrbaHotel.Registrar_Estadia
         //evento click boton check  out
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            if (FrbaHotel.Utils.validarTextBoxCompleto(txtCodEstadia,"Codigo estadia"))
+            if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodEstadia, "Codigo estadia"))
             {
                 new frmCheckout(this).Show();
                 this.Enabled = false;

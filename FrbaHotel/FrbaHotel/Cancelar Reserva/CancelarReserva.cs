@@ -27,9 +27,9 @@ namespace FrbaHotel.Cancelar_Reserva
         private bool validarDatosCompletos()
         {
             return (
-            FrbaHotel.Utils.validarTextBoxCompleto(txtCodReserva, "Codigo reserva")             &   
-            FrbaHotel.Utils.validarTextBoxCompleto(txtMotivo, "Motivo")                         &
-            FrbaHotel.Utils.validarDataTimePickerCompleto(dtpFechaCancel, "Fecha cancelacion") 
+            FrbaHotel.Utils.validarCampoEsteCompleto(txtCodReserva, "Codigo reserva") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(txtMotivo, "Motivo") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaCancel, "Fecha cancelacion") 
             );
         }
 

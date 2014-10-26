@@ -18,7 +18,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (FrbaHotel.Utils.validarTextBoxCompleto(txtCodRes,"Codigo reserva"))
+            if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodRes, "Codigo reserva"))
             {
                 new frmModificarRerserva(this).Show();
                 this.Enabled = false;

@@ -49,9 +49,9 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void btnRegistrarCons_Click(object sender, EventArgs e)
         {
-            if (FrbaHotel.Utils .validarTextBoxCompleto(txtCodProducto,"Codigo producto")&
-                FrbaHotel.Utils.validarTextBoxCompleto(txtCantidad,"Cantidad")&
-                FrbaHotel.Utils.validarTextBoxCompleto(txtHabitacion,"Nro habitacion"))
+            if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodProducto, "Codigo producto") &
+                FrbaHotel.Utils.validarCampoEsteCompleto(txtCantidad, "Cantidad") &
+                FrbaHotel.Utils.validarCampoEsteCompleto(txtHabitacion, "Nro habitacion"))
             {
                 agregarConsumible(txtCodProducto.Text, txtCantidad.Text, txtHabitacion.Text);
             }
