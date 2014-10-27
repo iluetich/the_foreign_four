@@ -1,6 +1,6 @@
 CREATE TABLE THE_FOREIGN_FOUR.Roles (
 	cod_rol				int						IDENTITY(1,1) PRIMARY KEY,
-	nombre				varchar(30)				UNIQUE,
+	nombre				nvarchar(30)			UNIQUE,
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 )
 CREATE TABLE THE_FOREIGN_FOUR.Funcionalidades (
@@ -101,7 +101,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
 	nro_habitacion		numeric(18,0),
 	piso				numeric(18,0),
 	ubicacion			nvarchar(50),
-	descripcion			nvarchar(255), --de que es la descripcion de una habitacion??
+	descripcion			nvarchar(255), --de que es la descripcion de una habitacion??				
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 	PRIMARY KEY(nro_habitacion, cod_hotel)
 )

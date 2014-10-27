@@ -89,7 +89,7 @@ CREATE FUNCTION THE_FOREIGN_FOUR.buscar_habitaciones(
 RETURNS TABLE
 AS
 RETURN(
-	SELECT nro_habitacion, cod_hotel, h.cod_tipo_hab, th.descripcion, estado, piso, ubicacion
+	SELECT nro_habitacion, cod_hotel, h.cod_tipo_hab, th.descripcion, piso, ubicacion, estado
 	FROM THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones th
 	WHERE h.cod_tipo_hab = th.cod_tipo_hab
 	AND CAST(nro_habitacion AS nvarchar(4)) LIKE
@@ -115,7 +115,6 @@ WHERE nro_habitacion = @nro_hab
 AND cod_hotel = @cod_hotel
 
 GO
-					
 
 
 --********************************************
@@ -126,6 +125,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes
 DROP FUNCTION THE_FOREIGN_FOUR.obtener_tipo_habitaciones
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_habitaciones
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_cliente
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_habitacion
 DROP VIEW THE_FOREIGN_FOUR.view_todos_los_clientes
 
 --********************************************
