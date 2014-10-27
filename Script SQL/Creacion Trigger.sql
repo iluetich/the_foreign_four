@@ -265,3 +265,48 @@ BEGIN
 END
 GO
 
+
+--***********************************************
+
+CREATE TRIGGER trg_clientes_por_estadia_err
+ON THE_FOREIGN_FOUR.ClientePorEstadia
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT cod_cliente, cod_estadia
+	FROM inserted
+	DECLARE @cod_cliente numeric(18,0),
+			@cod_estadia numeric(18,0)
+
+	OPEN TrigInsCursor;
+
+	FETCH NEXT FROM TrigInsCursor INTO @cod_cliente, @cod_estadia
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		IF(@cod_estadia IS NULL)
+		
+		BEGIN
+			FETCH NEXT FROM TrigInsCursor INTO @cod_cliente, @cod_estadia
+			CONTINUE
+		END
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.ClientePorEstadia(cod_cliente, cod_estadia)
+			VALUES (@cod_cliente, @cod_estadia);
+		END			
+		
+		FETCH NEXT FROM TrigInsCursor INTO @cod_cliente, @cod_estadia    
+
+  END
+
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
+
+END
+GO
+
+

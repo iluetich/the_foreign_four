@@ -129,3 +129,19 @@ SELECT DISTINCT	Item_Factura_Cantidad,
 FROM gd_esquema.Maestra m
 
 
+--***CLIENTES POR ESTADIA***************************************
+
+INSERT INTO THE_FOREIGN_FOUR.ClientePorEstadia (cod_cliente, cod_estadia)
+SELECT DISTINCT (SELECT c.cod_cliente
+				 FROM THE_FOREIGN_FOUR.Clientes c
+				 WHERE	c.nro_doc = m.Cliente_Pasaporte_Nro
+				 AND	c.mail = m.Cliente_Mail),
+				(SELECT e.cod_estadia
+				 FROM THE_FOREIGN_FOUR.Estadias e
+				 WHERE	e.fecha_inicio = m.Estadia_Fecha_Inicio
+				 AND	e.cant_noches = m.Estadia_Cant_Noches
+				 AND	e.cod_reserva = m.Reserva_Codigo)
+FROM gd_esquema.Maestra m
+
+
+
