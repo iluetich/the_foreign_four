@@ -58,6 +58,8 @@ CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	depto				nvarchar(50),
 	fecha_nac			datetime,
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
+	baja_logica			char(1)					DEFAULT 'N'	CHECK(baja_logica IN ('S', 'N')) --Si el usuario elimina un cliente
+																							 --NO se borra nunca fisicamente
 )
 CREATE TABLE THE_FOREIGN_FOUR.ClientesDefectuosos (
 	cod_cliente			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,

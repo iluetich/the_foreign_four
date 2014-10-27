@@ -58,12 +58,22 @@ SELECT nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle
 FROM THE_FOREIGN_FOUR.Clientes
 
 
+CREATE PROCEDURE proc_eliminar_cliente (@mail nvarchar(255))
+AS
+
+	UPDATE THE_FOREIGN_FOUR.Clientes
+	SET baja_logica = 'S'
+	WHERE mail = @mail
+GO
+
+--********************************************
+--******SCRIPT PARA DROPEAR*******************
 DROP FUNCTION THE_FOREIGN_FOUR.login_password
 DROP FUNCTION THE_FOREIGN_FOUR. login_funcionalidades
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes
 DROP VIEW THE_FOREIGN_FOUR.view_todos_los_clientes
---**********************************
---****DATOS PARA TESTEAR************
+--********************************************
+--****DATOS PARA TESTEAR**********************
 INSERT INTO THE_FOREIGN_FOUR.Usuarios
 (user_name, password)
 VALUES ('Ani', '1234')
@@ -83,3 +93,17 @@ SELECT *
 FROM THE_FOREIGN_FOUR.buscar_clientes('AARON', NULL, NULL ,NULL , NULL)
 
 SELECT * FROM THE_FOREIGN_FOUR.view_todos_los_clientes
+
+INSERT INTO THE_FOREIGN_FOUR.Clientes
+(nombre, apellido, tipo_doc, nro_doc,mail)
+VALUES ('Ana', 'Perez Ghiglia', 'DNI', 38067003, 'anitperez2@gmail.com')
+
+SELECT *
+FROM THE_FOREIGN_FOUR.Clientes
+WHERE nombre = 'Ana'
+
+EXECUTE proc_eliminar_cliente 'anitperez2@gmail.com'
+
+DELETE FROM THE_FOREIGN_FOUR.Clientes
+WHERE cod_cliente = 87275
+
