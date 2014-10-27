@@ -81,6 +81,7 @@ namespace FrbaHotel
             // 
             // InicioDelSistema
             // 
+            this.AcceptButton = this.BotonIngresar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(308, 139);
@@ -88,7 +89,11 @@ namespace FrbaHotel
             this.Controls.Add(this.comboBoxEleccionRol);
             this.Controls.Add(this.LabelIngreso);
             this.Controls.Add(this.TituloEntrada);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "InicioDelSistema";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Formulario de Entrada";
             this.ResumeLayout(false);
             this.PerformLayout();

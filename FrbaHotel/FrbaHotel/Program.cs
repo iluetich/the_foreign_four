@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using FrbaHotel.Generar_Modificar_Reserva;
 using FrbaHotel.Registrar_Estadia;
 using FrbaHotel.Registrar_Consumible;
+using FrbaHotel.Listado_Estadistico;
 
 namespace FrbaHotel
 {
@@ -23,6 +24,7 @@ namespace FrbaHotel
             //Application.Run(new frmModificarReserva());
             //Application.Run(new frmInicioRegistrarConsumible());
             //Application.Run(new frmInicioEstadia());
+            Application.Run(new frmListadoEstadistico());
            
         }
     }
