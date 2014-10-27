@@ -41,7 +41,7 @@ RETURN(
 	SELECT nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, nro_calle, nacionalidad, pais_origen
 	FROM THE_FOREIGN_FOUR.Clientes
 	WHERE nombre LIKE 
-		(CASE WHEN @nombre IS NULL  THEN '%'ELSE @nombre END)
+		(CASE WHEN @nombre IS NULL  THEN '%' ELSE @nombre END)
 	AND apellido LIKE
 		(CASE WHEN @apellido IS NULL THEN '%' ELSE @apellido END)
 	AND tipo_doc LIKE 
@@ -104,6 +104,19 @@ RETURN(
 			(CASE WHEN @piso IS NULL THEN '%' ELSE CAST(@piso AS nvarchar(4)) END)
 )
 
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_habitacion(
+					@nro_hab numeric(18,0),
+					@cod_hotel int)
+AS
+
+UPDATE THE_FOREIGN_FOUR.Habitaciones
+SET estado = 'I'
+WHERE nro_habitacion = @nro_hab
+AND cod_hotel = @cod_hotel
+
+GO
+					
+
 
 --********************************************
 --******SCRIPT PARA DROPEAR*******************
@@ -159,3 +172,7 @@ SELECT * FROM THE_FOREIGN_FOUR.Habitaciones
 
 SELECT *
 FROM THE_FOREIGN_FOUR.buscar_habitaciones(NULL, 1,  1001, NULL, 9)
+
+SELECT * FROM THE_FOREIGN_FOUR.Habitaciones
+
+EXECUTE THE_FOREIGN_FOUR.proc_inhabilitar_habitacion 0,1
