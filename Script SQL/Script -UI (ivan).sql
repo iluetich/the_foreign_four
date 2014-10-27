@@ -114,7 +114,7 @@ BEGIN
 END
 	
 --***********************************************************
-
+DROP FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
 				(@cod_hotel int,
 				 @cod_tipo_hab int,
@@ -124,16 +124,16 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
 RETURNS BIT
 AS
 BEGIN
-	IF(	NOT EXISTS (SELECT cod_regimen
-				    FROM THE_FOREIGN_FOUR.func_obtener_regimenes_hab (@cod_hotel)
-				    WHERE @cod_regimen = cod_regimen))
+	IF	(NOT EXISTS (SELECT cod_regimen
+				     FROM THE_FOREIGN_FOUR.func_obtener_regimenes_hab (@cod_hotel)
+				     WHERE @cod_regimen = cod_regimen))
 	BEGIN
 		RETURN CAST(0 AS BIT)
 	END
-	IF(	THE_FOREIGN_FOUR.func_hab_disponibles (@cod_hotel,
-											   @cod_tipo_hab,
-											   @fecha_desde,
-											   @fecha_hasta) <= 0)
+	IF	(THE_FOREIGN_FOUR.func_hab_disponibles (@cod_hotel,
+											    @cod_tipo_hab,
+											    @fecha_desde,
+											    @fecha_hasta) <= 0)
 	BEGIN
 		RETURN CAST(0 AS BIT)
 	END				
@@ -142,3 +142,27 @@ BEGIN
 END
 								   
 --***********************************************************
+
+
+
+--***********************************************************
+--***********************************************************
+--*********************TESTEO DE DISPONIBILIDAD**************
+--***********************************************************
+--***********************************************************
+INSERT INTO THE_FOREIGN_FOUR.RegimenPorHotel 
+VALUES (1,1)
+
+SELECT THE_FOREIGN_FOUR.func_hay_disponibilidad (1, 1001, 1, GETDATE() + 999, GETDATE() + 1000)
+
+SELECT COUNT(cod_reserva)
+FROM THE_FOREIGN_FOUR.Reservas
+WHERE	cod_hotel = 1
+AND		cod_tipo_hab = 1001
+AND		fecha_desde BETWEEN GETDATE() + 999 AND GETDATE() + 1000
+OR		fecha_hasta BETWEEN GETDATE() + 999 AND GETDATE() + 1000
+
+SELECT COUNT(nro_habitacion)
+FROM THE_FOREIGN_FOUR.Habitaciones
+WHERE	cod_hotel = 1
+AND		cod_tipo_hab = 1001
