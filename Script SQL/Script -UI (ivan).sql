@@ -30,4 +30,33 @@ AS
 	VALUES	(@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches)
 GO
 
+--***********************************************************
+
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_reserva
+				(@cod_reserva numeric(18,0))
+
+RETURNS TABLE
+AS
+RETURN	(SELECT cod_hotel, cod_cliente, cod_regimen, cod_tipo_hab, cod_estado_reserva, cant_noches
+		 FROM THE_FOREIGN_FOUR.Reservas
+		 WHERE @cod_reserva = cod_reserva)
+		 
+--***********************************************************
+
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva
+				(@cod_reserva numeric(18,0),
+				 @fecha_desde datetime,
+				 @fecha_hasta datetime,
+				 @cod_tipo_hab int,
+				 @cod_regimen int)
+AS
+	UPDATE THE_FOREIGN_FOUR.Reservas
+	SET fecha_desde = @fecha_desde,
+		fecha_hasta = @fecha_hasta,
+		cod_tipo_hab = @cod_tipo_hab,
+		cod_regimen = @cod_regimen
+	WHERE @cod_reserva = cod_reserva
+GO
+
+
 
