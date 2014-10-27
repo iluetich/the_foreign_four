@@ -64,7 +64,7 @@ BEGIN
 	DECLARE @cod_reserva numeric(18,0),
 			@cod_hotel int,
 			@cod_cliente numeric(18,0),
-			@cod_tipo_hab int,
+			@cod_tipo_hab numeric(18,0),
 			@cod_regimen int,
 			@cod_estado_reserva int,
 			@fecha_creacion datetime, 
@@ -179,7 +179,7 @@ BEGIN
 	FROM inserted
 	DECLARE @piso int,
 			@ubicacion nvarchar(255),
-			@cod_tipo_hab int,
+			@cod_tipo_hab numeric(18,0),
 			@nro_habitacion numeric(18,0),
 			@cod_hotel int
 

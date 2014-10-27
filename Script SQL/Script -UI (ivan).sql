@@ -36,7 +36,7 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva
 				(@cod_reserva numeric(18,0),
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
-				 @cod_tipo_hab int,
+				 @cod_tipo_hab numeric(18,0),
 				 @cod_regimen int)
 AS
 	UPDATE THE_FOREIGN_FOUR.Reservas
@@ -51,7 +51,7 @@ GO
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				(@cod_hotel int,
-				 @cod_tipo_hab int,
+				 @cod_tipo_hab numeric(18,0),
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
@@ -102,7 +102,7 @@ RETURN
 
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hab_disponibles
 				(@cod_hotel int,
-				 @cod_tipo_hab int,
+				 @cod_tipo_hab numeric(18,0),
 				 @fecha_inicio datetime,
 				 @fecha_fin	datetime)
 RETURNS INT
@@ -132,7 +132,7 @@ END
 DROP FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
 				(@cod_hotel int,
-				 @cod_tipo_hab int,
+				 @cod_tipo_hab numeric(18,0),
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime)
