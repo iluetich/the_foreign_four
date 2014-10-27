@@ -99,9 +99,9 @@ CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
 	cod_tipo_hab		int						REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 	nro_habitacion		numeric(18,0),
-	piso				int,
+	piso				numeric(18,0),
 	ubicacion			nvarchar(50),
-	descripcion			nvarchar(255),
+	descripcion			nvarchar(255), --de que es la descripcion de una habitacion??
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 	PRIMARY KEY(nro_habitacion, cod_hotel)
 )

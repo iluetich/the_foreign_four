@@ -79,6 +79,31 @@ RETURN(
 	
 )
 
+CREATE FUNCTION THE_FOREIGN_FOUR.buscar_habitaciones(
+				@nro_hab numeric(18,0),
+				@cod_hotel int,
+				@tipo_hab int,
+				@ubicacion nvarchar(50),
+				@piso numeric(18,0))
+				
+RETURNS TABLE
+AS
+RETURN(
+	SELECT nro_habitacion, cod_hotel, h.cod_tipo_hab, th.descripcion, estado, piso, ubicacion
+	FROM THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones th
+	WHERE h.cod_tipo_hab = th.cod_tipo_hab
+	AND CAST(nro_habitacion AS nvarchar(4)) LIKE
+			(CASE WHEN @nro_hab IS NULL THEN '%' ELSE CAST(@nro_hab AS nvarchar(4)) END)
+	AND CAST(cod_hotel AS nvarchar(10)) LIKE
+			(CASE WHEN @cod_hotel IS NULL THEN '%' ELSE CAST(@cod_hotel AS nvarchar(10)) END)
+	AND CAST(h.cod_tipo_hab AS nvarchar(20)) LIKE
+			(CASE WHEN @tipo_hab IS NULL THEN '%' ELSE CAST(@tipo_hab AS nvarchar(20)) END)
+	AND ubicacion LIKE
+			(CASE WHEN @ubicacion IS NULL THEN '%' ELSE @ubicacion END)
+	AND CAST(piso AS nvarchar(4)) LIKE
+			(CASE WHEN @piso IS NULL THEN '%' ELSE CAST(@piso AS nvarchar(4)) END)
+)
+
 
 --********************************************
 --******SCRIPT PARA DROPEAR*******************
@@ -86,6 +111,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.login_password
 DROP FUNCTION THE_FOREIGN_FOUR. login_funcionalidades
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes
 DROP FUNCTION THE_FOREIGN_FOUR.obtener_tipo_habitaciones
+DROP FUNCTION THE_FOREIGN_FOUR.buscar_habitaciones
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_cliente
 DROP VIEW THE_FOREIGN_FOUR.view_todos_los_clientes
 
@@ -128,3 +154,8 @@ WHERE cod_cliente = 87275
 SELECT *
 FROM THE_FOREIGN_FOUR.obtener_tipo_habitaciones(9)
 
+
+SELECT * FROM THE_FOREIGN_FOUR.Habitaciones
+
+SELECT *
+FROM THE_FOREIGN_FOUR.buscar_habitaciones(NULL, 1,  1001, NULL, 9)
