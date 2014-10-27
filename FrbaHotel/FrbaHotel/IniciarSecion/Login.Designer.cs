@@ -1,4 +1,4 @@
-﻿namespace FrbaHotel.Login
+﻿namespace FrbaHotel.IniciarSecion
 {
     partial class Login
     {
@@ -34,6 +34,9 @@
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.textBoxpassword = new System.Windows.Forms.TextBox();
             this.botonIngresar = new System.Windows.Forms.Button();
+            this.labelHotel = new System.Windows.Forms.Label();
+            this.comboBoxSelecionHotel = new System.Windows.Forms.ComboBox();
+            this.botonVolver = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelTituloLogin
@@ -71,37 +74,72 @@
             // 
             this.textBoxUsername.Location = new System.Drawing.Point(87, 47);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(100, 20);
+            this.textBoxUsername.Size = new System.Drawing.Size(136, 20);
             this.textBoxUsername.TabIndex = 3;
             // 
             // textBoxpassword
             // 
             this.textBoxpassword.Location = new System.Drawing.Point(87, 80);
             this.textBoxpassword.Name = "textBoxpassword";
-            this.textBoxpassword.Size = new System.Drawing.Size(100, 20);
+            this.textBoxpassword.Size = new System.Drawing.Size(136, 20);
             this.textBoxpassword.TabIndex = 4;
             // 
             // botonIngresar
             // 
-            this.botonIngresar.Location = new System.Drawing.Point(87, 121);
+            this.botonIngresar.Location = new System.Drawing.Point(12, 162);
             this.botonIngresar.Name = "botonIngresar";
             this.botonIngresar.Size = new System.Drawing.Size(75, 23);
             this.botonIngresar.TabIndex = 5;
             this.botonIngresar.Text = "Ingresar";
             this.botonIngresar.UseVisualStyleBackColor = true;
             // 
+            // labelHotel
+            // 
+            this.labelHotel.AutoSize = true;
+            this.labelHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelHotel.Location = new System.Drawing.Point(12, 118);
+            this.labelHotel.Name = "labelHotel";
+            this.labelHotel.Size = new System.Drawing.Size(39, 15);
+            this.labelHotel.TabIndex = 6;
+            this.labelHotel.Text = "Hotel:";
+            // 
+            // comboBoxSelecionHotel
+            // 
+            this.comboBoxSelecionHotel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSelecionHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxSelecionHotel.FormattingEnabled = true;
+            this.comboBoxSelecionHotel.Location = new System.Drawing.Point(57, 115);
+            this.comboBoxSelecionHotel.Name = "comboBoxSelecionHotel";
+            this.comboBoxSelecionHotel.Size = new System.Drawing.Size(146, 23);
+            this.comboBoxSelecionHotel.TabIndex = 7;
+            // 
+            // botonVolver
+            // 
+            this.botonVolver.Location = new System.Drawing.Point(160, 162);
+            this.botonVolver.Name = "botonVolver";
+            this.botonVolver.Size = new System.Drawing.Size(75, 23);
+            this.botonVolver.TabIndex = 8;
+            this.botonVolver.Text = "Volver";
+            this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(247, 162);
+            this.ClientSize = new System.Drawing.Size(247, 197);
+            this.Controls.Add(this.botonVolver);
+            this.Controls.Add(this.comboBoxSelecionHotel);
+            this.Controls.Add(this.labelHotel);
             this.Controls.Add(this.botonIngresar);
             this.Controls.Add(this.textBoxpassword);
             this.Controls.Add(this.textBoxUsername);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.laberUserName);
             this.Controls.Add(this.labelTituloLogin);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ventana de Login";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -116,5 +154,8 @@
         private System.Windows.Forms.TextBox textBoxUsername;
         private System.Windows.Forms.TextBox textBoxpassword;
         private System.Windows.Forms.Button botonIngresar;
+        private System.Windows.Forms.Label labelHotel;
+        private System.Windows.Forms.ComboBox comboBoxSelecionHotel;
+        private System.Windows.Forms.Button botonVolver;
     }
 }

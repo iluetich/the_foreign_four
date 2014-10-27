@@ -45,3 +45,43 @@ C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Registrar_Estadia.checkOut.frmCheckout.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Registrar_Estadia.frmInicioEstadia.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Listado_Estadistico.frmListadoEstadistico.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.exe
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.pdb
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\ResolveAssemblyReference.cache
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Cliente.EliminarCliente.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Cliente.ModificarCliente.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Cliente.ModificarOBorrarCliente.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Cliente.RegistrarCliente.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Habitacion.InhabilitarHabitacion.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Habitacion.ModificarHabitacion.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Habitacion.ModificarOEliminarHabitacion.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Habitacion.RegistrarHabitacion.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Rol.BorrarRol.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Rol.CreacionRol.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Rol.ModificarRol.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Rol.ModificarYBorrarRol.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Usuario.CreacionDeUsuario.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Usuario.EliminarUsuario.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Usuario.ModificarUsuario.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Usuario.ModificarYBorrarUsuario.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Cancelar_Reserva.frmCancelarReserva.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmModificarRerserva.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmBuscarCliente.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmCliente.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmGenerarReserva.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmModificarReserva.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.regimenes.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.InicioDelSistema.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Listado_Estadistico.frmListadoEstadistico.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Login.Login.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Properties.Resources.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Registrar_Consumible.frmFacturacion.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Registrar_Consumible.frmRegistrarConsumible.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Registrar_Consumible.frmInicioRegistrarConsumible.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Registrar_Estadia.checkOut.frmCheckout.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Registrar_Estadia.frmInicioEstadia.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Registrar_Estadia.frmRegistrarHuespedesRestantes.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.csproj.GenerateResource.Cache
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.exe.config
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.exe
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.pdb

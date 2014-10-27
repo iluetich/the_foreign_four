@@ -6,29 +6,46 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.Common;
+using System.Data.SqlClient;
+using FrbaHotel.IniciarSecion;
 
 namespace FrbaHotel
 {
-    public partial class InicioDelSistema : Form
+    public partial class InicioDelSistema : Form 
     {
         
         //debe leer de la base de datos los roles existentes
         // Hacer consulta sql para ver que roles existen
-        private List<String> roles;
+        private string rolElegido;
 
         public InicioDelSistema()
         {
             InitializeComponent();
-        }
-
-        public void setearRolesAlComboBox()
-        {
-            //setear los roleas de la lista, una vez que ya se los saco de la base de datos
+            string consultaSql = "SELECT * FROM THE_FOREIGN_FOUR.Roles";
+            FrbaHotel.Utils.rellenarComboBox(comboBoxEleccionRol, "THE_FOREIGN_FOUR.Roles", "nombre", consultaSql);
         }
 
         private void BotonIngresar_Click(object sender, EventArgs e)
         {
-            //Accion que tiene que hacer cuando se elige un rol
+            if (rolElegido == "Guest")
+            {
+                //si seleccionaste guest abri el menu de guest
+            }
+            else
+            {
+                //si se selecciono otro rol entonces abri el formulario de Login
+                Form formulario = new Login(this,comboBoxEleccionRol.SelectedText);
+                formulario.Show();
+                this.Hide();
+            }
+                
         }
+
+        private void comboBoxEleccionRol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rolElegido = comboBoxEleccionRol.Text;
+        }
+
     }
 }
