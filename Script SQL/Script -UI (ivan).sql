@@ -82,3 +82,63 @@ RETURN
 		 FROM THE_FOREIGN_FOUR.RegimenPorHotel rph JOIN THE_FOREIGN_FOUR.Regimenes r ON(rph.cod_regimen = r.cod_regimen)
 		 WHERE	r.estado = 'H'
 		 AND	@cod_hotel = rph.cod_hotel)
+		 
+--***********************************************************
+
+CREATE FUNCTION THE_FOREIGN_FOUR.func_hab_disponibles
+				(@cod_hotel int,
+				 @cod_tipo_hab int,
+				 @fecha_inicio datetime,
+				 @fecha_fin	datetime)
+RETURNS INT
+AS
+BEGIN
+	DECLARE @cant_hab_por_tipo int,
+			@cant_hab_reservadas int,
+			@cant_hab_disponibles int
+
+	SET		@cant_hab_por_tipo = (SELECT	COUNT(nro_habitacion)
+								  FROM		THE_FOREIGN_FOUR.Habitaciones ha
+								  WHERE		@cod_hotel = ha.cod_hotel
+								  AND		@cod_tipo_hab = ha.cod_tipo_hab) 
+								  
+	SET		@cant_hab_reservadas = (SELECT	COUNT(cod_reserva)
+									FROM	THE_FOREIGN_FOUR.Reservas r
+									WHERE	@cod_hotel = r.cod_hotel
+									AND		@cod_tipo_hab = r.cod_tipo_hab
+									AND		r.fecha_desde BETWEEN @fecha_inicio AND @fecha_fin
+									OR		r.fecha_hasta BETWEEN @fecha_inicio AND @fecha_fin)
+									
+	SET		@cant_hab_disponibles = @cant_hab_por_tipo - @cant_hab_reservadas
+	RETURN	@cant_hab_disponibles
+END
+	
+--***********************************************************
+
+CREATE FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
+				(@cod_hotel int,
+				 @cod_tipo_hab int,
+				 @cod_regimen int,
+				 @fecha_desde datetime,
+				 @fecha_hasta datetime)
+RETURNS BIT
+AS
+BEGIN
+	IF(	NOT EXISTS (SELECT cod_regimen
+				    FROM THE_FOREIGN_FOUR.func_obtener_regimenes_hab (@cod_hotel)
+				    WHERE @cod_regimen = cod_regimen))
+	BEGIN
+		RETURN CAST(0 AS BIT)
+	END
+	IF(	THE_FOREIGN_FOUR.func_hab_disponibles (@cod_hotel,
+											   @cod_tipo_hab,
+											   @fecha_desde,
+											   @fecha_hasta) <= 0)
+	BEGIN
+		RETURN CAST(0 AS BIT)
+	END				
+	
+	RETURN CAST(1 AS BIT)
+END
+								   
+--***********************************************************
