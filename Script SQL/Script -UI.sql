@@ -58,7 +58,7 @@ SELECT nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle
 FROM THE_FOREIGN_FOUR.Clientes
 
 
-CREATE PROCEDURE proc_eliminar_cliente (@mail nvarchar(255))
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_cliente (@mail nvarchar(255))
 AS
 
 	UPDATE THE_FOREIGN_FOUR.Clientes
@@ -66,12 +66,29 @@ AS
 	WHERE mail = @mail
 GO
 
+ 
+CREATE FUNCTION THE_FOREIGN_FOUR.obtener_tipo_habitaciones (
+				@cod_hotel int)
+RETURNS TABLE
+AS
+RETURN(
+	SELECT DISTINCT h.cod_tipo_hab, th.descripcion
+	FROM THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones th
+	WHERE h.cod_tipo_hab = th.cod_tipo_hab
+	AND  h.cod_hotel = @cod_hotel
+	
+)
+
+
 --********************************************
 --******SCRIPT PARA DROPEAR*******************
 DROP FUNCTION THE_FOREIGN_FOUR.login_password
 DROP FUNCTION THE_FOREIGN_FOUR. login_funcionalidades
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes
+DROP FUNCTION THE_FOREIGN_FOUR.obtener_tipo_habitaciones
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_cliente
 DROP VIEW THE_FOREIGN_FOUR.view_todos_los_clientes
+
 --********************************************
 --****DATOS PARA TESTEAR**********************
 INSERT INTO THE_FOREIGN_FOUR.Usuarios
@@ -106,4 +123,8 @@ EXECUTE proc_eliminar_cliente 'anitperez2@gmail.com'
 
 DELETE FROM THE_FOREIGN_FOUR.Clientes
 WHERE cod_cliente = 87275
+
+
+SELECT *
+FROM THE_FOREIGN_FOUR.obtener_tipo_habitaciones(9)
 
