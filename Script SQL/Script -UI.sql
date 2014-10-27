@@ -116,6 +116,18 @@ AND cod_hotel = @cod_hotel
 
 GO
 
+CREATE VIEW THE_FOREIGN_FOUR.view_funcionalidades
+AS
+SELECT DISTINCT cod_funcion, nombre
+FROM THE_FOREIGN_FOUR.Funcionalidades
+
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_rol(@cod_rol int)
+AS
+UPDATE THE_FOREIGN_FOUR.Roles
+SET estado = 'I'
+WHERE cod_rol = @cod_rol
+GO
+
 
 --********************************************
 --******SCRIPT PARA DROPEAR*******************
@@ -126,7 +138,9 @@ DROP FUNCTION THE_FOREIGN_FOUR.obtener_tipo_habitaciones
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_habitaciones
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_cliente
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_habitacion
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_rol
 DROP VIEW THE_FOREIGN_FOUR.view_todos_los_clientes
+DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades
 
 --********************************************
 --****DATOS PARA TESTEAR**********************
@@ -145,11 +159,12 @@ SELECT * FROM THE_FOREIGN_FOUR.UsuariosPorHotel
 SELECT * 
 FROM THE_FOREIGN_FOUR.login_password('Ani', '124')
 
+------------------------------------------------------
 SELECT *
 FROM THE_FOREIGN_FOUR.buscar_clientes('AARON', NULL, NULL ,NULL , NULL)
-
+-------------------------------------------------------
 SELECT * FROM THE_FOREIGN_FOUR.view_todos_los_clientes
-
+---------------------------------------------------
 INSERT INTO THE_FOREIGN_FOUR.Clientes
 (nombre, apellido, tipo_doc, nro_doc,mail)
 VALUES ('Ana', 'Perez Ghiglia', 'DNI', 38067003, 'anitperez2@gmail.com')
@@ -159,20 +174,27 @@ FROM THE_FOREIGN_FOUR.Clientes
 WHERE nombre = 'Ana'
 
 EXECUTE proc_eliminar_cliente 'anitperez2@gmail.com'
-
-DELETE FROM THE_FOREIGN_FOUR.Clientes
-WHERE cod_cliente = 87275
-
+--------------------------------------------------------
 
 SELECT *
 FROM THE_FOREIGN_FOUR.obtener_tipo_habitaciones(9)
 
-
+------------------------------------------------------------------
 SELECT * FROM THE_FOREIGN_FOUR.Habitaciones
 
 SELECT *
 FROM THE_FOREIGN_FOUR.buscar_habitaciones(NULL, 1,  1001, NULL, 9)
 
-SELECT * FROM THE_FOREIGN_FOUR.Habitaciones
-
+------------------------------------------------------------
 EXECUTE THE_FOREIGN_FOUR.proc_inhabilitar_habitacion 0,1
+
+-------------------------------------------------------
+INSERT INTO THE_FOREIGN_FOUR.Roles
+(nombre)
+VALUES ('Recepcionlista')
+
+SELECT * FROM THE_FOREIGN_FOUR.Roles
+
+EXECUTE THE_FOREIGN_FOUR.proc_inhabilitar_rol 1
+
+----------------------------------------------------------
