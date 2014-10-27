@@ -47,5 +47,28 @@ AS
 	WHERE @cod_reserva = cod_reserva
 GO
 
+--***********************************************************
 
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
+				(@cod_hotel int,
+				 @cod_tipo_hab int,
+				 @cod_regimen int,
+				 @fecha_desde datetime,
+				 @fecha_hasta datetime,
+				 @fecha_creacion datetime,
+				 @cant_huespedes int)
+AS
+	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_hotel, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion)
+	VALUES (@cod_hotel, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion)
+GO
+
+--***********************************************************
+
+CREATE VIEW THE_FOREIGN_FOUR.view_mostrar_hoteles
+AS
+	SELECT cod_hotel, nombre
+	FROM THE_FOREIGN_FOUR.Hoteles
+GO
+
+--***********************************************************
 
