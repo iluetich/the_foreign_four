@@ -32,17 +32,6 @@ GO
 
 --***********************************************************
 
-CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_reserva
-				(@cod_reserva numeric(18,0))
-
-RETURNS TABLE
-AS
-RETURN	(SELECT cod_hotel, cod_cliente, cod_regimen, cod_tipo_hab, cod_estado_reserva, cant_noches
-		 FROM THE_FOREIGN_FOUR.Reservas
-		 WHERE @cod_reserva = cod_reserva)
-		 
---***********************************************************
-
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva
 				(@cod_reserva numeric(18,0),
 				 @fecha_desde datetime,
