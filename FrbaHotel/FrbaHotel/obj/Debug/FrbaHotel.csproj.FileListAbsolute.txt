@@ -89,3 +89,4 @@ C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Regist
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Registrar_Estadia.frmRegistrarHuespedesRestantes.resources
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.exe.config
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.IniciarSecion.Login.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Menues_de_los_Roles.MenuDinamico.resources

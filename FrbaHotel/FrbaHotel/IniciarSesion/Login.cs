@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel.IniciarSecion
 {
@@ -81,7 +82,9 @@ namespace FrbaHotel.IniciarSecion
 
             //corrobora Hotel
             SqlCommand cmd3 = new SqlCommand();
-            cmd3.CommandText = consultaSql + "WHERE cod_hotel='" + this.codHotelElegido + "'";
+            cmd3.CommandText = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('"+ this.user_name +"','"+ this.password +"')"
+                               + " WHERE cod_hotel = "+ this.codHotelElegido;
+            
             cmd3.CommandType = CommandType.Text;
             cmd3.Connection = conexion;
 
@@ -118,6 +121,9 @@ namespace FrbaHotel.IniciarSecion
             if (podesIngresar) 
             {
                 //abrir menu del rol especificado
+                MenuDinamico ventanaMenu = new MenuDinamico(formPadre,user_name,codHotelElegido);
+                ventanaMenu.Show();
+                this.Close();
             }
         }
 

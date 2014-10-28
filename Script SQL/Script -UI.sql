@@ -20,12 +20,16 @@ CREATE FUNCTION THE_FOREIGN_FOUR.login_funcionalidades(
 RETURNS TABLE
 AS
 RETURN(
-	SELECT	f.cod_funcion, f.nombre
-	FROM	THE_FOREIGN_FOUR.UsuariosPorHotel uh,
-			THE_FOREIGN_FOUR.FuncionalidadPorRol fr,
-			THE_FOREIGN_FOUR.Funcionalidades f
-	WHERE	uh.cod_rol = fr.cod_funcion
-	AND		f.cod_funcion = fr.cod_funcion
+	SELECT f.cod_funcion,f.nombre
+	FROM THE_FOREIGN_FOUR.Usuarios u,
+	THE_FOREIGN_FOUR.UsuariosPorHotel uh,
+	THE_FOREIGN_FOUR.FuncionalidadPorRol fr,
+	THE_FOREIGN_FOUR.Funcionalidades f
+	WHERE u.cod_usuario = uh.cod_usuario
+	AND   uh.cod_rol = fr.cod_rol
+	AND   fr.cod_funcion = f.cod_funcion
+	AND   uh.cod_hotel = @cod_hotel	
+	AND   u.user_name = @user_name
 )
 
 CREATE FUNCTION THE_FOREIGN_FOUR.buscar_clientes(
