@@ -64,7 +64,7 @@ BEGIN
 	DECLARE @cod_reserva numeric(18,0),
 			@cod_hotel int,
 			@cod_cliente numeric(18,0),
-			@cod_tipo_hab int,
+			@cod_tipo_hab numeric(18,0),
 			@cod_regimen int,
 			@cod_estado_reserva int,
 			@fecha_creacion datetime, 
@@ -179,7 +179,7 @@ BEGIN
 	FROM inserted
 	DECLARE @piso int,
 			@ubicacion nvarchar(255),
-			@cod_tipo_hab int,
+			@cod_tipo_hab numeric(18,0),
 			@nro_habitacion numeric(18,0),
 			@cod_hotel int
 
@@ -310,3 +310,58 @@ END
 GO
 
 
+--***********************************************
+
+CREATE TRIGGER trg_consumibles_por_estadia
+ON THE_FOREIGN_FOUR.ConsumiblesPorEstadia
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT cod_consumible, cantidad, cod_estadia
+	FROM inserted
+	DECLARE @cod_consumible numeric(18,0),
+			@cantidad numeric(18,0),
+			@cod_estadia numeric(18,0)
+
+	OPEN TrigInsCursor;
+
+	FETCH NEXT FROM TrigInsCursor INTO @cod_consumible, @cantidad, @cod_estadia
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		IF(@cod_consumible IS NULL OR
+		   @cantidad IS NULL OR
+		   @cod_estadia IS NULL)
+		
+		BEGIN
+			FETCH NEXT FROM TrigInsCursor INTO @cod_consumible, @cantidad, @cod_estadia
+			CONTINUE
+		END
+		IF(EXISTS (SELECT	cpe.cod_consumible, cpe.cod_estadia
+				   FROM		THE_FOREIGN_FOUR.ConsumiblesPorEstadia cpe
+				   WHERE	@cod_estadia = cpe.cod_estadia
+				   AND		@cod_consumible = cpe.cod_consumible))
+		BEGIN
+			UPDATE	THE_FOREIGN_FOUR.ConsumiblesPorEstadia
+			SET		cantidad += 1
+			WHERE	@cod_estadia = cod_estadia
+			AND		@cod_consumible = cod_consumible
+		END
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.ConsumiblesPorEstadia(cod_consumible, cantidad, cod_estadia)
+			VALUES (@cod_consumible, @cantidad, @cod_estadia);
+		END			
+		
+		FETCH NEXT FROM TrigInsCursor INTO @cod_consumible, @cantidad, @cod_estadia   
+
+  END
+
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
+
+END
+GO
