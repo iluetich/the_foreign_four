@@ -41,7 +41,7 @@ namespace FrbaHotel
             this.TituloEntrada.AutoSize = true;
             this.TituloEntrada.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TituloEntrada.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.TituloEntrada.Location = new System.Drawing.Point(56, 9);
+            this.TituloEntrada.Location = new System.Drawing.Point(68, 9);
             this.TituloEntrada.Name = "TituloEntrada";
             this.TituloEntrada.Size = new System.Drawing.Size(198, 24);
             this.TituloEntrada.TabIndex = 0;
@@ -51,7 +51,7 @@ namespace FrbaHotel
             // 
             this.LabelIngreso.AutoSize = true;
             this.LabelIngreso.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelIngreso.Location = new System.Drawing.Point(12, 67);
+            this.LabelIngreso.Location = new System.Drawing.Point(12, 59);
             this.LabelIngreso.Name = "LabelIngreso";
             this.LabelIngreso.Size = new System.Drawing.Size(155, 15);
             this.LabelIngreso.TabIndex = 3;
@@ -61,15 +61,15 @@ namespace FrbaHotel
             // 
             this.comboBoxEleccionRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxEleccionRol.FormattingEnabled = true;
-            this.comboBoxEleccionRol.Location = new System.Drawing.Point(173, 66);
+            this.comboBoxEleccionRol.Location = new System.Drawing.Point(173, 59);
             this.comboBoxEleccionRol.Name = "comboBoxEleccionRol";
-            this.comboBoxEleccionRol.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxEleccionRol.Size = new System.Drawing.Size(137, 21);
             this.comboBoxEleccionRol.TabIndex = 4;
             this.comboBoxEleccionRol.SelectedIndexChanged += new System.EventHandler(this.comboBoxEleccionRol_SelectedIndexChanged);
             // 
             // BotonIngresar
             // 
-            this.BotonIngresar.Location = new System.Drawing.Point(114, 104);
+            this.BotonIngresar.Location = new System.Drawing.Point(129, 92);
             this.BotonIngresar.Name = "BotonIngresar";
             this.BotonIngresar.Size = new System.Drawing.Size(75, 23);
             this.BotonIngresar.TabIndex = 5;
@@ -82,7 +82,7 @@ namespace FrbaHotel
             this.AcceptButton = this.BotonIngresar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(312, 146);
+            this.ClientSize = new System.Drawing.Size(326, 127);
             this.Controls.Add(this.BotonIngresar);
             this.Controls.Add(this.comboBoxEleccionRol);
             this.Controls.Add(this.LabelIngreso);

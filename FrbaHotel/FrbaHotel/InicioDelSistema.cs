@@ -35,7 +35,7 @@ namespace FrbaHotel
             else
             {
                 //si se selecciono otro rol entonces abri el formulario de Login
-                Form formulario = new Login(this,comboBoxEleccionRol.SelectedText);
+                Form formulario = new Login(this,rolElegido);
                 formulario.Show();
                 this.Hide();
             }

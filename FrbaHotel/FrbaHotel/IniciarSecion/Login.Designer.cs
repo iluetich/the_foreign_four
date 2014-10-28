@@ -74,15 +74,17 @@
             // 
             this.textBoxUsername.Location = new System.Drawing.Point(87, 47);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(136, 20);
+            this.textBoxUsername.Size = new System.Drawing.Size(148, 20);
             this.textBoxUsername.TabIndex = 3;
+            this.textBoxUsername.TextChanged += new System.EventHandler(this.textBoxUsername_TextChanged);
             // 
             // textBoxpassword
             // 
             this.textBoxpassword.Location = new System.Drawing.Point(87, 80);
             this.textBoxpassword.Name = "textBoxpassword";
-            this.textBoxpassword.Size = new System.Drawing.Size(136, 20);
+            this.textBoxpassword.Size = new System.Drawing.Size(148, 20);
             this.textBoxpassword.TabIndex = 4;
+            this.textBoxpassword.TextChanged += new System.EventHandler(this.textBoxpassword_TextChanged);
             // 
             // botonIngresar
             // 
@@ -92,6 +94,7 @@
             this.botonIngresar.TabIndex = 5;
             this.botonIngresar.Text = "Ingresar";
             this.botonIngresar.UseVisualStyleBackColor = true;
+            this.botonIngresar.Click += new System.EventHandler(this.botonIngresar_Click);
             // 
             // labelHotel
             // 
@@ -112,6 +115,7 @@
             this.comboBoxSelecionHotel.Name = "comboBoxSelecionHotel";
             this.comboBoxSelecionHotel.Size = new System.Drawing.Size(146, 23);
             this.comboBoxSelecionHotel.TabIndex = 7;
+            this.comboBoxSelecionHotel.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelecionHotel_SelectedIndexChanged);
             // 
             // botonVolver
             // 
