@@ -143,5 +143,20 @@ SELECT DISTINCT (SELECT c.cod_cliente
 				 AND	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
 
+--***CONSUMIBLES POR ESTADIA***************************************
+
+INSERT INTO THE_FOREIGN_FOUR.ConsumiblesPorEstadia (cod_consumible, cantidad, cod_estadia)
+SELECT	Consumible_Codigo, 
+		Item_Factura_Cantidad,
+	   (SELECT	cod_estadia
+		FROM	THE_FOREIGN_FOUR.Estadias e
+		WHERE	e.cod_reserva = m.Reserva_Codigo)
+FROM gd_esquema.Maestra m
+WHERE	m.Item_Factura_Cantidad IS NOT NULL
+AND		m.Consumible_Codigo IS NOT NULL
+AND		(SELECT	cod_estadia
+		FROM	THE_FOREIGN_FOUR.Estadias e
+		WHERE	e.cod_reserva = m.Reserva_Codigo) IS NOT NULL
+
 
 
