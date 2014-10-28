@@ -152,11 +152,6 @@ SELECT	Consumible_Codigo,
 		FROM	THE_FOREIGN_FOUR.Estadias e
 		WHERE	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
-WHERE	m.Item_Factura_Cantidad IS NOT NULL
-AND		m.Consumible_Codigo IS NOT NULL
-AND		(SELECT	cod_estadia
-		FROM	THE_FOREIGN_FOUR.Estadias e
-		WHERE	e.cod_reserva = m.Reserva_Codigo) IS NOT NULL
 
 
 
