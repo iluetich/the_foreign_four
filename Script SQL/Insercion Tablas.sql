@@ -153,5 +153,3 @@ SELECT	Consumible_Codigo,
 		WHERE	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
 
-SELECT M.Factura_Nro
-FROM gd_esquema.Maestra m JOIN THE_FOREIGN_FOUR.FacturasDefectuosas fd ON(m.Factura_Nro = fd.nro_factura)

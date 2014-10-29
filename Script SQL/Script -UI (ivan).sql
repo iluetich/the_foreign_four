@@ -136,24 +136,24 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime)
-RETURNS BIT
+RETURNS INT
 AS
 BEGIN
 	IF	(NOT EXISTS (SELECT cod_regimen
 				     FROM THE_FOREIGN_FOUR.func_obtener_regimenes_hab (@cod_hotel)
 				     WHERE @cod_regimen = cod_regimen))
 	BEGIN
-		RETURN CAST(0 AS BIT)
+		RETURN -1
 	END
 	IF	(THE_FOREIGN_FOUR.func_hab_disponibles (@cod_hotel,
 											    @cod_tipo_hab,
 											    @fecha_desde,
 											    @fecha_hasta) <= 0)
 	BEGIN
-		RETURN CAST(0 AS BIT)
+		RETURN 0
 	END				
 	
-	RETURN CAST(1 AS BIT)
+	RETURN 1
 END
 								   
 --***********************************************************
