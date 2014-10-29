@@ -14,17 +14,22 @@ namespace FrbaHotel.Listado_Estadistico
         public frmListadoEstadistico()
         {
             InitializeComponent();
-            lblFechaDesde.Hide();
-            lblFechaHasta.Hide();
-            dtpFechaDesde.Hide();
-            dtpFechaHasta.Hide();
+            //Autoajusto celdas
+            this.dgvListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            //oculto columnas
+            for (int i = 0; i < dgvListado.Columns.Count; i++ )
+                this.dgvListado.Columns[i].Visible = false;
+            
         }
-
+        
         private void btnGenerar_Click(object sender, EventArgs e)
         {
             if (validarCampos()){
+                muestraColumnasTipoListado();
             }
 
+            
 
         }
 
@@ -39,21 +44,60 @@ namespace FrbaHotel.Listado_Estadistico
             );
         }
 
-        private void cmbTipoListado_SelectedIndexChanged(object sender, EventArgs e)
+        private void muestraColumnasTipoListado()
         {
-            if (cmbTipoListado.SelectedIndex == 4)
+            switch (cmbTipoListado.SelectedIndex)
             {
-                dtpFechaDesde.Show();
-                dtpFechaHasta.Show();
-                lblFechaDesde.Show();
-                lblFechaHasta.Show();
-            }
-            else
-            {
-                lblFechaDesde.Hide();
-                lblFechaHasta.Hide();
-                dtpFechaDesde.Hide();
-                dtpFechaHasta.Hide();
+                case 0:
+                    this.dgvListado.Columns[clmHotel.Name].Visible = true;
+                    this.dgvListado.Columns[clmCantResCanc.Name].Visible = true;
+                    this.dgvListado.Columns[clmCantConsFact.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantDiasFueraServ.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantDiasOcup.Name].Visible = false;
+                    this.dgvListado.Columns[clmCliente.Name].Visible = false;
+                    this.dgvListado.Columns[clmHabitacion.Name].Visible = false;
+                    this.dgvListado.Columns[clmPuntaje.Name].Visible = false;
+                    break;
+                case 1:
+                    this.dgvListado.Columns[clmHotel.Name].Visible = true;
+                    this.dgvListado.Columns[clmCantResCanc.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantConsFact.Name].Visible = true;
+                    this.dgvListado.Columns[clmCantDiasFueraServ.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantDiasOcup.Name].Visible = false;
+                    this.dgvListado.Columns[clmCliente.Name].Visible = false;
+                    this.dgvListado.Columns[clmHabitacion.Name].Visible = false;
+                    this.dgvListado.Columns[clmPuntaje.Name].Visible = false;
+                    break;
+                case 2:
+                    this.dgvListado.Columns[clmHotel.Name].Visible = true;
+                    this.dgvListado.Columns[clmCantResCanc.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantConsFact.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantDiasFueraServ.Name].Visible = true;
+                    this.dgvListado.Columns[clmCantDiasOcup.Name].Visible = false;
+                    this.dgvListado.Columns[clmCliente.Name].Visible = false;
+                    this.dgvListado.Columns[clmHabitacion.Name].Visible = false;
+                    this.dgvListado.Columns[clmPuntaje.Name].Visible = false;
+                    break;
+                case 3:
+                    this.dgvListado.Columns[clmHotel.Name].Visible = true;
+                    this.dgvListado.Columns[clmCantResCanc.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantConsFact.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantDiasFueraServ.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantDiasOcup.Name].Visible = true;
+                    this.dgvListado.Columns[clmCliente.Name].Visible = false;
+                    this.dgvListado.Columns[clmHabitacion.Name].Visible = true;
+                    this.dgvListado.Columns[clmPuntaje.Name].Visible = false;
+                    break;
+                case 4:
+                    this.dgvListado.Columns[clmHotel.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantResCanc.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantConsFact.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantDiasFueraServ.Name].Visible = false;
+                    this.dgvListado.Columns[clmCantDiasOcup.Name].Visible = false;
+                    this.dgvListado.Columns[clmCliente.Name].Visible = true;
+                    this.dgvListado.Columns[clmHabitacion.Name].Visible = false;
+                    this.dgvListado.Columns[clmPuntaje.Name].Visible = true;
+                    break;
             }
         }
 

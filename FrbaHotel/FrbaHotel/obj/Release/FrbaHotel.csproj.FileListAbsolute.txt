@@ -16,7 +16,6 @@ C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Usuario.ModificarUsuario.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Usuario.ModificarYBorrarUsuario.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.InicioDelSistema.resources
-C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Login.Login.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Properties.Resources.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.csproj.GenerateResource.Cache
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.exe
@@ -85,3 +84,6 @@ C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.cspr
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.exe.config
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.exe
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.pdb
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.IniciarSecion.Login.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Menues_de_los_Roles.MenuDinamico.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.exe.config
