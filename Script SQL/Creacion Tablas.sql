@@ -181,6 +181,13 @@ CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	precio_unitario		decimal(6,2),
 	descripcion			nvarchar(255),
 )
+CREATE TABLE THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (
+	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
+	nro_factura			numeric(18,0),
+	cantidad			int,
+	precio_unitario		decimal(6,2),
+	descripcion			nvarchar(255),
+)
 CREATE TABLE THE_FOREIGN_FOUR.Consumibles (
 	cod_consumible		numeric(18,0)			PRIMARY KEY,
 	descripcion			nvarchar(255),

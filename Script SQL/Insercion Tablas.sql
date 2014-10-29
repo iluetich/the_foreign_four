@@ -116,16 +116,16 @@ FROM gd_esquema.Maestra m
 --***ITEMS FACTURAS***************************************
 
 INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, precio_unitario, descripcion, nro_factura)
-SELECT DISTINCT	Item_Factura_Cantidad, 
-				Item_Factura_Monto, 
-			   (SELECT descripcion
-			    FROM THE_FOREIGN_FOUR.Consumibles c
-			    WHERE	m.Consumible_Codigo = c.cod_consumible) AS 'descripcion',
-			   (SELECT nro_factura
-				FROM THE_FOREIGN_FOUR.Facturas f
-				WHERE	m.Factura_Nro = f.nro_factura
-				AND		m.Factura_Fecha = f.fecha_factura
-				AND		m.Factura_Total = f.total) AS 'nro_factura'
+SELECT Item_Factura_Cantidad, 
+	   Item_Factura_Monto, 
+	   (SELECT descripcion
+	    FROM THE_FOREIGN_FOUR.Consumibles c
+	    WHERE	m.Consumible_Codigo = c.cod_consumible) AS 'descripcion',
+	   (SELECT nro_factura
+		FROM THE_FOREIGN_FOUR.Facturas f
+		WHERE	m.Factura_Nro = f.nro_factura
+		AND		m.Factura_Fecha = f.fecha_factura
+		AND		m.Factura_Total = f.total) AS 'nro_factura'
 FROM gd_esquema.Maestra m
 
 
@@ -153,5 +153,5 @@ SELECT	Consumible_Codigo,
 		WHERE	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
 
-
-
+SELECT M.Factura_Nro
+FROM gd_esquema.Maestra m JOIN THE_FOREIGN_FOUR.FacturasDefectuosas fd ON(m.Factura_Nro = fd.nro_factura)

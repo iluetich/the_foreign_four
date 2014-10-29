@@ -365,3 +365,51 @@ BEGIN
 
 END
 GO
+
+--*********************************************************
+
+CREATE TRIGGER trg_itemsFactura_error
+ON THE_FOREIGN_FOUR.ItemsFactura
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT nro_factura, cantidad, precio_unitario, descripcion
+	FROM inserted
+	DECLARE @nro_factura numeric(18,0),
+			@cantidad numeric(18,0),
+			@precio_unitario numeric(18,2),
+			@descripcion nvarchar(255)
+
+	OPEN TrigInsCursor;
+
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @precio_unitario, @descripcion
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		IF(@nro_factura IS NULL OR
+		   @cantidad IS NULL OR
+		   @precio_unitario IS NULL)
+		   
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (nro_factura, cantidad, precio_unitario, descripcion)
+			VALUES (@nro_factura, @cantidad, @precio_unitario, @descripcion);
+		END	
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, precio_unitario, descripcion)
+			VALUES (@nro_factura, @cantidad, @precio_unitario, @descripcion);
+		END			
+			
+		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @precio_unitario, @descripcion   
+
+  END
+
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
+
+END
+GO
+
