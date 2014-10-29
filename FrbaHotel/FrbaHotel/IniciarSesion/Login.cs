@@ -19,14 +19,17 @@ namespace FrbaHotel.IniciarSecion
         private string password;
         private string codHotelElegido;
         private Boolean podesIngresar; //variable que se cambia cuando alguno de los checkeos no da positivo
-        
+        private Boolean eligieronHotel;
+
         public Login(InicioDelSistema formularioPadre,string rolElegido)
         {
+            eligieronHotel = false;
             rol = rolElegido;
             formPadre = formularioPadre;
             InitializeComponent();
             string consulta = "select * from THE_FOREIGN_FOUR.Hoteles";
             FrbaHotel.Utils.rellenarComboBox(comboBoxSelecionHotel, "THE_FOREIGN_FOUR.Hoteles", "cod_hotel", consulta);
+
         }
 
         private void botonVolver_Click(object sender, EventArgs e)
@@ -80,13 +83,33 @@ namespace FrbaHotel.IniciarSecion
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conexion;
 
+            //para que no me salte error si no se elige nada
+            string consultaCmd3;
+            /*if (!eligieronHotel)
+            {
+                consultaCmd3 = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('" + this.user_name + "' , '" + this.password +"') WHERE cod_hotel = 1";
+            }
+            else 
+            {*/
+                consultaCmd3 = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('" + this.user_name + "','" + this.password + "')"
+                               + " WHERE cod_hotel = " + this.codHotelElegido;
+            //}
+
             //corrobora Hotel
             SqlCommand cmd3 = new SqlCommand();
-            cmd3.CommandText = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('"+ this.user_name +"','"+ this.password +"')"
-                               + " WHERE cod_hotel = "+ this.codHotelElegido;
+            cmd3.CommandText = consultaCmd3;
             
             cmd3.CommandType = CommandType.Text;
             cmd3.Connection = conexion;
+
+            //corrobora que el usuario en ese hotel tenga el rol elegido
+            SqlCommand cmd4 = new SqlCommand();
+            cmd4.CommandText = "SELECT COUNT(*) FROM THE_FOREIGN_FOUR.view_roles_hoteles_usuarios rhu" +
+                               " WHERE rhu.user_name ='"+ this.user_name +"' " +
+                               "AND  rhu.cod_hotel ="+ this.codHotelElegido +
+                               " AND  rhu.rol = '"+ this.rol+"'";
+            cmd4.CommandType = CommandType.Text;
+            cmd4.Connection = conexion;
 
             conexion.Open();
 
@@ -114,6 +137,13 @@ namespace FrbaHotel.IniciarSecion
                     MessageBox.Show("Su cuenta no esta asociada a ese hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     this.podesIngresar = false;
                 }
+
+                int resultadoConcuerdaRolHotelUsuario = (int)cmd4.ExecuteScalar();
+                if (resultadoConcuerdaRolHotelUsuario == 0)
+                {
+                    MessageBox.Show("No tiene asignado ese Rol para el Hotel ingresado", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    this.podesIngresar = false;
+                }
             }
 
             conexion.Close();
@@ -129,6 +159,7 @@ namespace FrbaHotel.IniciarSecion
 
         private void comboBoxSelecionHotel_SelectedIndexChanged(object sender, EventArgs e)
         {
+            eligieronHotel = true;
             this.codHotelElegido = comboBoxSelecionHotel.Text;
         }
 

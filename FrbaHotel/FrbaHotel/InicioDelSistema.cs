@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.Common;
 using System.Data.SqlClient;
 using FrbaHotel.IniciarSecion;
+using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel
 {
@@ -31,6 +32,9 @@ namespace FrbaHotel
             if (rolElegido == "Guest")
             {
                 //si seleccionaste guest abri el menu de guest
+                MenuDinamico menuGuest = new MenuDinamico(this,"Guest", "1");
+                menuGuest.Show();
+                this.Hide();
             }
             else
             {

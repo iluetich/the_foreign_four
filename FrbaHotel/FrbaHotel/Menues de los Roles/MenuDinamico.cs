@@ -34,7 +34,17 @@ namespace FrbaHotel.Menues_de_los_Roles
             SqlCommand cmd = new SqlCommand();
             SqlDataReader reader;
 
-            cmd.CommandText = "SELECT * FROM [THE_FOREIGN_FOUR].[login_funcionalidades] ('"+ this.userSesion +"', "+ this.hotelSesion +")";
+            string consulta;
+            if (userSesion == "Guest")
+            {
+                consulta = "SELECT * FROM THE_FOREIGN_FOUR.view_funcionalidades_rol r WHERE r.rol= 'Guest'";
+            }
+            else
+            {
+                consulta = "SELECT * FROM [THE_FOREIGN_FOUR].[login_funcionalidades] ('" + this.userSesion + "', " + this.hotelSesion + ")";
+            }
+
+            cmd.CommandText = consulta;
             cmd.CommandType = CommandType.Text;
             cmd.Connection = sqlConnection1;
 
