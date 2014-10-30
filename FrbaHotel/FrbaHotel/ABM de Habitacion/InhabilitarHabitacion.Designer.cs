@@ -58,7 +58,9 @@
             this.ClientSize = new System.Drawing.Size(432, 88);
             this.Controls.Add(this.Aceptar);
             this.Controls.Add(this.Leyenda);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "InhabilitarHabitacion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "InhabilitarHabitacion";
             this.ResumeLayout(false);
             this.PerformLayout();

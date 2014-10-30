@@ -6,17 +6,24 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel.ABM_de_Rol
 {
     public partial class CreacionRol : Form
     {
-        private InicioDelSistema ventanaPadre;
+        private MenuDinamico menu;
 
-        public CreacionRol(InicioDelSistema formulario)
+        public CreacionRol(MenuDinamico menuPadre)
         {
+            this.menu = menuPadre;
             InitializeComponent();
-            ventanaPadre = formulario;
+        }
+
+        private void Cancelar_Click(object sender, EventArgs e)
+        {
+            menu.Show();
+            this.Hide();
         }
     }
 }

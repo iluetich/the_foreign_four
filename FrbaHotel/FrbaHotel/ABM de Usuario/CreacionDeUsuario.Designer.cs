@@ -251,6 +251,7 @@
             this.cancelar.TabIndex = 18;
             this.cancelar.Text = "Cancelar";
             this.cancelar.UseVisualStyleBackColor = true;
+            this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
             // 
             // textBoxUsername
             // 
@@ -401,7 +402,9 @@
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUserName);
             this.Controls.Add(this.labelCrearUsuario);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "CreacionDeUsuario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Creacion de Usuario";
             this.ResumeLayout(false);
             this.PerformLayout();

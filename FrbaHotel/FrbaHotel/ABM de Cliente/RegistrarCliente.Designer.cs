@@ -306,7 +306,9 @@
             this.Controls.Add(this.labelNombre);
             this.Controls.Add(this.tituloIngresarDatos);
             this.Controls.Add(this.labelTitulo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "RegistrarCliente";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registrar Cliente";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RegistrarCliente_FormClosing);
             this.ResumeLayout(false);

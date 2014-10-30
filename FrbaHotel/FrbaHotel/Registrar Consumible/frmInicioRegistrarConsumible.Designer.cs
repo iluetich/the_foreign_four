@@ -32,6 +32,7 @@
             this.btnContinuar = new System.Windows.Forms.Button();
             this.txtCodEstadia = new System.Windows.Forms.TextBox();
             this.lblCodEstadia = new System.Windows.Forms.Label();
+            this.botonVolver = new System.Windows.Forms.Button();
             this.groupRegEst.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,12 +76,23 @@
             this.lblCodEstadia.TabIndex = 0;
             this.lblCodEstadia.Text = "Ingrese codigo de estadia:";
             // 
+            // botonVolver
+            // 
+            this.botonVolver.Location = new System.Drawing.Point(393, 124);
+            this.botonVolver.Name = "botonVolver";
+            this.botonVolver.Size = new System.Drawing.Size(75, 23);
+            this.botonVolver.TabIndex = 1;
+            this.botonVolver.Text = "Volver";
+            this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
+            // 
             // frmInicioRegistrarConsumible
             // 
             this.AcceptButton = this.btnContinuar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 139);
+            this.ClientSize = new System.Drawing.Size(489, 159);
+            this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.groupRegEst);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -100,5 +112,6 @@
         private System.Windows.Forms.Button btnContinuar;
         private System.Windows.Forms.TextBox txtCodEstadia;
         private System.Windows.Forms.Label lblCodEstadia;
+        private System.Windows.Forms.Button botonVolver;
     }
 }

@@ -36,6 +36,7 @@
             this.groupCheckout = new System.Windows.Forms.GroupBox();
             this.txtCodEstadia = new System.Windows.Forms.TextBox();
             this.lblCodEstadia = new System.Windows.Forms.Label();
+            this.botonVolver = new System.Windows.Forms.Button();
             this.groupCheckin.SuspendLayout();
             this.groupCheckout.SuspendLayout();
             this.SuspendLayout();
@@ -119,12 +120,23 @@
             this.lblCodEstadia.TabIndex = 4;
             this.lblCodEstadia.Text = "Codigo estadia:";
             // 
+            // botonVolver
+            // 
+            this.botonVolver.Location = new System.Drawing.Point(490, 255);
+            this.botonVolver.Name = "botonVolver";
+            this.botonVolver.Size = new System.Drawing.Size(75, 23);
+            this.botonVolver.TabIndex = 2;
+            this.botonVolver.Text = "Volver";
+            this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
+            // 
             // frmInicioEstadia
             // 
             this.AcceptButton = this.btnCheckin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(577, 279);
+            this.ClientSize = new System.Drawing.Size(577, 290);
+            this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.groupCheckout);
             this.Controls.Add(this.groupCheckin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -151,5 +163,6 @@
         private System.Windows.Forms.GroupBox groupCheckout;
         private System.Windows.Forms.TextBox txtCodEstadia;
         private System.Windows.Forms.Label lblCodEstadia;
+        private System.Windows.Forms.Button botonVolver;
     }
 }

@@ -412,7 +412,9 @@
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUserName);
             this.Controls.Add(this.labelModificarUsuario);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ModificarUsuario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarUsuario";
             this.ResumeLayout(false);
             this.PerformLayout();

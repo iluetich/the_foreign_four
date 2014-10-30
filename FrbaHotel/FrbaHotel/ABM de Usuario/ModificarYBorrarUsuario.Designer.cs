@@ -55,6 +55,7 @@
             this.cancelar.TabIndex = 10;
             this.cancelar.Text = "Cancelar";
             this.cancelar.UseVisualStyleBackColor = true;
+            this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
             // 
             // InhabilitarUsuario
             // 
@@ -105,6 +106,7 @@
             this.Controls.Add(this.listaUsuarios);
             this.Controls.Add(this.TituloUsuarios);
             this.Name = "ModificarYBorrarUsuario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarYBorrarUsuario";
             this.ResumeLayout(false);
             this.PerformLayout();

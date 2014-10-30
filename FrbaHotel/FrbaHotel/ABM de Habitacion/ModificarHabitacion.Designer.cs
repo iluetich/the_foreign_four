@@ -203,7 +203,9 @@
             this.Controls.Add(this.labelNumHabitacion);
             this.Controls.Add(this.labelIngreseDatos);
             this.Controls.Add(this.labelTitulo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ModificarHabitacion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarHabitacion";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -7,12 +7,28 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Registrar_Estadia.checkOut;
+using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel.Registrar_Estadia
 {
     public partial class frmInicioEstadia : Form
     {
-        public frmInicioEstadia(){InitializeComponent();}
+        private MenuDinamico menu;
+        
+        //evento para cuando se escribe en un text box, permita solo numeros
+        private void txtCodEstadia_KeyPress(object sender, KeyPressEventArgs e) { FrbaHotel.Utils.allowNumbers(e); }
+        private void txtNroReserva_KeyPress(object sender, KeyPressEventArgs e) { FrbaHotel.Utils.allowNumbers(e); }
+
+        public frmInicioEstadia()
+        {
+            InitializeComponent();
+        }
+
+        public frmInicioEstadia(MenuDinamico menuPadre)
+        {
+            this.menu = menuPadre;
+            InitializeComponent();
+        }
 
         //Evento click boton check in
         private void btnCheckin_Click(object sender, EventArgs e)
@@ -35,12 +51,10 @@ namespace FrbaHotel.Registrar_Estadia
             }
         }
 
-        //evento para cuando se escribe en un text box, permita solo numeros
-        private void txtCodEstadia_KeyPress(object sender, KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
-        private void txtNroReserva_KeyPress(object sender, KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
-
-        
-
-
+        private void botonVolver_Click(object sender, EventArgs e)
+        {
+            menu.Show();
+            this.Close();
+        }
     }
 }

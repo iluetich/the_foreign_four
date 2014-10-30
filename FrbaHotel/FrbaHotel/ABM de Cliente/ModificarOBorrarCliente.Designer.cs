@@ -207,6 +207,7 @@
             this.botonVolver.TabIndex = 17;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
             // 
             // ModificarOBorrarCliente
             // 
@@ -231,7 +232,9 @@
             this.Controls.Add(this.labelNombre);
             this.Controls.Add(this.tituloBuscador);
             this.Controls.Add(this.Titulo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ModificarOBorrarCliente";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarOBorrarCliente";
             this.ResumeLayout(false);
             this.PerformLayout();

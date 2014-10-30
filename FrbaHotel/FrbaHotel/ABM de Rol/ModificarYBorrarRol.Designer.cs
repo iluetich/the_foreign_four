@@ -82,6 +82,7 @@
             this.cancelar.TabIndex = 4;
             this.cancelar.Text = "Cancelar";
             this.cancelar.UseVisualStyleBackColor = true;
+            this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
             // 
             // TituloVentana
             // 
@@ -105,7 +106,9 @@
             this.Controls.Add(this.ModificarRol);
             this.Controls.Add(this.listaRoles);
             this.Controls.Add(this.TituloRoles);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ModificarYBorrarRol";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modificar/Borrar Rol";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -8,21 +8,21 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menues_de_los_Roles;
 
-namespace FrbaHotel.ABM_de_Usuario
+namespace FrbaHotel.ABM_de_Hotel
 {
-    public partial class ModificarYBorrarUsuario : Form
+    public partial class ModificarOEliminarHotel : Form
     {
         private MenuDinamico menu;
 
-        public ModificarYBorrarUsuario(MenuDinamico menuPadre)
+        public ModificarOEliminarHotel(MenuDinamico menuPadre)
         {
             this.menu = menuPadre;
             InitializeComponent();
         }
 
-        private void cancelar_Click(object sender, EventArgs e)
+        private void botonVolver_Click(object sender, EventArgs e)
         {
-            menu.Show();
+            this.menu.Show();
             this.Close();
         }
     }

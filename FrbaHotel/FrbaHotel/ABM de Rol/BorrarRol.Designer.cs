@@ -59,7 +59,9 @@
             this.ClientSize = new System.Drawing.Size(389, 90);
             this.Controls.Add(this.Aceptar);
             this.Controls.Add(this.Leyenda);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "BorrarRol";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Borrar Rol";
             this.ResumeLayout(false);
             this.PerformLayout();

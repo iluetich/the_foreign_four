@@ -6,12 +6,21 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class frmGenerarReserva : Form
     {
+        private MenuDinamico menu;
+        
         public frmGenerarReserva(){
+            InitializeComponent();
+        }
+
+        public frmGenerarReserva(MenuDinamico menuPadre)
+        {
+            this.menu = menuPadre;
             InitializeComponent();
         }
 
@@ -47,6 +56,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
         private void txtCantHues_KeyPress(object sender,KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.menu.Show();
+            this.Close();
+        }
       
     }
 }

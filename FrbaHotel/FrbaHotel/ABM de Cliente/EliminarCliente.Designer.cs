@@ -58,7 +58,9 @@
             this.ClientSize = new System.Drawing.Size(412, 86);
             this.Controls.Add(this.Aceptar);
             this.Controls.Add(this.Leyenda);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "EliminarCliente";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EliminarCliente";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -6,11 +6,21 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel.Registrar_Consumible
 {
+
     public partial class frmInicioRegistrarConsumible : Form
     {
+        private MenuDinamico menu;
+
+        public frmInicioRegistrarConsumible(MenuDinamico menuPadre)
+        {
+            this.menu = menuPadre;
+            InitializeComponent();
+        }
+
         public frmInicioRegistrarConsumible()
         {
             InitializeComponent();
@@ -26,5 +36,11 @@ namespace FrbaHotel.Registrar_Consumible
         }
 
         private void txtCodEstadia_KeyPress(object sender, KeyPressEventArgs e) { FrbaHotel.Utils.allowNumbers(e); }
+
+        private void botonVolver_Click(object sender, EventArgs e)
+        {
+            menu.Show();
+            this.Close();
+        }
     }
 }

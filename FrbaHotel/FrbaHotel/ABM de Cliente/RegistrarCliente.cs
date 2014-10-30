@@ -7,20 +7,32 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Registrar_Estadia;
+using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
     public partial class RegistrarCliente : Form
     {
         frmRegistrarHuespedesRestantes frmRegistrarHuespedesRestantesPadre;
+        private MenuDinamico menu;
+        private Boolean constructorMenu;
+
+        public RegistrarCliente(MenuDinamico menuPadre)
+        {
+            this.constructorMenu = true;
+            this.menu = menuPadre;
+            InitializeComponent();
+        }
 
         public RegistrarCliente()
         {
+            this.constructorMenu = false;
             InitializeComponent();
         }
 
         public RegistrarCliente(frmRegistrarHuespedesRestantes newForm)
         {
+            this.constructorMenu = false;
             InitializeComponent();
             frmRegistrarHuespedesRestantesPadre = newForm;
         }
@@ -35,6 +47,10 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void botonVolver_Click(object sender, EventArgs e)
         {
+            if (constructorMenu)
+            {
+                menu.Show();
+            }
             this.Close();
         }
 

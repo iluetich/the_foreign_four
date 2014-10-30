@@ -6,13 +6,18 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel.Listado_Estadistico
 {
     public partial class frmListadoEstadistico : Form
     {
-        public frmListadoEstadistico()
+        private MenuDinamico menu;
+
+        public frmListadoEstadistico(MenuDinamico menuPadre)
         {
+            //seteo el padre del formulario
+            this.menu = menuPadre;
             InitializeComponent();
             //Autoajusto celdas
             this.dgvListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -21,6 +26,18 @@ namespace FrbaHotel.Listado_Estadistico
             for (int i = 0; i < dgvListado.Columns.Count; i++ )
                 this.dgvListado.Columns[i].Visible = false;
             
+        }
+
+        public frmListadoEstadistico()
+        {
+            InitializeComponent();
+            //Autoajusto celdas
+            this.dgvListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            //oculto columnas
+            for (int i = 0; i < dgvListado.Columns.Count; i++)
+                this.dgvListado.Columns[i].Visible = false;
+
         }
         
         private void btnGenerar_Click(object sender, EventArgs e)
@@ -99,6 +116,12 @@ namespace FrbaHotel.Listado_Estadistico
                     this.dgvListado.Columns[clmPuntaje.Name].Visible = true;
                     break;
             }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            menu.Show();
+            this.Close();
         }
 
 

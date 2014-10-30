@@ -126,6 +126,7 @@
             this.botonCancelar.TabIndex = 8;
             this.botonCancelar.Text = "Cancelar";
             this.botonCancelar.UseVisualStyleBackColor = true;
+            this.botonCancelar.Click += new System.EventHandler(this.botonCancelar_Click);
             // 
             // botonLimpiar
             // 
@@ -228,7 +229,9 @@
             this.Controls.Add(this.labelNumHabitacion);
             this.Controls.Add(this.labelIngreseDatos);
             this.Controls.Add(this.labelTitulo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "RegistrarHabitacion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registrar Habitacion";
             this.ResumeLayout(false);
             this.PerformLayout();

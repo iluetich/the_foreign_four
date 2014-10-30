@@ -6,13 +6,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel.Cancelar_Reserva
 {
     public partial class frmCancelarReserva : Form
     {
-        public frmCancelarReserva()
+        private MenuDinamico menu;
+
+        public frmCancelarReserva(MenuDinamico menuPadre)
         {
+            this.menu = menuPadre;
             InitializeComponent();
         }
 
@@ -31,6 +35,12 @@ namespace FrbaHotel.Cancelar_Reserva
             FrbaHotel.Utils.validarCampoEsteCompleto(txtMotivo, "Motivo") &
             FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaCancel, "Fecha cancelacion") 
             );
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            menu.Show();
+            this.Close();
         }
 
 

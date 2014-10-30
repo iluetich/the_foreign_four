@@ -239,7 +239,9 @@
             this.Controls.Add(this.estadoRol);
             this.Controls.Add(this.funcionalidad);
             this.Controls.Add(this.nombre);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ModificarRol";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarRol";
             this.ResumeLayout(false);
             this.PerformLayout();

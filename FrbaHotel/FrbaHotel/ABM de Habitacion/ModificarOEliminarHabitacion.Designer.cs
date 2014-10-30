@@ -54,6 +54,7 @@
             this.botonVolver.TabIndex = 51;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
             // 
             // botonInhabilitar
             // 
@@ -214,7 +215,9 @@
             this.Controls.Add(this.labelNroHab);
             this.Controls.Add(this.tituloBuscador);
             this.Controls.Add(this.Titulo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ModificarOEliminarHabitacion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarOEliminarHabitacion";
             this.ResumeLayout(false);
             this.PerformLayout();

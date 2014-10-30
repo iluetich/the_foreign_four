@@ -170,6 +170,7 @@ namespace FrbaHotel.ABM_de_Rol
             this.Cancelar.TabIndex = 15;
             this.Cancelar.Text = "Cancelar";
             this.Cancelar.UseVisualStyleBackColor = true;
+            this.Cancelar.Click += new System.EventHandler(this.Cancelar_Click);
             // 
             // BotonAgregarFuncionalidad
             // 
@@ -232,7 +233,9 @@ namespace FrbaHotel.ABM_de_Rol
             this.Controls.Add(this.textBoxNombre);
             this.Controls.Add(this.funcionalidad);
             this.Controls.Add(this.nombre);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "CreacionRol";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Creacion De Rol";
             this.ResumeLayout(false);
             this.PerformLayout();

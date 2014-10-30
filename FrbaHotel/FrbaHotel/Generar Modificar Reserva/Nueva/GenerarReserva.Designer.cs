@@ -94,9 +94,9 @@
             "3"});
             this.cmbTipoHab.Location = new System.Drawing.Point(138, 134);
             this.cmbTipoHab.Name = "cmbTipoHab";
-            this.cmbTipoHab.Tag = "Tipo habitacion";
             this.cmbTipoHab.Size = new System.Drawing.Size(200, 21);
             this.cmbTipoHab.TabIndex = 4;
+            this.cmbTipoHab.Tag = "Tipo habitacion";
             // 
             // lblTipoReg
             // 
@@ -117,9 +117,9 @@
             "3"});
             this.cmbTipoReg.Location = new System.Drawing.Point(138, 161);
             this.cmbTipoReg.Name = "cmbTipoReg";
-            this.cmbTipoReg.Tag = "Tipo regimiento";
             this.cmbTipoReg.Size = new System.Drawing.Size(200, 21);
             this.cmbTipoReg.TabIndex = 5;
+            this.cmbTipoReg.Tag = "Tipo regimiento";
             // 
             // btnCheckRes
             // 
@@ -134,17 +134,17 @@
             // 
             this.dtpFechaDesde.Location = new System.Drawing.Point(138, 55);
             this.dtpFechaDesde.Name = "dtpFechaDesde";
-            this.dtpFechaDesde.Tag = "Fecha desde";
             this.dtpFechaDesde.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaDesde.TabIndex = 1;
+            this.dtpFechaDesde.Tag = "Fecha desde";
             // 
             // dtpFechaHasta
             // 
             this.dtpFechaHasta.Location = new System.Drawing.Point(138, 82);
             this.dtpFechaHasta.Name = "dtpFechaHasta";
-            this.dtpFechaHasta.Tag = "Fecha hasta";
             this.dtpFechaHasta.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaHasta.TabIndex = 2;
+            this.dtpFechaHasta.Tag = "Fecha hasta";
             // 
             // btnRegimenes
             // 
@@ -209,15 +209,15 @@
             "Faena"});
             this.cmbHotel.Location = new System.Drawing.Point(138, 27);
             this.cmbHotel.Name = "cmbHotel";
-            this.cmbHotel.Tag = "Hotel";
             this.cmbHotel.Size = new System.Drawing.Size(199, 21);
             this.cmbHotel.TabIndex = 0;
+            this.cmbHotel.Tag = "Hotel";
             // 
             // lblSeleccionarHotel
             // 
             this.lblSeleccionarHotel.AutoSize = true;
             this.lblSeleccionarHotel.Location = new System.Drawing.Point(21, 35);
-            this.lblSeleccionarHotel.Name = "lblSeleccionarHotel";            
+            this.lblSeleccionarHotel.Name = "lblSeleccionarHotel";
             this.lblSeleccionarHotel.Size = new System.Drawing.Size(94, 13);
             this.lblSeleccionarHotel.TabIndex = 14;
             this.lblSeleccionarHotel.Text = "Seleccionar Hotel:";
@@ -299,6 +299,7 @@
             this.btnCancel.TabStop = false;
             this.btnCancel.Text = "Volver";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnConfirReser
             // 

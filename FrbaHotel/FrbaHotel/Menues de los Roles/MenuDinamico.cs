@@ -7,6 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaHotel.Listado_Estadistico;
+using FrbaHotel.Registrar_Consumible;
+using FrbaHotel.Registrar_Estadia;
+using FrbaHotel.Cancelar_Reserva;
+using FrbaHotel.Generar_Modificar_Reserva;
+using FrbaHotel.ABM_de_Cliente;
+using FrbaHotel.ABM_de_Habitacion;
+using FrbaHotel.ABM_de_Rol;
+using FrbaHotel.ABM_de_Usuario;
+using FrbaHotel.ABM_de_Hotel;
 
 namespace FrbaHotel.Menues_de_los_Roles
 {
@@ -70,32 +80,38 @@ namespace FrbaHotel.Menues_de_los_Roles
         {
             if (funcionalidad == "ABM Clientes")
             {
-                this.botonABMCliente.Enabled = true;
+                this.botonRegCliente.Enabled = true;
+                this.botonModElimCliente.Enabled = true;
             }
 
             if (funcionalidad == "ABM Habitacion")
             {
-                this.botonABMHabitacion.Enabled = true;
+                this.botonRegHabitacion.Enabled = true;
+                this.botonModElimHab.Enabled = true;
             }
 
             if (funcionalidad == "ABM Hotel")
             {
-                this.botonABMHotel.Enabled = true;
+                this.botonRegHotel.Enabled = true;
+                this.botonModElimHotel.Enabled = true;
             }
 
             if (funcionalidad == "ABM Regimen De Estadia")
             {
-                this.botonABMRegimenEstadia.Enabled = true;
+                this.botonRegRegimen.Enabled = true;
+                this.botonModElimRegEsta.Enabled = true;
             }
 
             if (funcionalidad == "ABM Rol")
             {
-                this.botonABMRol.Enabled = true;
+                this.botonRegRol.Enabled = true;
+                this.botonModElimRol.Enabled = true;
             }
 
             if (funcionalidad == "ABM Usuario")
             {
-                this.botonABMUsuario.Enabled = true;
+                this.botonRegUsuario.Enabled = true;
+                this.botonModElimUsuario.Enabled = true;
             }
 
             if (funcionalidad == "Cancelar Reserva")
@@ -103,14 +119,16 @@ namespace FrbaHotel.Menues_de_los_Roles
                 this.botonCancelarReserva.Enabled = true;
             }
 
-            if (funcionalidad == "Facturar Estadia")
+            //Problema Ver Con Ian
+            /*if (funcionalidad == "Facturar Estadia")
             {
                 this.botonFacturarEstadia.Enabled = true;
-            }
+            }*/
 
             if (funcionalidad == "Generar o Modificar Reserva")
             {
-                this.botonGenOModRes.Enabled = true;
+                this.botonGenRes.Enabled = true;
+                this.botonModRes.Enabled = true;
             }
 
             if (funcionalidad == "Listado Estadistico")
@@ -125,7 +143,7 @@ namespace FrbaHotel.Menues_de_los_Roles
 
             if (funcionalidad == "Registrar Estadia")
             {
-                this.botonRegistrarEstadia.Enabled = true;
+                this.botonRegFacEstadia.Enabled = true;
             }  
         }
 
@@ -133,6 +151,118 @@ namespace FrbaHotel.Menues_de_los_Roles
         {
             ventanaInicio.Show();
             this.Close();
+        }
+
+        private void botonListEstadistico_Click(object sender, EventArgs e)
+        {
+            frmListadoEstadistico formEstad = new frmListadoEstadistico(this);
+            formEstad.Show();
+            this.Hide();
+        }
+
+        private void botonRegConsumibles_Click(object sender, EventArgs e)
+        {
+            frmInicioRegistrarConsumible frmRegConsumible = new frmInicioRegistrarConsumible(this);
+            frmRegConsumible.Show();
+            this.Hide();
+        }
+
+        private void botonRegFacEstadia_Click(object sender, EventArgs e)
+        {
+            frmInicioEstadia frmEstadia = new frmInicioEstadia(this);
+            frmEstadia.Show();
+            this.Hide();
+        }
+
+        private void botonCancelarReserva_Click(object sender, EventArgs e)
+        {
+            frmCancelarReserva frmCanRes = new frmCancelarReserva(this);
+            frmCanRes.Show();
+            this.Hide();
+        }
+
+        private void botonModRes_Click(object sender, EventArgs e)
+        {
+            frmModificarReserva frmModRes = new frmModificarReserva(this);
+            frmModRes.Show();
+            this.Hide();
+        }
+
+        private void botonGenRes_Click(object sender, EventArgs e)
+        {
+            frmGenerarReserva frmGenRes = new frmGenerarReserva(this);
+            frmGenRes.Show();
+            this.Hide();
+        }
+
+        private void botonRegCliente_Click(object sender, EventArgs e)
+        {
+            RegistrarCliente frmRegCliente = new RegistrarCliente(this);
+            frmRegCliente.Show();
+            this.Hide();
+        }
+
+        private void botonModElimCliente_Click(object sender, EventArgs e)
+        {
+            ModificarOBorrarCliente frmModEliCli = new ModificarOBorrarCliente(this);
+            frmModEliCli.Show();
+            this.Hide();
+        }
+
+        private void botonRegHabitacion_Click(object sender, EventArgs e)
+        {
+            RegistrarHabitacion frmRegHab = new RegistrarHabitacion(this);
+            frmRegHab.Show();
+            this.Hide();
+        }
+
+        private void botonModElimHab_Click(object sender, EventArgs e)
+        {
+            ModificarOEliminarHabitacion frmModOElimHab = new ModificarOEliminarHabitacion(this);
+            frmModOElimHab.Show();
+            this.Hide();
+        }
+
+        private void botonRegHotel_Click(object sender, EventArgs e)
+        {
+            RegistrarHotel frmRegHotel = new RegistrarHotel(this);
+            frmRegHotel.Show();
+            this.Hide();
+        }
+
+        private void botonRegRol_Click(object sender, EventArgs e)
+        {
+            CreacionRol frmCreaRol = new CreacionRol(this);
+            frmCreaRol.Show();
+            this.Hide();
+        }
+
+        private void botonModElimRol_Click(object sender, EventArgs e)
+        {
+            ModificarYBorrarRol frmModYElimRol = new ModificarYBorrarRol(this);
+            frmModYElimRol.Show();
+            this.Hide();
+        }
+
+        private void botonRegUsuario_Click(object sender, EventArgs e)
+        {
+            CreacionDeUsuario frmCreUsuario = new CreacionDeUsuario(this);
+            frmCreUsuario.Show();
+            this.Hide();
+        }
+
+        private void botonModElimUsuario_Click(object sender, EventArgs e)
+        {
+            ModificarYBorrarUsuario frmModElimUsuario = new ModificarYBorrarUsuario(this);
+            frmModElimUsuario.Show();
+            this.Hide();
+        }
+
+        private void botonModElimHotel_Click(object sender, EventArgs e)
+        {
+            ModificarOEliminarHotel frmModElimHotel = new ModificarOEliminarHotel(this);
+            frmModElimHotel.Show();
+            this.Hide();
         }
     }
 }
