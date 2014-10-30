@@ -153,3 +153,5 @@ SELECT	Consumible_Codigo,
 		WHERE	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
 
+--***JUEGO DE DATOS************************************************
+EXEC THE_FOREIGN_FOUR.proc_juego_datos
