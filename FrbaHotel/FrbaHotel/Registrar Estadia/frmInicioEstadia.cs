@@ -53,8 +53,12 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void botonVolver_Click(object sender, EventArgs e)
         {
-            menu.Show();
             this.Close();
+        }
+
+        private void frmInicioEstadia_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.menu.Show();
         }
     }
 }

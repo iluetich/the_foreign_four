@@ -28,20 +28,20 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             if (validarDatosCompletos() &
                 FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)){
-                    Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     new frmCliente(this).Show();
                     this.Enabled = false;
             }
         }
 
         private void frmGenerarReserva_FormClosing(Object sender, FormClosingEventArgs e){
-            DialogResult dialogo = MessageBox.Show("¿ Desea Salir de la Aplicacion S/N ?",
-                "Salir", MessageBoxButtons.OKCancel, MessageBoxIcon.None);
-            if (dialogo == DialogResult.OK) {
-            
-            }else { 
-                   e.Cancel = true; 
-            }
+            //DialogResult dialogo = MessageBox.Show("¿ Desea Salir de la Aplicacion S/N ?",
+            //    "Salir", MessageBoxButtons.OKCancel, MessageBoxIcon.None);
+            //if (dialogo == DialogResult.OK) {
+            //
+            //}else { 
+            //       e.Cancel = true; 
+            //}
+            this.menu.Show();
         }
 
         private bool validarDatosCompletos(){
@@ -59,7 +59,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.menu.Show();
             this.Close();
         }
       

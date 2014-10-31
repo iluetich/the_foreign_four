@@ -145,6 +145,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Estadia";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmInicioEstadia_FormClosing);
             this.groupCheckin.ResumeLayout(false);
             this.groupCheckin.PerformLayout();
             this.groupCheckout.ResumeLayout(false);

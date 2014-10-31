@@ -10,17 +10,17 @@ using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
-    public partial class frmModificarReserva : Form
+    public partial class frmBuscarReserva : Form
     {
         private MenuDinamico menu;
         
-        public frmModificarReserva(MenuDinamico menuPadre)
+        public frmBuscarReserva(MenuDinamico menuPadre)
         {
             this.menu = menuPadre;
             InitializeComponent();
         }
 
-        public frmModificarReserva()
+        public frmBuscarReserva()
         {
             InitializeComponent();
         }
@@ -38,8 +38,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            this.menu.Show();
             this.Close();
+        }
+
+        private void frmBuscarReserva_FormClosing(object sender, FormClosingEventArgs e) {
+            this.menu.Show();
         }
 
     }

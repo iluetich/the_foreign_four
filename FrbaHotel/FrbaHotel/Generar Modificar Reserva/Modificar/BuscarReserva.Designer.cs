@@ -1,6 +1,6 @@
 ﻿namespace FrbaHotel.Generar_Modificar_Reserva
 {
-    partial class frmModificarReserva
+    partial class frmBuscarReserva
     {
         /// <summary>
         /// Required designer variable.
@@ -84,7 +84,7 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // frmModificarReserva
+            // frmBuscarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -93,10 +93,11 @@
             this.Controls.Add(this.groupModificar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "frmModificarReserva";
+            this.Name = "frmBuscarReserva";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Modificar Reserva";
+            this.Text = "Buscar Reserva";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmBuscarReserva_FormClosing);
             this.groupModificar.ResumeLayout(false);
             this.groupModificar.PerformLayout();
             this.ResumeLayout(false);

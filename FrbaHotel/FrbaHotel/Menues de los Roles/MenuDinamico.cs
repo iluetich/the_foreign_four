@@ -183,7 +183,7 @@ namespace FrbaHotel.Menues_de_los_Roles
 
         private void botonModRes_Click(object sender, EventArgs e)
         {
-            frmModificarReserva frmModRes = new frmModificarReserva(this);
+            frmBuscarReserva frmModRes = new frmBuscarReserva(this);
             frmModRes.Show();
             this.Hide();
         }

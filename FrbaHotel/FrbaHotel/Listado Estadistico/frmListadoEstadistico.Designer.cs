@@ -232,6 +232,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Listado Estadistico";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmListadoEstadistico_FormClosing);
             this.groupListado.ResumeLayout(false);
             this.groupListado.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).EndInit();

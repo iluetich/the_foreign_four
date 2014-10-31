@@ -39,10 +39,12 @@ namespace FrbaHotel.Cancelar_Reserva
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            menu.Show();
-            this.Close();
+           this.Close();
         }
 
-
+        private void frmCancelarReserva_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.menu.Show();
+        }
     }
 }

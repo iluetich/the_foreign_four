@@ -39,8 +39,13 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void botonVolver_Click(object sender, EventArgs e)
         {
-            menu.Show();
             this.Close();
         }
+
+        private void frmInicioRegistrarConsumible_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.menu.Show();
+        }
+
     }
 }

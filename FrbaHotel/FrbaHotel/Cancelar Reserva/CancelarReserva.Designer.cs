@@ -159,6 +159,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cancelar Reserva";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCancelarReserva_FormClosing);
             this.groupCancelar.ResumeLayout(false);
             this.groupCancelar.PerformLayout();
             this.ResumeLayout(false);

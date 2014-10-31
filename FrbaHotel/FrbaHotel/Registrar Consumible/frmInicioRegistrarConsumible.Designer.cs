@@ -100,6 +100,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registrar Consumibles";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmInicioRegistrarConsumible_FormClosing);
             this.groupRegEst.ResumeLayout(false);
             this.groupRegEst.PerformLayout();
             this.ResumeLayout(false);

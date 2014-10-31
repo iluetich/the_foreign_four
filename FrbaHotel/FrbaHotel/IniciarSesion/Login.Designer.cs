@@ -75,7 +75,7 @@
             this.textBoxUsername.Location = new System.Drawing.Point(87, 47);
             this.textBoxUsername.Name = "textBoxUsername";
             this.textBoxUsername.Size = new System.Drawing.Size(148, 20);
-            this.textBoxUsername.TabIndex = 3;
+            this.textBoxUsername.TabIndex = 0;
             this.textBoxUsername.TextChanged += new System.EventHandler(this.textBoxUsername_TextChanged);
             // 
             // textBoxpassword
@@ -83,7 +83,7 @@
             this.textBoxpassword.Location = new System.Drawing.Point(87, 80);
             this.textBoxpassword.Name = "textBoxpassword";
             this.textBoxpassword.Size = new System.Drawing.Size(148, 20);
-            this.textBoxpassword.TabIndex = 4;
+            this.textBoxpassword.TabIndex = 1;
             this.textBoxpassword.TextChanged += new System.EventHandler(this.textBoxpassword_TextChanged);
             // 
             // botonIngresar
@@ -91,7 +91,7 @@
             this.botonIngresar.Location = new System.Drawing.Point(12, 162);
             this.botonIngresar.Name = "botonIngresar";
             this.botonIngresar.Size = new System.Drawing.Size(75, 23);
-            this.botonIngresar.TabIndex = 5;
+            this.botonIngresar.TabIndex = 3;
             this.botonIngresar.Text = "Ingresar";
             this.botonIngresar.UseVisualStyleBackColor = true;
             this.botonIngresar.Click += new System.EventHandler(this.botonIngresar_Click);
@@ -114,7 +114,7 @@
             this.comboBoxSelecionHotel.Location = new System.Drawing.Point(57, 115);
             this.comboBoxSelecionHotel.Name = "comboBoxSelecionHotel";
             this.comboBoxSelecionHotel.Size = new System.Drawing.Size(146, 23);
-            this.comboBoxSelecionHotel.TabIndex = 7;
+            this.comboBoxSelecionHotel.TabIndex = 2;
             this.comboBoxSelecionHotel.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelecionHotel_SelectedIndexChanged);
             // 
             // botonVolver
@@ -122,7 +122,7 @@
             this.botonVolver.Location = new System.Drawing.Point(160, 162);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
-            this.botonVolver.TabIndex = 8;
+            this.botonVolver.TabIndex = 4;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
@@ -141,8 +141,10 @@
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.laberUserName);
             this.Controls.Add(this.labelTituloLogin);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Login";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ventana de Login";
             this.ResumeLayout(false);
