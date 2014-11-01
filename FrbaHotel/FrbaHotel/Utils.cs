@@ -82,5 +82,6 @@ namespace FrbaHotel
             comboBox1.DataSource = dataSet.Tables[0].DefaultView;
             comboBox1.DisplayMember = nombreCampo;
         }
+
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.ABM_de_Cliente;
+using System.Data.SqlClient;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
@@ -45,6 +46,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             new RegistrarCliente().Show();
         }
 
+        private void btnConfirmarReserva_Click(object sender, EventArgs e)
+        {
+
+        }
+
+       
         
 
 

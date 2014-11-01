@@ -51,7 +51,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnConfirReser = new System.Windows.Forms.Button();
+            this.btnSiguiente = new System.Windows.Forms.Button();
             this.grbPanel1.SuspendLayout();
             this.grbPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -202,16 +202,11 @@
             // 
             this.cmbHotel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbHotel.FormattingEnabled = true;
-            this.cmbHotel.Items.AddRange(new object[] {
-            "Conrad",
-            "Hilton",
-            "Sheraton",
-            "Faena"});
             this.cmbHotel.Location = new System.Drawing.Point(138, 27);
             this.cmbHotel.Name = "cmbHotel";
             this.cmbHotel.Size = new System.Drawing.Size(199, 21);
             this.cmbHotel.TabIndex = 0;
-            this.cmbHotel.Tag = "Hotel";
+            this.cmbHotel.Tag = "";
             // 
             // lblSeleccionarHotel
             // 
@@ -282,7 +277,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnCancel);
-            this.groupBox1.Controls.Add(this.btnConfirReser);
+            this.groupBox1.Controls.Add(this.btnSiguiente);
             this.groupBox1.Location = new System.Drawing.Point(19, 385);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(364, 50);
@@ -301,16 +296,16 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // btnConfirReser
+            // btnSiguiente
             // 
-            this.btnConfirReser.AutoSize = true;
-            this.btnConfirReser.Location = new System.Drawing.Point(173, 19);
-            this.btnConfirReser.Name = "btnConfirReser";
-            this.btnConfirReser.Size = new System.Drawing.Size(104, 23);
-            this.btnConfirReser.TabIndex = 11;
-            this.btnConfirReser.Text = "Siguiente";
-            this.btnConfirReser.UseVisualStyleBackColor = true;
-            this.btnConfirReser.Click += new System.EventHandler(this.btnConfirReser_Click);
+            this.btnSiguiente.AutoSize = true;
+            this.btnSiguiente.Location = new System.Drawing.Point(173, 19);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(104, 23);
+            this.btnSiguiente.TabIndex = 11;
+            this.btnSiguiente.Text = "Siguiente";
+            this.btnSiguiente.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguietne_Click);
             // 
             // frmGenerarReserva
             // 
@@ -329,6 +324,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nueva Reserva";
+            this.Load += new System.EventHandler(this.frmGenerarReserva_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmGenerarReserva_FormClosing);
             this.grbPanel1.ResumeLayout(false);
             this.grbPanel1.PerformLayout();
@@ -361,7 +357,7 @@
         private System.Windows.Forms.TextBox txtCostoTotal;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnConfirReser;
+        private System.Windows.Forms.Button btnSiguiente;
         private System.Windows.Forms.ComboBox cmbHotel;
         private System.Windows.Forms.Label lblSeleccionarHotel;
         private System.Windows.Forms.Button btnCancel;

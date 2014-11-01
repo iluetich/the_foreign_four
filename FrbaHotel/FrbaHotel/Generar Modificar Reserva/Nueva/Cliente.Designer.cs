@@ -102,6 +102,7 @@
             this.btnConfirmarReserva.TabIndex = 5;
             this.btnConfirmarReserva.Text = "Confirmar reserva";
             this.btnConfirmarReserva.UseVisualStyleBackColor = true;
+            this.btnConfirmarReserva.Click += new System.EventHandler(this.btnConfirmarReserva_Click);
             // 
             // groupBox2
             // 

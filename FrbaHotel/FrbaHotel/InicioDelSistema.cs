@@ -20,6 +20,11 @@ namespace FrbaHotel
         // Hacer consulta sql para ver que roles existen
         private string rolElegido;
 
+        private void InicioDelSistema_Load(object sender, EventArgs e)
+        {
+            FrbaHotel.ConexionSQL.establecerConexionBD();
+        }
+
         public InicioDelSistema()
         {
             InitializeComponent();
@@ -50,6 +55,8 @@ namespace FrbaHotel
         {
             rolElegido = comboBoxEleccionRol.Text;
         }
+
+       
 
     }
 }

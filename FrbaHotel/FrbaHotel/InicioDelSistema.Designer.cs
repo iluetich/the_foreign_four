@@ -93,6 +93,7 @@ namespace FrbaHotel
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Formulario de Entrada";
+            this.Load += new System.EventHandler(this.InicioDelSistema_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

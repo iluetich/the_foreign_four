@@ -33,7 +33,6 @@ C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.pdb
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmCliente.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmGenerarReserva.resources
-C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmModificarReserva.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmModificarRerserva.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Cancelar_Reserva.frmCancelarReserva.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Registrar_Estadia.frmRegistrarHuespedesRestantes.resources
@@ -87,3 +86,8 @@ C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.pdb
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.IniciarSecion.Login.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Menues_de_los_Roles.MenuDinamico.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\bin\Release\FrbaHotel.exe.config
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Hotel.InHabilitarHotel.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Hotel.ModificarHotel.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Hotel.ModificarOEliminarHotel.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Hotel.RegistrarHotel.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Generar_Modificar_Reserva.frmBuscarReserva.resources
