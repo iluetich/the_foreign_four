@@ -73,11 +73,8 @@ namespace FrbaHotel
         //funcion generica que le pasas un combo box y te lo rellena con todos los registros de una tabla de la bd de un campo
         internal static void rellenarComboBox(System.Windows.Forms.ComboBox comboBox1, string nombreTabla, string nombreCampo, string consultaSql)
         {
-            string stringConnection = "Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014";
-            SqlConnection conexion = new SqlConnection();
-            conexion.ConnectionString = stringConnection;
             DataSet dataSet = new DataSet();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql, conexion);
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             dataAdapter.Fill(dataSet, nombreTabla);
             comboBox1.DataSource = dataSet.Tables[0].DefaultView;
             comboBox1.DisplayMember = nombreCampo;

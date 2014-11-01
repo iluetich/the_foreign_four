@@ -67,21 +67,22 @@ namespace FrbaHotel.IniciarSecion
         {
             this.podesIngresar = true;
             
-            string stringConnection = "Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014";
-            SqlConnection conexion = new SqlConnection();
-            conexion.ConnectionString = stringConnection;
+            //te lo comente nacho, fijate como anda lo otro despues borralo vos
+            //string stringConnection = "Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014";
+            //SqlConnection conexion = new SqlConnection();
+            //conexion.ConnectionString = stringConnection;
             
             //corrobora user_name AYUDA MEMORIA MUY IMPORTANTE NO OLVIDARSE LAS COMILLAS CUANDO SE PONEN STRING EN SQL
             SqlCommand cmd2 = new SqlCommand();
             cmd2.CommandText = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[Usuarios] WHERE user_name='" + this.user_name +"'";
             cmd2.CommandType = CommandType.Text;
-            cmd2.Connection = conexion;
+            cmd2.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
 
             //corrobora password
             SqlCommand cmd = new SqlCommand();          
             cmd.CommandText = consultaSql;
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = conexion;
+            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
 
             //para que no me salte error si no se elige nada
             string consultaCmd3;
@@ -100,7 +101,7 @@ namespace FrbaHotel.IniciarSecion
             cmd3.CommandText = consultaCmd3;
             
             cmd3.CommandType = CommandType.Text;
-            cmd3.Connection = conexion;
+            cmd3.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
 
             //corrobora que el usuario en ese hotel tenga el rol elegido
             SqlCommand cmd4 = new SqlCommand();
@@ -109,9 +110,9 @@ namespace FrbaHotel.IniciarSecion
                                "AND  rhu.cod_hotel ="+ this.codHotelElegido +
                                " AND  rhu.rol = '"+ this.rol+"'";
             cmd4.CommandType = CommandType.Text;
-            cmd4.Connection = conexion;
+            cmd4.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
 
-            conexion.Open();
+            //FrbaHotel.ConexionSQL.getSqlInstanceConnection().Open();
 
             int resultadoUserName = (int)cmd2.ExecuteScalar();
 
@@ -146,7 +147,7 @@ namespace FrbaHotel.IniciarSecion
                 }
             }
 
-            conexion.Close();
+            //conexion.Close();
 
             if (podesIngresar) 
             {

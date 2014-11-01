@@ -19,15 +19,13 @@ namespace FrbaHotel
         //debe leer de la base de datos los roles existentes
         // Hacer consulta sql para ver que roles existen
         private string rolElegido;
-
-        private void InicioDelSistema_Load(object sender, EventArgs e)
-        {
-            FrbaHotel.ConexionSQL.establecerConexionBD();
-        }
-
+        
         public InicioDelSistema()
         {
             InitializeComponent();
+            //Abre la conexion a la BD
+            FrbaHotel.ConexionSQL.establecerConexionBD();
+
             string consultaSql = "SELECT * FROM THE_FOREIGN_FOUR.Roles";
             FrbaHotel.Utils.rellenarComboBox(comboBoxEleccionRol, "THE_FOREIGN_FOUR.Roles", "nombre", consultaSql);
         }
