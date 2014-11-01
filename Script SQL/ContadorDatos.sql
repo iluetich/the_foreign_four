@@ -45,3 +45,7 @@ FROM THE_FOREIGN_FOUR.Estadias
 
 SELECT COUNT(*) 'EstadiasDefectuosas'
 FROM THE_FOREIGN_FOUR.EstadiasDefectuosas
+
+SELECT *
+FROM
+THE_FOREIGN_FOUR.ItemsFactura
