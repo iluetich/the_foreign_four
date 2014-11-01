@@ -416,10 +416,9 @@ BEGIN
 	
 		IF(@nro_factura IS NULL OR
 		   @cantidad IS NULL OR
-		   NOT EXISTS( SELECT cod_consumible
-						FROM THE_FOREIGN_FOUR.Consumibles
-						WHERE cod_consumible = @cod_consumible )
-			)
+		   ( SELECT cod_consumible
+			FROM THE_FOREIGN_FOUR.Consumibles
+			WHERE cod_consumible = @cod_consumible) IS NULL)
 		   
 		BEGIN
 			INSERT INTO THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (nro_factura, cantidad, cod_consumible, descripcion)
@@ -440,4 +439,35 @@ BEGIN
 
 END
 GO
+
+CREATE TRIGGER trg_setear_descrip_items
+ON THE_FOREIGN_FOUR.ItemsFactura
+AFTER INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT cod_consumible
+	FROM inserted
+	DECLARE @cod_consumible numeric(18,0)
+	
+	OPEN TrigInsCursor
+	
+	FETCH NEXT FROM TrigInsCursor INTO @cod_consumible
+	
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		
+		INSERT INTO THE_FOREIGN_FOUR.ItemsFactura 
+		(descripcion)
+		SELECT descripcion
+		FROM THE_FOREIGN_FOUR.Consumibles c
+		WHERE c.cod_consumible = @cod_consumible
+				
+		FETCH NEXT FROM TrigInsCursor INTO @cod_consumible
+	END
+	CLOSE TrgInsCursor
+	DEALLOCATE TrgInsCursor
+
+END
 

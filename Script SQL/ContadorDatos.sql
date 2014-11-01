@@ -42,4 +42,3 @@ FROM THE_FOREIGN_FOUR.Estadias
 
 SELECT COUNT(*) 'EstadiasDefectuosas'
 FROM THE_FOREIGN_FOUR.EstadiasDefectuosas
-

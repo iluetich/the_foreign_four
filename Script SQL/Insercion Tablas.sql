@@ -122,10 +122,11 @@ SELECT m.Item_Factura_Cantidad,
 	    WHERE	m.Consumible_Codigo = c.cod_consumible) AS 'descripcion',*/
 	    --esto hay que ponerlo en un trigger para que sea para todos los casos
 	   --(SELECT cod_consumible
-	   (SELECT cod_consumible
+	   (SELECT DISTINCT c.cod_consumible
 	   FROM THE_FOREIGN_FOUR.Consumibles c
 	   WHERE c.descripcion = m.Consumible_Descripcion
-	   AND c.precio = m.Consumible_precio) AS 'cod_consumible',
+	   AND c.precio = m.Consumible_precio
+	   AND c.cod_consumible = m.Consumible_Codigo) AS 'cod_consumible',
 	   (SELECT nro_factura
 		FROM THE_FOREIGN_FOUR.Facturas f
 		WHERE	m.Factura_Nro = f.nro_factura
@@ -160,3 +161,5 @@ FROM gd_esquema.Maestra m
 */
 --***JUEGO DE DATOS************************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos
+
+
