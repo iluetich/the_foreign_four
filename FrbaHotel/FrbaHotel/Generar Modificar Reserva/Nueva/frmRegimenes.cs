@@ -34,5 +34,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string consultaSql = "select cod_regimen, descripcion, precio from THE_FOREIGN_FOUR.Regimenes";
             FrbaHotel.Utils.rellenarDataGridView(dgvRegimenes,consultaSql);         
         }
+
+        //evento para cuando se hace click en una celda devuelva la fila correspondiente
+        private void dgvRegimenes;
     }
 }

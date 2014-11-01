@@ -29,6 +29,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void frmGenerarReserva_Load(object sender, EventArgs e)
         {
+            //conexion a la BD -- no olvidarse de sacarlo
             FrbaHotel.ConexionSQL.establecerConexionBD();
             cargarControles();
         }
