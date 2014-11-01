@@ -7,6 +7,9 @@ FROM THE_FOREIGN_FOUR.FacturasDefectuosas
 SELECT COUNT(*) 'ItemsFactura'
 FROM THE_FOREIGN_FOUR.ItemsFactura
 
+SELECT COUNT(*) 'ItemsFacturaDefectuosos'
+FROM THE_FOREIGN_FOUR.ItemsFacturaDefectuosos
+
 SELECT COUNT(*) 'Clientes'
 FROM THE_FOREIGN_FOUR.Clientes
 

@@ -113,20 +113,9 @@ SELECT DISTINCT	m.Factura_Nro,
 FROM gd_esquema.Maestra m
 
 --***ITEMS FACTURAS***************************************
-
-INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, descripcion, nro_factura)
+INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, nro_factura)
 SELECT m.Item_Factura_Cantidad, 
-	   m.Item_Factura_Monto, 
-	   /*(SELECT descripcion
-	    FROM THE_FOREIGN_FOUR.Consumibles c
-	    WHERE	m.Consumible_Codigo = c.cod_consumible) AS 'descripcion',*/
-	    --esto hay que ponerlo en un trigger para que sea para todos los casos
-	   --(SELECT cod_consumible
-	   (SELECT DISTINCT c.cod_consumible
-	   FROM THE_FOREIGN_FOUR.Consumibles c
-	   WHERE c.descripcion = m.Consumible_Descripcion
-	   AND c.precio = m.Consumible_precio
-	   AND c.cod_consumible = m.Consumible_Codigo) AS 'cod_consumible',
+	   m.Consumible_Codigo,
 	   (SELECT nro_factura
 		FROM THE_FOREIGN_FOUR.Facturas f
 		WHERE	m.Factura_Nro = f.nro_factura

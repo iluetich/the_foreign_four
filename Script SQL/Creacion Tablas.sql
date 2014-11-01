@@ -192,8 +192,7 @@ CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	nro_factura			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Facturas,
 	cod_consumible		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Consumibles,
 	cantidad			int,
-	descripcion			nvarchar(255),			--hay que acordarse de hacer el trigger
-												--que mantenga la integridad de este campo
+	descripcion			nvarchar(255),			
 )
 
 CREATE TABLE THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (
