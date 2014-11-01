@@ -15,7 +15,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     public partial class frmGenerarReserva : Form
     {
         private MenuDinamico menu;
-       
+        bool regimenesIsOn = true;
+
         public frmGenerarReserva(){
             InitializeComponent();            
         }
@@ -28,6 +29,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void frmGenerarReserva_Load(object sender, EventArgs e)
         {
+            FrbaHotel.ConexionSQL.establecerConexionBD();
             cargarControles();
         }
 
@@ -50,8 +52,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             return (
             FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &
             FrbaHotel.Utils.validarCampoEsteCompleto(txtCantHues, "cantidad huespedes") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoReg, "Tipo regimen") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &            
             FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
             FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata")
             );
@@ -68,13 +69,41 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             string consultaSql = "select * from THE_FOREIGN_FOUR.Hoteles";
             string nombreTabla = "THE_FOREIGN_FOUR.Hoteles";
-            string nombreCampo = "cod_hotel";
+            string nombreCampo = "nombre";
 
             DataSet dataSet = new DataSet();
             SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql,FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             dataAdapter.Fill(dataSet, nombreTabla);
             cmbHotel.DataSource = dataSet.Tables[0].DefaultView;
             cmbHotel.DisplayMember = nombreCampo;
+        }
+
+        private void btnRegimenes_Click(object sender, EventArgs e)
+        {
+            if (regimenesIsOn)
+            {
+                new frmRegimenes(this, regimenesIsOn).Show();
+                regimenesIsOn = false;
+            }
+        }
+
+        public void setRegimesIsOn()
+        {
+            regimenesIsOn = true;
+        }
+
+        private void cmbHotel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string itemCombo = (cmbHotel.SelectedIndex + 1).ToString();
+            string consultaSql = "select distinct h.cod_tipo_hab, t.descripcion from THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones t where cod_hotel=" + itemCombo + "and h.cod_tipo_hab = t.cod_tipo_hab";
+            string nombreTabla = "THE_FOREIGN_FOUR.TipoHabitaciones";
+            string nombreCampo = "descripcion";
+
+            DataSet dataSet = new DataSet();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            dataAdapter.Fill(dataSet, nombreTabla);
+            cmbTipoHab.DataSource = dataSet.Tables[0].DefaultView;
+            cmbTipoHab.DisplayMember = nombreCampo;
         }
     }
 }

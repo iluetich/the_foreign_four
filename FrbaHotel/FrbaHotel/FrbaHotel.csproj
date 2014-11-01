@@ -202,35 +202,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2014DataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Nueva\BuscarCliente.cs">
+    <Compile Include="Generar Modificar Reserva\Nueva\frmBuscarCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Nueva\BuscarCliente.Designer.cs">
-      <DependentUpon>BuscarCliente.cs</DependentUpon>
+    <Compile Include="Generar Modificar Reserva\Nueva\frmBuscarCliente.Designer.cs">
+      <DependentUpon>frmBuscarCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Nueva\Cliente.cs">
+    <Compile Include="Generar Modificar Reserva\Nueva\frmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Nueva\Cliente.Designer.cs">
-      <DependentUpon>Cliente.cs</DependentUpon>
+    <Compile Include="Generar Modificar Reserva\Nueva\frmCliente.Designer.cs">
+      <DependentUpon>frmCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Modificar\ModificarReserva.cs">
+    <Compile Include="Generar Modificar Reserva\Modificar\frmModificarReserva.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Modificar\ModificarReserva.Designer.cs">
-      <DependentUpon>ModificarReserva.cs</DependentUpon>
+    <Compile Include="Generar Modificar Reserva\Modificar\frmModificarReserva.Designer.cs">
+      <DependentUpon>frmModificarReserva.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Modificar\BuscarReserva.cs">
+    <Compile Include="Generar Modificar Reserva\Modificar\frmBuscarReserva.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Modificar\BuscarReserva.Designer.cs">
-      <DependentUpon>BuscarReserva.cs</DependentUpon>
+    <Compile Include="Generar Modificar Reserva\Modificar\frmBuscarReserva.Designer.cs">
+      <DependentUpon>frmBuscarReserva.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Nueva\regimenes.cs">
+    <Compile Include="Generar Modificar Reserva\Nueva\frmRegimenes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Nueva\regimenes.Designer.cs">
-      <DependentUpon>regimenes.cs</DependentUpon>
+    <Compile Include="Generar Modificar Reserva\Nueva\frmRegimenes.Designer.cs">
+      <DependentUpon>frmRegimenes.cs</DependentUpon>
     </Compile>
     <Compile Include="InicioDelSistema.cs">
       <SubType>Form</SubType>
@@ -238,11 +238,11 @@
     <Compile Include="InicioDelSistema.Designer.cs">
       <DependentUpon>InicioDelSistema.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Nueva\GenerarReserva.cs">
+    <Compile Include="Generar Modificar Reserva\Nueva\frmGenerarReserva.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Nueva\GenerarReserva.Designer.cs">
-      <DependentUpon>GenerarReserva.cs</DependentUpon>
+    <Compile Include="Generar Modificar Reserva\Nueva\frmGenerarReserva.Designer.cs">
+      <DependentUpon>frmGenerarReserva.cs</DependentUpon>
     </Compile>
     <Compile Include="Listado Estadistico\frmListadoEstadistico.cs">
       <SubType>Form</SubType>
@@ -335,28 +335,28 @@
     <EmbeddedResource Include="Cancelar Reserva\CancelarReserva.resx">
       <DependentUpon>CancelarReserva.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Modificar Reserva\Modificar\ModificarReserva.resx">
-      <DependentUpon>ModificarReserva.cs</DependentUpon>
+    <EmbeddedResource Include="Generar Modificar Reserva\Modificar\frmModificarReserva.resx">
+      <DependentUpon>frmModificarReserva.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Modificar Reserva\Nueva\BuscarCliente.resx">
-      <DependentUpon>BuscarCliente.cs</DependentUpon>
+    <EmbeddedResource Include="Generar Modificar Reserva\Nueva\frmBuscarCliente.resx">
+      <DependentUpon>frmBuscarCliente.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Modificar Reserva\Nueva\Cliente.resx">
-      <DependentUpon>Cliente.cs</DependentUpon>
+    <EmbeddedResource Include="Generar Modificar Reserva\Nueva\frmCliente.resx">
+      <DependentUpon>frmCliente.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Modificar Reserva\Nueva\GenerarReserva.resx">
-      <DependentUpon>GenerarReserva.cs</DependentUpon>
+    <EmbeddedResource Include="Generar Modificar Reserva\Nueva\frmGenerarReserva.resx">
+      <DependentUpon>frmGenerarReserva.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Modificar Reserva\Modificar\BuscarReserva.resx">
-      <DependentUpon>BuscarReserva.cs</DependentUpon>
+    <EmbeddedResource Include="Generar Modificar Reserva\Modificar\frmBuscarReserva.resx">
+      <DependentUpon>frmBuscarReserva.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Modificar Reserva\Nueva\regimenes.resx">
-      <DependentUpon>regimenes.cs</DependentUpon>
+    <EmbeddedResource Include="Generar Modificar Reserva\Nueva\frmRegimenes.resx">
+      <DependentUpon>frmRegimenes.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="InicioDelSistema.resx">

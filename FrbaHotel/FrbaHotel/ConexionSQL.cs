@@ -20,7 +20,6 @@ namespace FrbaHotel
             try
             {
                 conexion.Open();
-                //MessageBox.Show("Conexion realizada satisfactoriamente");
                 conexionMaestra = conexion;
             }
             catch (Exception)

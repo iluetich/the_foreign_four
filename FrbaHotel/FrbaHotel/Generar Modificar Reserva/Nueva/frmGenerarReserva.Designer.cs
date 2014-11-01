@@ -32,13 +32,12 @@
             this.lblFechaHast = new System.Windows.Forms.Label();
             this.lblTipoHab = new System.Windows.Forms.Label();
             this.cmbTipoHab = new System.Windows.Forms.ComboBox();
-            this.lblTipoReg = new System.Windows.Forms.Label();
-            this.cmbTipoReg = new System.Windows.Forms.ComboBox();
             this.btnCheckRes = new System.Windows.Forms.Button();
             this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
             this.btnRegimenes = new System.Windows.Forms.Button();
             this.grbPanel1 = new System.Windows.Forms.GroupBox();
+            this.txtRegimen = new System.Windows.Forms.TextBox();
             this.txtCostoXDia = new System.Windows.Forms.TextBox();
             this.lblCostoXDia = new System.Windows.Forms.Label();
             this.cmbHotel = new System.Windows.Forms.ComboBox();
@@ -98,29 +97,6 @@
             this.cmbTipoHab.TabIndex = 4;
             this.cmbTipoHab.Tag = "Tipo habitacion";
             // 
-            // lblTipoReg
-            // 
-            this.lblTipoReg.AutoSize = true;
-            this.lblTipoReg.Location = new System.Drawing.Point(19, 169);
-            this.lblTipoReg.Name = "lblTipoReg";
-            this.lblTipoReg.Size = new System.Drawing.Size(76, 13);
-            this.lblTipoReg.TabIndex = 6;
-            this.lblTipoReg.Text = "Tipo Regimen:";
-            // 
-            // cmbTipoReg
-            // 
-            this.cmbTipoReg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTipoReg.FormattingEnabled = true;
-            this.cmbTipoReg.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3"});
-            this.cmbTipoReg.Location = new System.Drawing.Point(138, 161);
-            this.cmbTipoReg.Name = "cmbTipoReg";
-            this.cmbTipoReg.Size = new System.Drawing.Size(200, 21);
-            this.cmbTipoReg.TabIndex = 5;
-            this.cmbTipoReg.Tag = "Tipo regimiento";
-            // 
             // btnCheckRes
             // 
             this.btnCheckRes.Location = new System.Drawing.Point(22, 19);
@@ -149,16 +125,18 @@
             // btnRegimenes
             // 
             this.btnRegimenes.AutoSize = true;
-            this.btnRegimenes.Location = new System.Drawing.Point(137, 187);
+            this.btnRegimenes.Location = new System.Drawing.Point(22, 171);
             this.btnRegimenes.Name = "btnRegimenes";
             this.btnRegimenes.Size = new System.Drawing.Size(141, 23);
             this.btnRegimenes.TabIndex = 6;
-            this.btnRegimenes.Text = "Ver regímenes disponibles";
+            this.btnRegimenes.Text = "Seleccionar regimen";
             this.btnRegimenes.UseVisualStyleBackColor = true;
+            this.btnRegimenes.Click += new System.EventHandler(this.btnRegimenes_Click);
             // 
             // grbPanel1
             // 
             this.grbPanel1.AutoSize = true;
+            this.grbPanel1.Controls.Add(this.txtRegimen);
             this.grbPanel1.Controls.Add(this.txtCostoXDia);
             this.grbPanel1.Controls.Add(this.lblCostoXDia);
             this.grbPanel1.Controls.Add(this.cmbHotel);
@@ -172,14 +150,19 @@
             this.grbPanel1.Controls.Add(this.dtpFechaDesde);
             this.grbPanel1.Controls.Add(this.lblTipoHab);
             this.grbPanel1.Controls.Add(this.cmbTipoHab);
-            this.grbPanel1.Controls.Add(this.cmbTipoReg);
-            this.grbPanel1.Controls.Add(this.lblTipoReg);
             this.grbPanel1.Location = new System.Drawing.Point(19, 11);
             this.grbPanel1.Name = "grbPanel1";
             this.grbPanel1.Size = new System.Drawing.Size(364, 262);
             this.grbPanel1.TabIndex = 0;
             this.grbPanel1.TabStop = false;
             this.grbPanel1.Text = "Datos Reserva";
+            // 
+            // txtRegimen
+            // 
+            this.txtRegimen.Location = new System.Drawing.Point(173, 173);
+            this.txtRegimen.Name = "txtRegimen";
+            this.txtRegimen.Size = new System.Drawing.Size(164, 20);
+            this.txtRegimen.TabIndex = 16;
             // 
             // txtCostoXDia
             // 
@@ -207,6 +190,7 @@
             this.cmbHotel.Size = new System.Drawing.Size(199, 21);
             this.cmbHotel.TabIndex = 0;
             this.cmbHotel.Tag = "";
+            this.cmbHotel.SelectedIndexChanged += new System.EventHandler(this.cmbHotel_SelectedIndexChanged);
             // 
             // lblSeleccionarHotel
             // 
@@ -343,8 +327,6 @@
         private System.Windows.Forms.Label lblFechaHast;
         private System.Windows.Forms.Label lblTipoHab;
         private System.Windows.Forms.ComboBox cmbTipoHab;
-        private System.Windows.Forms.Label lblTipoReg;
-        private System.Windows.Forms.ComboBox cmbTipoReg;
         private System.Windows.Forms.Button btnCheckRes;
         private System.Windows.Forms.DateTimePicker dtpFechaDesde;
         private System.Windows.Forms.DateTimePicker dtpFechaHasta;
@@ -363,5 +345,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblCostoXDia;
         private System.Windows.Forms.TextBox txtCostoXDia;
+        private System.Windows.Forms.TextBox txtRegimen;
     }
 }
