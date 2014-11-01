@@ -425,8 +425,11 @@ BEGIN
 		
 		ELSE
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, cod_consumible)
-			VALUES (@nro_factura, @cantidad, @cod_consumible);
+			INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, cod_consumible, descripcion)
+			VALUES (@nro_factura, @cantidad, @cod_consumible, 
+			(SELECT descripcion
+			FROM THE_FOREIGN_FOUR.Consumibles
+			WHERE cod_consumible = @cod_consumible));
 		END			
 			
 		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible  
@@ -438,6 +441,8 @@ BEGIN
 
 END
 GO
+
+/* -- este trigger hay que activarlo despues de la migracion
 
 CREATE TRIGGER trg_items_descripcion
 ON THE_FOREIGN_FOUR.ItemsFactura
@@ -469,4 +474,4 @@ BEGIN
   DEALLOCATE TrigCursor;
 
 END
-GO
+GO*/
