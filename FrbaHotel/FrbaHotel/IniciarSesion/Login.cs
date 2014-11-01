@@ -67,22 +67,21 @@ namespace FrbaHotel.IniciarSecion
         {
             this.podesIngresar = true;
             
-            //te lo comente nacho, fijate como anda lo otro despues borralo vos
-            //string stringConnection = "Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014";
-            //SqlConnection conexion = new SqlConnection();
-            //conexion.ConnectionString = stringConnection;
+            string stringConnection = "Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014";
+            SqlConnection conexion = new SqlConnection();
+            conexion.ConnectionString = stringConnection;
             
             //corrobora user_name AYUDA MEMORIA MUY IMPORTANTE NO OLVIDARSE LAS COMILLAS CUANDO SE PONEN STRING EN SQL
             SqlCommand cmd2 = new SqlCommand();
             cmd2.CommandText = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[Usuarios] WHERE user_name='" + this.user_name +"'";
             cmd2.CommandType = CommandType.Text;
-            cmd2.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+            cmd2.Connection = conexion;
 
             //corrobora password
             SqlCommand cmd = new SqlCommand();          
             cmd.CommandText = consultaSql;
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+            cmd.Connection = conexion;
 
             //para que no me salte error si no se elige nada
             string consultaCmd3;
@@ -112,7 +111,7 @@ namespace FrbaHotel.IniciarSecion
             cmd4.CommandType = CommandType.Text;
             cmd4.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
 
-            //FrbaHotel.ConexionSQL.getSqlInstanceConnection().Open();
+            conexion.Open();
 
             int resultadoUserName = (int)cmd2.ExecuteScalar();
 
@@ -147,7 +146,7 @@ namespace FrbaHotel.IniciarSecion
                 }
             }
 
-            //conexion.Close();
+            conexion.Close();
 
             if (podesIngresar) 
             {

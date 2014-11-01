@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
@@ -14,15 +15,24 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         frmGenerarReserva frmGenerarReservaPadre;
         bool band;
 
+        //inicializo variables
         public frmRegimenes(frmGenerarReserva newFrm, bool band)
         {
             InitializeComponent();
             frmGenerarReservaPadre = newFrm;
-            this.band = band;
+            this.band = band;           
         }
 
+        //evento para cuando se cierra el form
         private void frmRegimenes_FormClosing(object sender, FormClosingEventArgs e){
             frmGenerarReservaPadre.setRegimesIsOn();            
+        }
+
+        //en load del form carga en el datagrid los valores de regimenes
+        private void frmRegimenes_Load(object sender, EventArgs e)
+        {
+            string consultaSql = "select cod_regimen, descripcion, precio from THE_FOREIGN_FOUR.Regimenes";
+            FrbaHotel.Utils.rellenarDataGridView(dgvRegimenes,consultaSql);         
         }
     }
 }

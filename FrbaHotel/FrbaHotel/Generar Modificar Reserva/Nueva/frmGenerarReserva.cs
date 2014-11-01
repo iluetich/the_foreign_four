@@ -71,11 +71,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string nombreTabla = "THE_FOREIGN_FOUR.Hoteles";
             string nombreCampo = "nombre";
 
-            DataSet dataSet = new DataSet();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql,FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            dataAdapter.Fill(dataSet, nombreTabla);
-            cmbHotel.DataSource = dataSet.Tables[0].DefaultView;
-            cmbHotel.DisplayMember = nombreCampo;
+            FrbaHotel.Utils.rellenarComboBox(cmbHotel, nombreTabla, nombreCampo, consultaSql);
+           
         }
 
         private void btnRegimenes_Click(object sender, EventArgs e)
@@ -99,11 +96,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string nombreTabla = "THE_FOREIGN_FOUR.TipoHabitaciones";
             string nombreCampo = "descripcion";
 
-            DataSet dataSet = new DataSet();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            dataAdapter.Fill(dataSet, nombreTabla);
-            cmbTipoHab.DataSource = dataSet.Tables[0].DefaultView;
-            cmbTipoHab.DisplayMember = nombreCampo;
+            FrbaHotel.Utils.rellenarComboBox(cmbTipoHab, nombreTabla, nombreCampo, consultaSql);
+
         }
     }
 }

@@ -161,6 +161,7 @@
             // 
             this.txtRegimen.Location = new System.Drawing.Point(173, 173);
             this.txtRegimen.Name = "txtRegimen";
+            this.txtRegimen.ReadOnly = true;
             this.txtRegimen.Size = new System.Drawing.Size(164, 20);
             this.txtRegimen.TabIndex = 16;
             // 
