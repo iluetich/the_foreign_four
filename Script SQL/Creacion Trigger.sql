@@ -167,7 +167,32 @@ END
 GO
 
 --*****************************************************
-
+/*
+CREATE TRIGGER trg_precio_estadia
+ON THE_FOREIGN_FOUR.Estadias
+AFTER INSERT
+AS
+BEGIN
+	DECLARE TrgInsCursor CURSOR FOR
+	SELECT cod_reserva FROM inserted
+	DECLARE @cod_reserva numeric(18,0)
+	
+	OPEN  TrgInsCursor
+	FETCH NEXT FROM TrgInsCurson INTO @cod_reserva
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.Estadias
+		SELECT r.cant_noches * th.recargo
+		FROM	THE_FOREIGN_FOUR.Reservas r,
+				THE_FOREIGN_FOUR.TipoHabitaciones th
+		WHERE r.cod_
+	
+	END
+	CLOSE TrgInsCursor
+	DEALLOCATE TrgInsCursor
+END
+GO*/
+--*************************************************
 CREATE TRIGGER trg_habitaciones_error
 ON THE_FOREIGN_FOUR.Habitaciones
 INSTEAD OF INSERT
@@ -311,7 +336,7 @@ GO
 
 
 --***********************************************
-
+/*
 CREATE TRIGGER trg_consumibles_por_estadia
 ON THE_FOREIGN_FOUR.ConsumiblesPorEstadia
 INSTEAD OF INSERT
@@ -365,7 +390,7 @@ BEGIN
 
 END
 GO
-
+*/
 --*********************************************************
 
 CREATE TRIGGER trg_itemsFactura_error
@@ -375,35 +400,38 @@ AS
 BEGIN
 
 	DECLARE TrigInsCursor CURSOR FOR
-	SELECT nro_factura, cantidad, precio_unitario, descripcion
+	SELECT nro_factura, cantidad, cod_consumible, descripcion
 	FROM inserted
 	DECLARE @nro_factura numeric(18,0),
 			@cantidad numeric(18,0),
-			@precio_unitario numeric(18,2),
+			@cod_consumible numeric(18,0),
 			@descripcion nvarchar(255)
 
 	OPEN TrigInsCursor;
 
-	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @precio_unitario, @descripcion
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible, @descripcion
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
 		IF(@nro_factura IS NULL OR
 		   @cantidad IS NULL OR
-		   @precio_unitario IS NULL)
+		   NOT EXISTS( SELECT cod_consumible
+						FROM THE_FOREIGN_FOUR.Consumibles
+						WHERE cod_consumible = @cod_consumible )
+			)
 		   
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (nro_factura, cantidad, precio_unitario, descripcion)
-			VALUES (@nro_factura, @cantidad, @precio_unitario, @descripcion);
+			INSERT INTO THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (nro_factura, cantidad, cod_consumible, descripcion)
+			VALUES (@nro_factura, @cantidad, @cod_consumible, @descripcion);
 		END	
 		ELSE
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, precio_unitario, descripcion)
-			VALUES (@nro_factura, @cantidad, @precio_unitario, @descripcion);
+			INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, cod_consumible, descripcion)
+			VALUES (@nro_factura, @cantidad, @cod_consumible, @descripcion);
 		END			
 			
-		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @precio_unitario, @descripcion   
+		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible, @descripcion   
 
   END
 

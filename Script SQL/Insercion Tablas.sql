@@ -23,7 +23,6 @@ SELECT DISTINCT Habitacion_Tipo_Codigo, Habitacion_Tipo_Descripcion, Habitacion_
 FROM gd_esquema.Maestra
 
 --***CONSUMIBLES**************************************
---Para que tenemos una tabla consumibles defectuosos si no hay trigger?
 
 INSERT INTO THE_FOREIGN_FOUR.Consumibles (cod_consumible, descripcion, precio)
 SELECT DISTINCT Consumible_Codigo, Consumible_Descripcion, Consumible_Precio
@@ -115,12 +114,18 @@ FROM gd_esquema.Maestra m
 
 --***ITEMS FACTURAS***************************************
 
-INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, precio_unitario, descripcion, nro_factura)
-SELECT Item_Factura_Cantidad, 
-	   Item_Factura_Monto, 
-	   (SELECT descripcion
+INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, descripcion, nro_factura)
+SELECT m.Item_Factura_Cantidad, 
+	   m.Item_Factura_Monto, 
+	   /*(SELECT descripcion
 	    FROM THE_FOREIGN_FOUR.Consumibles c
-	    WHERE	m.Consumible_Codigo = c.cod_consumible) AS 'descripcion',
+	    WHERE	m.Consumible_Codigo = c.cod_consumible) AS 'descripcion',*/
+	    --esto hay que ponerlo en un trigger para que sea para todos los casos
+	   --(SELECT cod_consumible
+	   (SELECT cod_consumible
+	   FROM THE_FOREIGN_FOUR.Consumibles c
+	   WHERE c.descripcion = m.Consumible_Descripcion
+	   AND c.precio = m.Consumible_precio) AS 'cod_consumible',
 	   (SELECT nro_factura
 		FROM THE_FOREIGN_FOUR.Facturas f
 		WHERE	m.Factura_Nro = f.nro_factura
@@ -144,7 +149,7 @@ SELECT DISTINCT (SELECT c.cod_cliente
 FROM gd_esquema.Maestra m
 
 --***CONSUMIBLES POR ESTADIA***************************************
-
+/*
 INSERT INTO THE_FOREIGN_FOUR.ConsumiblesPorEstadia (cod_consumible, cantidad, cod_estadia)
 SELECT	Consumible_Codigo, 
 		Item_Factura_Cantidad,
@@ -152,6 +157,6 @@ SELECT	Consumible_Codigo,
 		FROM	THE_FOREIGN_FOUR.Estadias e
 		WHERE	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
-
+*/
 --***JUEGO DE DATOS************************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos

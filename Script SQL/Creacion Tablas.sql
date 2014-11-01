@@ -152,6 +152,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Estadias (
 	nro_habitacion		numeric(18,0),
 	fecha_inicio		datetime,
 	cant_noches			numeric(18,0),
+	precio				numeric(18,2)
 )
 CREATE TABLE THE_FOREIGN_FOUR.EstadiasDefectuosas (
 	cod_estadia			numeric(18,0)			IDENTITY (1,1) PRIMARY KEY,
@@ -174,20 +175,7 @@ CREATE TABLE THE_FOREIGN_FOUR.FacturasDefectuosas (
 	fecha_factura		datetime,
 	total				numeric(18,2),
 )
-CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
-	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
-	nro_factura			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Facturas,
-	cantidad			int,
-	precio_unitario		decimal(6,2),
-	descripcion			nvarchar(255),
-)
-CREATE TABLE THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (
-	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
-	nro_factura			numeric(18,0),
-	cantidad			int,
-	precio_unitario		decimal(6,2),
-	descripcion			nvarchar(255),
-)
+
 CREATE TABLE THE_FOREIGN_FOUR.Consumibles (
 	cod_consumible		numeric(18,0)			PRIMARY KEY,
 	descripcion			nvarchar(255),
@@ -198,11 +186,23 @@ CREATE TABLE THE_FOREIGN_FOUR.ClientePorEstadia (
 	cod_cliente			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Clientes,
 	PRIMARY KEY (cod_estadia, cod_cliente)
 )
-CREATE TABLE THE_FOREIGN_FOUR.ConsumiblesPorEstadia (
-	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
+
+CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
+	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
+	nro_factura			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Facturas,
 	cod_consumible		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Consumibles,
 	cantidad			int,
-	PRIMARY KEY (cod_estadia, cod_consumible)
+	descripcion			nvarchar(255),			--hay que acordarse de hacer el trigger
+												--que mantenga la integridad de este campo
+)
+
+CREATE TABLE THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (
+	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
+	nro_factura			numeric(18,0),
+	cod_consumible		int,
+	cantidad			int,
+	precio_unitario		decimal(6,2),
+	descripcion			nvarchar(255),
 )
 CREATE TABLE THE_FOREIGN_FOUR.RegimenPorHotel (
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,

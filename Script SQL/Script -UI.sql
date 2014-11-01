@@ -304,6 +304,61 @@ SET estado = 'I'
 WHERE cod_rol = @cod_rol
 GO
 
+CREATE VIEW THE_FOREIGN_FOUR.view_facturas
+AS
+SELECT f.nro_factura, f.cod_estadia, c.cod_consumible, c.descripcion, c.precio, ce.cantidad
+FROM	THE_FOREIGN_FOUR.Facturas f, 
+		THE_FOREIGN_FOUR.ItemsFactura i,
+		THE_FOREIGN_FOUR.ConsumiblesPorEstadia ce,
+		THE_FOREIGN_FOUR.Consumibles c
+WHERE ce.cod_estadia = f.cod_estadia
+AND f.nro_factura = i.nro_factura
+AND c.cod_consumible = ce.cod_consumible
+
+CREATE FUNCTION THE_FOREIGN_FOUR.facturacion(@cod_estadia int)
+RETURNS TABLE
+AS
+RETURN(
+SELECT *
+FROM THE_FOREIGN_FOUR.view_facturas
+WHERE cod_estadia = @cod_estadia
+)
+
+CREATE TRIGGER trg_separar_factura
+ON THE_FOREIGN_FOUR.view_facturas
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT nro_factura, cod_estadia, cod_consumible, cantidad
+	FROM inserted
+	DECLARE	@nro_factura numeric(18,0),
+			@cod_estadia int,
+			@cod_consumible int,
+			@cantidad int
+			
+	OPEN TrigInsCursor;
+	
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cod_estadia, @cod_consumible
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+	INSERT INTO THE_FOREIGN_FOUR.ConsumiblesPorEstadia (cod_estadia, cod_consumible, cantidad)
+	VALUES (@cod_estadia, @cod_consumible, @cantidad)
+	
+	INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, 
+	
+	
+	END
+	CLOSE TrigInsCursor;
+	DEALLOCATE TrigInsCursor;
+END
+GO
+
+
+
+DROP VIEW THE_FOREIGN_FOUR.view_facturas
 
 --********************************************
 --******SCRIPT PARA DROPEAR*******************

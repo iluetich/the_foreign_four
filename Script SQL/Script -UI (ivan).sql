@@ -27,10 +27,12 @@ BEGIN
 			('registrar_consumible'),
 			('facturar_estadia'),
 			('listado_estadistico')
+			
 	INSERT INTO THE_FOREIGN_FOUR.FuncionalidadPorRol(cod_rol, cod_funcion)
 	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), (1,10), (1,11), (1,12),
 			(2,1), (2,4), (2,7), (2,8), (2,9), (2,10),
 			(3,7), (3,8)
+			
 	INSERT INTO THE_FOREIGN_FOUR.RegimenPorHotel(cod_hotel, cod_regimen)
 	VALUES	(1,1), (1,2), (1,3), (1,4),
 			(2,1), (2,2), (2,3), (2,4),
@@ -48,6 +50,7 @@ BEGIN
 			(14,1), (14,2), (14,3), (14,4),
 			(15,1), (15,2), (15,3), (15,4),
 			(16,1), (16,2), (16,3), (16,4)
+			
 	INSERT INTO THE_FOREIGN_FOUR.UsuariosPorHotel(cod_usuario, cod_hotel, cod_rol)
 	VALUES	(1, 1, 1), (1, 2, 1), (1, 3, 1), (1, 4, 1), (1, 5, 1), 
 			(1, 6, 1), (1, 7, 1), (1, 8, 1), (1, 9, 1), (1, 10, 1),
