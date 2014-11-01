@@ -310,6 +310,7 @@ SET estado = 'I'
 WHERE cod_rol = @cod_rol
 GO
 --***********************************************************
+/*
 CREATE VIEW THE_FOREIGN_FOUR.view_facturas
 AS
 SELECT f.nro_factura, f.cod_estadia, c.cod_consumible, c.descripcion, c.precio, ce.cantidad
@@ -365,7 +366,7 @@ GO
 
 
 
-DROP VIEW THE_FOREIGN_FOUR.view_facturas
+DROP VIEW THE_FOREIGN_FOUR.view_facturas*/
 
 --********************************************
 --******SCRIPT PARA DROPEAR*******************

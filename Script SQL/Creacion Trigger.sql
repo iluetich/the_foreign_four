@@ -168,6 +168,11 @@ GO
 
 --*****************************************************
 /*
+
+El valor de la habitación se obtiene a través de su precio base
+multiplicando la cantidad de personas que se alojarán en la habitación (tipo de habitación)
+y luego de ello aplicando un incremento en función de la categoría del Hotel (cantidad de estrellas)
+
 CREATE TRIGGER trg_precio_estadia
 ON THE_FOREIGN_FOUR.Estadias
 AFTER INSERT
@@ -181,11 +186,11 @@ BEGIN
 	FETCH NEXT FROM TrgInsCurson INTO @cod_reserva
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-		INSERT INTO THE_FOREIGN_FOUR.Estadias
-		SELECT r.cant_noches * th.recargo
-		FROM	THE_FOREIGN_FOUR.Reservas r,
-				THE_FOREIGN_FOUR.TipoHabitaciones th
-		WHERE r.cod_
+		UPDATE THE_FOREIGN_FOUR.Estadias
+		SET precio = (	SELECT r.cant_noches * th.recargo
+						FROM	THE_FOREIGN_FOUR.Reservas r,
+						THE_FOREIGN_FOUR.TipoHabitaciones th
+						WHERE r.cod_
 	
 	END
 	CLOSE TrgInsCursor
@@ -334,63 +339,6 @@ BEGIN
 END
 GO
 
-
---***********************************************
-/*
-CREATE TRIGGER trg_consumibles_por_estadia
-ON THE_FOREIGN_FOUR.ConsumiblesPorEstadia
-INSTEAD OF INSERT
-AS
-BEGIN
-
-	DECLARE TrigInsCursor CURSOR FOR
-	SELECT cod_consumible, cantidad, cod_estadia
-	FROM inserted
-	DECLARE @cod_consumible numeric(18,0),
-			@cantidad numeric(18,0),
-			@cod_estadia numeric(18,0)
-
-	OPEN TrigInsCursor;
-
-	FETCH NEXT FROM TrigInsCursor INTO @cod_consumible, @cantidad, @cod_estadia
-
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-	
-		IF(@cod_consumible IS NULL OR
-		   @cantidad IS NULL OR
-		   @cod_estadia IS NULL)
-		
-		BEGIN
-			FETCH NEXT FROM TrigInsCursor INTO @cod_consumible, @cantidad, @cod_estadia
-			CONTINUE
-		END
-		IF(EXISTS (SELECT	cpe.cod_consumible, cpe.cod_estadia
-				   FROM		THE_FOREIGN_FOUR.ConsumiblesPorEstadia cpe
-				   WHERE	@cod_estadia = cpe.cod_estadia
-				   AND		@cod_consumible = cpe.cod_consumible))
-		BEGIN
-			UPDATE	THE_FOREIGN_FOUR.ConsumiblesPorEstadia
-			SET		cantidad += 1
-			WHERE	@cod_estadia = cod_estadia
-			AND		@cod_consumible = cod_consumible
-		END
-		ELSE
-		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.ConsumiblesPorEstadia(cod_consumible, cantidad, cod_estadia)
-			VALUES (@cod_consumible, @cantidad, @cod_estadia);
-		END			
-		
-		FETCH NEXT FROM TrigInsCursor INTO @cod_consumible, @cantidad, @cod_estadia   
-
-  END
-
-  CLOSE TrigInsCursor;
-  DEALLOCATE TrigInsCursor;
-
-END
-GO
-*/
 --*********************************************************
 
 CREATE TRIGGER trg_itemsFactura_error
@@ -451,22 +399,25 @@ AS
 BEGIN
 
 	DECLARE TrigCursor CURSOR FOR
-	SELECT cod_consumible
+	SELECT cod_consumible, nro_factura
 	FROM inserted
 	DECLARE @cod_consumible numeric(18,0)
+			@nro_factura numeric(18,0)
 			
 	OPEN TrigCursor;
 
-	FETCH NEXT FROM TrigCursor INTO @cod_consumible
+	FETCH NEXT FROM TrigCursor INTO @cod_consumible, @nro_factura
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-		INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (descripcion)
-		SELECT descripcion
-		FROM THE_FOREIGN_FOUR.Consumibles
-		WHERE cod_consumible = @cod_consumible;
+		UPDATE THE_FOREIGN_FOUR.ItemsFactura 
+		SET descripcion = (SELECT descripcion
+		                   FROM THE_FOREIGN_FOUR.Consumibles
+		                   WHERE cod_consumible = @cod_consumible)
+		WHERE cod_consumible = @cod_consumible
+		AND nro_factura = @nro_factura;
 			
-		FETCH NEXT FROM TrigCursor INTO @cod_consumible  
+		FETCH NEXT FROM TrigCursor INTO @cod_consumible, @nro_factura  
 
 	END
 
