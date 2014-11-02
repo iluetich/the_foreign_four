@@ -15,40 +15,66 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     public partial class frmGenerarReserva : Form
     {
         private MenuDinamico menu;
-        bool regimenesIsOn = true;
+        bool regimenesIsOn;
+        bool boolVerificoDisp;
 
-        public frmGenerarReserva(){
-            InitializeComponent();            
-        }
+        //constructor generico  
+        public frmGenerarReserva() { InitializeComponent(); }
 
+        //constructor que invoca el menu
         public frmGenerarReserva(MenuDinamico menuPadre)
         {
             this.menu = menuPadre;
             InitializeComponent();
         }
 
+        //evento load del form
         private void frmGenerarReserva_Load(object sender, EventArgs e)
         {
-            //conexion a la BD -- no olvidarse de sacarlo
-            FrbaHotel.ConexionSQL.establecerConexionBD();
-            cargarControles();
-        }
+            //seteo de booleanos
+            regimenesIsOn = false;
+            boolVerificoDisp = false;
 
-        private void btnSiguietne_Click(object sender, EventArgs e)
+            //conexion a la BD -- no olvidarse de sacarl
+            FrbaHotel.ConexionSQL.establecerConexionBD();
+            cargarControles();            
+        }
+        
+        //muestra ventana regimenes
+        private void btnRegimenes_Click(object sender, EventArgs e)
         {
-            if (validarDatosCompletos() &
-                FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)){
-                    
-                    new frmCliente(this).Show();
-                    this.Enabled = false;
+            if (!regimenesIsOn)
+            {
+                new frmRegimenes(this, regimenesIsOn).Show();
+                regimenesIsOn = true;
             }
         }
 
-        private void frmGenerarReserva_FormClosing(Object sender, FormClosingEventArgs e)
+        //verifica que los campos esten completos cuando se verifica la disponibilidad y autoriza al boton siguiente
+        private void btnVerificarDisp_Click(object sender, EventArgs e)
         {
-            this.menu.Show();
+            if (validarDatosCompletos() &
+                FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta))
+            {
+                boolVerificoDisp = true;
+            }
         }
 
+        //boton a la siguiente ventana
+        private void btnSiguietne_Click(object sender, EventArgs e)
+        {
+            if (boolVerificoDisp)
+            {
+                new frmCliente(this).Show();
+                this.Enabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Verifique la disponibilidad de la reserva antes de continuar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }       
+
+        //valida que los campos esten completos
         private bool validarDatosCompletos(){
             return (
             FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &
@@ -59,37 +85,32 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             );
         }
 
+        //valida que el input del textbox sean solo numeros
         private void txtCantHues_KeyPress(object sender,KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
 
+        //boton volver
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }     
 
+        //carga de controles desde la BD
         private void cargarControles()
         {
             string consultaSql = "select * from THE_FOREIGN_FOUR.Hoteles";
             string nombreTabla = "THE_FOREIGN_FOUR.Hoteles";
             string nombreCampo = "nombre";
 
-            FrbaHotel.Utils.rellenarComboBox(cmbHotel, nombreTabla, nombreCampo, consultaSql);
-           
-        }
+            FrbaHotel.Utils.rellenarCombo(cmbHotel, nombreTabla, nombreCampo, consultaSql);           
+        }      
 
-        private void btnRegimenes_Click(object sender, EventArgs e)
-        {
-            if (regimenesIsOn)
-            {
-                new frmRegimenes(this, regimenesIsOn).Show();
-                regimenesIsOn = false;
-            }
-        }
-
+        //metodo llamado del form de regimenes
         public void setRegimesIsOn()
         {
             regimenesIsOn = true;
         }
 
+        //evento para que cuando cambie el idex del combo hotel se auto cargue en el combo habitaciones las correspondientes al hotel
         private void cmbHotel_SelectedIndexChanged(object sender, EventArgs e)
         {
             string itemCombo = (cmbHotel.SelectedIndex + 1).ToString();
@@ -98,12 +119,21 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string nombreCampo = "descripcion";
 
             FrbaHotel.Utils.rellenarComboBox(cmbTipoHab, nombreTabla, nombreCampo, consultaSql);
-
         }
 
+        //obtengo la fila seleccionada del grid de regimenes para llenar el textbox con el regimen
         public void filaSeleccionadaDataGrid(DataGridViewRow row)
         {
             txtRegimen.Text = row.Cells[1].Value.ToString();
         }
+
+        //evento para el cierre del form
+        private void frmGenerarReserva_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            this.menu.Show();
+        }
+      
+
+       
     }
 }

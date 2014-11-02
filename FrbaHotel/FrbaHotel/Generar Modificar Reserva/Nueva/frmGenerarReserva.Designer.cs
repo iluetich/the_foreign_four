@@ -32,7 +32,7 @@
             this.lblFechaHast = new System.Windows.Forms.Label();
             this.lblTipoHab = new System.Windows.Forms.Label();
             this.cmbTipoHab = new System.Windows.Forms.ComboBox();
-            this.btnCheckRes = new System.Windows.Forms.Button();
+            this.btnVerificarDisp = new System.Windows.Forms.Button();
             this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
             this.btnRegimenes = new System.Windows.Forms.Button();
@@ -97,14 +97,15 @@
             this.cmbTipoHab.TabIndex = 4;
             this.cmbTipoHab.Tag = "Tipo habitacion";
             // 
-            // btnCheckRes
+            // btnVerificarDisp
             // 
-            this.btnCheckRes.Location = new System.Drawing.Point(22, 19);
-            this.btnCheckRes.Name = "btnCheckRes";
-            this.btnCheckRes.Size = new System.Drawing.Size(129, 23);
-            this.btnCheckRes.TabIndex = 8;
-            this.btnCheckRes.Text = "Verificar disponibilidad";
-            this.btnCheckRes.UseVisualStyleBackColor = true;
+            this.btnVerificarDisp.Location = new System.Drawing.Point(22, 19);
+            this.btnVerificarDisp.Name = "btnVerificarDisp";
+            this.btnVerificarDisp.Size = new System.Drawing.Size(129, 23);
+            this.btnVerificarDisp.TabIndex = 8;
+            this.btnVerificarDisp.Text = "Verificar disponibilidad";
+            this.btnVerificarDisp.UseVisualStyleBackColor = true;
+            this.btnVerificarDisp.Click += new System.EventHandler(this.btnVerificarDisp_Click);
             // 
             // dtpFechaDesde
             // 
@@ -235,7 +236,7 @@
             this.grbPanel2.AutoSize = true;
             this.grbPanel2.Controls.Add(this.txtCostoTotal);
             this.grbPanel2.Controls.Add(this.label2);
-            this.grbPanel2.Controls.Add(this.btnCheckRes);
+            this.grbPanel2.Controls.Add(this.btnVerificarDisp);
             this.grbPanel2.Controls.Add(this.textBox1);
             this.grbPanel2.Location = new System.Drawing.Point(19, 286);
             this.grbPanel2.Name = "grbPanel2";
@@ -295,7 +296,7 @@
             // 
             // frmGenerarReserva
             // 
-            this.AcceptButton = this.btnCheckRes;
+            this.AcceptButton = this.btnVerificarDisp;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
@@ -329,7 +330,7 @@
         private System.Windows.Forms.Label lblFechaHast;
         private System.Windows.Forms.Label lblTipoHab;
         private System.Windows.Forms.ComboBox cmbTipoHab;
-        private System.Windows.Forms.Button btnCheckRes;
+        private System.Windows.Forms.Button btnVerificarDisp;
         private System.Windows.Forms.DateTimePicker dtpFechaDesde;
         private System.Windows.Forms.DateTimePicker dtpFechaHasta;
         private System.Windows.Forms.Button btnRegimenes;

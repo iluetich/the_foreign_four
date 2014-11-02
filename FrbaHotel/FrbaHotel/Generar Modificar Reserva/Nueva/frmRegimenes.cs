@@ -36,6 +36,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
         //evento para cuando se hace click en una celda devuelva la fila correspondiente
-        //private void dgvRegimenes;
+        private void dgvRegimenes_CellClick(object sender, DataGridViewCellEventArgs e)
+        {            
+            DataGridViewRow row = dgvRegimenes.Rows[e.RowIndex];
+            frmGenerarReservaPadre.filaSeleccionadaDataGrid(row);
+            this.Close();
+        }
     }
 }
