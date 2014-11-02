@@ -111,5 +111,16 @@ namespace FrbaHotel
             comboBox1.DisplayMember = nombreCampo;
         }
 
+        //Guarda en una tabla los resultados de hacer una query a la BD para despues pasar a variables individuales
+        internal static DataTable obtenerDatosBD(string consultaSQL){
+            
+            DataTable dt = new DataTable();
+            SqlCommand comando = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            SqlDataAdapter adapter = new SqlDataAdapter(comando);
+            adapter.Fill(dt);
+
+            return dt;
+        }
+
     }
 }
