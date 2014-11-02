@@ -96,6 +96,7 @@
             this.cmbTipoHab.Size = new System.Drawing.Size(200, 21);
             this.cmbTipoHab.TabIndex = 4;
             this.cmbTipoHab.Tag = "Tipo habitacion";
+            this.cmbTipoHab.SelectedIndexChanged += new System.EventHandler(this.cmbTipoHab_SelectedIndexChanged);
             // 
             // btnVerificarDisp
             // 
@@ -114,6 +115,7 @@
             this.dtpFechaDesde.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaDesde.TabIndex = 1;
             this.dtpFechaDesde.Tag = "Fecha desde";
+            this.dtpFechaDesde.ValueChanged += new System.EventHandler(this.dtpFechaDesde_ValueChanged);
             // 
             // dtpFechaHasta
             // 
@@ -122,6 +124,7 @@
             this.dtpFechaHasta.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaHasta.TabIndex = 2;
             this.dtpFechaHasta.Tag = "Fecha hasta";
+            this.dtpFechaHasta.ValueChanged += new System.EventHandler(this.dtpFechaHasta_ValueChanged);
             // 
             // btnRegimenes
             // 
@@ -166,12 +169,14 @@
             this.txtRegimen.Size = new System.Drawing.Size(164, 20);
             this.txtRegimen.TabIndex = 16;
             this.txtRegimen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtRegimen.TextChanged += new System.EventHandler(this.txtRegimen_TextChanged);
             // 
             // txtCostoXDia
             // 
             this.txtCostoXDia.Enabled = false;
             this.txtCostoXDia.Location = new System.Drawing.Point(138, 215);
             this.txtCostoXDia.Name = "txtCostoXDia";
+            this.txtCostoXDia.ReadOnly = true;
             this.txtCostoXDia.Size = new System.Drawing.Size(199, 20);
             this.txtCostoXDia.TabIndex = 7;
             // 
@@ -212,6 +217,7 @@
             this.txtCantHues.Size = new System.Drawing.Size(200, 20);
             this.txtCantHues.TabIndex = 3;
             this.txtCantHues.Tag = "Cantidad de huespedes";
+            this.txtCantHues.TextChanged += new System.EventHandler(this.txtCantHues_TextChanged);
             this.txtCantHues.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantHues_KeyPress);
             // 
             // lblCantHues

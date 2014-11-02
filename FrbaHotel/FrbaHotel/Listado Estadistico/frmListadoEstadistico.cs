@@ -20,7 +20,7 @@ namespace FrbaHotel.Listado_Estadistico
             this.menu = menuPadre;
             InitializeComponent();
             //Autoajusto celdas
-            this.dgvListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             //oculto columnas
             for (int i = 0; i < dgvListado.Columns.Count; i++ )
