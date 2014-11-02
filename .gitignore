@@ -1,4 +1,5 @@
-*.exe
+.Cache
+.exe
 .resx
 .resources
 *.Cache
