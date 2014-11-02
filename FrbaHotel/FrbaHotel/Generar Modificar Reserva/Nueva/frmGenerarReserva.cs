@@ -17,7 +17,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private MenuDinamico menu;
         bool regimenesIsOn;
         bool boolVerificoDisp;
-        String codigoHotel;
+        string codigoHotel;
         int precioBase;
 
         //constructor generico  
@@ -130,8 +130,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //obtengo la fila seleccionada del grid de regimenes para llenar el textbox con el regimen
         public void filaSeleccionadaDataGrid(DataGridViewRow row)
         {
-            txtRegimen.Text = row.Cells[1].Value.ToString();
-            precioBase = (int)row.Cells[0].Value;
+            //precio base del regimen            
+            precioBase = Convert.ToInt32(row.Cells[2].Value);        
+            //actualizo txtbox
+            txtRegimen.Text = row.Cells[1].Value.ToString();            
         }
 
         //evento para el cierre del form
@@ -144,16 +146,27 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e){boolVerificoDisp = false;}
         private void dtpFechaDesde_ValueChanged(object sender, EventArgs e){boolVerificoDisp = false;}
         private void dtpFechaHasta_ValueChanged(object sender, EventArgs e){boolVerificoDisp = false;}
-        private void txtCantHues_TextChanged(object sender, EventArgs e){boolVerificoDisp = false;}
+        private void txtCantHues_TextChanged(object sender, EventArgs e){
+            boolVerificoDisp = false;
+            if (txtRegimen.Text != "")
+            {
+                txtRegimen_TextChanged(null, null); //si cambio la cant de huespedes llamo al textChanged para que refreshee
+            }
+        }
 
         //muestra costo por dia
         private void txtRegimen_TextChanged(object sender, EventArgs e)
         {
-
+            //Obtengo el recargo por estrellas del hotel
+            DataTable dt = new DataTable();
             string consultaSQL = "select recarga_estrellas from THE_FOREIGN_FOUR.Hoteles where cod_hotel=" + codigoHotel + ";";
-            int incrementoPorEstrellas;
+            SqlCommand comando = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            SqlDataAdapter adapter = new SqlDataAdapter(comando);
+            adapter.Fill(dt);
+            DataRow row = dt.Rows[0];
+            int incrementoPorEstrellas = Convert.ToInt32(row["recarga_estrellas"]);
 
-            //txtCostoXDia.Text = (precioBase * (int)txtCantHues.Text) + incrementoPorEstrellas;
+            txtCostoXDia.Text = "USD " + (precioBase * Convert.ToInt32(txtCantHues.Text) + incrementoPorEstrellas).ToString();
         }     
 
        

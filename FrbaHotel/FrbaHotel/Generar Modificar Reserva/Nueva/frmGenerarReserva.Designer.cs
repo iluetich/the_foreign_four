@@ -173,12 +173,13 @@
             // 
             // txtCostoXDia
             // 
-            this.txtCostoXDia.Enabled = false;
+            this.txtCostoXDia.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCostoXDia.Location = new System.Drawing.Point(138, 215);
             this.txtCostoXDia.Name = "txtCostoXDia";
             this.txtCostoXDia.ReadOnly = true;
-            this.txtCostoXDia.Size = new System.Drawing.Size(199, 20);
+            this.txtCostoXDia.Size = new System.Drawing.Size(199, 21);
             this.txtCostoXDia.TabIndex = 7;
+            this.txtCostoXDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblCostoXDia
             // 
