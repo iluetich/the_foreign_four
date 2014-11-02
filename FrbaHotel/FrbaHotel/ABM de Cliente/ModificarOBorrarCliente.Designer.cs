@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Titulo = new System.Windows.Forms.Label();
             this.tituloBuscador = new System.Windows.Forms.Label();
             this.labelNombre = new System.Windows.Forms.Label();
@@ -40,12 +41,17 @@
             this.comboBoxBuscadorTipoDoc = new System.Windows.Forms.ComboBox();
             this.textBoxBuscadorNroDoc = new System.Windows.Forms.TextBox();
             this.textBoxBuscadorMail = new System.Windows.Forms.TextBox();
-            this.listBoxClientes = new System.Windows.Forms.ListBox();
             this.botonBuscar = new System.Windows.Forms.Button();
             this.botonLimpiar = new System.Windows.Forms.Button();
             this.botonModificar = new System.Windows.Forms.Button();
             this.botonInhabilitar = new System.Windows.Forms.Button();
             this.botonVolver = new System.Windows.Forms.Button();
+            this.gD2C2014DataSet = new FrbaHotel.GD2C2014DataSet();
+            this.gD2C2014DataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.datGridViewClientes = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.gD2C2014DataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gD2C2014DataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.datGridViewClientes)).BeginInit();
             this.SuspendLayout();
             // 
             // Titulo
@@ -53,7 +59,7 @@
             this.Titulo.AutoSize = true;
             this.Titulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Titulo.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.Titulo.Location = new System.Drawing.Point(135, 9);
+            this.Titulo.Location = new System.Drawing.Point(236, 9);
             this.Titulo.Name = "Titulo";
             this.Titulo.Size = new System.Drawing.Size(248, 24);
             this.Titulo.TabIndex = 0;
@@ -63,7 +69,7 @@
             // 
             this.tituloBuscador.AutoSize = true;
             this.tituloBuscador.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tituloBuscador.Location = new System.Drawing.Point(108, 45);
+            this.tituloBuscador.Location = new System.Drawing.Point(288, 46);
             this.tituloBuscador.Name = "tituloBuscador";
             this.tituloBuscador.Size = new System.Drawing.Size(147, 17);
             this.tituloBuscador.TabIndex = 1;
@@ -113,7 +119,7 @@
             // 
             this.labelMail.AutoSize = true;
             this.labelMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMail.Location = new System.Drawing.Point(12, 158);
+            this.labelMail.Location = new System.Drawing.Point(479, 85);
             this.labelMail.Name = "labelMail";
             this.labelMail.Size = new System.Drawing.Size(34, 15);
             this.labelMail.TabIndex = 6;
@@ -125,6 +131,7 @@
             this.textBoxBuscadorNombre.Name = "textBoxBuscadorNombre";
             this.textBoxBuscadorNombre.Size = new System.Drawing.Size(118, 20);
             this.textBoxBuscadorNombre.TabIndex = 7;
+            this.textBoxBuscadorNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorNombre_KeyPress);
             // 
             // textBoxBuscadorApellido
             // 
@@ -132,10 +139,15 @@
             this.textBoxBuscadorApellido.Name = "textBoxBuscadorApellido";
             this.textBoxBuscadorApellido.Size = new System.Drawing.Size(132, 20);
             this.textBoxBuscadorApellido.TabIndex = 8;
+            this.textBoxBuscadorApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorApellido_KeyPress);
             // 
             // comboBoxBuscadorTipoDoc
             // 
+            this.comboBoxBuscadorTipoDoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxBuscadorTipoDoc.FormattingEnabled = true;
+            this.comboBoxBuscadorTipoDoc.Items.AddRange(new object[] {
+            "PAS",
+            "DNI"});
             this.comboBoxBuscadorTipoDoc.Location = new System.Drawing.Point(97, 121);
             this.comboBoxBuscadorTipoDoc.Name = "comboBoxBuscadorTipoDoc";
             this.comboBoxBuscadorTipoDoc.Size = new System.Drawing.Size(121, 21);
@@ -144,46 +156,42 @@
             // textBoxBuscadorNroDoc
             // 
             this.textBoxBuscadorNroDoc.Location = new System.Drawing.Point(345, 123);
+            this.textBoxBuscadorNroDoc.MaxLength = 8;
             this.textBoxBuscadorNroDoc.Name = "textBoxBuscadorNroDoc";
             this.textBoxBuscadorNroDoc.Size = new System.Drawing.Size(118, 20);
             this.textBoxBuscadorNroDoc.TabIndex = 10;
+            this.textBoxBuscadorNroDoc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorNroDoc_KeyPress);
             // 
             // textBoxBuscadorMail
             // 
-            this.textBoxBuscadorMail.Location = new System.Drawing.Point(53, 152);
+            this.textBoxBuscadorMail.Location = new System.Drawing.Point(520, 79);
             this.textBoxBuscadorMail.Name = "textBoxBuscadorMail";
             this.textBoxBuscadorMail.Size = new System.Drawing.Size(138, 20);
             this.textBoxBuscadorMail.TabIndex = 11;
             // 
-            // listBoxClientes
-            // 
-            this.listBoxClientes.FormattingEnabled = true;
-            this.listBoxClientes.Location = new System.Drawing.Point(15, 218);
-            this.listBoxClientes.Name = "listBoxClientes";
-            this.listBoxClientes.Size = new System.Drawing.Size(395, 134);
-            this.listBoxClientes.TabIndex = 12;
-            // 
             // botonBuscar
             // 
-            this.botonBuscar.Location = new System.Drawing.Point(15, 187);
+            this.botonBuscar.Location = new System.Drawing.Point(264, 158);
             this.botonBuscar.Name = "botonBuscar";
             this.botonBuscar.Size = new System.Drawing.Size(75, 23);
             this.botonBuscar.TabIndex = 13;
             this.botonBuscar.Text = "Buscar";
             this.botonBuscar.UseVisualStyleBackColor = true;
+            this.botonBuscar.Click += new System.EventHandler(this.botonBuscar_Click);
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(111, 186);
+            this.botonLimpiar.Location = new System.Drawing.Point(409, 158);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.botonLimpiar.TabIndex = 14;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
+            this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
             // 
             // botonModificar
             // 
-            this.botonModificar.Location = new System.Drawing.Point(431, 227);
+            this.botonModificar.Location = new System.Drawing.Point(12, 424);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(75, 23);
             this.botonModificar.TabIndex = 15;
@@ -192,7 +200,7 @@
             // 
             // botonInhabilitar
             // 
-            this.botonInhabilitar.Location = new System.Drawing.Point(431, 271);
+            this.botonInhabilitar.Location = new System.Drawing.Point(177, 424);
             this.botonInhabilitar.Name = "botonInhabilitar";
             this.botonInhabilitar.Size = new System.Drawing.Size(75, 23);
             this.botonInhabilitar.TabIndex = 16;
@@ -201,7 +209,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(431, 368);
+            this.botonVolver.Location = new System.Drawing.Point(648, 424);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 17;
@@ -209,17 +217,35 @@
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
             // 
+            // gD2C2014DataSet
+            // 
+            this.gD2C2014DataSet.DataSetName = "GD2C2014DataSet";
+            this.gD2C2014DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // gD2C2014DataSetBindingSource
+            // 
+            this.gD2C2014DataSetBindingSource.DataSource = this.gD2C2014DataSet;
+            this.gD2C2014DataSetBindingSource.Position = 0;
+            // 
+            // datGridViewClientes
+            // 
+            this.datGridViewClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.datGridViewClientes.Location = new System.Drawing.Point(15, 195);
+            this.datGridViewClientes.Name = "datGridViewClientes";
+            this.datGridViewClientes.Size = new System.Drawing.Size(708, 210);
+            this.datGridViewClientes.TabIndex = 18;
+            // 
             // ModificarOBorrarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 400);
+            this.ClientSize = new System.Drawing.Size(735, 459);
+            this.Controls.Add(this.datGridViewClientes);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.botonInhabilitar);
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.botonLimpiar);
             this.Controls.Add(this.botonBuscar);
-            this.Controls.Add(this.listBoxClientes);
             this.Controls.Add(this.textBoxBuscadorMail);
             this.Controls.Add(this.textBoxBuscadorNroDoc);
             this.Controls.Add(this.comboBoxBuscadorTipoDoc);
@@ -236,6 +262,9 @@
             this.Name = "ModificarOBorrarCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarOBorrarCliente";
+            ((System.ComponentModel.ISupportInitialize)(this.gD2C2014DataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gD2C2014DataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.datGridViewClientes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,11 +284,13 @@
         private System.Windows.Forms.ComboBox comboBoxBuscadorTipoDoc;
         private System.Windows.Forms.TextBox textBoxBuscadorNroDoc;
         private System.Windows.Forms.TextBox textBoxBuscadorMail;
-        private System.Windows.Forms.ListBox listBoxClientes;
         private System.Windows.Forms.Button botonBuscar;
         private System.Windows.Forms.Button botonLimpiar;
         private System.Windows.Forms.Button botonModificar;
         private System.Windows.Forms.Button botonInhabilitar;
         private System.Windows.Forms.Button botonVolver;
+        private System.Windows.Forms.BindingSource gD2C2014DataSetBindingSource;
+        private GD2C2014DataSet gD2C2014DataSet;
+        private System.Windows.Forms.DataGridView datGridViewClientes;
     }
 }
