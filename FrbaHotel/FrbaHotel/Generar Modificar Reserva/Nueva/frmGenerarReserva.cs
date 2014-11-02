@@ -100,5 +100,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             FrbaHotel.Utils.rellenarComboBox(cmbTipoHab, nombreTabla, nombreCampo, consultaSql);
 
         }
+
+        public void filaSeleccionadaDataGrid(DataGridViewRow row)
+        {
+            txtRegimen.Text = row.Cells[1].Value.ToString();
+        }
     }
 }

@@ -47,6 +47,7 @@
             this.dgvRegimenes.ReadOnly = true;
             this.dgvRegimenes.Size = new System.Drawing.Size(375, 135);
             this.dgvRegimenes.TabIndex = 0;
+            this.dgvRegimenes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegimenes_CellClick);
             // 
             // lblInfo
             // 
