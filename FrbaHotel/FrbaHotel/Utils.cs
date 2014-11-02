@@ -18,7 +18,16 @@ namespace FrbaHotel
                 char.IsWhiteSpace(e.KeyChar) || //Espacios
                 char.IsPunctuation(e.KeyChar)) //Puntuacion
                 e.Handled = true; //No permitir
-        }    
+        }
+
+        //Para que el textBox solo permita el tipeo de letras
+        internal static void allowLetters(KeyPressEventArgs e)
+        {
+            if (char.IsNumber(e.KeyChar) || //Numeros
+                char.IsSymbol(e.KeyChar) || //Símbolos
+                char.IsPunctuation(e.KeyChar)) //Puntuacion
+                e.Handled = true; //No permitir
+        }
 
         //Valida que la fecha inicio sea menor a la fecha final
         internal static bool validarFechas(DateTimePicker dtpFechaDesde, DateTimePicker dtpFechaHasta)

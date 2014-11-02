@@ -45,7 +45,6 @@
             this.botonVolver = new System.Windows.Forms.Button();
             this.textBoxNombre = new System.Windows.Forms.TextBox();
             this.textBoxApellido = new System.Windows.Forms.TextBox();
-            this.textBoxTipoDoc = new System.Windows.Forms.TextBox();
             this.textBoxNroDoc = new System.Windows.Forms.TextBox();
             this.textBoxMail = new System.Windows.Forms.TextBox();
             this.textBoxTelefono = new System.Windows.Forms.TextBox();
@@ -53,6 +52,13 @@
             this.textBoxCalle = new System.Windows.Forms.TextBox();
             this.textBoxLocalidad = new System.Windows.Forms.TextBox();
             this.textBoxNacionalidad = new System.Windows.Forms.TextBox();
+            this.comboBoxTipoDoc = new System.Windows.Forms.ComboBox();
+            this.labelDepartamento = new System.Windows.Forms.Label();
+            this.textBoxDepto = new System.Windows.Forms.TextBox();
+            this.labelPiso = new System.Windows.Forms.Label();
+            this.textBoxPiso = new System.Windows.Forms.TextBox();
+            this.labelNroCalle = new System.Windows.Forms.Label();
+            this.textBoxNroCalle = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -160,7 +166,7 @@
             // 
             this.labelLocalidad.AutoSize = true;
             this.labelLocalidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelLocalidad.Location = new System.Drawing.Point(221, 212);
+            this.labelLocalidad.Location = new System.Drawing.Point(239, 279);
             this.labelLocalidad.Name = "labelLocalidad";
             this.labelLocalidad.Size = new System.Drawing.Size(64, 15);
             this.labelLocalidad.TabIndex = 10;
@@ -170,7 +176,7 @@
             // 
             this.labelNacionalidad.AutoSize = true;
             this.labelNacionalidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNacionalidad.Location = new System.Drawing.Point(8, 241);
+            this.labelNacionalidad.Location = new System.Drawing.Point(8, 279);
             this.labelNacionalidad.Name = "labelNacionalidad";
             this.labelNacionalidad.Size = new System.Drawing.Size(83, 15);
             this.labelNacionalidad.TabIndex = 11;
@@ -178,7 +184,7 @@
             // 
             // botonRegistrar
             // 
-            this.botonRegistrar.Location = new System.Drawing.Point(12, 276);
+            this.botonRegistrar.Location = new System.Drawing.Point(11, 315);
             this.botonRegistrar.Name = "botonRegistrar";
             this.botonRegistrar.Size = new System.Drawing.Size(75, 23);
             this.botonRegistrar.TabIndex = 12;
@@ -188,7 +194,7 @@
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(119, 276);
+            this.botonLimpiar.Location = new System.Drawing.Point(118, 315);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.botonLimpiar.TabIndex = 13;
@@ -198,7 +204,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(356, 276);
+            this.botonVolver.Location = new System.Drawing.Point(355, 315);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 14;
@@ -212,6 +218,7 @@
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(130, 20);
             this.textBoxNombre.TabIndex = 15;
+            this.textBoxNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNombre_KeyPress);
             // 
             // textBoxApellido
             // 
@@ -219,20 +226,16 @@
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(124, 20);
             this.textBoxApellido.TabIndex = 16;
-            // 
-            // textBoxTipoDoc
-            // 
-            this.textBoxTipoDoc.Location = new System.Drawing.Point(94, 108);
-            this.textBoxTipoDoc.Name = "textBoxTipoDoc";
-            this.textBoxTipoDoc.Size = new System.Drawing.Size(100, 20);
-            this.textBoxTipoDoc.TabIndex = 17;
+            this.textBoxApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxApellido_KeyPress);
             // 
             // textBoxNroDoc
             // 
             this.textBoxNroDoc.Location = new System.Drawing.Point(328, 107);
+            this.textBoxNroDoc.MaxLength = 8;
             this.textBoxNroDoc.Name = "textBoxNroDoc";
             this.textBoxNroDoc.Size = new System.Drawing.Size(100, 20);
             this.textBoxNroDoc.TabIndex = 18;
+            this.textBoxNroDoc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNroDoc_KeyPress);
             // 
             // textBoxMail
             // 
@@ -247,6 +250,7 @@
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(100, 20);
             this.textBoxTelefono.TabIndex = 20;
+            this.textBoxTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTelefono_KeyPress);
             // 
             // dateTimePickerFechaNac
             // 
@@ -254,6 +258,7 @@
             this.dateTimePickerFechaNac.Name = "dateTimePickerFechaNac";
             this.dateTimePickerFechaNac.Size = new System.Drawing.Size(216, 20);
             this.dateTimePickerFechaNac.TabIndex = 21;
+            this.dateTimePickerFechaNac.ValueChanged += new System.EventHandler(this.dateTimePickerFechaNac_ValueChanged);
             // 
             // textBoxCalle
             // 
@@ -264,23 +269,94 @@
             // 
             // textBoxLocalidad
             // 
-            this.textBoxLocalidad.Location = new System.Drawing.Point(292, 206);
+            this.textBoxLocalidad.Location = new System.Drawing.Point(309, 278);
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(114, 20);
             this.textBoxLocalidad.TabIndex = 23;
             // 
             // textBoxNacionalidad
             // 
-            this.textBoxNacionalidad.Location = new System.Drawing.Point(94, 235);
+            this.textBoxNacionalidad.Location = new System.Drawing.Point(94, 278);
             this.textBoxNacionalidad.Name = "textBoxNacionalidad";
             this.textBoxNacionalidad.Size = new System.Drawing.Size(126, 20);
             this.textBoxNacionalidad.TabIndex = 24;
+            // 
+            // comboBoxTipoDoc
+            // 
+            this.comboBoxTipoDoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTipoDoc.FormattingEnabled = true;
+            this.comboBoxTipoDoc.Items.AddRange(new object[] {
+            "PAS",
+            "DNI"});
+            this.comboBoxTipoDoc.Location = new System.Drawing.Point(94, 107);
+            this.comboBoxTipoDoc.Name = "comboBoxTipoDoc";
+            this.comboBoxTipoDoc.Size = new System.Drawing.Size(100, 21);
+            this.comboBoxTipoDoc.TabIndex = 25;
+            this.comboBoxTipoDoc.SelectedIndexChanged += new System.EventHandler(this.comboBoxTipoDoc_SelectedIndexChanged);
+            // 
+            // labelDepartamento
+            // 
+            this.labelDepartamento.AutoSize = true;
+            this.labelDepartamento.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDepartamento.Location = new System.Drawing.Point(8, 246);
+            this.labelDepartamento.Name = "labelDepartamento";
+            this.labelDepartamento.Size = new System.Drawing.Size(89, 15);
+            this.labelDepartamento.TabIndex = 26;
+            this.labelDepartamento.Text = "Departamento:";
+            // 
+            // textBoxDepto
+            // 
+            this.textBoxDepto.Location = new System.Drawing.Point(104, 246);
+            this.textBoxDepto.Name = "textBoxDepto";
+            this.textBoxDepto.Size = new System.Drawing.Size(116, 20);
+            this.textBoxDepto.TabIndex = 27;
+            // 
+            // labelPiso
+            // 
+            this.labelPiso.AutoSize = true;
+            this.labelPiso.Location = new System.Drawing.Point(239, 252);
+            this.labelPiso.Name = "labelPiso";
+            this.labelPiso.Size = new System.Drawing.Size(30, 13);
+            this.labelPiso.TabIndex = 28;
+            this.labelPiso.Text = "Piso:";
+            // 
+            // textBoxPiso
+            // 
+            this.textBoxPiso.Location = new System.Drawing.Point(282, 249);
+            this.textBoxPiso.Name = "textBoxPiso";
+            this.textBoxPiso.Size = new System.Drawing.Size(100, 20);
+            this.textBoxPiso.TabIndex = 29;
+            this.textBoxPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPiso_KeyPress);
+            // 
+            // labelNroCalle
+            // 
+            this.labelNroCalle.AutoSize = true;
+            this.labelNroCalle.Location = new System.Drawing.Point(215, 212);
+            this.labelNroCalle.Name = "labelNroCalle";
+            this.labelNroCalle.Size = new System.Drawing.Size(88, 13);
+            this.labelNroCalle.TabIndex = 30;
+            this.labelNroCalle.Text = "Numero de Calle:";
+            // 
+            // textBoxNroCalle
+            // 
+            this.textBoxNroCalle.Location = new System.Drawing.Point(309, 209);
+            this.textBoxNroCalle.Name = "textBoxNroCalle";
+            this.textBoxNroCalle.Size = new System.Drawing.Size(76, 20);
+            this.textBoxNroCalle.TabIndex = 31;
+            this.textBoxNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNroCalle_KeyPress);
             // 
             // RegistrarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(442, 308);
+            this.ClientSize = new System.Drawing.Size(442, 350);
+            this.Controls.Add(this.textBoxNroCalle);
+            this.Controls.Add(this.labelNroCalle);
+            this.Controls.Add(this.textBoxPiso);
+            this.Controls.Add(this.labelPiso);
+            this.Controls.Add(this.textBoxDepto);
+            this.Controls.Add(this.labelDepartamento);
+            this.Controls.Add(this.comboBoxTipoDoc);
             this.Controls.Add(this.textBoxNacionalidad);
             this.Controls.Add(this.textBoxLocalidad);
             this.Controls.Add(this.textBoxCalle);
@@ -288,7 +364,6 @@
             this.Controls.Add(this.textBoxTelefono);
             this.Controls.Add(this.textBoxMail);
             this.Controls.Add(this.textBoxNroDoc);
-            this.Controls.Add(this.textBoxTipoDoc);
             this.Controls.Add(this.textBoxApellido);
             this.Controls.Add(this.textBoxNombre);
             this.Controls.Add(this.botonVolver);
@@ -335,7 +410,6 @@
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.TextBox textBoxNombre;
         private System.Windows.Forms.TextBox textBoxApellido;
-        private System.Windows.Forms.TextBox textBoxTipoDoc;
         private System.Windows.Forms.TextBox textBoxNroDoc;
         private System.Windows.Forms.TextBox textBoxMail;
         private System.Windows.Forms.TextBox textBoxTelefono;
@@ -343,5 +417,12 @@
         private System.Windows.Forms.TextBox textBoxCalle;
         private System.Windows.Forms.TextBox textBoxLocalidad;
         private System.Windows.Forms.TextBox textBoxNacionalidad;
+        private System.Windows.Forms.ComboBox comboBoxTipoDoc;
+        private System.Windows.Forms.Label labelDepartamento;
+        private System.Windows.Forms.TextBox textBoxDepto;
+        private System.Windows.Forms.Label labelPiso;
+        private System.Windows.Forms.TextBox textBoxPiso;
+        private System.Windows.Forms.Label labelNroCalle;
+        private System.Windows.Forms.TextBox textBoxNroCalle;
     }
 }

@@ -36,6 +36,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
         //evento para cuando se hace click en una celda devuelva la fila correspondiente
-        private void dgvRegimenes;
+        //private void dgvRegimenes;
     }
 }
