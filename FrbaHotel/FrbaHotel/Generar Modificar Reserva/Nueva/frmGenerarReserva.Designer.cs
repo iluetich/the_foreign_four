@@ -164,6 +164,7 @@
             this.txtRegimen.ReadOnly = true;
             this.txtRegimen.Size = new System.Drawing.Size(164, 20);
             this.txtRegimen.TabIndex = 16;
+            this.txtRegimen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtCostoXDia
             // 
