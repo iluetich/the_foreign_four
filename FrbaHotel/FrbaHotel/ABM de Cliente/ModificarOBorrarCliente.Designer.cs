@@ -131,6 +131,7 @@
             this.textBoxBuscadorNombre.Name = "textBoxBuscadorNombre";
             this.textBoxBuscadorNombre.Size = new System.Drawing.Size(118, 20);
             this.textBoxBuscadorNombre.TabIndex = 7;
+            this.textBoxBuscadorNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorNombre_KeyPress);
             // 
             // textBoxBuscadorApellido
             // 
@@ -138,10 +139,15 @@
             this.textBoxBuscadorApellido.Name = "textBoxBuscadorApellido";
             this.textBoxBuscadorApellido.Size = new System.Drawing.Size(132, 20);
             this.textBoxBuscadorApellido.TabIndex = 8;
+            this.textBoxBuscadorApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorApellido_KeyPress);
             // 
             // comboBoxBuscadorTipoDoc
             // 
+            this.comboBoxBuscadorTipoDoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxBuscadorTipoDoc.FormattingEnabled = true;
+            this.comboBoxBuscadorTipoDoc.Items.AddRange(new object[] {
+            "PAS",
+            "DNI"});
             this.comboBoxBuscadorTipoDoc.Location = new System.Drawing.Point(97, 121);
             this.comboBoxBuscadorTipoDoc.Name = "comboBoxBuscadorTipoDoc";
             this.comboBoxBuscadorTipoDoc.Size = new System.Drawing.Size(121, 21);
@@ -150,9 +156,11 @@
             // textBoxBuscadorNroDoc
             // 
             this.textBoxBuscadorNroDoc.Location = new System.Drawing.Point(345, 123);
+            this.textBoxBuscadorNroDoc.MaxLength = 8;
             this.textBoxBuscadorNroDoc.Name = "textBoxBuscadorNroDoc";
             this.textBoxBuscadorNroDoc.Size = new System.Drawing.Size(118, 20);
             this.textBoxBuscadorNroDoc.TabIndex = 10;
+            this.textBoxBuscadorNroDoc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorNroDoc_KeyPress);
             // 
             // textBoxBuscadorMail
             // 
@@ -179,6 +187,7 @@
             this.botonLimpiar.TabIndex = 14;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
+            this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
             // 
             // botonModificar
             // 
@@ -253,7 +262,6 @@
             this.Name = "ModificarOBorrarCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarOBorrarCliente";
-            this.Load += new System.EventHandler(this.ModificarOBorrarCliente_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2014DataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2014DataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.datGridViewClientes)).EndInit();

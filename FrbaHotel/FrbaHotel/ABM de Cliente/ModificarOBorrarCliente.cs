@@ -29,18 +29,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
         public void cargarClientes()
         {
-            string consultaSql;
-            consultaSql = "SELECT * FROM THE_FOREIGN_FOUR.Clientes";
-
-            SqlConnection connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
-
-            SqlDataAdapter adaptador = new SqlDataAdapter("SELECT * FROM THE_FOREIGN_FOUR.Clientes", connection);
-
-            DataSet dataSetClientes = new DataSet();
-
-            adaptador.Fill(dataSetClientes);
-
-            datGridViewClientes.DataSource = datGridViewClientes;
+            FrbaHotel.Utils.rellenarDataGridView(datGridViewClientes, "SELECT * FROM THE_FOREIGN_FOUR.Clientes");
         }
 
         private void botonBuscar_Click(object sender, EventArgs e)
@@ -48,9 +37,27 @@ namespace FrbaHotel.ABM_de_Cliente
             this.cargarClientes();
         }
 
-        private void ModificarOBorrarCliente_Load(object sender, EventArgs e)
+        private void textBoxBuscadorNroDoc_KeyPress(object sender, KeyPressEventArgs e)
         {
-            this.cargarClientes();
+            FrbaHotel.Utils.allowNumbers(e);
+        }
+
+        private void textBoxBuscadorApellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            FrbaHotel.Utils.allowLetters(e);
+        }
+
+        private void textBoxBuscadorNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            FrbaHotel.Utils.allowLetters(e);
+        }
+
+        private void botonLimpiar_Click(object sender, EventArgs e)
+        {
+            FrbaHotel.Utils.limpiarControl(textBoxBuscadorApellido);
+            FrbaHotel.Utils.limpiarControl(textBoxBuscadorMail);
+            FrbaHotel.Utils.limpiarControl(textBoxBuscadorNombre);
+            FrbaHotel.Utils.limpiarControl(textBoxBuscadorNroDoc);
         }
 
     }
