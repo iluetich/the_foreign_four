@@ -62,3 +62,9 @@ update THE_FOREIGN_FOUR.Hoteles
 set nombre = 'Claridge'
 where cod_hotel = 16;
 
+-- -----------------------------------------------
+
+delete from THE_FOREIGN_FOUR.RegimenPorHotel
+where cod_hotel = 3
+and
+cod_regimen = 2;
