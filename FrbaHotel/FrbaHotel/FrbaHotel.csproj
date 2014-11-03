@@ -64,18 +64,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ABM de Cliente\EliminarCliente.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM de Cliente\EliminarCliente.Designer.cs">
-      <DependentUpon>EliminarCliente.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ABM de Cliente\ModificarCliente.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM de Cliente\ModificarCliente.Designer.cs">
-      <DependentUpon>ModificarCliente.cs</DependentUpon>
-    </Compile>
     <Compile Include="ABM de Cliente\ModificarOBorrarCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,14 +252,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ABM de Cliente\EliminarCliente.resx">
-      <DependentUpon>EliminarCliente.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ABM de Cliente\ModificarCliente.resx">
-      <DependentUpon>ModificarCliente.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ABM de Cliente\ModificarOBorrarCliente.resx">
       <DependentUpon>ModificarOBorrarCliente.cs</DependentUpon>
       <SubType>Designer</SubType>

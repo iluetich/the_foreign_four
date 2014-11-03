@@ -22,9 +22,7 @@ namespace FrbaHotel
         
         public InicioDelSistema()
         {
-            InitializeComponent();
-            //Abre la conexion a la BD
-            FrbaHotel.ConexionSQL.establecerConexionBD();
+            InitializeComponent();           
 
             string consultaSql = "SELECT * FROM THE_FOREIGN_FOUR.Roles";
             FrbaHotel.Utils.rellenarComboBox(comboBoxEleccionRol, "THE_FOREIGN_FOUR.Roles", "nombre", consultaSql);

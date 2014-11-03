@@ -40,7 +40,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             boolVerificoDisp = false;
 
             //conexion a la BD -- no olvidarse de sacarl
-            FrbaHotel.ConexionSQL.establecerConexionBD();
+            //FrbaHotel.ConexionSQL.establecerConexionBD();
+            //carga controles desde la BD
             cargarControles();            
         }
         
