@@ -44,7 +44,7 @@
             this.lblSeleccionarHotel = new System.Windows.Forms.Label();
             this.txtCantHues = new System.Windows.Forms.TextBox();
             this.lblCantHues = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtResul = new System.Windows.Forms.TextBox();
             this.grbPanel2 = new System.Windows.Forms.GroupBox();
             this.txtCostoTotal = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -230,13 +230,14 @@
             this.lblCantHues.TabIndex = 1;
             this.lblCantHues.Text = "Cantidad Huespedes:";
             // 
-            // textBox1
+            // txtResul
             // 
-            this.textBox1.Location = new System.Drawing.Point(157, 22);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(156, 20);
-            this.textBox1.TabIndex = 9;
+            this.txtResul.Location = new System.Drawing.Point(157, 22);
+            this.txtResul.Name = "txtResul";
+            this.txtResul.ReadOnly = true;
+            this.txtResul.Size = new System.Drawing.Size(156, 20);
+            this.txtResul.TabIndex = 9;
+            this.txtResul.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // grbPanel2
             // 
@@ -244,7 +245,7 @@
             this.grbPanel2.Controls.Add(this.txtCostoTotal);
             this.grbPanel2.Controls.Add(this.label2);
             this.grbPanel2.Controls.Add(this.btnVerificarDisp);
-            this.grbPanel2.Controls.Add(this.textBox1);
+            this.grbPanel2.Controls.Add(this.txtResul);
             this.grbPanel2.Location = new System.Drawing.Point(19, 286);
             this.grbPanel2.Name = "grbPanel2";
             this.grbPanel2.Size = new System.Drawing.Size(364, 85);
@@ -342,7 +343,7 @@
         private System.Windows.Forms.DateTimePicker dtpFechaHasta;
         private System.Windows.Forms.Button btnRegimenes;
         private System.Windows.Forms.GroupBox grbPanel1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtResul;
         private System.Windows.Forms.GroupBox grbPanel2;
         private System.Windows.Forms.TextBox txtCantHues;
         private System.Windows.Forms.Label lblCantHues;
