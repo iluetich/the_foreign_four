@@ -2,6 +2,7 @@
 .exe
 .resx
 .resources
+.Suo
 *.Cache
 *.pdb
 

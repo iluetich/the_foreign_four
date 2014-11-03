@@ -1,6 +1,6 @@
 CREATE FUNCTION	THE_FOREIGN_FOUR.func_obtener_cant_huespedes
 				(@cod_reserva numeric(18,0))
-				
+		
 RETURNS TABLE
 AS
 RETURN (SELECT	COUNT(c.cod_cliente) AS cantidad_huespedes
@@ -48,7 +48,6 @@ AS
 GO
 
 --***********************************************************
-DROP PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				(@cod_hotel int,
 				 @cod_tipo_hab numeric(18,0),
@@ -99,7 +98,7 @@ RETURN
 		 AND	@cod_hotel = rph.cod_hotel)
 		 
 --***********************************************************
-
+DROP FUNCTION THE_FOREIGN_FOUR.func_hab_disponibles
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hab_disponibles
 				(@cod_hotel int,
 				 @cod_tipo_hab numeric(18,0),
@@ -121,14 +120,15 @@ BEGIN
 									FROM	THE_FOREIGN_FOUR.Reservas r
 									WHERE	@cod_hotel = r.cod_hotel
 									AND		@cod_tipo_hab = r.cod_tipo_hab
-									AND		r.fecha_desde BETWEEN @fecha_inicio AND @fecha_fin
-									OR		r.fecha_hasta BETWEEN @fecha_inicio AND @fecha_fin)
+									AND		(@fecha_inicio BETWEEN r.fecha_desde AND R.fecha_hasta
+									OR		@fecha_fin BETWEEN r.fecha_desde AND r.fecha_hasta))
 									
 	SET		@cant_hab_disponibles = @cant_hab_por_tipo - @cant_hab_reservadas
 	RETURN	@cant_hab_disponibles
 END
 	
 --***********************************************************
+DROP FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
 				(@cod_hotel int,
 				 @cod_tipo_hab numeric(18,0),
