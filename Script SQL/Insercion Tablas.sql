@@ -54,7 +54,7 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		m.Reserva_Fecha_Inicio,
 		m.Reserva_Cant_Noches,
 		
-	   (SELECT DISTINCT cod_hotel
+	   (SELECT cod_hotel
 		FROM THE_FOREIGN_FOUR.Hoteles h
 		WHERE	h.nom_calle = m.Hotel_Calle
 		AND		h.nro_calle = m.Hotel_Nro_Calle
@@ -62,22 +62,14 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		AND		h.cant_estrellas = m.Hotel_CantEstrella
 		AND		h.recarga_estrellas = m.Hotel_Recarga_Estrella) AS 'cod_hotel',
 		
-       (SELECT DISTINCT cod_cliente
+       (SELECT cod_cliente
 		FROM THE_FOREIGN_FOUR.Clientes c
-		WHERE	c.nombre = m.Cliente_Nombre
-		AND		c.apellido = m.Cliente_Apellido
-		AND		c.nro_doc = m.Cliente_Pasaporte_Nro
-		AND		c.fecha_nac = m.Cliente_Fecha_Nac
-		AND		c.mail = m.Cliente_Mail
-		AND		c.nom_calle = m.Cliente_Dom_Calle
-		AND		c.nro_calle = m.Cliente_Nro_Calle
-		AND		c.piso = m.Cliente_Piso
-		AND		c.depto = m.Cliente_Depto
-		AND		c.nacionalidad = m.Cliente_Nacionalidad) AS 'cod_cliente',
-		
+		WHERE	c.nro_doc = m.Cliente_Pasaporte_Nro
+		AND		c.mail = m.Cliente_Mail),
+				
 		m.Habitacion_Tipo_Codigo,
 		
-		(SELECT DISTINCT cod_regimen
+		(SELECT cod_regimen
 		FROM THE_FOREIGN_FOUR.Regimenes r
 		WHERE r.descripcion = m.Regimen_Descripcion
 		AND r.precio = m.Regimen_Precio) AS 'cod_regimen',
@@ -113,14 +105,13 @@ SELECT DISTINCT	m.Factura_Nro,
 FROM gd_esquema.Maestra m
 
 --***ITEMS FACTURAS***************************************
-INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, nro_factura)
+INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, descripcion, nro_factura)
 SELECT m.Item_Factura_Cantidad, 
 	   m.Consumible_Codigo,
+	   m.Consumible_Descripcion,
 	   (SELECT nro_factura
 		FROM THE_FOREIGN_FOUR.Facturas f
-		WHERE	m.Factura_Nro = f.nro_factura
-		AND		m.Factura_Fecha = f.fecha_factura
-		AND		m.Factura_Total = f.total) AS 'nro_factura'
+		WHERE	m.Factura_Nro = f.nro_factura)
 FROM gd_esquema.Maestra m
 
 
@@ -138,16 +129,9 @@ SELECT DISTINCT (SELECT c.cod_cliente
 				 AND	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
 
---***CONSUMIBLES POR ESTADIA***************************************
-/*
-INSERT INTO THE_FOREIGN_FOUR.ConsumiblesPorEstadia (cod_consumible, cantidad, cod_estadia)
-SELECT	Consumible_Codigo, 
-		Item_Factura_Cantidad,
-	   (SELECT	cod_estadia
-		FROM	THE_FOREIGN_FOUR.Estadias e
-		WHERE	e.cod_reserva = m.Reserva_Codigo)
-FROM gd_esquema.Maestra m
-*/
 --***JUEGO DE DATOS************************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos
 
+
+SELECT *
+FROM THE_FOREIGN_FOUR.ReservasPorTipoHabitacion
