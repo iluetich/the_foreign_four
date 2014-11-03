@@ -111,7 +111,6 @@ namespace FrbaHotel
             comboBox1.DisplayMember = nombreCampo;
         }
 
-<<<<<<< HEAD
         //Guarda en una tabla los resultados de hacer una query a la BD para despues pasar a variables individuales
         internal static DataTable obtenerDatosBD(string consultaSQL){
             
@@ -121,7 +120,8 @@ namespace FrbaHotel
             adapter.Fill(dt);
 
             return dt;
-=======
+        }
+
         //le pasas la consulta por parametro y la ejecuta
         internal static void ejecutarConsulta(string consulta)
         {
@@ -135,7 +135,6 @@ namespace FrbaHotel
             cmd.CommandText = consulta;
 
             cmd.ExecuteNonQuery();
->>>>>>> termine el ABM de Clientes
         }
 
     }
