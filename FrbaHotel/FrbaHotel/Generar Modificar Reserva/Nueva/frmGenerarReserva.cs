@@ -38,10 +38,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             //seteo de booleanos
             regimenesIsOn = false;
             boolVerificoDisp = false;
-
-            //conexion a la BD -- no olvidarse de sacarl
-            //FrbaHotel.ConexionSQL.establecerConexionBD();
+         
             //carga controles desde la BD
+            FrbaHotel.ConexionSQL.establecerConexionBD();
             cargarControles();            
         }
         

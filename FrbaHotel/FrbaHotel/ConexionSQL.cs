@@ -9,7 +9,9 @@ namespace FrbaHotel
 {
     class ConexionSQL
     {
-        internal static SqlConnection getSqlInstanceConnection()
+        static SqlConnection conexionMaestra;
+
+        internal static void establecerConexionBD()
         {
             string stringConexion = "Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014";
             SqlConnection conexion = new SqlConnection();
@@ -18,13 +20,17 @@ namespace FrbaHotel
             try
             {
                 conexion.Open();
+                conexionMaestra = conexion;
             }
             catch (Exception)
             {
                 MessageBox.Show("Conexion a la BD fallida");
             }
+        }
 
-            return conexion;
+        internal static SqlConnection getSqlInstanceConnection()
+        {
+            return conexionMaestra;
         }
     }
 }
