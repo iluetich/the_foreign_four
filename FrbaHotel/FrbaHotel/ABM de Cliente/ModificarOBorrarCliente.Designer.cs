@@ -152,6 +152,7 @@
             this.comboBoxBuscadorTipoDoc.Name = "comboBoxBuscadorTipoDoc";
             this.comboBoxBuscadorTipoDoc.Size = new System.Drawing.Size(121, 21);
             this.comboBoxBuscadorTipoDoc.TabIndex = 9;
+            this.comboBoxBuscadorTipoDoc.SelectedIndexChanged += new System.EventHandler(this.comboBoxBuscadorTipoDoc_SelectedIndexChanged);
             // 
             // textBoxBuscadorNroDoc
             // 
@@ -197,6 +198,7 @@
             this.botonModificar.TabIndex = 15;
             this.botonModificar.Text = "Modificar";
             this.botonModificar.UseVisualStyleBackColor = true;
+            this.botonModificar.Click += new System.EventHandler(this.botonModificar_Click);
             // 
             // botonInhabilitar
             // 
@@ -206,6 +208,7 @@
             this.botonInhabilitar.TabIndex = 16;
             this.botonInhabilitar.Text = "Inhabilitar";
             this.botonInhabilitar.UseVisualStyleBackColor = true;
+            this.botonInhabilitar.Click += new System.EventHandler(this.botonInhabilitar_Click);
             // 
             // botonVolver
             // 

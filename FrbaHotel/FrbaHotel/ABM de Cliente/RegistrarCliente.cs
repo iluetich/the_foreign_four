@@ -16,6 +16,7 @@ namespace FrbaHotel.ABM_de_Cliente
     {
         frmRegistrarHuespedesRestantes frmRegistrarHuespedesRestantesPadre;
         private MenuDinamico menu;
+        private ModificarOBorrarCliente frmPadre;
         private Boolean constructorMenu;
         private string nombre;
         private string apellido;
@@ -28,27 +29,89 @@ namespace FrbaHotel.ABM_de_Cliente
         private int telefono;
         private DateTime fechaNac;
         private string nacionalidad;
-        private string estado = "H";
+        private string estado;
         private int nroCalle;
         private string localidad;
+        private Boolean constructorMod;
+        private string codCliente;//sirve para hacer el UPDATE
 
+        //constructor de formulario registrar cliente
         public RegistrarCliente(MenuDinamico menuPadre)
         {
             this.constructorMenu = true;
+            this.constructorMod = false;
             this.menu = menuPadre;
             InitializeComponent();
+            comboBoxEstado.SelectedIndex = 0;//marca que el estado de entrada es H
+            labelEstado.Visible = false;
+            comboBoxEstado.Visible = false;
+        }
+
+        //contructor de formulario de MODIFICAR cliente
+        public RegistrarCliente(DataGridViewRow dgvr,ModificarOBorrarCliente formularioPadre)
+        {
+            this.constructorMod = true;
+            this.constructorMenu = false;
+            this.frmPadre = formularioPadre;
+            InitializeComponent();
+            this.labelTitulo.Text = "Modificar Cliente";
+            
+            //setear los datos a los controles
+            this.setearDatos(dgvr);
+        }
+
+        public void setearDatos(DataGridViewRow dgvr)
+        {
+            textBoxNombre.Text = dgvr.Cells["nombre"].Value.ToString();
+            textBoxApellido.Text = dgvr.Cells["apellido"].Value.ToString();
+            string itemDelComboBox = dgvr.Cells["tipo_doc"].Value.ToString();
+            if (itemDelComboBox == "DNI")
+            {
+                comboBoxTipoDoc.SelectedIndex = 1;
+            }
+            else
+            {
+                comboBoxTipoDoc.SelectedIndex = 0;
+            }
+            textBoxNroDoc.Text = dgvr.Cells["nro_doc"].Value.ToString();
+            textBoxMail.Text = dgvr.Cells["mail"].Value.ToString();
+            textBoxTelefono.Text = dgvr.Cells["telefono"].Value.ToString();
+            dateTimePickerFechaNac.Text = dgvr.Cells["fecha_nac"].Value.ToString();
+            textBoxCalle.Text = dgvr.Cells["nom_calle"].Value.ToString();
+            textBoxNroCalle.Text = dgvr.Cells["nro_calle"].Value.ToString();
+            textBoxDepto.Text = dgvr.Cells["depto"].Value.ToString();
+            textBoxPiso.Text = dgvr.Cells["piso"].Value.ToString();
+            textBoxNacionalidad.Text = dgvr.Cells["pais_origen"].Value.ToString();
+            textBoxLocalidad.Text = dgvr.Cells["nacionalidad"].Value.ToString();
+            codCliente = dgvr.Cells["cod_cliente"].Value.ToString();
+            string estadoComboBox = dgvr.Cells["estado"].Value.ToString();
+            if (estadoComboBox == "H")
+            {
+                comboBoxEstado.SelectedIndex = 0;
+            }
+            else
+            {
+                comboBoxEstado.SelectedIndex = 1;
+            }
+
         }
 
         public RegistrarCliente()
         {
+            comboBoxEstado.SelectedIndex = 0;//marca que el estado de entrada es H
             this.constructorMenu = false;
+            this.constructorMod = false;
             InitializeComponent();
         }
 
+        //constructor de formulario registrar cliente
         public RegistrarCliente(frmRegistrarHuespedesRestantes newForm)
         {
             this.constructorMenu = false;
             InitializeComponent();
+            comboBoxEstado.SelectedIndex = 0;//marca que el estado de entrada es H
+            labelEstado.Visible = false;
+            comboBoxEstado.Visible = false;
             frmRegistrarHuespedesRestantesPadre = newForm;
         }
 
@@ -65,6 +128,11 @@ namespace FrbaHotel.ABM_de_Cliente
             if (constructorMenu)
             {
                 menu.Show();
+            }
+
+            if (constructorMod)
+            {
+                frmPadre.Show();
             }
             this.Close();
         }
@@ -83,6 +151,7 @@ namespace FrbaHotel.ABM_de_Cliente
             nacionalidad = textBoxNacionalidad.Text;
             nroCalle = int.Parse(textBoxNroCalle.Text);
             localidad = textBoxLocalidad.Text;
+            estado = comboBoxEstado.Text;
 
             ok = this.validarCampos();
 
@@ -117,13 +186,28 @@ namespace FrbaHotel.ABM_de_Cliente
                     cmd.Parameters.Add("@estado", estado);
                     cmd.Parameters.Add("@mail", mail);
 
-                    cmd.CommandText = "INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre,apellido,tipo_doc,nro_doc,mail,telefono,nom_calle,nro_calle,pais_origen,nacionalidad,piso,depto,fecha_nac,estado) " +
-                                      "VALUES (@nombre,@apellido,@tipo_doc,@nro_doc,@mail,@telefono,@nom_calle,@nro_calle,@pais_origen,@nacionalidad,@piso,@depto,@fecha_nac,@estado)";	
-	                
+                    if (constructorMod)
+                    {
+                        cmd.CommandText = "UPDATE THE_FOREIGN_FOUR.Clientes SET nombre=@nombre,apellido=@apellido,tipo_doc=@tipo_doc,nro_doc=@nro_doc,mail=@mail,telefono=@telefono,"+
+                                         "nom_calle=@nom_calle,nro_calle=@nro_calle,pais_origen=@pais_origen,nacionalidad=@nacionalidad,piso=@piso,depto=@depto,fecha_nac=@fecha_nac,estado=@estado"+
+                                         " WHERE cod_cliente=" + codCliente;
+                    }
+                    else
+                    {
+                        cmd.CommandText = "INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre,apellido,tipo_doc,nro_doc,mail,telefono,nom_calle,nro_calle,pais_origen,nacionalidad,piso,depto,fecha_nac,estado) " +
+                                "VALUES (@nombre,@apellido,@tipo_doc,@nro_doc,@mail,@telefono,@nom_calle,@nro_calle,@pais_origen,@nacionalidad,@piso,@depto,@fecha_nac,@estado)";	
+                    }                
 	
 	                cmd.ExecuteNonQuery();
                     cnn.Close();
-                    menu.Show();
+                    if (constructorMod)
+                    {
+                        frmPadre.Show();
+                    }
+                    else
+                    {
+                        menu.Show();
+                    }
                     this.Close();
                 }
             }
@@ -144,32 +228,36 @@ namespace FrbaHotel.ABM_de_Cliente
                 MessageBox.Show("Complete el campo NroDoc", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);    
             }
 
-            //corroborar que no ingrese un mail o un numero de documento que ya esta en la base de datos
-            SqlCommand cmd = new SqlCommand();
-            SqlCommand cmd2 = new SqlCommand();
-
-            cmd2.CommandText = "SELECT COUNT(*) FROM THE_FOREIGN_FOUR.Clientes c WHERE c.mail='"+ mail +"'"; 
-            cmd.CommandText = "SELECT COUNT(*) FROM THE_FOREIGN_FOUR.Clientes c WHERE c.nro_doc=" + nroDoc;
-            
-            cmd.CommandType = CommandType.Text;
-            cmd2.CommandType = CommandType.Text;
-
-            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
-            cmd2.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
-
-            int resulDni = (int)cmd.ExecuteScalar();
-            int resulMail = (int)cmd2.ExecuteScalar();
-
-            if (resulDni != 0)
+            //mientras no sea la pantalla de Registrar verifica que el mail y el doc sean unicos sino no
+            if (!constructorMod)
             {
-                MessageBox.Show("ERROR el dni ingresado ya existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                estaOk = false;
-            }
+                //corroborar que no ingrese un mail o un numero de documento que ya esta en la base de datos
+                SqlCommand cmd = new SqlCommand();
+                SqlCommand cmd2 = new SqlCommand();
 
-            if (resulMail != 0)
-            {
-                MessageBox.Show("ERROR el mail ingresado ya existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                estaOk = false;
+                cmd2.CommandText = "SELECT COUNT(*) FROM THE_FOREIGN_FOUR.Clientes c WHERE c.mail='" + mail + "'";
+                cmd.CommandText = "SELECT COUNT(*) FROM THE_FOREIGN_FOUR.Clientes c WHERE c.nro_doc=" + nroDoc;
+
+                cmd.CommandType = CommandType.Text;
+                cmd2.CommandType = CommandType.Text;
+
+                cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+                cmd2.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+
+                int resulDni = (int)cmd.ExecuteScalar();
+                int resulMail = (int)cmd2.ExecuteScalar();
+
+                if (resulDni != 0)
+                {
+                    MessageBox.Show("ERROR el dni ingresado ya existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    estaOk = false;
+                }
+
+                if (resulMail != 0)
+                {
+                    MessageBox.Show("ERROR el mail ingresado ya existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    estaOk = false;
+                }
             }
 
             return estaOk;
@@ -228,6 +316,16 @@ namespace FrbaHotel.ABM_de_Cliente
         private void textBoxApellido_KeyPress(object sender, KeyPressEventArgs e)
         {
             FrbaHotel.Utils.allowLetters(e); 
+        }
+
+        private void textBoxEstado_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            FrbaHotel.Utils.allowLetters(e);
+        }
+
+        private void comboBoxEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            estado = comboBoxEstado.Text;
         }
 
     }

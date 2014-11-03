@@ -122,5 +122,20 @@ namespace FrbaHotel
             return dt;
         }
 
+        //le pasas la consulta por parametro y la ejecuta
+        internal static void ejecutarConsulta(string consulta)
+        {
+            //SqlConnection cnn = new SqlConnection("Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014");
+            //cnn.Open();
+            SqlConnection cnn = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cnn;
+            cmd.CommandType = CommandType.Text;
+
+            cmd.CommandText = consulta;
+
+            cmd.ExecuteNonQuery();
+        }
+
     }
 }

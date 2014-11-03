@@ -59,6 +59,8 @@
             this.textBoxPiso = new System.Windows.Forms.TextBox();
             this.labelNroCalle = new System.Windows.Forms.Label();
             this.textBoxNroCalle = new System.Windows.Forms.TextBox();
+            this.labelEstado = new System.Windows.Forms.Label();
+            this.comboBoxEstado = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -184,7 +186,7 @@
             // 
             // botonRegistrar
             // 
-            this.botonRegistrar.Location = new System.Drawing.Point(11, 315);
+            this.botonRegistrar.Location = new System.Drawing.Point(11, 348);
             this.botonRegistrar.Name = "botonRegistrar";
             this.botonRegistrar.Size = new System.Drawing.Size(75, 23);
             this.botonRegistrar.TabIndex = 12;
@@ -194,7 +196,7 @@
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(118, 315);
+            this.botonLimpiar.Location = new System.Drawing.Point(118, 348);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.botonLimpiar.TabIndex = 13;
@@ -204,7 +206,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(355, 315);
+            this.botonVolver.Location = new System.Drawing.Point(355, 348);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 14;
@@ -345,11 +347,36 @@
             this.textBoxNroCalle.TabIndex = 31;
             this.textBoxNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNroCalle_KeyPress);
             // 
+            // labelEstado
+            // 
+            this.labelEstado.AutoSize = true;
+            this.labelEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelEstado.Location = new System.Drawing.Point(11, 311);
+            this.labelEstado.Name = "labelEstado";
+            this.labelEstado.Size = new System.Drawing.Size(48, 15);
+            this.labelEstado.TabIndex = 32;
+            this.labelEstado.Text = "Estado:";
+            // 
+            // comboBoxEstado
+            // 
+            this.comboBoxEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxEstado.FormattingEnabled = true;
+            this.comboBoxEstado.Items.AddRange(new object[] {
+            "H",
+            "I"});
+            this.comboBoxEstado.Location = new System.Drawing.Point(65, 310);
+            this.comboBoxEstado.Name = "comboBoxEstado";
+            this.comboBoxEstado.Size = new System.Drawing.Size(47, 21);
+            this.comboBoxEstado.TabIndex = 35;
+            this.comboBoxEstado.SelectedIndexChanged += new System.EventHandler(this.comboBoxEstado_SelectedIndexChanged);
+            // 
             // RegistrarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(442, 350);
+            this.ClientSize = new System.Drawing.Size(442, 383);
+            this.Controls.Add(this.comboBoxEstado);
+            this.Controls.Add(this.labelEstado);
             this.Controls.Add(this.textBoxNroCalle);
             this.Controls.Add(this.labelNroCalle);
             this.Controls.Add(this.textBoxPiso);
@@ -424,5 +451,7 @@
         private System.Windows.Forms.TextBox textBoxPiso;
         private System.Windows.Forms.Label labelNroCalle;
         private System.Windows.Forms.TextBox textBoxNroCalle;
+        private System.Windows.Forms.Label labelEstado;
+        private System.Windows.Forms.ComboBox comboBoxEstado;
     }
 }
