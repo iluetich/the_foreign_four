@@ -50,6 +50,8 @@ namespace FrbaHotel.IniciarSecion
 
         private void botonIngresar_Click(object sender, EventArgs e)
         {
+            this.comboBoxSelecionHotel_SelectedIndexChanged(sender, e);
+
             //primero corroborar los campos completos
             FrbaHotel.Utils.validarCampoEsteCompleto(textBoxUsername,"UserName");
             FrbaHotel.Utils.validarCampoEsteCompleto(textBoxpassword, "Password");

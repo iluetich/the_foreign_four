@@ -130,17 +130,17 @@
     <Compile Include="ABM de Rol\ModificarYBorrarRol.Designer.cs">
       <DependentUpon>ModificarYBorrarRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM de Usuario\AgregarRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Usuario\AgregarRol.Designer.cs">
+      <DependentUpon>AgregarRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM de Usuario\CreacionDeUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM de Usuario\CreacionDeUsuario.Designer.cs">
       <DependentUpon>CreacionDeUsuario.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ABM de Usuario\EliminarUsuario.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM de Usuario\EliminarUsuario.Designer.cs">
-      <DependentUpon>EliminarUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Usuario\ModificarUsuario.cs">
       <SubType>Form</SubType>
@@ -288,11 +288,11 @@
     <EmbeddedResource Include="ABM de Rol\ModificarYBorrarRol.resx">
       <DependentUpon>ModificarYBorrarRol.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Usuario\AgregarRol.resx">
+      <DependentUpon>AgregarRol.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM de Usuario\CreacionDeUsuario.resx">
       <DependentUpon>CreacionDeUsuario.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ABM de Usuario\EliminarUsuario.resx">
-      <DependentUpon>EliminarUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Usuario\ModificarUsuario.resx">
       <DependentUpon>ModificarUsuario.cs</DependentUpon>

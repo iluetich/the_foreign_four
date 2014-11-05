@@ -43,25 +43,26 @@
             this.telefono = new System.Windows.Forms.Label();
             this.Direccion = new System.Windows.Forms.Label();
             this.fechaDeNacimiento = new System.Windows.Forms.Label();
-            this.hotelTrabaja = new System.Windows.Forms.Label();
             this.guardar = new System.Windows.Forms.Button();
             this.limpiar = new System.Windows.Forms.Button();
             this.cancelar = new System.Windows.Forms.Button();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.textBoxPassword1 = new System.Windows.Forms.TextBox();
             this.textBoxPassword2 = new System.Windows.Forms.TextBox();
-            this.fechaDeNac = new System.Windows.Forms.DateTimePicker();
-            this.texBoxTelefono = new System.Windows.Forms.TextBox();
+            this.dateTimePickFechaNac = new System.Windows.Forms.DateTimePicker();
+            this.textBoxTelefono = new System.Windows.Forms.TextBox();
             this.textBoxNumeroDeDoc = new System.Windows.Forms.TextBox();
             this.textBoxMail = new System.Windows.Forms.TextBox();
-            this.textBoxTipoDoc = new System.Windows.Forms.TextBox();
             this.textBoxNombre = new System.Windows.Forms.TextBox();
             this.textBoxApellido = new System.Windows.Forms.TextBox();
             this.textBoxDireccion = new System.Windows.Forms.TextBox();
-            this.comboBoxHoteles = new System.Windows.Forms.ComboBox();
-            this.comboBoxRoles = new System.Windows.Forms.ComboBox();
-            this.botonAgregar = new System.Windows.Forms.Button();
-            this.listBoxRoles = new System.Windows.Forms.ListBox();
+            this.botonAgregarRol = new System.Windows.Forms.Button();
+            this.labelEstado = new System.Windows.Forms.Label();
+            this.comboBoxEstado = new System.Windows.Forms.ComboBox();
+            this.comboBoxTipoDoc = new System.Windows.Forms.ComboBox();
+            this.dgvRolesHoteles = new System.Windows.Forms.DataGridView();
+            this.botonQuitarRol = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRolesHoteles)).BeginInit();
             this.SuspendLayout();
             // 
             // labelCrearUsuario
@@ -109,7 +110,7 @@
             // 
             this.labelRol.AutoSize = true;
             this.labelRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRol.Location = new System.Drawing.Point(261, 70);
+            this.labelRol.Location = new System.Drawing.Point(274, 71);
             this.labelRol.Name = "labelRol";
             this.labelRol.Size = new System.Drawing.Size(122, 15);
             this.labelRol.TabIndex = 4;
@@ -215,37 +216,29 @@
             this.fechaDeNacimiento.TabIndex = 14;
             this.fechaDeNacimiento.Text = "Fecha de Nac.:";
             // 
-            // hotelTrabaja
-            // 
-            this.hotelTrabaja.AutoSize = true;
-            this.hotelTrabaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hotelTrabaja.Location = new System.Drawing.Point(11, 356);
-            this.hotelTrabaja.Name = "hotelTrabaja";
-            this.hotelTrabaja.Size = new System.Drawing.Size(164, 15);
-            this.hotelTrabaja.TabIndex = 15;
-            this.hotelTrabaja.Text = "Hotel donde se Desempeña:";
-            // 
             // guardar
             // 
-            this.guardar.Location = new System.Drawing.Point(14, 397);
+            this.guardar.Location = new System.Drawing.Point(14, 361);
             this.guardar.Name = "guardar";
             this.guardar.Size = new System.Drawing.Size(75, 23);
             this.guardar.TabIndex = 16;
             this.guardar.Text = "Guardar";
             this.guardar.UseVisualStyleBackColor = true;
+            this.guardar.Click += new System.EventHandler(this.guardar_Click);
             // 
             // limpiar
             // 
-            this.limpiar.Location = new System.Drawing.Point(100, 397);
+            this.limpiar.Location = new System.Drawing.Point(100, 361);
             this.limpiar.Name = "limpiar";
             this.limpiar.Size = new System.Drawing.Size(75, 23);
             this.limpiar.TabIndex = 17;
             this.limpiar.Text = "Limpiar";
             this.limpiar.UseVisualStyleBackColor = true;
+            this.limpiar.Click += new System.EventHandler(this.limpiar_Click);
             // 
             // cancelar
             // 
-            this.cancelar.Location = new System.Drawing.Point(517, 397);
+            this.cancelar.Location = new System.Drawing.Point(514, 361);
             this.cancelar.Name = "cancelar";
             this.cancelar.Size = new System.Drawing.Size(75, 23);
             this.cancelar.TabIndex = 18;
@@ -274,26 +267,31 @@
             this.textBoxPassword2.Size = new System.Drawing.Size(100, 20);
             this.textBoxPassword2.TabIndex = 21;
             // 
-            // fechaDeNac
+            // dateTimePickFechaNac
             // 
-            this.fechaDeNac.Location = new System.Drawing.Point(390, 319);
-            this.fechaDeNac.Name = "fechaDeNac";
-            this.fechaDeNac.Size = new System.Drawing.Size(200, 20);
-            this.fechaDeNac.TabIndex = 22;
+            this.dateTimePickFechaNac.Location = new System.Drawing.Point(390, 319);
+            this.dateTimePickFechaNac.Name = "dateTimePickFechaNac";
+            this.dateTimePickFechaNac.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickFechaNac.TabIndex = 22;
+            this.dateTimePickFechaNac.ValueChanged += new System.EventHandler(this.fechaDeNac_ValueChanged);
             // 
-            // texBoxTelefono
+            // textBoxTelefono
             // 
-            this.texBoxTelefono.Location = new System.Drawing.Point(264, 286);
-            this.texBoxTelefono.Name = "texBoxTelefono";
-            this.texBoxTelefono.Size = new System.Drawing.Size(100, 20);
-            this.texBoxTelefono.TabIndex = 23;
+            this.textBoxTelefono.Location = new System.Drawing.Point(264, 286);
+            this.textBoxTelefono.MaxLength = 20;
+            this.textBoxTelefono.Name = "textBoxTelefono";
+            this.textBoxTelefono.Size = new System.Drawing.Size(100, 20);
+            this.textBoxTelefono.TabIndex = 23;
+            this.textBoxTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTelefono_KeyPress);
             // 
             // textBoxNumeroDeDoc
             // 
             this.textBoxNumeroDeDoc.Location = new System.Drawing.Point(359, 253);
+            this.textBoxNumeroDeDoc.MaxLength = 8;
             this.textBoxNumeroDeDoc.Name = "textBoxNumeroDeDoc";
             this.textBoxNumeroDeDoc.Size = new System.Drawing.Size(100, 20);
             this.textBoxNumeroDeDoc.TabIndex = 24;
+            this.textBoxNumeroDeDoc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumeroDeDoc_KeyPress);
             // 
             // textBoxMail
             // 
@@ -302,19 +300,13 @@
             this.textBoxMail.Size = new System.Drawing.Size(100, 20);
             this.textBoxMail.TabIndex = 25;
             // 
-            // textBoxTipoDoc
-            // 
-            this.textBoxTipoDoc.Location = new System.Drawing.Point(96, 254);
-            this.textBoxTipoDoc.Name = "textBoxTipoDoc";
-            this.textBoxTipoDoc.Size = new System.Drawing.Size(100, 20);
-            this.textBoxTipoDoc.TabIndex = 26;
-            // 
             // textBoxNombre
             // 
             this.textBoxNombre.Location = new System.Drawing.Point(76, 220);
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(149, 20);
             this.textBoxNombre.TabIndex = 27;
+            this.textBoxNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNombre_KeyPress);
             // 
             // textBoxApellido
             // 
@@ -322,6 +314,7 @@
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(144, 20);
             this.textBoxApellido.TabIndex = 28;
+            this.textBoxApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxApellido_KeyPress);
             // 
             // textBoxDireccion
             // 
@@ -330,63 +323,94 @@
             this.textBoxDireccion.Size = new System.Drawing.Size(199, 20);
             this.textBoxDireccion.TabIndex = 29;
             // 
-            // comboBoxHoteles
+            // botonAgregarRol
             // 
-            this.comboBoxHoteles.FormattingEnabled = true;
-            this.comboBoxHoteles.Location = new System.Drawing.Point(181, 350);
-            this.comboBoxHoteles.Name = "comboBoxHoteles";
-            this.comboBoxHoteles.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxHoteles.TabIndex = 30;
+            this.botonAgregarRol.Location = new System.Drawing.Point(402, 68);
+            this.botonAgregarRol.Name = "botonAgregarRol";
+            this.botonAgregarRol.Size = new System.Drawing.Size(75, 23);
+            this.botonAgregarRol.TabIndex = 32;
+            this.botonAgregarRol.Text = "Agregar Rol";
+            this.botonAgregarRol.UseVisualStyleBackColor = true;
+            this.botonAgregarRol.Click += new System.EventHandler(this.botonAgregarRol_Click);
             // 
-            // comboBoxRoles
+            // labelEstado
             // 
-            this.comboBoxRoles.FormattingEnabled = true;
-            this.comboBoxRoles.Location = new System.Drawing.Point(389, 70);
-            this.comboBoxRoles.Name = "comboBoxRoles";
-            this.comboBoxRoles.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxRoles.TabIndex = 31;
+            this.labelEstado.AutoSize = true;
+            this.labelEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelEstado.Location = new System.Drawing.Point(11, 156);
+            this.labelEstado.Name = "labelEstado";
+            this.labelEstado.Size = new System.Drawing.Size(48, 15);
+            this.labelEstado.TabIndex = 34;
+            this.labelEstado.Text = "Estado:";
             // 
-            // botonAgregar
+            // comboBoxEstado
             // 
-            this.botonAgregar.Location = new System.Drawing.Point(517, 66);
-            this.botonAgregar.Name = "botonAgregar";
-            this.botonAgregar.Size = new System.Drawing.Size(75, 23);
-            this.botonAgregar.TabIndex = 32;
-            this.botonAgregar.Text = "Agregar";
-            this.botonAgregar.UseVisualStyleBackColor = true;
+            this.comboBoxEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxEstado.FormattingEnabled = true;
+            this.comboBoxEstado.Items.AddRange(new object[] {
+            "H",
+            "I"});
+            this.comboBoxEstado.Location = new System.Drawing.Point(65, 155);
+            this.comboBoxEstado.Name = "comboBoxEstado";
+            this.comboBoxEstado.Size = new System.Drawing.Size(44, 21);
+            this.comboBoxEstado.TabIndex = 35;
+            this.comboBoxEstado.SelectedIndexChanged += new System.EventHandler(this.comboBoxEstado_SelectedIndexChanged);
             // 
-            // listBoxRoles
+            // comboBoxTipoDoc
             // 
-            this.listBoxRoles.FormattingEnabled = true;
-            this.listBoxRoles.Location = new System.Drawing.Point(264, 100);
-            this.listBoxRoles.Name = "listBoxRoles";
-            this.listBoxRoles.Size = new System.Drawing.Size(328, 56);
-            this.listBoxRoles.TabIndex = 33;
+            this.comboBoxTipoDoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTipoDoc.FormattingEnabled = true;
+            this.comboBoxTipoDoc.Items.AddRange(new object[] {
+            "PAS",
+            "DNI"});
+            this.comboBoxTipoDoc.Location = new System.Drawing.Point(100, 255);
+            this.comboBoxTipoDoc.Name = "comboBoxTipoDoc";
+            this.comboBoxTipoDoc.Size = new System.Drawing.Size(86, 21);
+            this.comboBoxTipoDoc.TabIndex = 40;
+            this.comboBoxTipoDoc.SelectedIndexChanged += new System.EventHandler(this.comboBoxTipoDoc_SelectedIndexChanged);
+            // 
+            // dgvRolesHoteles
+            // 
+            this.dgvRolesHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRolesHoteles.Location = new System.Drawing.Point(277, 100);
+            this.dgvRolesHoteles.Name = "dgvRolesHoteles";
+            this.dgvRolesHoteles.Size = new System.Drawing.Size(281, 90);
+            this.dgvRolesHoteles.TabIndex = 41;
+            // 
+            // botonQuitarRol
+            // 
+            this.botonQuitarRol.Location = new System.Drawing.Point(483, 68);
+            this.botonQuitarRol.Name = "botonQuitarRol";
+            this.botonQuitarRol.Size = new System.Drawing.Size(75, 23);
+            this.botonQuitarRol.TabIndex = 42;
+            this.botonQuitarRol.Text = "Quitar Rol";
+            this.botonQuitarRol.UseVisualStyleBackColor = true;
+            this.botonQuitarRol.Click += new System.EventHandler(this.botonQuitarRol_Click);
             // 
             // CreacionDeUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(599, 430);
-            this.Controls.Add(this.listBoxRoles);
-            this.Controls.Add(this.botonAgregar);
-            this.Controls.Add(this.comboBoxRoles);
-            this.Controls.Add(this.comboBoxHoteles);
+            this.ClientSize = new System.Drawing.Size(599, 400);
+            this.Controls.Add(this.botonQuitarRol);
+            this.Controls.Add(this.dgvRolesHoteles);
+            this.Controls.Add(this.comboBoxTipoDoc);
+            this.Controls.Add(this.comboBoxEstado);
+            this.Controls.Add(this.labelEstado);
+            this.Controls.Add(this.botonAgregarRol);
             this.Controls.Add(this.textBoxDireccion);
             this.Controls.Add(this.textBoxApellido);
             this.Controls.Add(this.textBoxNombre);
-            this.Controls.Add(this.textBoxTipoDoc);
             this.Controls.Add(this.textBoxMail);
             this.Controls.Add(this.textBoxNumeroDeDoc);
-            this.Controls.Add(this.texBoxTelefono);
-            this.Controls.Add(this.fechaDeNac);
+            this.Controls.Add(this.textBoxTelefono);
+            this.Controls.Add(this.dateTimePickFechaNac);
             this.Controls.Add(this.textBoxPassword2);
             this.Controls.Add(this.textBoxPassword1);
             this.Controls.Add(this.textBoxUsername);
             this.Controls.Add(this.cancelar);
             this.Controls.Add(this.limpiar);
             this.Controls.Add(this.guardar);
-            this.Controls.Add(this.hotelTrabaja);
             this.Controls.Add(this.fechaDeNacimiento);
             this.Controls.Add(this.Direccion);
             this.Controls.Add(this.telefono);
@@ -406,6 +430,7 @@
             this.Name = "CreacionDeUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Creacion de Usuario";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRolesHoteles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -428,24 +453,24 @@
         private System.Windows.Forms.Label telefono;
         private System.Windows.Forms.Label Direccion;
         private System.Windows.Forms.Label fechaDeNacimiento;
-        private System.Windows.Forms.Label hotelTrabaja;
         private System.Windows.Forms.Button guardar;
         private System.Windows.Forms.Button limpiar;
         private System.Windows.Forms.Button cancelar;
         private System.Windows.Forms.TextBox textBoxUsername;
         private System.Windows.Forms.TextBox textBoxPassword1;
         private System.Windows.Forms.TextBox textBoxPassword2;
-        private System.Windows.Forms.DateTimePicker fechaDeNac;
-        private System.Windows.Forms.TextBox texBoxTelefono;
+        private System.Windows.Forms.DateTimePicker dateTimePickFechaNac;
+        private System.Windows.Forms.TextBox textBoxTelefono;
         private System.Windows.Forms.TextBox textBoxNumeroDeDoc;
         private System.Windows.Forms.TextBox textBoxMail;
-        private System.Windows.Forms.TextBox textBoxTipoDoc;
         private System.Windows.Forms.TextBox textBoxNombre;
         private System.Windows.Forms.TextBox textBoxApellido;
         private System.Windows.Forms.TextBox textBoxDireccion;
-        private System.Windows.Forms.ComboBox comboBoxHoteles;
-        private System.Windows.Forms.ComboBox comboBoxRoles;
-        private System.Windows.Forms.Button botonAgregar;
-        private System.Windows.Forms.ListBox listBoxRoles;
+        private System.Windows.Forms.Button botonAgregarRol;
+        private System.Windows.Forms.Label labelEstado;
+        private System.Windows.Forms.ComboBox comboBoxEstado;
+        private System.Windows.Forms.ComboBox comboBoxTipoDoc;
+        private System.Windows.Forms.DataGridView dgvRolesHoteles;
+        private System.Windows.Forms.Button botonQuitarRol;
     }
 }

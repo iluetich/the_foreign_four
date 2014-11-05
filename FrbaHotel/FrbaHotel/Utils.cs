@@ -137,5 +137,19 @@ namespace FrbaHotel
             cmd.ExecuteNonQuery();
         }
 
+        //le pasas un consulta y devuelve un numero INT resultado de esa consulta
+        internal static int ejecutarConsultaResulInt(string consulta)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = consulta;
+
+            cmd.CommandType = CommandType.Text;
+
+            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+
+            return (int)cmd.ExecuteScalar();
+        }
+
     }
 }

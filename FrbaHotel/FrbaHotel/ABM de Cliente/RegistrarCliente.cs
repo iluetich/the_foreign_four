@@ -171,20 +171,20 @@ namespace FrbaHotel.ABM_de_Cliente
                     cmd.Connection = cnn;
                     cmd.CommandType = CommandType.Text;
 
-                    cmd.Parameters.Add("@nombre", nombre);
-                    cmd.Parameters.Add("@apellido", apellido);
-                    cmd.Parameters.Add("@tipo_doc", tipoDoc);
-                    cmd.Parameters.Add("@nro_doc", nroDoc);
-                    cmd.Parameters.Add("@telefono", telefono);
-                    cmd.Parameters.Add("@nom_calle", calle);
-                    cmd.Parameters.Add("@nro_calle", nroCalle);
-                    cmd.Parameters.Add("@pais_origen", nacionalidad);
-                    cmd.Parameters.Add("@nacionalidad", localidad);
-                    cmd.Parameters.Add("@piso", piso);
-                    cmd.Parameters.Add("@depto", departamento);
-                    cmd.Parameters.Add("@fecha_nac", fechaNac);
-                    cmd.Parameters.Add("@estado", estado);
-                    cmd.Parameters.Add("@mail", mail);
+                    cmd.Parameters.AddWithValue("@nombre", nombre);
+                    cmd.Parameters.AddWithValue("@apellido", apellido);
+                    cmd.Parameters.AddWithValue("@tipo_doc", tipoDoc);
+                    cmd.Parameters.AddWithValue("@nro_doc", nroDoc);
+                    cmd.Parameters.AddWithValue("@telefono", telefono);
+                    cmd.Parameters.AddWithValue("@nom_calle", calle);
+                    cmd.Parameters.AddWithValue("@nro_calle", nroCalle);
+                    cmd.Parameters.AddWithValue("@pais_origen", nacionalidad);
+                    cmd.Parameters.AddWithValue("@nacionalidad", localidad);
+                    cmd.Parameters.AddWithValue("@piso", piso);
+                    cmd.Parameters.AddWithValue("@depto", departamento);
+                    cmd.Parameters.AddWithValue("@fecha_nac", fechaNac);
+                    cmd.Parameters.AddWithValue("@estado", estado);
+                    cmd.Parameters.AddWithValue("@mail", mail);
 
                     if (constructorMod)
                     {
@@ -218,8 +218,14 @@ namespace FrbaHotel.ABM_de_Cliente
             Boolean estaOk = true;
 
             estaOk = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxNombre, "Nombre");
-            estaOk = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxApellido, "Apellido");
-            estaOk = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxMail, "Mail");
+            if (estaOk)
+            {
+                estaOk = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxApellido, "Apellido");
+            }
+            if (estaOk)
+            {
+                estaOk = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxMail, "Mail");
+            }
 
             //corrobora que el mail si o si tenga mas de 6 cifras
             if((nroDoc - 999999) < 0)
@@ -232,24 +238,12 @@ namespace FrbaHotel.ABM_de_Cliente
             if (!constructorMod)
             {
                 //corroborar que no ingrese un mail o un numero de documento que ya esta en la base de datos
-                SqlCommand cmd = new SqlCommand();
-                SqlCommand cmd2 = new SqlCommand();
-
-                cmd2.CommandText = "SELECT COUNT(*) FROM THE_FOREIGN_FOUR.Clientes c WHERE c.mail='" + mail + "'";
-                cmd.CommandText = "SELECT COUNT(*) FROM THE_FOREIGN_FOUR.Clientes c WHERE c.nro_doc=" + nroDoc;
-
-                cmd.CommandType = CommandType.Text;
-                cmd2.CommandType = CommandType.Text;
-
-                cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
-                cmd2.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
-
-                int resulDni = (int)cmd.ExecuteScalar();
-                int resulMail = (int)cmd2.ExecuteScalar();
+                int resulDni = FrbaHotel.Utils.ejecutarConsultaResulInt("SELECT COUNT(*) FROM THE_FOREIGN_FOUR.Clientes c WHERE c.nro_doc=" + nroDoc);
+                int resulMail = FrbaHotel.Utils.ejecutarConsultaResulInt("SELECT COUNT(*) FROM THE_FOREIGN_FOUR.Clientes c WHERE c.mail='" + mail + "'");
 
                 if (resulDni != 0)
                 {
-                    MessageBox.Show("ERROR el dni ingresado ya existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("ERROR el nro de documento ingresado ya existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     estaOk = false;
                 }
 
