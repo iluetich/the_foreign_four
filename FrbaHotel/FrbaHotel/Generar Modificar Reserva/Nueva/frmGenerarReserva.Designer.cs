@@ -248,17 +248,20 @@
             this.grbPanel2.Controls.Add(this.txtResul);
             this.grbPanel2.Location = new System.Drawing.Point(19, 286);
             this.grbPanel2.Name = "grbPanel2";
-            this.grbPanel2.Size = new System.Drawing.Size(364, 85);
+            this.grbPanel2.Size = new System.Drawing.Size(364, 86);
             this.grbPanel2.TabIndex = 15;
             this.grbPanel2.TabStop = false;
             // 
             // txtCostoTotal
             // 
+            this.txtCostoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCostoTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.txtCostoTotal.Location = new System.Drawing.Point(157, 46);
             this.txtCostoTotal.Name = "txtCostoTotal";
             this.txtCostoTotal.ReadOnly = true;
-            this.txtCostoTotal.Size = new System.Drawing.Size(156, 20);
+            this.txtCostoTotal.Size = new System.Drawing.Size(156, 21);
             this.txtCostoTotal.TabIndex = 10;
+            this.txtCostoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
             // 
