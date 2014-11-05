@@ -34,8 +34,8 @@ CREATE TABLE THE_FOREIGN_FOUR.Usuarios (
 	nombre				nvarchar(60),
 	apellido			nvarchar(60),
 	tipo_doc			nvarchar(3)				DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
-	nro_doc				numeric(18,0)			UNIQUE,
-	mail				nvarchar(60)			UNIQUE,
+	nro_doc				numeric(18,0),
+	mail				nvarchar(60),			--saco los unique ya que no es necesario para los usuarios
 	telefono			nvarchar(60),
 	direccion			nvarchar(60),
 	fecha_nac			datetime,
