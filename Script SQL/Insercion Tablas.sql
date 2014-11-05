@@ -131,7 +131,3 @@ FROM gd_esquema.Maestra m
 
 --***JUEGO DE DATOS************************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos
-
-
-SELECT *
-FROM THE_FOREIGN_FOUR.ReservasPorTipoHabitacion

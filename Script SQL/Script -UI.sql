@@ -383,6 +383,7 @@ DROP VIEW THE_FOREIGN_FOUR.view_facturas*/
 
 --********************************************
 --******SCRIPT PARA DROPEAR*******************
+/*
 DROP FUNCTION THE_FOREIGN_FOUR.login_password
 DROP FUNCTION THE_FOREIGN_FOUR.login_funcionalidades
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes
@@ -478,3 +479,4 @@ FROM THE_FOREIGN_FOUR.Habitaciones
 WHERE	cod_hotel = 1
 AND		cod_tipo_hab = 1001
 ----------------------------------------------------------
+*/
