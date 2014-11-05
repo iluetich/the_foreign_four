@@ -38,14 +38,14 @@
             this.dgvRegimenes.AllowUserToDeleteRows = false;
             this.dgvRegimenes.AllowUserToResizeColumns = false;
             this.dgvRegimenes.AllowUserToResizeRows = false;
-            this.dgvRegimenes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvRegimenes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvRegimenes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvRegimenes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvRegimenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRegimenes.Location = new System.Drawing.Point(1, 1);
             this.dgvRegimenes.Name = "dgvRegimenes";
             this.dgvRegimenes.ReadOnly = true;
-            this.dgvRegimenes.Size = new System.Drawing.Size(330, 116);
+            this.dgvRegimenes.Size = new System.Drawing.Size(313, 116);
             this.dgvRegimenes.TabIndex = 2;
             this.dgvRegimenes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegimenes_CellClick);
             // 
@@ -53,7 +53,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 120);
+            this.ClientSize = new System.Drawing.Size(316, 120);
             this.Controls.Add(this.dgvRegimenes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -62,7 +62,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Regimenes";
+            this.Text = "Haga click en la opcion que desee";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.frmRegimenes_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRegimenes_FormClosing);
