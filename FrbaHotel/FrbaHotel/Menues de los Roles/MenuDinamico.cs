@@ -253,7 +253,7 @@ namespace FrbaHotel.Menues_de_los_Roles
 
         private void botonModElimUsuario_Click(object sender, EventArgs e)
         {
-            ModificarYBorrarUsuario frmModElimUsuario = new ModificarYBorrarUsuario(this);
+            ModificarYBorrarUsuario frmModElimUsuario = new ModificarYBorrarUsuario(this,userSesion,hotelSesion);
             frmModElimUsuario.Show();
             this.Hide();
         }

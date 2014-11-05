@@ -233,6 +233,13 @@ WHERE u.cod_usuario = uh.cod_usuario
 AND uh.cod_rol = r.cod_rol
 
 --***********************************************************
+CREATE VIEW THE_FOREIGN_FOUR.RolesPorHotelesPorClientes
+AS
+SELECT u.cod_usuario,u.cod_hotel,r.nombre
+FROM THE_FOREIGN_FOUR.UsuariosPorHotel u,THE_FOREIGN_FOUR.Roles r
+WHERE u.cod_rol = r.cod_rol
+
+--***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_todos_los_clientes 
 AS
 SELECT nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, nro_calle, nacionalidad, pais_origen

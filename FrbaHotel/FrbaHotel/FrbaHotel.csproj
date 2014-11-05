@@ -142,12 +142,6 @@
     <Compile Include="ABM de Usuario\CreacionDeUsuario.Designer.cs">
       <DependentUpon>CreacionDeUsuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Usuario\ModificarUsuario.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM de Usuario\ModificarUsuario.Designer.cs">
-      <DependentUpon>ModificarUsuario.cs</DependentUpon>
-    </Compile>
     <Compile Include="ABM de Usuario\ModificarYBorrarUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -293,9 +287,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Usuario\CreacionDeUsuario.resx">
       <DependentUpon>CreacionDeUsuario.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ABM de Usuario\ModificarUsuario.resx">
-      <DependentUpon>ModificarUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Usuario\ModificarYBorrarUsuario.resx">
       <DependentUpon>ModificarYBorrarUsuario.cs</DependentUpon>

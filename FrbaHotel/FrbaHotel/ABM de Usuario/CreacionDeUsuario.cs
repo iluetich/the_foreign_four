@@ -14,13 +14,16 @@ namespace FrbaHotel.ABM_de_Usuario
     public partial class CreacionDeUsuario : Form
     {
         private MenuDinamico menu;
+        private ModificarYBorrarUsuario frmPadre;
         private string estado;
         private string tipoDoc;
         private DataSet dataSet;
         private DateTime fechaDeNac;
+        private Boolean constructorMod;
 
         public CreacionDeUsuario(MenuDinamico menuPadre)
         {
+            this.constructorMod = false;
             this.crearDataSet();
             this.menu = menuPadre;
             InitializeComponent();
@@ -28,6 +31,84 @@ namespace FrbaHotel.ABM_de_Usuario
             labelEstado.Visible = false;
             comboBoxEstado.Visible = false;
             comboBoxEstado.SelectedIndex = 0;
+        }
+
+        public CreacionDeUsuario(ModificarYBorrarUsuario padre,DataGridViewRow fila)
+        {
+            this.constructorMod = true;
+            this.crearDataSet();
+            this.frmPadre = padre;
+            InitializeComponent();
+            labelCrearUsuario.Text = "Modificar Usuario";
+            textBoxUsername.ReadOnly = true;
+            dgvRolesHoteles.ReadOnly = true;
+            this.setearDatos(fila);
+        }
+
+        public void setearDatos(DataGridViewRow fila)
+        {
+            textBoxUsername.Text = fila.Cells["user_name"].Value.ToString();
+            textBoxPassword1.Text = fila.Cells["password"].Value.ToString();
+            textBoxPassword2.Text = fila.Cells["password"].Value.ToString();
+            string estadoComboBox = fila.Cells["estado"].Value.ToString();
+            if (estadoComboBox == "H")
+            {
+                comboBoxEstado.SelectedIndex = 0;
+            }
+            else
+            {
+                comboBoxEstado.SelectedIndex = 1;
+            }
+            textBoxNombre.Text = fila.Cells["nombre"].Value.ToString();
+            textBoxApellido.Text = fila.Cells["apellido"].Value.ToString();
+            string itemDelComboBox = fila.Cells["tipo_doc"].Value.ToString();
+            if (itemDelComboBox == "DNI")
+            {
+                comboBoxTipoDoc.SelectedIndex = 1;
+            }
+            else
+            {
+                comboBoxTipoDoc.SelectedIndex = 0;
+            }
+            textBoxNumeroDeDoc.Text = fila.Cells["nro_doc"].Value.ToString();
+            textBoxMail.Text = fila.Cells["mail"].Value.ToString();
+            textBoxTelefono.Text = fila.Cells["telefono"].Value.ToString();
+            textBoxDireccion.Text = fila.Cells["direccion"].Value.ToString();
+            dateTimePickFechaNac.Text = fila.Cells["fecha_nac"].Value.ToString();
+
+            //cargar la tabla con sus roles por hoteles
+            //1) obetener todos los roles que tiene por hotel
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+            SqlDataReader reader;
+
+            cmd.CommandText = "SELECT * FROM THE_FOREIGN_FOUR.RolesPorHotelesPorClientes WHERE cod_usuario="+ fila.Cells["cod_usuario"].Value.ToString();
+            cmd.CommandType = CommandType.Text;
+
+            reader = cmd.ExecuteReader();
+
+            //2) cargar el reader en la tabla ya creada
+            DataTable table = dataSet.Tables[0];
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    int hotel = reader.GetInt32(1);
+                    string rol = reader.GetString(2);
+
+                    DataRow row = table.NewRow();
+                    row["rol"] = rol;
+                    row["hotel"] = hotel.ToString();
+
+                    table.Rows.Add(row);                
+                }
+            }
+            reader.Dispose();
+
+            //3) mostralos en la tabla
+            dgvRolesHoteles.DataSource = dataSet.Tables[0];
         }
 
         public void crearDataSet()
@@ -61,7 +142,14 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void cancelar_Click(object sender, EventArgs e)
         {
-            menu.Show();
+            if (constructorMod)
+            {
+                frmPadre.Show();
+            }
+            else
+            {
+                menu.Show();
+            }
             this.Close();
         }
 
@@ -109,22 +197,65 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void guardar_Click(object sender, EventArgs e)
         {
-            Boolean estaOk = true;
+            Boolean textosCompletos = true;
+            Boolean passwordIguales = true;
+            Boolean userUnico = true;
+            Boolean almenosUnRol = true;
+
             //corroborar que los texbox esten completos
-            estaOk = this.corroborarTextosCompletos(estaOk);
+            textosCompletos = this.corroborarTextosCompletos(textosCompletos);
             //corroborar que los password sean iguales
-            estaOk = this.passwordIguales(estaOk);
-            //corroborar que el username sea unico
-            estaOk = this.userNameUnico(estaOk);
-            //corroborar que tenga almenos un rol asignado
-            estaOk = this.almenosUnRol(estaOk);
-            //PERSISTIR
-            if (estaOk)
+            passwordIguales = this.passwordIguales(passwordIguales);
+            //corroborar que el username sea unico (si es la pantalla de modificar entonces no se controla ya que no se puede cambiar el UserName)
+            if (!constructorMod)
             {
-                this.guardarUsuario();
-                menu.Show();
+                userUnico = this.userNameUnico(userUnico);
+            }
+            //corroborar que tenga almenos un rol asignado
+            almenosUnRol = this.almenosUnRol(almenosUnRol);
+            //PERSISTIR O MODIFICAR
+            if (textosCompletos && passwordIguales && userUnico && almenosUnRol)
+            {
+                if (constructorMod)
+                {
+                    this.actualizarUsuario();
+                    frmPadre.Show();
+                }
+                else
+                {
+                    this.guardarUsuario();
+                    menu.Show();
+                }
                 this.Close();
             }
+        }
+
+        public void actualizarUsuario()
+        {
+            //UPDATE usuario
+            int nroDoc = int.Parse(textBoxNumeroDeDoc.Text);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+            cmd.CommandType = CommandType.Text;
+
+            cmd.Parameters.AddWithValue("@fechaNacimiento", fechaDeNac);
+            cmd.Parameters.AddWithValue("@password", textBoxPassword1.Text);
+            cmd.Parameters.AddWithValue("@nombre", textBoxNombre.Text);
+            cmd.Parameters.AddWithValue("@apellido", textBoxApellido.Text);
+            cmd.Parameters.AddWithValue("@tipo_doc", tipoDoc);
+            cmd.Parameters.AddWithValue("@nro_doc", textBoxNumeroDeDoc.Text);
+            cmd.Parameters.AddWithValue("@mail", textBoxMail.Text);
+            cmd.Parameters.AddWithValue("@telefono", textBoxTelefono.Text);
+            cmd.Parameters.AddWithValue("@direccion", textBoxDireccion.Text);
+            cmd.Parameters.AddWithValue("@estado", estado);
+
+            cmd.CommandText = "UPDATE THE_FOREIGN_FOUR.Usuarios SET password=@password,nombre=@nombre,apellido=@apellido,tipo_doc=@tipo_doc,nro_doc=@nro_doc,mail=@mail,telefono=@telefono," +
+                                "direccion=@direccion,fecha_nac=@fechaNacimiento,estado=@estado WHERE user_name='" + textBoxUsername.Text +"'";
+
+            cmd.ExecuteNonQuery();
+
+            //CARGAR todos los roles por hotel que tenga
+            this.insertarRolesPorHotel();
         }
 
         public void guardarUsuario()
@@ -142,10 +273,24 @@ namespace FrbaHotel.ABM_de_Usuario
 
             cmd.ExecuteNonQuery();
             
+            //inserta los roles por hotel que tiene el usuario
+            this.insertarRolesPorHotel();
+        }
+
+        public void insertarRolesPorHotel()
+        {
             //obtener el codigo del usuario generado
             int cod_usuario = int.Parse(this.obtenerCod("SELECT SUM(cod_usuario) FROM THE_FOREIGN_FOUR.Usuarios WHERE user_name='" + textBoxUsername.Text + "'"));
 
-            //inserta los roles por hotel que tiene el usuario
+            //si es una ventana de modificacion
+            if (constructorMod)
+            {
+                //ELMINAS TODOS LOS roles por hotel que tenga
+                string comandoSql = "DELETE FROM THE_FOREIGN_FOUR.UsuariosPorHotel WHERE cod_usuario=" + cod_usuario;
+                FrbaHotel.Utils.ejecutarConsulta(comandoSql);
+            }
+
+            //inserta los roles por hotel 
             DataTable table = dataSet.Tables[0];
             for (int i = 0; i <= table.Rows.Count - 1; i++)
             {
@@ -156,7 +301,7 @@ namespace FrbaHotel.ABM_de_Usuario
 
                 //inserta en la tabla
                 string consulta2 = "INSERT INTO THE_FOREIGN_FOUR.UsuariosPorHotel (cod_usuario,cod_hotel,cod_rol)" +
-                    " VALUES ("+ cod_usuario +","+ int.Parse(fila.ItemArray[1].ToString()) +","+ cod_rol +")";
+                    " VALUES (" + cod_usuario + "," + int.Parse(fila.ItemArray[1].ToString()) + "," + cod_rol + ")";
                 FrbaHotel.Utils.ejecutarConsulta(consulta2);
             }
         }
@@ -210,22 +355,22 @@ namespace FrbaHotel.ABM_de_Usuario
 
         public Boolean corroborarTextosCompletos(Boolean ok)
         {
-            ok = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxUsername,"UserName");
-            if (!ok) {return ok;}
-            ok = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxPassword1, "Password");
-            if (!ok) {return ok;}
-            ok = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxPassword2, "repertir Password");
-            if (!ok) {return ok;}
-            ok = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxNombre, "Nombre");
-            if (!ok) {return ok;}
-            ok = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxApellido, "Apellido");
-            if (!ok) {return ok;}            
-            ok = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxNumeroDeDoc, "Numero de Documento");
-            if (!ok) {return ok;}            
-            ok = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxMail, "Mail");
-            if (!ok) {return ok;}            
-            ok = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxTelefono, "Telefono");
-            if (!ok) { return ok;}            
+            Boolean okUsername = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxUsername,"UserName");
+            if (!okUsername) {ok = false;}
+            Boolean okPassword = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxPassword1, "Password");
+            if (!okPassword) {ok = false;}
+            Boolean okRPassword = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxPassword2, "repertir Password");
+            if (!okRPassword) {ok = false;}
+            Boolean okNombre = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxNombre, "Nombre");
+            if (!okNombre) {ok = false;}
+            Boolean okApellido = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxApellido, "Apellido");
+            if (!okApellido) {ok = false;}            
+            Boolean okNroDoc = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxNumeroDeDoc, "Numero de Documento");
+            if (!okNroDoc) {ok = false;}            
+            Boolean okMail = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxMail, "Mail");
+            if (!okMail) {ok = false;}            
+            Boolean okTelefono = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxTelefono, "Telefono");
+            if (!okTelefono) { ok = false;}            
             ok = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxDireccion, "Direccion");
             return ok;
         }
