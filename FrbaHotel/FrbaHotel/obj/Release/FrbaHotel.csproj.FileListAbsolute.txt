@@ -12,7 +12,6 @@ C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Rol.ModificarRol.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Rol.ModificarYBorrarRol.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Usuario.CreacionDeUsuario.resources
-C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Usuario.ModificarUsuario.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.ABM_de_Usuario.ModificarYBorrarUsuario.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.InicioDelSistema.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Release\FrbaHotel.Properties.Resources.resources

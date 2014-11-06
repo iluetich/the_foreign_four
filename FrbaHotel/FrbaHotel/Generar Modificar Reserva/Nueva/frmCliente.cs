@@ -43,7 +43,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnNuevlClt_Click(object sender, EventArgs e)
         {
-            new RegistrarCliente().Show();
+            new RegistrarCliente(this).Show();
+            this.Enabled = false;
         }
 
         private void btnConfirmarReserva_Click(object sender, EventArgs e)
@@ -51,9 +52,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         }
 
-       
-        
-
+        private void cargarParametrosClientes()
+        {
+            //cmd.Parameters["@mail"].Value
+        }
 
     }
 

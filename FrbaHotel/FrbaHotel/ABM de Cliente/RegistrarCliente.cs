@@ -9,12 +9,14 @@ using System.Windows.Forms;
 using FrbaHotel.Registrar_Estadia;
 using FrbaHotel.Menues_de_los_Roles;
 using System.Data.SqlClient;
+using FrbaHotel.Generar_Modificar_Reserva;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
     public partial class RegistrarCliente : Form
     {
         frmRegistrarHuespedesRestantes frmRegistrarHuespedesRestantesPadre;
+        frmCliente frmClientePadre;
         private MenuDinamico menu;
         private ModificarOBorrarCliente frmPadre;
         private Boolean constructorMenu;
@@ -59,6 +61,18 @@ namespace FrbaHotel.ABM_de_Cliente
             //setear los datos a los controles
             this.setearDatos(dgvr);
         }
+
+        //constructor que viene del flujo de generar reserva
+        public RegistrarCliente(frmCliente newForm)
+        {
+            this.constructorMenu = true;
+            this.constructorMod = false;
+            this.frmClientePadre = newForm;
+            InitializeComponent();
+            comboBoxEstado.SelectedIndex = 0;//marca que el estado de entrada es H
+            labelEstado.Visible = false;
+            comboBoxEstado.Visible = false;
+        }        
 
         public void setearDatos(DataGridViewRow dgvr)
         {
@@ -124,16 +138,22 @@ namespace FrbaHotel.ABM_de_Cliente
         }
 
         private void botonVolver_Click(object sender, EventArgs e)
-        {           
-            if (constructorMenu)
+        {
+
+            if (frmClientePadre != null)//vuelve al flujo de generar reserva(agregado por ian)
+            {
+                frmClientePadre.Enabled = true;
+                frmClientePadre.Focus();
+            }
+            else if (constructorMenu)
             {
                 menu.Show();
             }
-
             if (constructorMod)
             {
                 frmPadre.Show();
             }
+            
             this.Close();
         }
 
@@ -185,7 +205,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     cmd.Parameters.AddWithValue("@fecha_nac", fechaNac);
                     cmd.Parameters.AddWithValue("@estado", estado);
                     cmd.Parameters.AddWithValue("@mail", mail);
-
+                    
                     if (constructorMod)
                     {
                         cmd.CommandText = "UPDATE THE_FOREIGN_FOUR.Clientes SET nombre=@nombre,apellido=@apellido,tipo_doc=@tipo_doc,nro_doc=@nro_doc,mail=@mail,telefono=@telefono,"+
@@ -200,7 +220,15 @@ namespace FrbaHotel.ABM_de_Cliente
 	
 	                cmd.ExecuteNonQuery();
                     cnn.Close();
-                    if (constructorMod)
+
+
+                    if (frmClientePadre != null)//vuelve al flujo de generar reserva(agregado por ian)
+                    {
+                        frmClientePadre.Enabled = true;
+                        frmClientePadre.Focus();
+                        //pasar command sql
+                    }
+                    else if (constructorMod)
                     {
                         frmPadre.Show();
                     }

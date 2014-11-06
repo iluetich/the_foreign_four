@@ -189,7 +189,7 @@
             this.botonRegistrar.Location = new System.Drawing.Point(11, 348);
             this.botonRegistrar.Name = "botonRegistrar";
             this.botonRegistrar.Size = new System.Drawing.Size(75, 23);
-            this.botonRegistrar.TabIndex = 12;
+            this.botonRegistrar.TabIndex = 14;
             this.botonRegistrar.Text = "Registrar";
             this.botonRegistrar.UseVisualStyleBackColor = true;
             this.botonRegistrar.Click += new System.EventHandler(this.botonRegistrar_Click);
@@ -200,6 +200,7 @@
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.botonLimpiar.TabIndex = 13;
+            this.botonLimpiar.TabStop = false;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
             this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
@@ -210,6 +211,7 @@
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 14;
+            this.botonVolver.TabStop = false;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
@@ -219,7 +221,7 @@
             this.textBoxNombre.Location = new System.Drawing.Point(70, 74);
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(130, 20);
-            this.textBoxNombre.TabIndex = 15;
+            this.textBoxNombre.TabIndex = 0;
             this.textBoxNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNombre_KeyPress);
             // 
             // textBoxApellido
@@ -227,7 +229,7 @@
             this.textBoxApellido.Location = new System.Drawing.Point(282, 74);
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(124, 20);
-            this.textBoxApellido.TabIndex = 16;
+            this.textBoxApellido.TabIndex = 1;
             this.textBoxApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxApellido_KeyPress);
             // 
             // textBoxNroDoc
@@ -236,7 +238,7 @@
             this.textBoxNroDoc.MaxLength = 8;
             this.textBoxNroDoc.Name = "textBoxNroDoc";
             this.textBoxNroDoc.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNroDoc.TabIndex = 18;
+            this.textBoxNroDoc.TabIndex = 3;
             this.textBoxNroDoc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNroDoc_KeyPress);
             // 
             // textBoxMail
@@ -244,14 +246,14 @@
             this.textBoxMail.Location = new System.Drawing.Point(49, 143);
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(145, 20);
-            this.textBoxMail.TabIndex = 19;
+            this.textBoxMail.TabIndex = 4;
             // 
             // textBoxTelefono
             // 
             this.textBoxTelefono.Location = new System.Drawing.Point(286, 142);
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(100, 20);
-            this.textBoxTelefono.TabIndex = 20;
+            this.textBoxTelefono.TabIndex = 5;
             this.textBoxTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTelefono_KeyPress);
             // 
             // dateTimePickerFechaNac
@@ -259,7 +261,7 @@
             this.dateTimePickerFechaNac.Location = new System.Drawing.Point(141, 176);
             this.dateTimePickerFechaNac.Name = "dateTimePickerFechaNac";
             this.dateTimePickerFechaNac.Size = new System.Drawing.Size(216, 20);
-            this.dateTimePickerFechaNac.TabIndex = 21;
+            this.dateTimePickerFechaNac.TabIndex = 6;
             this.dateTimePickerFechaNac.ValueChanged += new System.EventHandler(this.dateTimePickerFechaNac_ValueChanged);
             // 
             // textBoxCalle
@@ -267,21 +269,21 @@
             this.textBoxCalle.Location = new System.Drawing.Point(53, 206);
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(126, 20);
-            this.textBoxCalle.TabIndex = 22;
+            this.textBoxCalle.TabIndex = 7;
             // 
             // textBoxLocalidad
             // 
             this.textBoxLocalidad.Location = new System.Drawing.Point(309, 278);
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(114, 20);
-            this.textBoxLocalidad.TabIndex = 23;
+            this.textBoxLocalidad.TabIndex = 12;
             // 
             // textBoxNacionalidad
             // 
             this.textBoxNacionalidad.Location = new System.Drawing.Point(94, 278);
             this.textBoxNacionalidad.Name = "textBoxNacionalidad";
             this.textBoxNacionalidad.Size = new System.Drawing.Size(126, 20);
-            this.textBoxNacionalidad.TabIndex = 24;
+            this.textBoxNacionalidad.TabIndex = 11;
             // 
             // comboBoxTipoDoc
             // 
@@ -293,7 +295,7 @@
             this.comboBoxTipoDoc.Location = new System.Drawing.Point(94, 107);
             this.comboBoxTipoDoc.Name = "comboBoxTipoDoc";
             this.comboBoxTipoDoc.Size = new System.Drawing.Size(100, 21);
-            this.comboBoxTipoDoc.TabIndex = 25;
+            this.comboBoxTipoDoc.TabIndex = 2;
             this.comboBoxTipoDoc.SelectedIndexChanged += new System.EventHandler(this.comboBoxTipoDoc_SelectedIndexChanged);
             // 
             // labelDepartamento
@@ -311,7 +313,7 @@
             this.textBoxDepto.Location = new System.Drawing.Point(104, 246);
             this.textBoxDepto.Name = "textBoxDepto";
             this.textBoxDepto.Size = new System.Drawing.Size(116, 20);
-            this.textBoxDepto.TabIndex = 27;
+            this.textBoxDepto.TabIndex = 9;
             // 
             // labelPiso
             // 
@@ -327,7 +329,7 @@
             this.textBoxPiso.Location = new System.Drawing.Point(282, 249);
             this.textBoxPiso.Name = "textBoxPiso";
             this.textBoxPiso.Size = new System.Drawing.Size(100, 20);
-            this.textBoxPiso.TabIndex = 29;
+            this.textBoxPiso.TabIndex = 10;
             this.textBoxPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPiso_KeyPress);
             // 
             // labelNroCalle
@@ -344,7 +346,7 @@
             this.textBoxNroCalle.Location = new System.Drawing.Point(309, 209);
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(76, 20);
-            this.textBoxNroCalle.TabIndex = 31;
+            this.textBoxNroCalle.TabIndex = 8;
             this.textBoxNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNroCalle_KeyPress);
             // 
             // labelEstado
@@ -367,7 +369,7 @@
             this.comboBoxEstado.Location = new System.Drawing.Point(65, 310);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(47, 21);
-            this.comboBoxEstado.TabIndex = 35;
+            this.comboBoxEstado.TabIndex = 13;
             this.comboBoxEstado.SelectedIndexChanged += new System.EventHandler(this.comboBoxEstado_SelectedIndexChanged);
             // 
             // RegistrarCliente
