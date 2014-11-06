@@ -234,11 +234,18 @@ WHERE u.cod_usuario = uh.cod_usuario
 AND uh.cod_rol = r.cod_rol
 GO
 --***********************************************************
-CREATE VIEW THE_FOREIGN_FOUR.RolesPorHotelesPorClientes
+CREATE VIEW THE_FOREIGN_FOUR.RolesPorHotelesPorUsuarios
 AS
 SELECT u.cod_usuario,u.cod_hotel,r.nombre
 FROM THE_FOREIGN_FOUR.UsuariosPorHotel u,THE_FOREIGN_FOUR.Roles r
 WHERE u.cod_rol = r.cod_rol
+GO
+--***********************************************************
+CREATE VIEW THE_FOREIGN_FOUR.FuncionesPorRol
+AS
+SELECT fr.cod_rol,f.nombre
+FROM THE_FOREIGN_FOUR.FuncionalidadPorRol fr,THE_FOREIGN_FOUR.Funcionalidades f
+WHERE fr.cod_funcion = f.cod_funcion
 GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_todos_los_clientes 
