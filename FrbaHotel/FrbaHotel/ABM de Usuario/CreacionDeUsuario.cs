@@ -83,7 +83,7 @@ namespace FrbaHotel.ABM_de_Usuario
             cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
             SqlDataReader reader;
 
-            cmd.CommandText = "SELECT * FROM THE_FOREIGN_FOUR.RolesPorHotelesPorClientes WHERE cod_usuario="+ fila.Cells["cod_usuario"].Value.ToString();
+            cmd.CommandText = "SELECT * FROM THE_FOREIGN_FOUR.RolesPorHotelesPorUsuarios WHERE cod_usuario="+ fila.Cells["cod_usuario"].Value.ToString();
             cmd.CommandType = CommandType.Text;
 
             reader = cmd.ExecuteReader();
@@ -212,7 +212,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 userUnico = this.userNameUnico(userUnico);
             }
             //corroborar que tenga almenos un rol asignado
-            almenosUnRol = this.almenosUnRol(almenosUnRol);
+            almenosUnRol = FrbaHotel.Utils.almenosUno(almenosUnRol,dgvRolesHoteles,"El usuario debe tener almenos un Rol asignado");
             //PERSISTIR O MODIFICAR
             if (textosCompletos && passwordIguales && userUnico && almenosUnRol)
             {
@@ -280,7 +280,7 @@ namespace FrbaHotel.ABM_de_Usuario
         public void insertarRolesPorHotel()
         {
             //obtener el codigo del usuario generado
-            int cod_usuario = int.Parse(this.obtenerCod("SELECT SUM(cod_usuario) FROM THE_FOREIGN_FOUR.Usuarios WHERE user_name='" + textBoxUsername.Text + "'"));
+            int cod_usuario = FrbaHotel.Utils.obtenerCod("SELECT SUM(cod_usuario) FROM THE_FOREIGN_FOUR.Usuarios WHERE user_name='" + textBoxUsername.Text + "'");
 
             //si es una ventana de modificacion
             if (constructorMod)
@@ -297,37 +297,13 @@ namespace FrbaHotel.ABM_de_Usuario
                 DataRow fila = table.Rows[i];
 
                 //obtener el codigo del rol por el cual se inserta
-                int cod_rol = int.Parse(this.obtenerCod("SELECT cod_rol FROM THE_FOREIGN_FOUR.Roles WHERE nombre='" + fila.ItemArray[0].ToString() + "'"));
+                int cod_rol = FrbaHotel.Utils.obtenerCod("SELECT cod_rol FROM THE_FOREIGN_FOUR.Roles WHERE nombre='" + fila.ItemArray[0].ToString() + "'");
 
                 //inserta en la tabla
                 string consulta2 = "INSERT INTO THE_FOREIGN_FOUR.UsuariosPorHotel (cod_usuario,cod_hotel,cod_rol)" +
                     " VALUES (" + cod_usuario + "," + int.Parse(fila.ItemArray[1].ToString()) + "," + cod_rol + ")";
                 FrbaHotel.Utils.ejecutarConsulta(consulta2);
             }
-        }
-
-        public string obtenerCod(string consultaSql)
-        {
-            string codUsuario;
-
-            DataSet dataSet = new DataSet();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            dataAdapter.Fill(dataSet);
-            DataRow fila = dataSet.Tables[0].Rows[0];
-            codUsuario = fila.ItemArray[0].ToString();
-
-            return codUsuario;
-        }
-
-        public Boolean almenosUnRol(Boolean ok)
-        {
-            int filas = dgvRolesHoteles.RowCount;
-            if (filas == 0)
-            {
-                MessageBox.Show("El usuario debe tener almenos un Rol asignado", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);    
-                ok = false;
-            }
-            return ok;
         }
 
         public Boolean userNameUnico(Boolean ok)

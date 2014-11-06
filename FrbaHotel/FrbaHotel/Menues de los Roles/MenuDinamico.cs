@@ -149,6 +149,7 @@ namespace FrbaHotel.Menues_de_los_Roles
 
         private void botonCerrarSesion_Click(object sender, EventArgs e)
         {
+            ventanaInicio.cargarRolesDisponibles();
             ventanaInicio.Show();
             this.Close();
         }

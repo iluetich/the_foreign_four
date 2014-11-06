@@ -151,5 +151,31 @@ namespace FrbaHotel
             return (int)cmd.ExecuteScalar();
         }
 
+        //corrobora que en la grilla tenga por lo menos un elemento
+        internal static Boolean almenosUno(Boolean ok, DataGridView dgv,string mensajeError)
+        {
+            int filas = dgv.RowCount;
+            if (filas == 0)
+            {
+                MessageBox.Show(mensajeError, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                ok = false;
+            }
+            return ok;
+        }
+
+        //obtiene el codigo de un registro resultado de la consulta dada
+        internal static int obtenerCod(string consultaSql)
+        {
+            string codUsuario;
+
+            DataSet dataSet = new DataSet();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            dataAdapter.Fill(dataSet);
+            DataRow fila = dataSet.Tables[0].Rows[0];
+            codUsuario = fila.ItemArray[0].ToString();
+
+            return int.Parse(codUsuario);
+        }
+
     }
 }

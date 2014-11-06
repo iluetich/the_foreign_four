@@ -106,23 +106,11 @@
     <Compile Include="ABM de Regimen\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Rol\BorrarRol.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM de Rol\BorrarRol.Designer.cs">
-      <DependentUpon>BorrarRol.cs</DependentUpon>
-    </Compile>
     <Compile Include="ABM de Rol\CreacionRol.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM de Rol\CreacionRol.Designer.cs">
       <DependentUpon>CreacionRol.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ABM de Rol\ModificarRol.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM de Rol\ModificarRol.Designer.cs">
-      <DependentUpon>ModificarRol.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Rol\ModificarYBorrarRol.cs">
       <SubType>Form</SubType>
@@ -270,14 +258,8 @@
       <DependentUpon>RegistrarHabitacion.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM de Rol\BorrarRol.resx">
-      <DependentUpon>BorrarRol.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ABM de Rol\CreacionRol.resx">
       <DependentUpon>CreacionRol.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ABM de Rol\ModificarRol.resx">
-      <DependentUpon>ModificarRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Rol\ModificarYBorrarRol.resx">
       <DependentUpon>ModificarYBorrarRol.cs</DependentUpon>

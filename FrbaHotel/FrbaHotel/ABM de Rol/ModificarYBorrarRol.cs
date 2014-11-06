@@ -18,19 +18,36 @@ namespace FrbaHotel.ABM_de_Rol
         public ModificarYBorrarRol(MenuDinamico menuPadre)
         {
             InitializeComponent();
+            dgvBuscarRol.ReadOnly = true;
             menu = menuPadre;
+            this.cargarGrid();
+        }
+
+        public void cargarGrid()
+        {
+            string consulta = "SELECT * FROM THE_FOREIGN_FOUR.Roles";
+            FrbaHotel.Utils.rellenarDataGridView(dgvBuscarRol, consulta);
         }
 
         private void InhabilitarRol_Click(object sender, EventArgs e)
         {
-            BorrarRol vetanaDeBorrado = new BorrarRol();
-            vetanaDeBorrado.Show();
+            string comandoSql = "UPDATE THE_FOREIGN_FOUR.Roles SET estado='I' WHERE nombre='"+ dgvBuscarRol.CurrentRow.Cells[1].Value.ToString() +"'";
+            FrbaHotel.Utils.ejecutarConsulta(comandoSql);
+            MessageBox.Show("Se Ha inhabilitado satifactoriamente el Rol seleccionado", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.cargarGrid();
         }
 
         private void cancelar_Click(object sender, EventArgs e)
         {
             menu.Show();
             this.Close();
+        }
+
+        private void ModificarRol_Click(object sender, EventArgs e)
+        {
+            CreacionRol frmModRol = new CreacionRol(this,dgvBuscarRol.CurrentRow);
+            frmModRol.Show();
+            this.Hide();
         }
 
     }
