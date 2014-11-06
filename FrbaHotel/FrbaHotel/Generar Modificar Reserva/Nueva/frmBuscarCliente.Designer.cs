@@ -148,6 +148,7 @@
             this.dgvResultCltes.ReadOnly = true;
             this.dgvResultCltes.Size = new System.Drawing.Size(474, 169);
             this.dgvResultCltes.TabIndex = 3;
+            this.dgvResultCltes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResultCltes_CellClick);
             // 
             // btnSelec
             // 
@@ -157,6 +158,7 @@
             this.btnSelec.TabIndex = 4;
             this.btnSelec.Text = "Seleccionar";
             this.btnSelec.UseVisualStyleBackColor = true;
+            this.btnSelec.Click += new System.EventHandler(this.btnSelec_Click);
             // 
             // btnVolver
             // 

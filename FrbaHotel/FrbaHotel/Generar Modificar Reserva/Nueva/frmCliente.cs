@@ -57,14 +57,30 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
         }
 
+        //muestro los datos del cliente que se acaba de registrar o buscar
         public void cargarParametrosClientes(SqlCommand cmd)
         {
-            //cmd.Parameters["@mail"].Value
             txtTipoIden.Text = cmd.Parameters["@tipo_doc"].Value.ToString();
             txtIden.Text = cmd.Parameters["@nro_doc"].Value.ToString();
             txtMail.Text = cmd.Parameters["@mail"].Value.ToString();
         }
 
+        //obtengo la fila seleccionada del grid de regimenes para llenar el textbox con el regimen
+        public void filaSeleccionadaDataGrid(DataGridViewRow row)
+        {
+            //tipo documento
+            txtTipoIden.Text = row.Cells[2].Value.ToString();
+            //documento            
+            txtIden.Text = row.Cells[3].Value.ToString();            
+            //mail
+            txtMail.Text = row.Cells[4].Value.ToString();
+        }
+
+        //para setear el boolea desde otro form
+        public void setBandClienteRegistrado()
+        {
+            this.boolClienteRegistrado = true;
+        }
     }
 
 
