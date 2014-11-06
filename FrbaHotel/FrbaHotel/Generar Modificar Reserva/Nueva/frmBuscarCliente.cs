@@ -16,6 +16,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         frmCliente frmClientePadre;
         frmRegistrarHuespedesRestantes frmRegistrarHuespedesRestantesPadre;
 
+        //form generico
+        public frmBuscarCliente() { InitializeComponent(); FrbaHotel.ConexionSQL.establecerConexionBD(); }
+
         public frmBuscarCliente(frmRegistrarHuespedesRestantes newForm)
         {
             InitializeComponent();
@@ -26,6 +29,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             InitializeComponent();
             frmClientePadre = newFrm;
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string consultaSql = "select nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text +"'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
+            FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSql);
         }
 
         private void btnVolver_Click(object sender, EventArgs e){
@@ -50,5 +59,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             FrbaHotel.Utils.limpiarControl(txtMail);
             FrbaHotel.Utils.limpiarControl(txtIdentificacion);
         }
+
+        
+        
+
+        
     }
 }

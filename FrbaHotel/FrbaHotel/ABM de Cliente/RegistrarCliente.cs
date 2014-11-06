@@ -226,7 +226,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     {
                         frmClientePadre.Enabled = true;
                         frmClientePadre.Focus();
-                        //pasar command sql
+                        frmClientePadre.cargarParametrosClientes(cmd);
                     }
                     else if (constructorMod)
                     {

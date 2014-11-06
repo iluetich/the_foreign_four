@@ -15,12 +15,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     {
 
         frmGenerarReserva frmGenerarReservaPadre;
-
+        bool boolClienteRegistrado;
 
         public frmCliente(frmGenerarReserva newFrm)
         {
             InitializeComponent();
             frmGenerarReservaPadre = newFrm;
+            this.boolClienteRegistrado = false;
         }
 
         public void btnVolver_Click(object sender, EventArgs e)
@@ -45,16 +46,23 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             new RegistrarCliente(this).Show();
             this.Enabled = false;
+            this.boolClienteRegistrado = true;
         }
 
         private void btnConfirmarReserva_Click(object sender, EventArgs e)
         {
-
+            if (boolClienteRegistrado){
+            }else{
+                MessageBox.Show("Primero registrese como cliente", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
-        private void cargarParametrosClientes()
+        public void cargarParametrosClientes(SqlCommand cmd)
         {
             //cmd.Parameters["@mail"].Value
+            txtTipoIden.Text = cmd.Parameters["@tipo_doc"].Value.ToString();
+            txtIden.Text = cmd.Parameters["@nro_doc"].Value.ToString();
+            txtMail.Text = cmd.Parameters["@mail"].Value.ToString();
         }
 
     }
