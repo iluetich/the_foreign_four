@@ -59,4 +59,14 @@ BEGIN
 END	
 GO
 --*********************************************************************************
-
+DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
+GO
+CREATE FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
+(
+)
+RETURNS numeric(18,0) AS
+BEGIN
+	RETURN (SELECT MAX(cod_reserva) + 1
+			FROM THE_FOREIGN_FOUR.Reservas)
+END
+GO
