@@ -192,6 +192,7 @@ BEGIN
 END
 GO*/
 --*************************************************
+
 CREATE TRIGGER trg_habitaciones_error
 ON THE_FOREIGN_FOUR.Habitaciones
 INSTEAD OF INSERT
