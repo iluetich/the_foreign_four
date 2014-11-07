@@ -49,11 +49,34 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.boolClienteRegistrado = true;
         }
 
+        //boton confirmar reserva
         private void btnConfirmarReserva_Click(object sender, EventArgs e)
         {
             if (boolClienteRegistrado){
+                generarReserva();
+                agregarOtraHabitacion();
             }else{
                 MessageBox.Show("Primero registrese como cliente", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        //alta reserva
+        private void generarReserva()
+        {
+        }
+
+        //pregunta si se quiere agregar otra habitacion y agrega
+        private void agregarOtraHabitacion()
+        {
+            DialogResult dialogResult = MessageBox.Show("Sure", "Some Title", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes)
+            {
+                new frmGenerarReserva(true);
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                this.Close();
+                this.frmGenerarReservaPadre.Close();
             }
         }
 

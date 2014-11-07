@@ -15,6 +15,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     public partial class frmGenerarReserva : Form
     {
         private MenuDinamico menu;
+        bool agregarOtraHabitacion;
         bool regimenesIsOn;
         bool boolVerificoDisp;
         bool boolPasaAClientes;
@@ -33,6 +34,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.menu = menuPadre;
             InitializeComponent();
         }
+
+        //constructor que se invoca si se quiere agregar otra habitacion
+        public frmGenerarReserva(bool flag) { InitializeComponent(); agregarOtraHabitacion = true; }
 
         //evento load del form
         private void frmGenerarReserva_Load(object sender, EventArgs e)

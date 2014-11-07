@@ -72,6 +72,7 @@
             this.txtIdentificacion.Name = "txtIdentificacion";
             this.txtIdentificacion.Size = new System.Drawing.Size(88, 20);
             this.txtIdentificacion.TabIndex = 2;
+            this.txtIdentificacion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtIdentificacion_KeyPress);
             // 
             // cmbTipoDoc
             // 

@@ -35,8 +35,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //busca clinte
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            string consultaSql = "select nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text +"'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
-            FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSql);
+            if (controlesCargados()){
+                string consultaSql = "select nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
+                FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSql);
+            }else{
+                MessageBox.Show("Complete al menos un campo");
+            }
         }
         
         //selecciona cliente
@@ -76,7 +80,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             FrbaHotel.Utils.limpiarControl(txtIdentificacion);
         }
 
-        
+        //valida que el input del textbox sean solo numeros
+        private void txtIdentificacion_KeyPress(object sender, KeyPressEventArgs e) { FrbaHotel.Utils.allowNumbers(e); }
 
         //evento para cuando se hace click en una celda devuelva la fila correspondiente
         private void dgvResultCltes_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -88,8 +93,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 seleccionoCliente = true;
             }
         }
-        
-        
+
+        //valida que se completo algun campo para realizar la busqueda
+        private bool controlesCargados()
+        {
+            if (txtMail.Text != "" | (txtIdentificacion.Text != "" & cmbTipoDoc.SelectedIndex != -1) ){
+                return true;
+            }else{
+                return false;
+            }
+        }
 
         
     }
