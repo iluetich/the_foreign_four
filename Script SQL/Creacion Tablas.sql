@@ -208,12 +208,6 @@ CREATE TABLE THE_FOREIGN_FOUR.RegimenPorHotel (
 	cod_regimen			int						REFERENCES THE_FOREIGN_FOUR.Regimenes
 	PRIMARY KEY (cod_hotel, cod_regimen)
 )
-CREATE TABLE THE_FOREIGN_FOUR.ReservasPorTipoHabitacion (
-	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
-	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
-	cantidad			int,
-	PRIMARY KEY (cod_tipo_hab, cod_reserva)
-)
 CREATE TABLE THE_FOREIGN_FOUR.UsuariosPorHotel (
 	cod_usuario			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Usuarios,
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
