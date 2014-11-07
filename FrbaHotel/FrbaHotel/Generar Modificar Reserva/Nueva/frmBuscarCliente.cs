@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Registrar_Estadia;
+using System.Data.SqlClient;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
@@ -17,27 +18,41 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         frmRegistrarHuespedesRestantes frmRegistrarHuespedesRestantesPadre;
         bool seleccionoCliente = false;
 
-        //form generico
-        public frmBuscarCliente() { InitializeComponent(); FrbaHotel.ConexionSQL.establecerConexionBD(); }
+        //constructor generico
+        public frmBuscarCliente() { InitializeComponent(); FrbaHotel.ConexionSQL.establecerConexionBD();}
 
+        //constructor del flujo de registrar los huespedes que queda
         public frmBuscarCliente(frmRegistrarHuespedesRestantes newForm)
         {
             InitializeComponent();
             frmRegistrarHuespedesRestantesPadre = newForm;
         }
 
+        //constructor del flujo normal
         public frmBuscarCliente(frmCliente newFrm)
         {
             InitializeComponent();
             frmClientePadre = newFrm;
         }
 
-        //busca clinte
+        //busca clieante
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             if (controlesCargados()){
-                string consultaSql = "select nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
-                FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSql);
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+                cmd.CommandType = CommandType.Text;
+
+                cmd.Parameters.AddWithValue("@tipoDoc", cmbTipoDoc.Text);
+                cmd.Parameters.AddWithValue("@doc", txtIdentificacion.Text);
+                cmd.Parameters.AddWithValue("@mail", txtMail.Text);
+
+                cmd.CommandText = "select nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,@tipoDoc ,@doc ,@mail);";
+                cmd.ExecuteNonQuery();             
+
+                //string consultaSql = "select nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
+                //FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSql);
             }else{
                 MessageBox.Show("Complete al menos un campo");
             }

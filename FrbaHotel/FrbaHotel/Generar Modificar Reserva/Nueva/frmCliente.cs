@@ -63,6 +63,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //alta reserva
         private void generarReserva()
         {
+            string consultaSQL = "insert into THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches)values (110742,15,87275,1001,3,'20170101','20170106','20171106',5);";
+            int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
+            Console.WriteLine("el resultado es: " + resultado.ToString());
         }
 
         //pregunta si se quiere agregar otra habitacion y agrega
@@ -71,7 +74,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             DialogResult dialogResult = MessageBox.Show("Sure", "Some Title", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult == DialogResult.Yes)
             {
-                new frmGenerarReserva(true);
+                new frmGenerarReserva(frmGenerarReservaPadre, true);
             }
             else if (dialogResult == DialogResult.No)
             {
