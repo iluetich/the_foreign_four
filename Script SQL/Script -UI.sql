@@ -56,14 +56,13 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
-				 @fecha_creacion datetime,
-				 @cant_huespedes int)
+				 @fecha_creacion datetime)
 AS
 BEGIN
 	DECLARE @cod_reserva_generada numeric(18,0)
 	
-	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion)
-	VALUES (@cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion)
+	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches)
+	VALUES (@cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, @fecha_hasta - @fecha_desde)
 	
 	SET		@cod_reserva_generada = (SELECT	cod_reserva
 									 FROM THE_FOREIGN_FOUR.Reservas
