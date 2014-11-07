@@ -48,8 +48,10 @@ AS
 GO
 
 --***********************************************************
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				(@cod_hotel int,
+				 @cod_cliente numeric(18,0),
 				 @cod_tipo_hab numeric(18,0),
 				 @cod_regimen int,
 				 @fecha_desde datetime,
@@ -60,12 +62,13 @@ AS
 BEGIN
 	DECLARE @cod_reserva_generada numeric(18,0)
 	
-	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_hotel, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion)
-	VALUES (@cod_hotel, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion)
+	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion)
+	VALUES (@cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion)
 	
 	SET		@cod_reserva_generada = (SELECT	cod_reserva
 									 FROM THE_FOREIGN_FOUR.Reservas
 									 WHERE	@cod_hotel = cod_hotel
+									 AND	@cod_cliente = cod_cliente
 									 AND	@cod_tipo_hab = cod_tipo_hab
 									 AND	@cod_regimen = cod_regimen
 									 AND	@fecha_desde = fecha_desde
@@ -487,3 +490,14 @@ WHERE	cod_hotel = 1
 AND		cod_tipo_hab = 1001
 ----------------------------------------------------------
 */
+
+
+DECLARE @fecha1 datetime,
+		@fecha2 datetime,
+		@fecha3 datetime
+SET		@fecha1 = 20160101
+SET		@fecha2 = 20160106
+SET		@fecha3 = 20141106
+EXEC THE_FOREIGN_FOUR.proc_generar_reserva 15, 1001, 3, @fecha1, @fecha2, @fecha3, 2
+
+CAST()
