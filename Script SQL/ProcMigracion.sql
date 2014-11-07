@@ -73,41 +73,53 @@ WHILE @@FETCH_STATUS = 0
 BEGIN
 
 --******Clientes********
-	IF(NOT EXISTS (SELECT nro_doc
+	IF(NOT EXISTS (SELECT cod_cliente
 					FROM THE_FOREIGN_FOUR.Clientes
 					WHERE nro_doc = @Cliente_Pasaporte_Nro
-					OR mail = @Cliente_Mail))
-	BEGIN
-		INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, 
-					nom_calle, nro_calle, piso, depto, nacionalidad, tipo_doc, nro_doc, mail)
-		VALUES(	@Cliente_Nombre, @Cliente_Apellido, @Cliente_Fecha_Nac, @Cliente_Dom_Calle,
-				@Cliente_Nro_Calle, @Cliente_Piso, @Cliente_Depto, @Cliente_Nacionalidad,
-				'PAS', @Cliente_Pasaporte_Nro, @Cliente_Mail)
-	END
-	ELSE
+					AND mail = @Cliente_Mail))
+	BEGIN 
+
+		IF(NOT EXISTS (SELECT nro_doc
+						FROM THE_FOREIGN_FOUR.Clientes
+						WHERE nro_doc = @Cliente_Pasaporte_Nro
+						OR mail = @Cliente_Mail))
 		BEGIN
-		INSERT INTO THE_FOREIGN_FOUR.ClientesDefectuosos (nombre, apellido, fecha_nac, 
-					nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
-		VALUES(	@Cliente_Nombre, @Cliente_Apellido, @Cliente_Fecha_Nac, @Cliente_Dom_Calle,
-				@Cliente_Nro_Calle, @Cliente_Piso, @Cliente_Depto, @Cliente_Nacionalidad,
-				'PAS', @Cliente_Pasaporte_Nro, @Cliente_Mail)
+			INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, 
+						nom_calle, nro_calle, piso, depto, nacionalidad, tipo_doc, nro_doc, mail)
+			VALUES(	@Cliente_Nombre, @Cliente_Apellido, @Cliente_Fecha_Nac, @Cliente_Dom_Calle,
+					@Cliente_Nro_Calle, @Cliente_Piso, @Cliente_Depto, @Cliente_Nacionalidad,
+					'PAS', @Cliente_Pasaporte_Nro, @Cliente_Mail)
 		END
+		ELSE
+			BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.ClientesDefectuosos (nombre, apellido, fecha_nac, 
+						nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
+			VALUES(	@Cliente_Nombre, @Cliente_Apellido, @Cliente_Fecha_Nac, @Cliente_Dom_Calle,
+					@Cliente_Nro_Calle, @Cliente_Piso, @Cliente_Depto, @Cliente_Nacionalidad,
+					'PAS', @Cliente_Pasaporte_Nro, @Cliente_Mail)
+			END
 
 
-	FETCH NEXT FROM CursorMigracion 
-	INTO	@Hotel_Ciudad,@Hotel_Calle,@Hotel_Nro_Calle, @Hotel_CantEstrella, @Hotel_Recarga_Estrella,
-			@Habitacion_Numero, @Habitacion_Piso, @Habitacion_Frente, 
-			@Habitacion_Tipo_Codigo, @Habitacion_Tipo_Descripcion, @Habitacion_Tipo_Porcentual,
-			@Regimen_Descripcion, @Regimen_Precio, 
-			@Reserva_Codigo, @Reserva_Fecha_Inicio, @Reserva_Cant_Noches,
-			@Estadia_Cant_Noches, @Estadia_Fecha_Inicio,
-			@Consumible_Codigo, @Consumible_Descripcion, @Consumible_Precio,
-			@Item_Factura_Cantidad, @Item_Factura_Monto,
-			@Factura_Nro, @Factura_Fecha, @Factura_Total,
-			@Cliente_Apellido, @Cliente_Depto, @Cliente_Dom_Calle, @Cliente_Fecha_Nac, @Cliente_Mail, 
-			@Cliente_Nacionalidad, @Cliente_Nombre, @Cliente_Nro_Calle, @Cliente_Pasaporte_Nro, @Cliente_Piso
+		FETCH NEXT FROM CursorMigracion 
+		INTO	@Hotel_Ciudad,@Hotel_Calle,@Hotel_Nro_Calle, @Hotel_CantEstrella, @Hotel_Recarga_Estrella,
+				@Habitacion_Numero, @Habitacion_Piso, @Habitacion_Frente, 
+				@Habitacion_Tipo_Codigo, @Habitacion_Tipo_Descripcion, @Habitacion_Tipo_Porcentual,
+				@Regimen_Descripcion, @Regimen_Precio, 
+				@Reserva_Codigo, @Reserva_Fecha_Inicio, @Reserva_Cant_Noches,
+				@Estadia_Cant_Noches, @Estadia_Fecha_Inicio,
+				@Consumible_Codigo, @Consumible_Descripcion, @Consumible_Precio,
+				@Item_Factura_Cantidad, @Item_Factura_Monto,
+				@Factura_Nro, @Factura_Fecha, @Factura_Total,
+				@Cliente_Apellido, @Cliente_Depto, @Cliente_Dom_Calle, @Cliente_Fecha_Nac, @Cliente_Mail, 
+				@Cliente_Nacionalidad, @Cliente_Nombre, @Cliente_Nro_Calle, @Cliente_Pasaporte_Nro, @Cliente_Piso
+			
+	END
 	
 --****HOTELES******************
+	IF(NOT EXISTS (SELECT cod_hotel
+					FROM THE_FOREIGN_FOUR.Hoteles
+					WHERE ciudad = @Hotel_Ciudad
+					AND nro_calle = @Hotel_Nro_Calle))
 	INSERT INTO THE_FOREIGN_FOUR.Hoteles (nom_calle, ciudad, nro_calle, cant_estrellas, recarga_estrellas)
 	VALUES (@Hotel_Calle, @Hotel_Ciudad, @Hotel_Nro_Calle, @Hotel_CantEstrella, @Hotel_Recarga_Estrella)
 
