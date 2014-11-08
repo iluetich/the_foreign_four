@@ -42,7 +42,6 @@
             this.lblCostoXDia = new System.Windows.Forms.Label();
             this.cmbHotel = new System.Windows.Forms.ComboBox();
             this.lblSeleccionarHotel = new System.Windows.Forms.Label();
-            this.txtCantHues = new System.Windows.Forms.TextBox();
             this.lblCantHues = new System.Windows.Forms.Label();
             this.txtResul = new System.Windows.Forms.TextBox();
             this.grbPanel2 = new System.Windows.Forms.GroupBox();
@@ -51,6 +50,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
+            this.cmbCantHues = new System.Windows.Forms.ComboBox();
             this.groupDatos.SuspendLayout();
             this.grbPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -91,7 +91,7 @@
             "1",
             "2",
             "3"});
-            this.cmbTipoHab.Location = new System.Drawing.Point(138, 134);
+            this.cmbTipoHab.Location = new System.Drawing.Point(138, 135);
             this.cmbTipoHab.Name = "cmbTipoHab";
             this.cmbTipoHab.Size = new System.Drawing.Size(200, 21);
             this.cmbTipoHab.TabIndex = 4;
@@ -140,12 +140,12 @@
             // groupDatos
             // 
             this.groupDatos.AutoSize = true;
+            this.groupDatos.Controls.Add(this.cmbCantHues);
             this.groupDatos.Controls.Add(this.txtRegimen);
             this.groupDatos.Controls.Add(this.txtCostoXDia);
             this.groupDatos.Controls.Add(this.lblCostoXDia);
             this.groupDatos.Controls.Add(this.cmbHotel);
             this.groupDatos.Controls.Add(this.lblSeleccionarHotel);
-            this.groupDatos.Controls.Add(this.txtCantHues);
             this.groupDatos.Controls.Add(this.lblCantHues);
             this.groupDatos.Controls.Add(this.btnRegimenes);
             this.groupDatos.Controls.Add(this.lblFechaDesd);
@@ -209,17 +209,6 @@
             this.lblSeleccionarHotel.Size = new System.Drawing.Size(94, 13);
             this.lblSeleccionarHotel.TabIndex = 14;
             this.lblSeleccionarHotel.Text = "Seleccionar Hotel:";
-            // 
-            // txtCantHues
-            // 
-            this.txtCantHues.Location = new System.Drawing.Point(137, 108);
-            this.txtCantHues.MaxLength = 3;
-            this.txtCantHues.Name = "txtCantHues";
-            this.txtCantHues.Size = new System.Drawing.Size(200, 20);
-            this.txtCantHues.TabIndex = 3;
-            this.txtCantHues.Tag = "Cantidad de huespedes";
-            this.txtCantHues.TextChanged += new System.EventHandler(this.txtCantHues_TextChanged);
-            this.txtCantHues.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantHues_KeyPress);
             // 
             // lblCantHues
             // 
@@ -305,6 +294,21 @@
             this.btnSiguiente.UseVisualStyleBackColor = true;
             this.btnSiguiente.Click += new System.EventHandler(this.btnSiguietne_Click);
             // 
+            // cmbCantHues
+            // 
+            this.cmbCantHues.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCantHues.FormattingEnabled = true;
+            this.cmbCantHues.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.cmbCantHues.Location = new System.Drawing.Point(138, 108);
+            this.cmbCantHues.Name = "cmbCantHues";
+            this.cmbCantHues.Size = new System.Drawing.Size(200, 21);
+            this.cmbCantHues.TabIndex = 3;
+            // 
             // frmGenerarReserva
             // 
             this.AcceptButton = this.btnVerificarDisp;
@@ -346,7 +350,6 @@
         private System.Windows.Forms.GroupBox groupDatos;
         private System.Windows.Forms.TextBox txtResul;
         private System.Windows.Forms.GroupBox grbPanel2;
-        private System.Windows.Forms.TextBox txtCantHues;
         private System.Windows.Forms.Label lblCantHues;
         private System.Windows.Forms.TextBox txtCostoTotal;
         private System.Windows.Forms.Label label2;
@@ -360,5 +363,6 @@
         private System.Windows.Forms.TextBox txtRegimen;
         public System.Windows.Forms.DateTimePicker dtpFechaDesde;
         public System.Windows.Forms.DateTimePicker dtpFechaHasta;
+        private System.Windows.Forms.ComboBox cmbCantHues;
     }
 }

@@ -77,12 +77,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private bool validarDatosCompletos()
         {
             return (
-            FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(txtCantHues, "cantidad huespedes") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen")
+                FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &
+                FrbaHotel.Utils.validarCampoEsteCompleto(cmbCantHues, "cantidad huespedes") &
+                FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &
+                FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
+                FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata") &
+                FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen") &
+                verificarCantHuespedesConTipoHabitacion()
             );
         }
 
@@ -108,7 +109,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //muestra ventana regimenes
         private void btnRegimenes_Click(object sender, EventArgs e)
         {
-            if (txtCantHues.Text != ""){
+            if (cmbCantHues.SelectedIndex != -1){
                 if (!regimenesIsOn){
                     Console.WriteLine(codigoHotel);
                     new frmRegimenes(this, regimenesIsOn, codigoHotel).Show();
@@ -226,8 +227,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             DataRow row = dt.Rows[0];
             int incrementoPorEstrellas = Convert.ToInt32(row["recarga_estrellas"]);
 
-            costoPorDia = precioBase * Convert.ToInt32(txtCantHues.Text) + incrementoPorEstrellas;
-            txtCostoXDia.Text = "USD " + (precioBase * Convert.ToInt32(txtCantHues.Text) + incrementoPorEstrellas).ToString();
+            costoPorDia = precioBase * Convert.ToInt32(cmbCantHues.Text) + incrementoPorEstrellas;
+            txtCostoXDia.Text = "USD " + (precioBase * Convert.ToInt32(cmbCantHues.Text) + incrementoPorEstrellas).ToString();
         }
         //------------------------------------------------------------------------------------------------------------
         //----------------------FIN EVENTOS TEXTBOX Y COMOBOBOX-------------------------------------------------------
@@ -276,6 +277,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             costoTotal *= cantDias;
 
             txtCostoTotal.Text = "USD " + costoTotal.ToString();
+        }
+
+        //verifica que la cantidad de huespedes ingresada 
+        private bool verificarCantHuespedesConTipoHabitacion(){
+            //if (cmbCantHues.SelectedIndex != -1){
+            return true; //momentaneo      
+
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------

@@ -16,20 +16,35 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         frmGenerarReserva frmGenerarReservaPadre;
         bool boolClienteRegistrado;
+        int codigoCliente;
 
+
+        //------------------------------------------------------------------------------------------------
+        //---------------------CONSTRUCTORES--------------------------------------------------------------
         public frmCliente(frmGenerarReserva newFrm)
         {
             InitializeComponent();
             frmGenerarReservaPadre = newFrm;
             this.boolClienteRegistrado = false;
         }
+        //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
 
-        //vuelve form anterior
-        public void btnVolver_Click(object sender, EventArgs e)
+
+        //-----------------------------------------------------------------------------------------------------
+        //----------------------EVENTOS DEL FORM---------------------------------------------------------------
+        //evento para el cierre del form
+        private void Cliente_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Close();           
+            frmGenerarReservaPadre.Enabled = true;
+            frmGenerarReservaPadre.Focus();
         }
+        //----------------------FIN EVENTOS DEL FORM----------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        
 
+        //----------------------------------------------------------------------------------------------------
+        //----------------------BOTONES-----------------------------------------------------------------------        
         //busca un cliente ya registrado
         public void btnRegistrado_Click(object sender, EventArgs e)
         {
@@ -37,12 +52,19 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.Enabled = false;
         }
 
-        //evento para el cierre del form
-        private void Cliente_FormClosing(object sender, FormClosingEventArgs e)
+        //boton confirmar reserva
+        private void btnConfirmarReserva_Click(object sender, EventArgs e)
         {
-            frmGenerarReservaPadre.Enabled = true;
-            frmGenerarReservaPadre.Focus();
-        }
+            if (boolClienteRegistrado)
+            {
+                generarReserva();
+                agregarOtraHabitacion();
+            }
+            else
+            {
+                MessageBox.Show("Primero registrese como cliente", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }      
 
         //genera nuevo alta cliente
         private void btnNuevlClt_Click(object sender, EventArgs e)
@@ -52,24 +74,24 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.boolClienteRegistrado = true;
         }
 
-        //boton confirmar reserva
-        private void btnConfirmarReserva_Click(object sender, EventArgs e)
+        //vuelve form anterior
+        public void btnVolver_Click(object sender, EventArgs e)
         {
-            if (boolClienteRegistrado){
-                generarReserva();
-                agregarOtraHabitacion();
-            }else{
-                MessageBox.Show("Primero registrese como cliente", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            this.Close();
         }
+        //----------------------FIN BOTONES-----------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------
 
+        
+        //----------------------OTROS---------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------------------------           
         //alta reserva
         private void generarReserva()
         {
             string consultaSQL = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_generar_reserva @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion SELECT @output as resultado";
             SqlCommand command = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             command.Parameters.AddWithValue("@cod_hotel", frmGenerarReservaPadre.getCodigoHotel());
-            command.Parameters.AddWithValue("@cod_cliente", 1);
+            command.Parameters.AddWithValue("@cod_cliente", codigoCliente);
             command.Parameters.AddWithValue("@cod_tipo_hab", frmGenerarReservaPadre.getCodigoTipoHab());
             command.Parameters.AddWithValue("@cod_regimen", frmGenerarReservaPadre.getCodigoRegimen());
             command.Parameters.AddWithValue("@fecha_desde", frmGenerarReservaPadre.getFechaDesde());
@@ -121,6 +143,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             this.boolClienteRegistrado = true;
         }
+        //----------------------------------------------------------------------------------------------------------------
+        //----------------------FIN OTROS---------------------------------------------------------------------------------
+
+
+        //----SETTERS------------------------------------------
+        public void setCodigoCliente(int codigo) {   codigoCliente = codigo; }
+        //-----------------------------------------------------
     }
 
 

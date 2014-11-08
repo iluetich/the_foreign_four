@@ -18,6 +18,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         frmCliente frmClientePadre;
         frmRegistrarHuespedesRestantes frmRegistrarHuespedesRestantesPadre;
         bool seleccionoCliente = false;
+        int codigoCliente;
 
 
         //------------------------------------------------------------------------------------------------
@@ -76,15 +77,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             if (controlesCargados()){                
                 //busquedas por algunos de los campos
                 if (txtMail.Text != "" & (txtIdentificacion.Text == "" | cmbTipoDoc.SelectedIndex == -1))
-                    consultaSQL = "select nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,null,null,'" + txtMail.Text + "');";
+                    consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,null,null,'" + txtMail.Text + "');";
                 if (txtMail.Text == "" & (txtIdentificacion.Text != "" & cmbTipoDoc.SelectedIndex != -1))
-                    consultaSQL = "select nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",null);";
+                    consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",null);";
                 if (txtMail.Text != "" & (txtIdentificacion.Text != "" & cmbTipoDoc.SelectedIndex != -1))
-                    consultaSQL = "select nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
+                    consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
                 
                 FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSQL);
-                //dgvResultCltes.Columns["cod_cliente"].Visible = false;
-                //Console.WriteLine("codigo clte: "+dgvResultCltes.Rows[0].Cells["cod_cliente"].Value.ToString());
+                dgvResultCltes.Columns["cod_cliente"].Visible = false;
+                codigoCliente = Convert.ToInt32(dgvResultCltes.Rows[0].Cells["cod_cliente"].Value);
+                
             }else{
                 MessageBox.Show("Complete al menos un campo");
             }
@@ -95,6 +97,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             if (seleccionoCliente){
                 frmClientePadre.setBandClienteRegistrado();
+                frmClientePadre.setCodigoCliente(codigoCliente);
                 this.Close();
             }else{
                 MessageBox.Show("Seleccione un cliente antes de continuar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);            
@@ -141,6 +144,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------
-        
+           
     }
 }
