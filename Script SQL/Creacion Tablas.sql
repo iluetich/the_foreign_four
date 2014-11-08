@@ -54,7 +54,8 @@ CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	telefono			nvarchar(60),
 	nom_calle			nvarchar(255),
 	nro_calle			numeric(18,0),
-	pais_origen			nvarchar(60),
+	pais_origen			nvarchar(255),
+	localidad			nvarchar(255),
 	nacionalidad		nvarchar(255),
 	piso				numeric(18,0),
 	depto				nvarchar(50),
@@ -107,15 +108,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 	PRIMARY KEY(nro_habitacion, cod_hotel)
 )
-CREATE TABLE THE_FOREIGN_FOUR.HabitacionesDefectuosas (
-	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
-	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
-	nro_habitacion		numeric(18,0),
-	piso				int,
-	ubicacion			nvarchar(50),
-	descripcion			nvarchar(255),
-	PRIMARY KEY(nro_habitacion, cod_hotel)
-)
+
 CREATE TABLE THE_FOREIGN_FOUR.EstadosReserva (
 	cod_estado			int						IDENTITY(1,1) PRIMARY KEY,
 	descripcion			varchar(255),
@@ -134,10 +127,10 @@ CREATE TABLE THE_FOREIGN_FOUR.Reservas (
 )
 CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
 	cod_reserva			numeric(18,0)			PRIMARY KEY,
-	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
-	cod_cliente			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Clientes,
-	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
-	cod_regimen			int						REFERENCES THE_FOREIGN_FOUR.Regimenes,
+	cod_hotel			int	,
+	cod_cliente			numeric(18,0),
+	cod_tipo_hab		numeric(18,0),
+	cod_regimen			int,
 	fecha_creacion		datetime,
 	fecha_desde			datetime,
 	fecha_hasta			datetime,
@@ -163,6 +156,7 @@ CREATE TABLE THE_FOREIGN_FOUR.EstadiasDefectuosas (
 	fecha_inicio		datetime,
 	cant_noches			numeric(18,0),
 )
+
 CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 	nro_factura			numeric(18,0)			PRIMARY KEY,
 	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
@@ -172,8 +166,8 @@ CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 )
 CREATE TABLE THE_FOREIGN_FOUR.FacturasDefectuosas (
 	nro_factura			numeric(18,0),
-	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
-	cod_tipo_pago		int						REFERENCES THE_FOREIGN_FOUR.TiposPago,
+	cod_estadia			numeric(18,0),
+	cod_tipo_pago		int,
 	fecha_factura		datetime,
 	total				numeric(18,2),
 )
