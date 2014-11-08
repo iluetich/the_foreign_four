@@ -216,4 +216,4 @@ CREATE TABLE THE_FOREIGN_FOUR.UsuariosPorHotel (
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
 	cod_rol				int						REFERENCES THE_FOREIGN_FOUR.Roles
 	PRIMARY KEY(cod_usuario, cod_hotel)
-	)
+)

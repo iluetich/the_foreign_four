@@ -280,17 +280,15 @@ GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_funcionalidades_rol 
 AS
-SELECT r.nombre as 'Rol' , f.nombre as 'Funcionalidad' 
-FROM THE_FOREIGN_FOUR.Roles r,THE_FOREIGN_FOUR.FuncionalidadPorRol fr
-	,THE_FOREIGN_FOUR.Funcionalidades f
-WHERE r.cod_rol=fr.cod_rol
-AND   fr.cod_funcion=f.cod_funcion
+SELECT fr.cod_funcion as 'Rol' , f.nombre as 'Funcionalidad' 
+FROM THE_FOREIGN_FOUR.FuncionalidadPorRol fr,THE_FOREIGN_FOUR.Funcionalidades f
+WHERE fr.cod_funcion=f.cod_funcion
 GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_roles_hoteles_usuarios
 AS
-SELECT u.user_name,uh.cod_hotel,r.nombre as 'rol'
-FROM THE_FOREIGN_FOUR.Usuarios u,THE_FOREIGN_FOUR.UsuariosPorHotel uh,THE_FOREIGN_FOUR.Roles r
+SELECT u.cod_usuario, u.user_name, uh.cod_hotel, r.nombre as 'rol'
+FROM THE_FOREIGN_FOUR.Usuarios u, THE_FOREIGN_FOUR.UsuariosPorHotel uh, THE_FOREIGN_FOUR.Roles r
 WHERE u.cod_usuario = uh.cod_usuario
 AND uh.cod_rol = r.cod_rol
 GO
