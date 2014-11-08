@@ -61,6 +61,8 @@
             this.textBoxNroCalle = new System.Windows.Forms.TextBox();
             this.labelEstado = new System.Windows.Forms.Label();
             this.comboBoxEstado = new System.Windows.Forms.ComboBox();
+            this.labelPaisOrigen = new System.Windows.Forms.Label();
+            this.textBoxPaisOrigen = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -353,7 +355,7 @@
             // 
             this.labelEstado.AutoSize = true;
             this.labelEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelEstado.Location = new System.Drawing.Point(11, 311);
+            this.labelEstado.Location = new System.Drawing.Point(239, 314);
             this.labelEstado.Name = "labelEstado";
             this.labelEstado.Size = new System.Drawing.Size(48, 15);
             this.labelEstado.TabIndex = 32;
@@ -366,17 +368,38 @@
             this.comboBoxEstado.Items.AddRange(new object[] {
             "H",
             "I"});
-            this.comboBoxEstado.Location = new System.Drawing.Point(65, 310);
+            this.comboBoxEstado.Location = new System.Drawing.Point(293, 313);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(47, 21);
             this.comboBoxEstado.TabIndex = 13;
             this.comboBoxEstado.SelectedIndexChanged += new System.EventHandler(this.comboBoxEstado_SelectedIndexChanged);
+            // 
+            // labelPaisOrigen
+            // 
+            this.labelPaisOrigen.AutoSize = true;
+            this.labelPaisOrigen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPaisOrigen.Location = new System.Drawing.Point(11, 315);
+            this.labelPaisOrigen.Name = "labelPaisOrigen";
+            this.labelPaisOrigen.Size = new System.Drawing.Size(91, 15);
+            this.labelPaisOrigen.TabIndex = 33;
+            this.labelPaisOrigen.Text = "Pais de Origen:";
+            // 
+            // textBoxPaisOrigen
+            // 
+            this.textBoxPaisOrigen.Location = new System.Drawing.Point(104, 315);
+            this.textBoxPaisOrigen.Name = "textBoxPaisOrigen";
+            this.textBoxPaisOrigen.Size = new System.Drawing.Size(100, 20);
+            this.textBoxPaisOrigen.TabIndex = 34;
+            this.textBoxPaisOrigen.TextChanged += new System.EventHandler(this.textBoxPaisOrigen_TextChanged);
+            this.textBoxPaisOrigen.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPaisOrigen_KeyPress);
             // 
             // RegistrarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(442, 383);
+            this.Controls.Add(this.textBoxPaisOrigen);
+            this.Controls.Add(this.labelPaisOrigen);
             this.Controls.Add(this.comboBoxEstado);
             this.Controls.Add(this.labelEstado);
             this.Controls.Add(this.textBoxNroCalle);
@@ -455,5 +478,7 @@
         private System.Windows.Forms.TextBox textBoxNroCalle;
         private System.Windows.Forms.Label labelEstado;
         private System.Windows.Forms.ComboBox comboBoxEstado;
+        private System.Windows.Forms.Label labelPaisOrigen;
+        private System.Windows.Forms.TextBox textBoxPaisOrigen;
     }
 }
