@@ -65,7 +65,4 @@ DROP FUNCTION THE_FOREIGN_FOUR.facturacion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura
 DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia
 
-
-
-
 DROP SCHEMA THE_FOREIGN_FOUR
