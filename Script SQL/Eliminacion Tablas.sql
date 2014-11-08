@@ -45,9 +45,11 @@ DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes
 DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades_rol 
 DROP VIEW THE_FOREIGN_FOUR.view_roles_hoteles_usuarios 
 DROP VIEW THE_FOREIGN_FOUR.view_todos_los_clientes 
+DROP VIEW THE_FOREIGN_FOUR.view_tipo_hab
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_cliente 
 DROP FUNCTION THE_FOREIGN_FOUR.obtener_tipo_habitaciones 
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_habitaciones
+DROP FUNCTION THE_FOREIGN_FOUR.buscar_tipo_hab_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_habitacion 
 DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades 
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_rol 
