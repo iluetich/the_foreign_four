@@ -25,6 +25,13 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia
 AS
 	INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, nro_habitacion, fecha_inicio, cant_noches)
 	VALUES	(@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches)
+	
+	UPDATE THE_FOREIGN_FOUR.Reservas
+	SET cod_estado_reserva  = (SELECT cod_estado_reserva
+								FROM THE_FOREIGN_FOUR.EstadosReserva
+								WHERE descripcion = 'efectivizada')
+	WHERE cod_reserva = @cod_reserva
+	
 GO
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva
