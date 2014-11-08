@@ -608,15 +608,43 @@ WHERE cod_estadia = @cod_estadia
 )
 GO
 
+--**********************************************************
+/*
+El valor de la habitación se obtiene a través de su precio base 
+(ver abm de régimen) multiplicando la cantidad de personas que se 
+alojarán en la habitación (tipo de habitación) y luego de ello aplicando 
+un incremento en función de la categoría del Hotel (cantidad de estrellas)
+*/
+CREATE FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia numeric(18,0))
+RETURNS numeric(18,2)
+AS
+BEGIN
+RETURN(
+	SELECT	(((r.precio* th.capacidad) + (h.cant_estrellas * h.recarga_estrellas))*res.cant_noches)
+	FROM	THE_FOREIGN_FOUR.Regimenes r,
+			THE_FOREIGN_FOUR.view_tipo_hab th,
+			THE_FOREIGN_FOUR.Hoteles h,
+			THE_FOREIGN_FOUR.Estadias e,
+			THE_FOREIGN_FOUR.Reservas res
+	WHERE	e.cod_estadia = @cod_estadia
+	AND		e.cod_reserva = res.cod_reserva
+	AND		res.cod_regimen = r.cod_regimen
+	AND		h.cod_hotel = res.cod_hotel
+	AND		th.cod_tipo_hab = res.cod_tipo_hab
+)
+END
+GO
 --****************************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS
 BEGIN
 	UPDATE THE_FOREIGN_FOUR.Facturas
-	SET total = (SELECT SUM(c.precio * i.cantidad)
-				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
+	SET total = (SELECT (SUM(c.precio * i.cantidad) + THE_FOREIGN_FOUR.calcular_precio_estadia(f.cod_estadia))
+				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i, THE_FOREIGN_FOUR.Facturas f
 				WHERE c.cod_consumible = i.cod_consumible
-				AND i.nro_factura = @nro_factura)
+				AND f.nro_factura = i.nro_factura
+				AND i.nro_factura = @nro_factura
+				GROUP BY f.cod_estadia)
 	WHERE nro_factura = @nro_factura
 END
 GO
