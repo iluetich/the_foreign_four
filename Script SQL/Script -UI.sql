@@ -425,4 +425,35 @@ BEGIN
 			FROM THE_FOREIGN_FOUR.Facturas)
 END
 GO
-
+--**********************************************
+CREATE VIEW THE_FOREIGN_FOUR.view_tipo_hab
+(cod_tipo_hab, descripcion, recargo, capacidad)
+AS
+	SELECT cod_tipo_hab, descripcion, recargo, 1
+	FROM THE_FOREIGN_FOUR.TipoHabitaciones
+	WHERE descripcion = 'Base Simple'
+	
+	UNION
+	
+	SELECT cod_tipo_hab, descripcion, recargo, 2
+	FROM THE_FOREIGN_FOUR.TipoHabitaciones
+	WHERE descripcion = 'Base Doble'
+	
+	UNION
+	
+	SELECT cod_tipo_hab, descripcion, recargo, 3
+	FROM THE_FOREIGN_FOUR.TipoHabitaciones
+	WHERE descripcion = 'Base Triple'
+	
+	UNION
+	
+	SELECT cod_tipo_hab, descripcion, recargo, 4
+	FROM THE_FOREIGN_FOUR.TipoHabitaciones
+	WHERE descripcion = 'Base Cuadruple'
+	
+	UNION
+	
+	SELECT cod_tipo_hab, descripcion, recargo, 5
+	FROM THE_FOREIGN_FOUR.TipoHabitaciones
+	WHERE descripcion = 'King'
+GO
