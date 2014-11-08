@@ -24,24 +24,28 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.boolClienteRegistrado = false;
         }
 
+        //vuelve form anterior
         public void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
            
         }
 
+        //busca un cliente ya registrado
         public void btnRegistrado_Click(object sender, EventArgs e)
         {
             new frmBuscarCliente(this).Show();
             this.Enabled = false;
         }
 
+        //evento para el cierre del form
         private void Cliente_FormClosing(object sender, FormClosingEventArgs e)
         {
             frmGenerarReservaPadre.Enabled = true;
             frmGenerarReservaPadre.Focus();
         }
 
+        //genera nuevo alta cliente
         private void btnNuevlClt_Click(object sender, EventArgs e)
         {
             new RegistrarCliente(this).Show();
@@ -63,9 +67,18 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //alta reserva
         private void generarReserva()
         {
-            string consultaSQL = "insert into THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches)values (110742,15,87275,1001,3,'20170101','20170106','20171106',5);";
-            int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
-            Console.WriteLine("el resultado es: " + resultado.ToString());
+            string consultaSQL = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_generar_reserva @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion SELECT @output as resultado";
+            SqlCommand command = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            command.Parameters.AddWithValue("@cod_hotel", frmGenerarReservaPadre.getCodigoHotel());
+            command.Parameters.AddWithValue("@cod_cliente", 1);
+            command.Parameters.AddWithValue("@cod_tipo_hab", frmGenerarReservaPadre.getCodigoTipoHab());
+            command.Parameters.AddWithValue("@cod_regimen", frmGenerarReservaPadre.getCodigoRegimen());
+            command.Parameters.AddWithValue("@fecha_desde", frmGenerarReservaPadre.getFechaDesde());
+            command.Parameters.AddWithValue("@fecha_hasta", frmGenerarReservaPadre.getFechaHasta());
+            command.Parameters.AddWithValue("@fecha_creacion", DateTime.Now.ToString("yyyy-dd-MM"));
+
+            Int32 codigo = Convert.ToInt32(command.ExecuteScalar());
+            txtCodigoReserva.Text = codigo.ToString();
         }
 
         //pregunta si se quiere agregar otra habitacion y agrega

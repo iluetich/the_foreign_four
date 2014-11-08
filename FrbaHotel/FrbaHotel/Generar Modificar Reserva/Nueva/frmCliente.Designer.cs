@@ -32,7 +32,7 @@
             this.btnRegistrado = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblCodigo = new System.Windows.Forms.Label();
-            this.txtCodigo = new System.Windows.Forms.TextBox();
+            this.txtCodigoReserva = new System.Windows.Forms.TextBox();
             this.btnConfirmarReserva = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblMail = new System.Windows.Forms.Label();
@@ -85,13 +85,13 @@
             this.lblCodigo.TabIndex = 3;
             this.lblCodigo.Text = "Código de reserva:";
             // 
-            // txtCodigo
+            // txtCodigoReserva
             // 
-            this.txtCodigo.Location = new System.Drawing.Point(147, 239);
-            this.txtCodigo.Name = "txtCodigo";
-            this.txtCodigo.ReadOnly = true;
-            this.txtCodigo.Size = new System.Drawing.Size(128, 20);
-            this.txtCodigo.TabIndex = 4;
+            this.txtCodigoReserva.Location = new System.Drawing.Point(147, 239);
+            this.txtCodigoReserva.Name = "txtCodigoReserva";
+            this.txtCodigoReserva.ReadOnly = true;
+            this.txtCodigoReserva.Size = new System.Drawing.Size(128, 20);
+            this.txtCodigoReserva.TabIndex = 4;
             // 
             // btnConfirmarReserva
             // 
@@ -171,7 +171,7 @@
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnConfirmarReserva);
-            this.Controls.Add(this.txtCodigo);
+            this.Controls.Add(this.txtCodigoReserva);
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -196,7 +196,7 @@
         private System.Windows.Forms.Button btnRegistrado;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblCodigo;
-        private System.Windows.Forms.TextBox txtCodigo;
+        private System.Windows.Forms.TextBox txtCodigoReserva;
         private System.Windows.Forms.Button btnConfirmarReserva;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnVolver;

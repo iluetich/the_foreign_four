@@ -20,11 +20,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         bool regimenesIsOn;
         bool boolVerificoDisp;
         bool boolPasaAClientes;
+        bool terminoDeCargarTodo = false; //para que no rompa el selectindex changed de los combos 
         string codigoHotel;
         int precioBase;
         int costoPorDia;
         string codigoRegimen;
         string codigoTipoHabitacion;
+        DataSet dataSetHotel;
+        DataSet dataSetHab;
 
         //constructor generico  
         public frmGenerarReserva() { InitializeComponent(); }
@@ -53,7 +56,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
          
             //carga controles desde la BD
             FrbaHotel.ConexionSQL.establecerConexionBD();
-            cargarControles();            
+            cargarControles();
+            terminoDeCargarTodo = true;
         }
         
         //muestra ventana regimenes
@@ -61,6 +65,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             if (txtCantHues.Text != ""){
                 if (!regimenesIsOn){
+                    Console.WriteLine(codigoHotel);
                     new frmRegimenes(this, regimenesIsOn, codigoHotel).Show();
                     regimenesIsOn = true;
                 }
@@ -129,7 +134,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string nombreTabla = "THE_FOREIGN_FOUR.Hoteles";
             string nombreCampo = "nombre";
 
-            FrbaHotel.Utils.rellenarCombo(cmbHotel, nombreTabla, nombreCampo, consultaSql);           
+            dataSetHotel = FrbaHotel.Utils.rellenarCombo(cmbHotel, nombreTabla, nombreCampo, consultaSql);           
         }      
 
         //metodo llamado del form de regimenes
@@ -143,13 +148,19 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             boolVerificoDisp = false;
 
+            //cargo tipo habitacion dependiendo el hotel seleccionado
             string itemCombo = (cmbHotel.SelectedIndex + 1).ToString();
             string consultaSql = "select distinct h.cod_tipo_hab, t.descripcion from THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones t where cod_hotel=" + itemCombo + "and h.cod_tipo_hab = t.cod_tipo_hab";
             string nombreTabla = "THE_FOREIGN_FOUR.TipoHabitaciones";
             string nombreCampo = "descripcion";
+            dataSetHab = FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSql);
+            
+            //cargo codigo hotel
+            if(terminoDeCargarTodo){
+                DataRow codRowHotel = dataSetHotel.Tables[0].Rows[cmbHotel.SelectedIndex];         
+                codigoHotel = codRowHotel["cod_hotel"].ToString(); 
+            }           
 
-            FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSql);
-            codigoHotel = itemCombo;
         }
 
         //obtengo la fila seleccionada del grid de regimenes para llenar el textbox con el regimen
@@ -179,13 +190,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 txtRegimen_TextChanged(null, null); //si cambio la cant de huespedes llamo al textChanged para que refreshee
             }
         }
+
+        //combo hotel
         private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e){
-            boolVerificoDisp = false;            
-            if (cmbTipoHab.Text != "System.Data.DataRowView"){
-                string consultaSQL = "select cod_tipo_hab from THE_FOREIGN_FOUR.TipoHabitaciones where descripcion ='" + cmbTipoHab.Text + "';";
-                DataTable dt = FrbaHotel.Utils.obtenerDatosBD(consultaSQL);
-                DataRow row = dt.Rows[0];
-                codigoTipoHabitacion = row["cod_tipo_hab"].ToString();
+            boolVerificoDisp = false;
+            //obtiene cod_tipo_habitacion
+            Console.WriteLine("la puta que lo pario "+cmbTipoHab.Text);
+            //if (cmbTipoHab.Text != "System.Data.DataRowView")
+            if(terminoDeCargarTodo)
+            {
+                DataRow codRowTipoHab = dataSetHab.Tables[0].Rows[cmbTipoHab.SelectedIndex];            
+                codigoTipoHabitacion = codRowTipoHab["cod_tipo_hab"].ToString();
             }
         }
         //--------------------------------------------------------------------------------------------------------------
@@ -226,6 +241,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
         }
 
+        //calcula el costo total
         private void calcularCostoTotal()
         {
             int costoTotal = 0;
@@ -235,8 +251,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             costoTotal *= cantDias;
 
             txtCostoTotal.Text = "USD " + costoTotal.ToString();
-
         }
-               
+        
+        //GETTERS--------------------------------------------------------------------------- 
+        public int getCodigoHotel(){    return Convert.ToInt32(codigoHotel);}        
+        public int getCodigoTipoHab(){  return Convert.ToInt32(codigoTipoHabitacion);}
+        public int getCodigoRegimen(){  return Convert.ToInt32(codigoRegimen);}
+        public string getFechaDesde(){  return dtpFechaDesde.Value.ToString("yyyy-dd-MM");}
+        public string getFechaHasta(){  return dtpFechaHasta.Value.ToString("yyyy-dd-MM");}
+        //----------------------------------------------------------------------------------
     }
 }

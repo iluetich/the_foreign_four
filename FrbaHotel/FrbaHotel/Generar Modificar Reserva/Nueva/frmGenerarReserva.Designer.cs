@@ -36,7 +36,7 @@
             this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
             this.btnRegimenes = new System.Windows.Forms.Button();
-            this.grbPanel1 = new System.Windows.Forms.GroupBox();
+            this.groupDatos = new System.Windows.Forms.GroupBox();
             this.txtRegimen = new System.Windows.Forms.TextBox();
             this.txtCostoXDia = new System.Windows.Forms.TextBox();
             this.lblCostoXDia = new System.Windows.Forms.Label();
@@ -51,7 +51,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
-            this.grbPanel1.SuspendLayout();
+            this.groupDatos.SuspendLayout();
             this.grbPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -137,29 +137,29 @@
             this.btnRegimenes.UseVisualStyleBackColor = true;
             this.btnRegimenes.Click += new System.EventHandler(this.btnRegimenes_Click);
             // 
-            // grbPanel1
+            // groupDatos
             // 
-            this.grbPanel1.AutoSize = true;
-            this.grbPanel1.Controls.Add(this.txtRegimen);
-            this.grbPanel1.Controls.Add(this.txtCostoXDia);
-            this.grbPanel1.Controls.Add(this.lblCostoXDia);
-            this.grbPanel1.Controls.Add(this.cmbHotel);
-            this.grbPanel1.Controls.Add(this.lblSeleccionarHotel);
-            this.grbPanel1.Controls.Add(this.txtCantHues);
-            this.grbPanel1.Controls.Add(this.lblCantHues);
-            this.grbPanel1.Controls.Add(this.btnRegimenes);
-            this.grbPanel1.Controls.Add(this.lblFechaDesd);
-            this.grbPanel1.Controls.Add(this.dtpFechaHasta);
-            this.grbPanel1.Controls.Add(this.lblFechaHast);
-            this.grbPanel1.Controls.Add(this.dtpFechaDesde);
-            this.grbPanel1.Controls.Add(this.lblTipoHab);
-            this.grbPanel1.Controls.Add(this.cmbTipoHab);
-            this.grbPanel1.Location = new System.Drawing.Point(19, 11);
-            this.grbPanel1.Name = "grbPanel1";
-            this.grbPanel1.Size = new System.Drawing.Size(364, 262);
-            this.grbPanel1.TabIndex = 0;
-            this.grbPanel1.TabStop = false;
-            this.grbPanel1.Text = "Datos Reserva";
+            this.groupDatos.AutoSize = true;
+            this.groupDatos.Controls.Add(this.txtRegimen);
+            this.groupDatos.Controls.Add(this.txtCostoXDia);
+            this.groupDatos.Controls.Add(this.lblCostoXDia);
+            this.groupDatos.Controls.Add(this.cmbHotel);
+            this.groupDatos.Controls.Add(this.lblSeleccionarHotel);
+            this.groupDatos.Controls.Add(this.txtCantHues);
+            this.groupDatos.Controls.Add(this.lblCantHues);
+            this.groupDatos.Controls.Add(this.btnRegimenes);
+            this.groupDatos.Controls.Add(this.lblFechaDesd);
+            this.groupDatos.Controls.Add(this.dtpFechaHasta);
+            this.groupDatos.Controls.Add(this.lblFechaHast);
+            this.groupDatos.Controls.Add(this.dtpFechaDesde);
+            this.groupDatos.Controls.Add(this.lblTipoHab);
+            this.groupDatos.Controls.Add(this.cmbTipoHab);
+            this.groupDatos.Location = new System.Drawing.Point(19, 11);
+            this.groupDatos.Name = "groupDatos";
+            this.groupDatos.Size = new System.Drawing.Size(364, 262);
+            this.groupDatos.TabIndex = 0;
+            this.groupDatos.TabStop = false;
+            this.groupDatos.Text = "Datos Reserva";
             // 
             // txtRegimen
             // 
@@ -315,7 +315,7 @@
             this.ClientSize = new System.Drawing.Size(405, 456);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbPanel2);
-            this.Controls.Add(this.grbPanel1);
+            this.Controls.Add(this.groupDatos);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmGenerarReserva";
@@ -324,8 +324,8 @@
             this.Text = "Nueva Reserva";
             this.Load += new System.EventHandler(this.frmGenerarReserva_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmGenerarReserva_FormClosing);
-            this.grbPanel1.ResumeLayout(false);
-            this.grbPanel1.PerformLayout();
+            this.groupDatos.ResumeLayout(false);
+            this.groupDatos.PerformLayout();
             this.grbPanel2.ResumeLayout(false);
             this.grbPanel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -342,10 +342,8 @@
         private System.Windows.Forms.Label lblTipoHab;
         private System.Windows.Forms.ComboBox cmbTipoHab;
         private System.Windows.Forms.Button btnVerificarDisp;
-        private System.Windows.Forms.DateTimePicker dtpFechaDesde;
-        private System.Windows.Forms.DateTimePicker dtpFechaHasta;
         private System.Windows.Forms.Button btnRegimenes;
-        private System.Windows.Forms.GroupBox grbPanel1;
+        private System.Windows.Forms.GroupBox groupDatos;
         private System.Windows.Forms.TextBox txtResul;
         private System.Windows.Forms.GroupBox grbPanel2;
         private System.Windows.Forms.TextBox txtCantHues;
@@ -360,5 +358,7 @@
         private System.Windows.Forms.Label lblCostoXDia;
         private System.Windows.Forms.TextBox txtCostoXDia;
         private System.Windows.Forms.TextBox txtRegimen;
+        public System.Windows.Forms.DateTimePicker dtpFechaDesde;
+        public System.Windows.Forms.DateTimePicker dtpFechaHasta;
     }
 }

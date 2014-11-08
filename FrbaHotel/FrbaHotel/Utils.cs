@@ -102,13 +102,15 @@ namespace FrbaHotel
             dgv.DataSource = dataSet.Tables[0];
         }
 
-        internal static void rellenarCombo(System.Windows.Forms.ComboBox comboBox1, string nombreTabla, string nombreCampo, string consultaSql)
+        internal static DataSet rellenarCombo(System.Windows.Forms.ComboBox comboBox1, string nombreTabla, string nombreCampo, string consultaSql)
         {
             DataSet dataSet = new DataSet();
             SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             dataAdapter.Fill(dataSet, nombreTabla);
             comboBox1.DataSource = dataSet.Tables[0].DefaultView;
             comboBox1.DisplayMember = nombreCampo;
+
+            return dataSet;
         }
 
         //Guarda en una tabla los resultados de hacer una query a la BD para despues pasar a variables individuales
