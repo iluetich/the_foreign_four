@@ -107,6 +107,7 @@ BEGIN
 	VALUES (@cod_reserva, @motivo, @usuario, (SELECT THE_FOREIGN_FOUR.fecha_sys ()))
 END
 GO
+
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				(@cod_hotel int,
@@ -119,16 +120,51 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				 @usuario nvarchar(255))
 AS
 BEGIN
-	DECLARE @cod_reserva_generada numeric(18,0)
+	DECLARE @cod_reserva_generada numeric(18,0),
+			@cod_estado_reserva int
+			
+	SET @cod_estado_reserva = (SELECT cod_estado
+								  FROM THE_FOREIGN_FOUR.EstadosReserva
+								  WHERE descripcion = 'correcta')
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
-	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), @usuario)
+	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), @usuario)
 	
 	RETURN @cod_reserva_generada
 END
 GO
 
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_hotel_inhabilitable 
+				(@cod_hotel int,
+				 @fecha_inicio datetime,
+				 @fecha_fin datetime)
+RETURNS int
+AS
+BEGIN
+	IF(NOT EXISTS (SELECT cod_reserva
+				   FROM	THE_FOREIGN_FOUR.Reservas
+				   WHERE @fecha_inicio BETWEEN fecha_desde AND fecha_hasta
+				   OR	 @fecha_fin BETWEEN fecha_desde AND fecha_hasta))
+	BEGIN 
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--***********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_hotel
+				(@cod_hotel int,
+				 @motivo nvarchar(255),
+				 @fecha_inicio datetime,
+				 @fecha_fin datetime)
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.InactividadHoteles (cod_hotel, descripcion, fecha_desde, fecha_hasta)
+	VALUES (@cod_hotel, @motivo, @fecha_inicio, @fecha_fin)
+END
+GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_hoteles
 AS
