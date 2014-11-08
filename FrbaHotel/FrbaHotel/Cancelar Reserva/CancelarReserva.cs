@@ -14,6 +14,12 @@ namespace FrbaHotel.Cancelar_Reserva
     {
         private MenuDinamico menu;
 
+        public frmCancelarReserva(MenuDinamico menuPadre, string userSesion, string hotelSesion)
+        {
+            this.menu = menuPadre;
+            InitializeComponent();
+        }
+
         public frmCancelarReserva(MenuDinamico menuPadre)
         {
             this.menu = menuPadre;
