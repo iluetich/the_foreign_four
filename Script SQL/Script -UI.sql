@@ -27,6 +27,21 @@ AS
 	VALUES	(@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches)
 GO
 --***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva
+				(@cod_reserva numeric(18,0))
+RETURNS int
+AS 
+BEGIN
+	IF(NOT EXISTS (SELECT cod_reserva
+				   FROM THE_FOREIGN_FOUR.Reservas
+				   WHERE cod_reserva = @cod_reserva))
+	BEGIN
+		RETURN -1
+	END  
+	RETURN 1
+END
+GO
+--***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva 
 				(@cod_reserva numeric(18,0),
 				 @cod_hotel int)
