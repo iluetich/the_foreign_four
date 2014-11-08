@@ -31,7 +31,6 @@ AS
 								FROM THE_FOREIGN_FOUR.EstadosReserva
 								WHERE descripcion = 'efectivizada')
 	WHERE cod_reserva = @cod_reserva
-	
 GO
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva
@@ -800,5 +799,16 @@ BEGIN
 RETURN (SELECT MAX(fecha_inicio + cant_noches)
 		FROM THE_FOREIGN_FOUR.Estadias)
 END	
+GO
+
+CREATE FUNCTION THE_FOREIGN_FOUR.obtener_regimenes (@cod_hotel numeric(18,0))
+RETURNS TABLE
+AS
+RETURN(
+	SELECT rh.cod_hotel, r.cod_regimen, r.descripcion, r.precio 
+	FROM THE_FOREIGN_FOUR.RegimenPorHotel rh, THE_FOREIGN_FOUR.Regimenes r
+	WHERE rh.cod_regimen = r.cod_regimen
+	AND rh.cod_hotel = @cod_hotel
+)
 GO
 
