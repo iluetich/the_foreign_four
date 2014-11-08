@@ -41,7 +41,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             InitializeComponent();
         }
 
-
         //constructor que invoca el menu
         public frmGenerarReserva(MenuDinamico menuPadre)
         {
@@ -211,16 +210,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
         //combo hotel
-        //private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-           // boolVerificoDisp = false;
-            //obtiene cod_tipo_habitacion            
-            //if (terminoDeCargarTodo)
-            //{
-              //  DataRow codRowTipoHab = dataSetHab.Tables[0].Rows[cmbTipoHab.SelectedIndex];
-               // codigoTipoHabitacion = codRowTipoHab["cod_tipo_hab"].ToString();
-            //}
-       // }
+        private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           boolVerificoDisp = false;
+           //obtiene cod_tipo_habitacion            
+            if (terminoDeCargarTodo)
+            {
+                DataRow codRowTipoHab = dataSetHab.Tables[0].Rows[cmbTipoHab.SelectedIndex];
+                codigoTipoHabitacion = codRowTipoHab["cod_tipo_hab"].ToString();
+            }
+        }
 
         //muestra costo por dia
         private void txtRegimen_TextChanged(object sender, EventArgs e)
