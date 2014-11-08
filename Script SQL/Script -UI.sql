@@ -215,7 +215,8 @@ RETURNS TABLE
 AS
 RETURN(
 
-	SELECT cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, nro_calle, nacionalidad, pais_origen
+	SELECT cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, 
+			nom_calle, nro_calle, nacionalidad, pais_origen, estado, piso
 	FROM THE_FOREIGN_FOUR.Clientes
 	WHERE nombre LIKE 
 		(CASE WHEN @nombre IS NULL  THEN '%' ELSE @nombre END)
@@ -295,7 +296,8 @@ GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_todos_los_clientes 
 AS
-SELECT nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, nro_calle, nacionalidad, pais_origen
+SELECT nombre, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, 
+		nro_calle, nacionalidad, pais_origen,  estado, piso
 FROM THE_FOREIGN_FOUR.Clientes
 GO
 --***********************************************************
