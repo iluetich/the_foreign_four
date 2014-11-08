@@ -1,4 +1,4 @@
-CREATE TRIGGER trg_clientes_error
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_clientes_error
 ON THE_FOREIGN_FOUR.Clientes
 INSTEAD OF INSERT
 AS
@@ -51,7 +51,7 @@ GO
 
 --*****************************************************
 
-CREATE TRIGGER trg_reservas_error
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_reservas_error
 ON THE_FOREIGN_FOUR.Reservas
 INSTEAD OF INSERT
 AS
@@ -114,7 +114,7 @@ GO
 
 --*****************************************************
 
-CREATE TRIGGER trg_estadias_error
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_estadias_error
 ON THE_FOREIGN_FOUR.Estadias
 INSTEAD OF INSERT
 AS
@@ -193,7 +193,7 @@ END
 GO*/
 --*************************************************
 
-CREATE TRIGGER trg_facturas_error
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_facturas_error
 ON THE_FOREIGN_FOUR.Facturas
 INSTEAD OF INSERT
 AS
@@ -242,7 +242,7 @@ GO
 
 --***********************************************
 
-CREATE TRIGGER trg_clientes_por_estadia_err
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_clientes_por_estadia_err
 ON THE_FOREIGN_FOUR.ClientePorEstadia
 INSTEAD OF INSERT
 AS
@@ -285,7 +285,7 @@ GO
 
 --*********************************************************
 
-CREATE TRIGGER trg_itemsFactura_error
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_itemsFactura_error
 ON THE_FOREIGN_FOUR.ItemsFactura
 INSTEAD OF INSERT
 AS
