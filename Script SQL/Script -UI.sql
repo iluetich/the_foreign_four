@@ -382,8 +382,8 @@ BEGIN
 			('cancelacion_cliente'),
 			('cancelacion_noshow'),
 			('efectivizada')
-	INSERT INTO THE_FOREIGN_FOUR.Usuarios(user_name, password)
-	VALUES	('admin', 'w23e')
+	INSERT INTO THE_FOREIGN_FOUR.Usuarios(user_name, password, nombre)
+	VALUES	('admin', 'w23e','Administrador General')
 	INSERT INTO THE_FOREIGN_FOUR.Roles(nombre)
 	VALUES	('Administrador'),
 			('Recepcionista'),
@@ -435,9 +435,7 @@ BEGIN
 END	
 GO
 --*********************************************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
-(
-)
+CREATE FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva ()
 RETURNS numeric(18,0) AS
 BEGIN
 	RETURN (SELECT MAX(cod_reserva) + 1
@@ -499,7 +497,6 @@ RETURN
 )
 GO
 
---******************************************************
 --******************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_facturas
 AS
