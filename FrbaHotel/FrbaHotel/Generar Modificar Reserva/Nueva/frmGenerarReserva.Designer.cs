@@ -96,7 +96,6 @@
             this.cmbTipoHab.Size = new System.Drawing.Size(200, 21);
             this.cmbTipoHab.TabIndex = 4;
             this.cmbTipoHab.Tag = "Tipo habitacion";
-            this.cmbTipoHab.SelectedIndexChanged += new System.EventHandler(this.cmbTipoHab_SelectedIndexChanged);
             // 
             // btnVerificarDisp
             // 
