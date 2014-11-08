@@ -37,6 +37,7 @@
             this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
             this.btnRegimenes = new System.Windows.Forms.Button();
             this.groupDatos = new System.Windows.Forms.GroupBox();
+            this.cmbCantHues = new System.Windows.Forms.ComboBox();
             this.txtRegimen = new System.Windows.Forms.TextBox();
             this.txtCostoXDia = new System.Windows.Forms.TextBox();
             this.lblCostoXDia = new System.Windows.Forms.Label();
@@ -50,7 +51,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
-            this.cmbCantHues = new System.Windows.Forms.ComboBox();
             this.groupDatos.SuspendLayout();
             this.grbPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -159,6 +159,21 @@
             this.groupDatos.TabIndex = 0;
             this.groupDatos.TabStop = false;
             this.groupDatos.Text = "Datos Reserva";
+            // 
+            // cmbCantHues
+            // 
+            this.cmbCantHues.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCantHues.FormattingEnabled = true;
+            this.cmbCantHues.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.cmbCantHues.Location = new System.Drawing.Point(138, 108);
+            this.cmbCantHues.Name = "cmbCantHues";
+            this.cmbCantHues.Size = new System.Drawing.Size(200, 21);
+            this.cmbCantHues.TabIndex = 3;
             // 
             // txtRegimen
             // 
@@ -292,21 +307,6 @@
             this.btnSiguiente.Text = "Siguiente";
             this.btnSiguiente.UseVisualStyleBackColor = true;
             this.btnSiguiente.Click += new System.EventHandler(this.btnSiguietne_Click);
-            // 
-            // cmbCantHues
-            // 
-            this.cmbCantHues.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCantHues.FormattingEnabled = true;
-            this.cmbCantHues.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbCantHues.Location = new System.Drawing.Point(138, 108);
-            this.cmbCantHues.Name = "cmbCantHues";
-            this.cmbCantHues.Size = new System.Drawing.Size(200, 21);
-            this.cmbCantHues.TabIndex = 3;
             // 
             // frmGenerarReserva
             // 
