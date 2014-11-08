@@ -70,3 +70,17 @@ BEGIN
 			FROM THE_FOREIGN_FOUR.Reservas)
 END
 GO
+--*********************************************************************************
+DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_nro_factura
+GO
+CREATE FUNCTION THE_FOREIGN_FOUR.func_sgte_nro_factura
+(
+)
+RETURNS numeric(18,0) AS
+BEGIN
+	RETURN (SELECT MAX(nro_factura) + 1
+			FROM THE_FOREIGN_FOUR.Facturas)
+END
+GO
+
+SELECT THE_FOREIGN_FOUR.func_sgte_nro_factura ()
