@@ -45,6 +45,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.buscar_tipo_hab_hotel
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada 
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva
+DROP FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada 
 DROP FUNCTION THE_FOREIGN_FOUR.func_hotel_inhabilitable 
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_regimenes_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_hotel

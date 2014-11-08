@@ -87,9 +87,28 @@ BEGIN
 	RETURN -1
 END
 GO
-
-SELECT THE_FOREIGN_FOUR.func_validar_reserva(10001,12)
-
+--**********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada 
+				(@cod_reserva numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	DECLARE @codigo int,
+			@estadoReserva int
+			
+	SET @codigo = (SELECT THE_FOREIGN_FOUR.func_validar_existe_reserva(@cod_reserva))
+	SET @estadoReserva = (SELECT cod_estado_reserva
+							FROM THE_FOREIGN_FOUR.Reservas
+							WHERE cod_reserva = @cod_reserva)
+	
+	
+	IF( (@codigo = 1) AND (@estadoReserva != 3) AND (@estadoReserva != 4) AND (@estadoReserva != 5))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva
 				(@cod_reserva numeric(18,0),
