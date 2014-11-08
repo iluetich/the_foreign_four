@@ -457,3 +457,15 @@ AS
 	FROM THE_FOREIGN_FOUR.TipoHabitaciones
 	WHERE descripcion = 'King'
 GO
+
+--****************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.buscar_tipo_hab_hotel (@cod_hotel numeric(18,0))
+RETURNS TABLE
+AS
+RETURN
+	(SELECT DISTINCT th.cod_tipo_hab, th.descripcion, th.recargo, th.capacidad
+	FROM	THE_FOREIGN_FOUR.view_tipo_hab th, THE_FOREIGN_FOUR.Habitaciones h
+	WHERE	th.cod_tipo_hab = h.cod_tipo_hab
+	AND		h.cod_hotel = @cod_hotel
+)
+GO
