@@ -105,10 +105,9 @@ SELECT DISTINCT	m.Factura_Nro,
 FROM gd_esquema.Maestra m
 
 --***ITEMS FACTURAS***************************************
-INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, descripcion, nro_factura)
+INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, nro_factura)
 SELECT m.Item_Factura_Cantidad, 
 	   m.Consumible_Codigo,
-	   m.Consumible_Descripcion,
 	   (SELECT nro_factura
 		FROM THE_FOREIGN_FOUR.Facturas f
 		WHERE	m.Factura_Nro = f.nro_factura)
@@ -131,7 +130,6 @@ FROM gd_esquema.Maestra m
 
 --***JUEGO DE DATOS************************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos
-
 
 --** ELIMINACION DE LOS TRIGGERS*******************************
 DROP TRIGGER THE_FOREIGN_FOUR.trg_clientes_error

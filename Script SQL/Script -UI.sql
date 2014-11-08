@@ -16,7 +16,6 @@ AS
 	INSERT INTO THE_FOREIGN_FOUR.ClientePorEstadia (cod_cliente, cod_estadia)
 	VALUES	(@cod_cliente, @cod_estadia)
 GO
-
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia
 				(@cod_reserva numeric(18,0),
@@ -27,7 +26,6 @@ AS
 	INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, nro_habitacion, fecha_inicio, cant_noches)
 	VALUES	(@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches)
 GO
-
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva
 				(@cod_reserva numeric(18,0),
@@ -40,10 +38,41 @@ AS
 	SET fecha_desde = @fecha_desde,
 		fecha_hasta = @fecha_hasta,
 		cod_tipo_hab = @cod_tipo_hab,
-		cod_regimen = @cod_regimen
+		cod_regimen = @cod_regimen,
+		cod_estado_reserva = (SELECT cod_estado
+							  FROM THE_FOREIGN_FOUR.EstadosReserva
+							  WHERE descripcion = 'modificada')
 	WHERE @cod_reserva = cod_reserva
 GO
-
+--***********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva
+				(@cod_reserva numeric(18,0),
+				 @motivo varchar(255),
+				 @usuario varchar(255))
+AS				
+BEGIN
+	DECLARE @estado varchar(30),
+			@fecha_sistema datetime
+	
+	IF(@usuario IS NULL) 
+	BEGIN
+		SET @estado = 'cancelacion_cliente'
+	END
+	ELSE
+	BEGIN
+		SET @estado = 'cancelacion_recepcion'
+	END
+	
+	UPDATE	THE_FOREIGN_FOUR.Reservas
+	SET		cod_estado_reserva = (SELECT cod_estado
+								  FROM THE_FOREIGN_FOUR.EstadosReserva
+								  WHERE descripcion = @estado)
+	WHERE	cod_reserva = @cod_reserva
+	
+	INSERT INTO THE_FOREIGN_FOUR.Cancelaciones (cod_reserva, motivo, usuario, fecha_operacion)
+	VALUES (@cod_reserva, @motivo, @usuario, (SELECT THE_FOREIGN_FOUR.fecha_sys ()))
+END
+GO
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				(@cod_hotel int,
@@ -186,7 +215,8 @@ RETURNS TABLE
 AS
 RETURN(
 
-	SELECT cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, nro_calle, nacionalidad, pais_origen
+	SELECT cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, 
+			nom_calle, nro_calle, nacionalidad, pais_origen, estado, piso
 	FROM THE_FOREIGN_FOUR.Clientes
 	WHERE nombre LIKE 
 		(CASE WHEN @nombre IS NULL  THEN '%' ELSE @nombre END)
@@ -232,16 +262,17 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_cliente(
 					@depto nvarchar(50),
 					@piso numeric(18,0),
 					@nacionalidad nvarchar(255),
+					@pais_origen nvarchar(255),
 					@localidad nvarchar(255))
 AS
 BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, 
-										   nom_calle, nro_calle, depto, piso, nacionalidad, localidad)
+										   nom_calle, nro_calle, depto, piso, nacionalidad, pais_origen, localidad)
 	VALUES (@nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle,
-										   @depto, @piso, @nacionalidad, @localidad)
+										   @depto, @piso, @nacionalidad, @pais_origen, @localidad)
 	DECLARE @cod_cliente_registrado numeric(18,0)
 	SET @cod_cliente_registrado = (SELECT cod_cliente
-								   FROM THE_FOREIGN_FOUR.Cliente
+								   FROM THE_FOREIGN_FOUR.Clientes
 								   WHERE @mail = mail
 								   AND	@nro_doc = nro_doc
 								   AND	@fecha_nac = fecha_nac)
@@ -251,24 +282,23 @@ GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_funcionalidades_rol 
 AS
-SELECT r.nombre as 'Rol' , f.nombre as 'Funcionalidad' 
-FROM THE_FOREIGN_FOUR.Roles r,THE_FOREIGN_FOUR.FuncionalidadPorRol fr
-	,THE_FOREIGN_FOUR.Funcionalidades f
-WHERE r.cod_rol=fr.cod_rol
-AND   fr.cod_funcion=f.cod_funcion
+SELECT fr.cod_funcion as 'Rol' , f.nombre as 'Funcionalidad' 
+FROM THE_FOREIGN_FOUR.FuncionalidadPorRol fr,THE_FOREIGN_FOUR.Funcionalidades f
+WHERE fr.cod_funcion=f.cod_funcion
 GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_roles_hoteles_usuarios
 AS
-SELECT u.user_name,uh.cod_hotel,r.nombre as 'rol'
-FROM THE_FOREIGN_FOUR.Usuarios u,THE_FOREIGN_FOUR.UsuariosPorHotel uh,THE_FOREIGN_FOUR.Roles r
+SELECT u.cod_usuario, u.user_name, uh.cod_hotel, r.nombre as 'rol'
+FROM THE_FOREIGN_FOUR.Usuarios u, THE_FOREIGN_FOUR.UsuariosPorHotel uh, THE_FOREIGN_FOUR.Roles r
 WHERE u.cod_usuario = uh.cod_usuario
 AND uh.cod_rol = r.cod_rol
 GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_todos_los_clientes 
 AS
-SELECT nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, nro_calle, nacionalidad, pais_origen
+SELECT nombre, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, 
+		nro_calle, nacionalidad, pais_origen,  estado, piso
 FROM THE_FOREIGN_FOUR.Clientes
 GO
 --***********************************************************
@@ -355,30 +385,32 @@ BEGIN
 			('cancelacion_cliente'),
 			('cancelacion_noshow'),
 			('efectivizada')
-	INSERT INTO THE_FOREIGN_FOUR.Usuarios(user_name, password)
-	VALUES	('admin', 'w23b')
+	INSERT INTO THE_FOREIGN_FOUR.Usuarios(user_name, password, nombre)
+	VALUES	('admin', 'w23e','Administrador General')
 	INSERT INTO THE_FOREIGN_FOUR.Roles(nombre)
-	VALUES	('administrador'),
-			('recepcionista'),
-			('guest')
+	VALUES	('Administrador'),
+			('Recepcionista'),
+			('Guest'),
+			('Administrador General')
 	INSERT INTO THE_FOREIGN_FOUR.Funcionalidades(nombre)
-	VALUES	('login'),
-			('abm_rol'),
-			('abm_usuario'),
-			('abm_cliente'),
-			('abm_hotel'),
-			('abm_habitacion'),
-			('generar_modificar_reserva'),
-			('cancelar_reserva'),
-			('registrar_estadia'),
-			('registrar_consumible'),
-			('facturar_estadia'),
-			('listado_estadistico')
+	VALUES	('ABM Rol'),
+			('ABM Usuario'),
+			('ABM Clientes'),
+			('ABM Hotel'),
+			('ABM Habitacion'),
+			('ABM Regimen De Estadia'),
+			('Generar o Modificar Reserva'),
+			('Cancelar Reserva'),
+			('Registrar Estadia'),
+			('Registrar Consumibles'),
+			('Facturar Estadia'),
+			('Listado Estadistico')
 			
 	INSERT INTO THE_FOREIGN_FOUR.FuncionalidadPorRol(cod_rol, cod_funcion)
-	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), (1,10), (1,11), (1,12),
+	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), (1,10), (1,11), (1,12), --verificar
 			(2,1), (2,4), (2,7), (2,8), (2,9), (2,10),
-			(3,7), (3,8)
+			(3,7), (3,8),
+			(4,1), (4,2), (4,3), (4,4), (4,5), (4,6), (4,7), (4,8,), (4,9), (4,10,), (4,11), (4,12)
 			
 	INSERT INTO THE_FOREIGN_FOUR.RegimenPorHotel(cod_hotel, cod_regimen)
 	VALUES	(1,1), (1,2), (1,3), (1,4),
@@ -399,16 +431,14 @@ BEGIN
 			(16,1), (16,2), (16,3), (16,4)
 			
 	INSERT INTO THE_FOREIGN_FOUR.UsuariosPorHotel(cod_usuario, cod_hotel, cod_rol)
-	VALUES	(1, 1, 1), (1, 2, 1), (1, 3, 1), (1, 4, 1), (1, 5, 1), 
-			(1, 6, 1), (1, 7, 1), (1, 8, 1), (1, 9, 1), (1, 10, 1),
-			(1, 11, 1), (1, 12, 1), (1, 13, 1), (1, 14, 1), (1, 15, 1), 
-			(1, 16, 1)
+	VALUES	(1, 1, 4), (1, 2, 4), (1, 3, 4), (1, 4, 4), (1, 5, 4), 
+			(1, 6, 4), (1, 7, 4), (1, 8, 4), (1, 9, 4), (1, 10, 4),
+			(1, 11, 4), (1, 12, 4), (1, 13, 4), (1, 14, 4), (1, 15, 4), 
+			(1, 16, 4)
 END	
 GO
 --*********************************************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
-(
-)
+CREATE FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva ()
 RETURNS numeric(18,0) AS
 BEGIN
 	RETURN (SELECT MAX(cod_reserva) + 1
@@ -468,4 +498,109 @@ RETURN
 	WHERE	th.cod_tipo_hab = h.cod_tipo_hab
 	AND		h.cod_hotel = @cod_hotel
 )
+GO
+
+--******************************************************
+CREATE VIEW THE_FOREIGN_FOUR.view_facturas
+AS
+SELECT f.nro_factura, f.cod_estadia, i.nro_item, c.cod_consumible, c.descripcion, c.precio, i.cantidad, f.total
+FROM	THE_FOREIGN_FOUR.Facturas f, 
+		THE_FOREIGN_FOUR.ItemsFactura i,
+		THE_FOREIGN_FOUR.Consumibles c
+WHERE f.nro_factura = i.nro_factura
+AND c.cod_consumible = i.cod_consumible
+GO
+
+
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.facturacion(@cod_estadia int)
+RETURNS TABLE
+AS
+RETURN(
+SELECT *
+FROM THE_FOREIGN_FOUR.view_facturas
+WHERE cod_estadia = @cod_estadia
+)
+GO
+
+--****************************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
+AS
+BEGIN
+	UPDATE THE_FOREIGN_FOUR.Facturas
+	SET total = (SELECT SUM(c.precio * i.cantidad)
+				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
+				WHERE c.cod_consumible = i.cod_consumible
+				AND i.nro_factura = @nro_factura)
+	WHERE nro_factura = @nro_factura
+END
+GO
+
+
+--***********************************************************
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_separar_factura
+ON THE_FOREIGN_FOUR.view_facturas
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT nro_factura, cod_consumible, cantidad
+	FROM inserted
+	DECLARE	@nro_factura numeric(18,0),
+			@cod_consumible numeric(18,0),
+			@cantidad int
+			
+	OPEN TrigInsCursor;
+	
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cod_consumible, @cantidad
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		INSERT INTO THE_FOREIGN_FOUR.ItemsFactura(nro_factura, cod_consumible, cantidad)
+		VALUES (@nro_factura, @cod_consumible, @cantidad)
+		
+		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cod_consumible, @cantidad
+	
+	END
+	
+	EXECUTE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura
+	
+	CLOSE TrigInsCursor;
+	DEALLOCATE TrigInsCursor;
+	
+	
+END
+GO
+
+--****************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_estado_reserva(@fecha_inicio datetime)
+RETURNS int
+AS
+BEGIN
+	DECLARE @cod_estado_reserva int,
+			@estado varchar(40),
+			@fecha_sistema datetime
+	SET		@fecha_sistema = (SELECT THE_FOREIGN_FOUR.fecha_sys ())
+	IF (@fecha_inicio >= @fecha_sistema) 
+	BEGIN
+		SET @estado = 'correcta'
+	END
+	ELSE
+	BEGIN
+		SET @estado = 'efectivizada' 
+	END
+	RETURN (SELECT cod_estado
+			FROM THE_FOREIGN_FOUR.EstadosReserva
+			WHERE descripcion = @estado)
+END
+GO
+--******************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.fecha_sys()
+RETURNS datetime
+AS
+BEGIN
+RETURN (SELECT MAX(fecha_inicio + cant_noches)
+		FROM THE_FOREIGN_FOUR.Estadias)
+END	
 GO

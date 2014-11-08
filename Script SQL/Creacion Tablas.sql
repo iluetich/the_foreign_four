@@ -108,7 +108,6 @@ CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
 	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
 	PRIMARY KEY(nro_habitacion, cod_hotel)
 )
-
 CREATE TABLE THE_FOREIGN_FOUR.EstadosReserva (
 	cod_estado			int						IDENTITY(1,1) PRIMARY KEY,
 	descripcion			varchar(255),
@@ -136,6 +135,13 @@ CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
 	fecha_hasta			datetime,
 	cant_noches			int,
 )
+CREATE TABLE THE_FOREIGN_FOUR.Cancelaciones (
+	cod_cancelacion		numeric(18,0)			PRIMARY KEY IDENTITY(1,1),
+	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
+	motivo				varchar(255),
+	usuario				varchar(255),
+	fecha_operacion		datetime
+)
 CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
 	cod_tipo_pago		int						IDENTITY(1,1) PRIMARY KEY,
 	descripcion			nvarchar(255),
@@ -156,7 +162,6 @@ CREATE TABLE THE_FOREIGN_FOUR.EstadiasDefectuosas (
 	fecha_inicio		datetime,
 	cant_noches			numeric(18,0),
 )
-
 CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 	nro_factura			numeric(18,0)			PRIMARY KEY,
 	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
@@ -171,7 +176,6 @@ CREATE TABLE THE_FOREIGN_FOUR.FacturasDefectuosas (
 	fecha_factura		datetime,
 	total				numeric(18,2),
 )
-
 CREATE TABLE THE_FOREIGN_FOUR.Consumibles (
 	cod_consumible		numeric(18,0)			PRIMARY KEY,
 	descripcion			nvarchar(255),
@@ -182,22 +186,17 @@ CREATE TABLE THE_FOREIGN_FOUR.ClientePorEstadia (
 	cod_cliente			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Clientes,
 	PRIMARY KEY (cod_estadia, cod_cliente)
 )
-
 CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nro_factura			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Facturas,
 	cod_consumible		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Consumibles,
-	cantidad			int,
-	descripcion			nvarchar(255),			
+	cantidad			int			
 )
-
 CREATE TABLE THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (
 	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nro_factura			numeric(18,0),
 	cod_consumible		int,
 	cantidad			int,
-	precio_unitario		decimal(6,2),
-	descripcion			nvarchar(255),
 )
 CREATE TABLE THE_FOREIGN_FOUR.RegimenPorHotel (
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
@@ -209,4 +208,4 @@ CREATE TABLE THE_FOREIGN_FOUR.UsuariosPorHotel (
 	cod_hotel			int						REFERENCES THE_FOREIGN_FOUR.Hoteles,
 	cod_rol				int						REFERENCES THE_FOREIGN_FOUR.Roles
 	PRIMARY KEY(cod_usuario, cod_hotel)
-	)
+)

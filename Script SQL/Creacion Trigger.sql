@@ -292,43 +292,37 @@ AS
 BEGIN
 
 	DECLARE TrigInsCursor CURSOR FOR
-	SELECT nro_factura, cantidad, cod_consumible, descripcion
+	SELECT nro_factura, cantidad, cod_consumible
 	FROM inserted
 	DECLARE @nro_factura numeric(18,0),
 			@cantidad numeric(18,0),
-			@cod_consumible numeric(18,0),
-			@descripcion nvarchar(255)
+			@cod_consumible numeric(18,0)
 			
 	OPEN TrigInsCursor;
 
-	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible, @descripcion
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-		IF(@descripcion IS NULL OR
-		   @nro_factura IS NULL OR
+		IF(@nro_factura IS NULL OR
 		   @cantidad IS NULL OR
 		   NOT EXISTS (SELECT cod_consumible
 					   FROM THE_FOREIGN_FOUR.Consumibles
 					   WHERE cod_consumible = @cod_consumible))
 		   
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (nro_factura, cantidad, cod_consumible, descripcion)
-			VALUES (@nro_factura, @cantidad, @cod_consumible, @descripcion);
+			INSERT INTO THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (nro_factura, cantidad, cod_consumible)
+			VALUES (@nro_factura, @cantidad, @cod_consumible);
 		END	
 		
 		ELSE
 		BEGIN
-			--INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, cod_consumible, descripcion)
-			--VALUES (@nro_factura, @cantidad, @cod_consumible, 
-			--(SELECT descripcion
-			--FROM THE_FOREIGN_FOUR.Consumibles
-			--WHERE cod_consumible = @cod_consumible));
-			INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, cod_consumible, descripcion)
-			VALUES (@nro_factura, @cantidad, @cod_consumible, @descripcion)
+			
+			INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, cod_consumible)
+			VALUES (@nro_factura, @cantidad, @cod_consumible)
 		END			
 			
-		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible, @descripcion 
+		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible 
 
   END
 
