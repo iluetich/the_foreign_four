@@ -35,6 +35,7 @@ namespace FrbaHotel.ABM_de_Cliente
         private int nroCalle;
         private string localidad;
         private Boolean constructorMod;
+        private string paisOrigen;
         private string codCliente;//sirve para hacer el UPDATE
 
         //constructor de formulario registrar cliente
@@ -88,6 +89,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 comboBoxTipoDoc.SelectedIndex = 0;
             }
             textBoxNroDoc.Text = dgvr.Cells["nro_doc"].Value.ToString();
+            textBoxPaisOrigen.Text = dgvr.Cells["pais_origen"].Value.ToString();
             textBoxMail.Text = dgvr.Cells["mail"].Value.ToString();
             textBoxTelefono.Text = dgvr.Cells["telefono"].Value.ToString();
             dateTimePickerFechaNac.Text = dgvr.Cells["fecha_nac"].Value.ToString();
@@ -188,7 +190,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     SqlConnection cnn = new SqlConnection("Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014");
 	                cnn.Open();
                     // SqlCommand cmd = new SqlCommand(); COMENTADO X IVAN
-                    string consulta = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_registrar_cliente @nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle, @depto, @piso, @nacionalidad, @localidad SELECT @output as codigo"; // agregado por ivan
+                    string consulta = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_registrar_cliente @nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle, @depto, @piso,@pais_origen, @nacionalidad, @localidad SELECT @output as codigo"; // agregado por ivan
                     SqlCommand cmd = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
 
                     cmd.Connection = cnn;
@@ -200,19 +202,19 @@ namespace FrbaHotel.ABM_de_Cliente
                     cmd.Parameters.AddWithValue("@telefono", telefono);
                     cmd.Parameters.AddWithValue("@nom_calle", calle);
                     cmd.Parameters.AddWithValue("@nro_calle", nroCalle);
-                    cmd.Parameters.AddWithValue("@pais_origen", nacionalidad);
-                    cmd.Parameters.AddWithValue("@nacionalidad", localidad);
+                    cmd.Parameters.AddWithValue("@pais_origen", paisOrigen);
+                    cmd.Parameters.AddWithValue("@nacionalidad", nacionalidad);
                     cmd.Parameters.AddWithValue("@piso", piso);
                     cmd.Parameters.AddWithValue("@depto", departamento);
                     cmd.Parameters.AddWithValue("@fecha_nac", fechaNac);
                     cmd.Parameters.AddWithValue("@estado", estado);
                     cmd.Parameters.AddWithValue("@mail", mail);
-                    cmd.Parameters.AddWithValue("localidad", localidad); // agregado por ivan
+                    cmd.Parameters.AddWithValue("@localidad", localidad); // agregado por ivan
 
                     if (constructorMod)
                     {
                         cmd.CommandText = "UPDATE THE_FOREIGN_FOUR.Clientes SET nombre=@nombre,apellido=@apellido,tipo_doc=@tipo_doc,nro_doc=@nro_doc,mail=@mail,telefono=@telefono,"+
-                                         "nom_calle=@nom_calle,nro_calle=@nro_calle,pais_origen=@pais_origen,nacionalidad=@nacionalidad,piso=@piso,depto=@depto,fecha_nac=@fecha_nac,estado=@estado"+
+                                         "nom_calle=@nom_calle,nro_calle=@nro_calle,pais_origen=@pais_origen,nacionalidad=@nacionalidad,piso=@piso,depto=@depto,fecha_nac=@fecha_nac,estado=@estado,localidad=@localidad"+
                                          " WHERE cod_cliente=" + codCliente;
                     }
                     else
@@ -354,6 +356,16 @@ namespace FrbaHotel.ABM_de_Cliente
         private void comboBoxEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
             estado = comboBoxEstado.Text;
+        }
+
+        private void textBoxPaisOrigen_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            FrbaHotel.Utils.allowLetters(e);
+        }
+
+        private void textBoxPaisOrigen_TextChanged(object sender, EventArgs e)
+        {
+            paisOrigen = textBoxPaisOrigen.Text;
         }
 
     }

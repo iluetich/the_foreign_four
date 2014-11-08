@@ -138,3 +138,4 @@ DROP TRIGGER THE_FOREIGN_FOUR.trg_estadias_error
 DROP TRIGGER THE_FOREIGN_FOUR.trg_facturas_error
 DROP TRIGGER THE_FOREIGN_FOUR.trg_clientes_por_estadia_err
 DROP TRIGGER THE_FOREIGN_FOUR.trg_itemsFactura_error
+

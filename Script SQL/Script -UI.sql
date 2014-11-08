@@ -27,18 +27,37 @@ AS
 	VALUES	(@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches)
 GO
 --***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva 
+				(@cod_reserva numeric(18,0),
+				 @cod_hotel int)
+RETURNS int
+AS
+BEGIN
+	IF(NOT EXISTS(SELECT cod_reserva
+				  FROM THE_FOREIGN_FOUR.Reservas
+				  WHERE	cod_reserva = @cod_reserva
+				  AND	cod_hotel = @cod_hotel))
+	BEGIN
+		RETURN -1
+	END
+	RETURN 1
+END
+GO
+--***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva
 				(@cod_reserva numeric(18,0),
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
 				 @cod_tipo_hab numeric(18,0),
-				 @cod_regimen int)
+				 @cod_regimen int,
+				 @usuario nvarchar(255))
 AS
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET fecha_desde = @fecha_desde,
 		fecha_hasta = @fecha_hasta,
 		cod_tipo_hab = @cod_tipo_hab,
 		cod_regimen = @cod_regimen,
+		usuario = @usuario,
 		cod_estado_reserva = (SELECT cod_estado
 							  FROM THE_FOREIGN_FOUR.EstadosReserva
 							  WHERE descripcion = 'modificada')
@@ -81,14 +100,15 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
-				 @fecha_creacion datetime)
+				 @fecha_creacion datetime,
+				 @usuario nvarchar(255))
 AS
 BEGIN
 	DECLARE @cod_reserva_generada numeric(18,0)
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
-	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde))
+	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), @usuario)
 	
 	RETURN @cod_reserva_generada
 END
@@ -282,9 +302,10 @@ GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_funcionalidades_rol 
 AS
-SELECT fr.cod_funcion as 'Rol' , f.nombre as 'Funcionalidad' 
-FROM THE_FOREIGN_FOUR.FuncionalidadPorRol fr,THE_FOREIGN_FOUR.Funcionalidades f
+SELECT r.nombre as 'Rol' , f.nombre as 'Funcionalidad' 
+FROM THE_FOREIGN_FOUR.FuncionalidadPorRol fr,THE_FOREIGN_FOUR.Funcionalidades f,THE_FOREIGN_FOUR.Roles r
 WHERE fr.cod_funcion=f.cod_funcion
+AND r.cod_rol=fr.cod_rol
 GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_roles_hoteles_usuarios
@@ -407,7 +428,7 @@ BEGIN
 			('Listado Estadistico')
 			
 	INSERT INTO THE_FOREIGN_FOUR.FuncionalidadPorRol(cod_rol, cod_funcion)
-	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), (1,10), (1,11), (1,12), --verificar
+	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,9), (1,10), (1,11), (1,12), --verificar
 			(2,1), (2,4), (2,7), (2,8), (2,9), (2,10),
 			(3,7), (3,8),
 			(4,1), (4,2), (4,3), (4,4), (4,5), (4,6), (4,7), (4,8), (4,9), (4,10), (4,11), (4,12)
@@ -435,6 +456,70 @@ BEGIN
 			(1, 6, 4), (1, 7, 4), (1, 8, 4), (1, 9, 4), (1, 10, 4),
 			(1, 11, 4), (1, 12, 4), (1, 13, 4), (1, 14, 4), (1, 15, 4), 
 			(1, 16, 4)
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Conrad'
+	WHERE cod_hotel = 1;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Hilton'
+	WHERE cod_hotel = 2;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Sheraton'
+	WHERE cod_hotel = 3;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Palacio Duhau'
+	WHERE cod_hotel = 4;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Melia'
+	WHERE cod_hotel = 5;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Madero'
+	WHERE cod_hotel = 6;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Alvear Palace'
+	WHERE cod_hotel = 7;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Intercontinental'
+	WHERE cod_hotel = 8;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Emeperador'
+	WHERE cod_hotel = 9;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'BA Grand Hotel'
+	WHERE cod_hotel = 10;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Four Seasons'
+	WHERE cod_hotel = 11;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Faena'
+	WHERE cod_hotel = 12;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Regal Pacific'
+	WHERE cod_hotel = 13;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Hotel Club Frances'
+	WHERE cod_hotel = 14;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Caesar Park'
+	WHERE cod_hotel = 15;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Claridge'
+	WHERE cod_hotel = 16;
+	
 END	
 GO
 --*********************************************************************************
@@ -604,3 +689,4 @@ RETURN (SELECT MAX(fecha_inicio + cant_noches)
 		FROM THE_FOREIGN_FOUR.Estadias)
 END	
 GO
+

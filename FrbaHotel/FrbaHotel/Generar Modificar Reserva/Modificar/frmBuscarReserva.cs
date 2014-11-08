@@ -13,7 +13,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     public partial class frmBuscarReserva : Form
     {
         private MenuDinamico menu;
-        
+
+        public frmBuscarReserva(MenuDinamico menuPadre,string userSesion,string hoteSesion)
+        {
+            this.menu = menuPadre;
+            InitializeComponent();
+        }
+
         public frmBuscarReserva(MenuDinamico menuPadre)
         {
             this.menu = menuPadre;

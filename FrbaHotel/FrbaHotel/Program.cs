@@ -20,9 +20,14 @@ namespace FrbaHotel
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+<<<<<<< HEAD
             //Application.Run(new InicioDelSistema());
             //Application.Run(new frmGenerarReserva());
             Application.Run(new frmCancelarReserva());
+=======
+            Application.Run(new InicioDelSistema());
+            //Application.Run(new frmGenerarReserva());
+>>>>>>> d9f4200ca6b146c35a62f7465249f949a287e244
             //Application.Run(new frmBuscarCliente());
             //Application.Run(new frmModificarReserva());
             //Application.Run(new frmInicioRegistrarConsumible());

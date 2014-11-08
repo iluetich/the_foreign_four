@@ -42,6 +42,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes
 DROP FUNCTION THE_FOREIGN_FOUR.obtener_tipo_habitaciones 
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_habitaciones
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_tipo_hab_hotel
+DROP FUNCTION THE_FOREIGN_FOUR.func_validar_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_cliente

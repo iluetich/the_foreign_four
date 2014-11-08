@@ -177,21 +177,21 @@ namespace FrbaHotel.Menues_de_los_Roles
 
         private void botonCancelarReserva_Click(object sender, EventArgs e)
         {
-            frmCancelarReserva frmCanRes = new frmCancelarReserva(this);
+            frmCancelarReserva frmCanRes = new frmCancelarReserva(this,userSesion,hotelSesion);
             frmCanRes.Show();
             this.Hide();
         }
 
         private void botonModRes_Click(object sender, EventArgs e)
         {
-            frmBuscarReserva frmModRes = new frmBuscarReserva(this);
+            frmBuscarReserva frmModRes = new frmBuscarReserva(this,userSesion,hotelSesion);
             frmModRes.Show();
             this.Hide();
         }
 
         private void botonGenRes_Click(object sender, EventArgs e)
         {
-            frmGenerarReserva frmGenRes = new frmGenerarReserva(this);
+            frmGenerarReserva frmGenRes = new frmGenerarReserva(this,userSesion,hotelSesion);
             frmGenRes.Show();
             this.Hide();
         }

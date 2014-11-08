@@ -83,7 +83,7 @@ namespace FrbaHotel.ABM_de_Usuario
             cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
             SqlDataReader reader;
 
-            cmd.CommandText = "SELECT * FROM THE_FOREIGN_FOUR.RolesPorHotelesPorUsuarios WHERE cod_usuario="+ fila.Cells["cod_usuario"].Value.ToString();
+            cmd.CommandText = "SELECT * FROM THE_FOREIGN_FOUR.view_roles_hoteles_usuarios WHERE cod_usuario=" + fila.Cells["cod_usuario"].Value.ToString();
             cmd.CommandType = CommandType.Text;
 
             reader = cmd.ExecuteReader();
@@ -95,8 +95,8 @@ namespace FrbaHotel.ABM_de_Usuario
             {
                 while (reader.Read())
                 {
-                    int hotel = reader.GetInt32(1);
-                    string rol = reader.GetString(2);
+                    int hotel = reader.GetInt32(2);
+                    string rol = reader.GetString(3);
 
                     DataRow row = table.NewRow();
                     row["rol"] = rol;

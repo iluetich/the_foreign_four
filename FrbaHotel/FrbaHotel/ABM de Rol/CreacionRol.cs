@@ -80,7 +80,7 @@ namespace FrbaHotel.ABM_de_Rol
             cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
             SqlDataReader reader;
 
-            cmd.CommandText = "SELECT * FROM THE_FOREIGN_FOUR.FuncionesPorRol WHERE cod_rol=" + fila.Cells["cod_rol"].Value.ToString();
+            cmd.CommandText = "SELECT * FROM THE_FOREIGN_FOUR.view_funcionalidades_rol WHERE Rol='" + fila.Cells["nombre"].Value.ToString() +"'";
             cmd.CommandType = CommandType.Text;
 
             reader = cmd.ExecuteReader();

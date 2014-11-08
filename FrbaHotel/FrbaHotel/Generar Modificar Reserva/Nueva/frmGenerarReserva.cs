@@ -35,6 +35,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //constructor generico  
         public frmGenerarReserva() { InitializeComponent(); }
 
+        public frmGenerarReserva(MenuDinamico menuPadre,string userSesion, string hotelSesion)
+        {
+            this.menu = menuPadre;
+            InitializeComponent();
+        }
+
+
         //constructor que invoca el menu
         public frmGenerarReserva(MenuDinamico menuPadre)
         {
