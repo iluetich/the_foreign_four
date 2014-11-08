@@ -27,8 +27,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //vuelve form anterior
         public void btnVolver_Click(object sender, EventArgs e)
         {
-            this.Close();
-           
+            this.Close();           
         }
 
         //busca un cliente ya registrado
@@ -79,12 +78,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             Int32 codigo = Convert.ToInt32(command.ExecuteScalar());
             txtCodigoReserva.Text = codigo.ToString();
+
+            MessageBox.Show("Felicidades ha generado una nueva reserva \n su codigo reserva es: "+txtCodigoReserva.Text,"Congrats",MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
 
         //pregunta si se quiere agregar otra habitacion y agrega
         private void agregarOtraHabitacion()
         {
-            DialogResult dialogResult = MessageBox.Show("Sure", "Some Title", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dialogResult = MessageBox.Show("¿Desea agregar otra habitacion?", "Un momento..", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult == DialogResult.Yes)
             {
                 new frmGenerarReserva(frmGenerarReservaPadre, true);

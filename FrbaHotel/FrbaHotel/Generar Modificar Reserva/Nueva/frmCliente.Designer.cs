@@ -92,6 +92,7 @@
             this.txtCodigoReserva.ReadOnly = true;
             this.txtCodigoReserva.Size = new System.Drawing.Size(128, 20);
             this.txtCodigoReserva.TabIndex = 4;
+            this.txtCodigoReserva.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnConfirmarReserva
             // 

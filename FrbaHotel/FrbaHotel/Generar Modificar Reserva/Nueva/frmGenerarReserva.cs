@@ -29,6 +29,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         DataSet dataSetHotel;
         DataSet dataSetHab;
 
+        //------------------------------------------------------------------------------------------------
+        //---------------------CONSTRUCTORES--------------------------------------------------------------
         //constructor generico  
         public frmGenerarReserva() { InitializeComponent(); }
 
@@ -46,7 +48,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
           agregarOtraHabitacion = true;
           this.instanciaReservaAnterior = newFrm;
         }
+        //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
 
+
+        //-----------------------------------------------------------------------------------------------------
+        //----------------------EVENTOS DEL FORM---------------------------------------------------------------
         //evento load del form
         private void frmGenerarReserva_Load(object sender, EventArgs e)
         {
@@ -59,7 +66,45 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             cargarControles();
             terminoDeCargarTodo = true;
         }
-        
+
+        //evento para el cierre del form
+        private void frmGenerarReserva_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            this.menu.Show();
+        }
+
+        //valida que los campos esten completos
+        private bool validarDatosCompletos()
+        {
+            return (
+            FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(txtCantHues, "cantidad huespedes") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen")
+            );
+        }
+
+        //carga de controles desde la BD
+        private void cargarControles()
+        {
+            string consultaSql = "select * from THE_FOREIGN_FOUR.Hoteles";
+            string nombreTabla = "THE_FOREIGN_FOUR.Hoteles";
+            string nombreCampo = "nombre";
+
+            dataSetHotel = FrbaHotel.Utils.rellenarCombo(cmbHotel, nombreTabla, nombreCampo, consultaSql);
+        }
+
+        //valida que el input del textbox sean solo numeros
+        private void txtCantHues_KeyPress(object sender, KeyPressEventArgs e) { FrbaHotel.Utils.allowNumbers(e); 
+        }
+        //----------------------FIN EVENTOS DEL FORM----------------------------------------------------------
+        //----------------------------------------------------------------------------------------------------
+
+
+        //----------------------------------------------------------------------------------------------------
+        //----------------------BOTONES-----------------------------------------------------------------------        
         //muestra ventana regimenes
         private void btnRegimenes_Click(object sender, EventArgs e)
         {
@@ -73,6 +118,27 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 MessageBox.Show("Complete la cantidad de huespedes primero");
             }
         }
+
+        //boton a la siguiente ventana
+        private void btnSiguietne_Click(object sender, EventArgs e)
+        {
+            if (boolVerificoDisp)
+            {
+                if (boolPasaAClientes)
+                {
+                    new frmCliente(this).Show();
+                    this.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("Reserva no disponible, verifique", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Verifique la disponibilidad de la reserva antes de continuar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }  
 
         //verifica que los campos esten completos cuando se verifica la disponibilidad y autoriza al boton siguiente
         private void btnVerificarDisp_Click(object sender, EventArgs e)
@@ -91,58 +157,29 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
         }
 
-        //boton a la siguiente ventana
-        private void btnSiguietne_Click(object sender, EventArgs e)
-        {
-            if (boolVerificoDisp){
-                if (boolPasaAClientes){
-                    new frmCliente(this).Show();
-                    this.Enabled = false;
-                }else{
-                    MessageBox.Show("Reserva no disponible, verifique", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }else{
-                MessageBox.Show("Verifique la disponibilidad de la reserva antes de continuar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-        }       
-
-        //valida que los campos esten completos
-        private bool validarDatosCompletos(){
-            return (
-            FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(txtCantHues, "cantidad huespedes") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &            
-            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen")
-            );
-        }
-
-        //valida que el input del textbox sean solo numeros
-        private void txtCantHues_KeyPress(object sender,KeyPressEventArgs e){FrbaHotel.Utils.allowNumbers(e);}
-
         //boton volver
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
-        }     
+        }  
+        //----------------------FIN BOTONES-----------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------
+     
 
-        //carga de controles desde la BD
-        private void cargarControles()
+        //----------------------EVENTOS TEXTBOX Y COMOBOBOX-------------------------------------------------------
+        //-------------------------------------------------------------------------------------------------------- 
+        //pone en false el booleano cuando se cambia de valor en los cotroles para verificar la diponibilidad nuevamente
+        private void dtpFechaDesde_ValueChanged(object sender, EventArgs e) { boolVerificoDisp = false; }
+        private void dtpFechaHasta_ValueChanged(object sender, EventArgs e) { boolVerificoDisp = false; }
+        private void txtCantHues_TextChanged(object sender, EventArgs e)
         {
-            string consultaSql = "select * from THE_FOREIGN_FOUR.Hoteles";
-            string nombreTabla = "THE_FOREIGN_FOUR.Hoteles";
-            string nombreCampo = "nombre";
-
-            dataSetHotel = FrbaHotel.Utils.rellenarCombo(cmbHotel, nombreTabla, nombreCampo, consultaSql);           
-        }      
-
-        //metodo llamado del form de regimenes
-        public void setRegimesIsOn()
-        {
-            regimenesIsOn = false;
+            boolVerificoDisp = false;
+            if (txtRegimen.Text != "")
+            {
+                txtRegimen_TextChanged(null, null); //si cambio la cant de huespedes llamo al textChanged para que refreshee
+            }
         }
-
+        
         //evento para que cuando cambie el idex del combo hotel se auto cargue en el combo habitaciones las correspondientes al hotel
         private void cmbHotel_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -154,15 +191,50 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string nombreTabla = "THE_FOREIGN_FOUR.TipoHabitaciones";
             string nombreCampo = "descripcion";
             dataSetHab = FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSql);
-            
-            //cargo codigo hotel
-            if(terminoDeCargarTodo){
-                DataRow codRowHotel = dataSetHotel.Tables[0].Rows[cmbHotel.SelectedIndex];         
-                codigoHotel = codRowHotel["cod_hotel"].ToString(); 
-            }           
 
+            //cargo codigo hotel
+            if (terminoDeCargarTodo)
+            {
+                DataRow codRowHotel = dataSetHotel.Tables[0].Rows[cmbHotel.SelectedIndex];
+                codigoHotel = codRowHotel["cod_hotel"].ToString();
+            }
         }
 
+        //combo hotel
+        private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            boolVerificoDisp = false;
+            //obtiene cod_tipo_habitacion
+            Console.WriteLine("la puta que lo pario " + cmbTipoHab.Text);
+            //if (cmbTipoHab.Text != "System.Data.DataRowView")
+            if (terminoDeCargarTodo)
+            {
+                DataRow codRowTipoHab = dataSetHab.Tables[0].Rows[cmbTipoHab.SelectedIndex];
+                codigoTipoHabitacion = codRowTipoHab["cod_tipo_hab"].ToString();
+            }
+        }
+
+        //muestra costo por dia
+        private void txtRegimen_TextChanged(object sender, EventArgs e)
+        {
+            boolVerificoDisp = false;
+
+            //Obtengo el recargo por estrellas del hotel           
+            string consultaSQL = "select recarga_estrellas from THE_FOREIGN_FOUR.Hoteles where cod_hotel=" + codigoHotel + ";";
+            DataTable dt = FrbaHotel.Utils.obtenerDatosBD(consultaSQL);
+
+            DataRow row = dt.Rows[0];
+            int incrementoPorEstrellas = Convert.ToInt32(row["recarga_estrellas"]);
+
+            costoPorDia = precioBase * Convert.ToInt32(txtCantHues.Text) + incrementoPorEstrellas;
+            txtCostoXDia.Text = "USD " + (precioBase * Convert.ToInt32(txtCantHues.Text) + incrementoPorEstrellas).ToString();
+        }
+        //------------------------------------------------------------------------------------------------------------
+        //----------------------FIN EVENTOS TEXTBOX Y COMOBOBOX-------------------------------------------------------
+
+        
+        //----------------------OTROS---------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------------------------           
         //obtengo la fila seleccionada del grid de regimenes para llenar el textbox con el regimen
         public void filaSeleccionadaDataGrid(DataGridViewRow row)
         {
@@ -172,54 +244,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             txtRegimen.Text = row.Cells[1].Value.ToString();
             //codigo regimen
             codigoRegimen = row.Cells[0].Value.ToString();
-        }
-
-        //evento para el cierre del form
-        private void frmGenerarReserva_FormClosing(Object sender, FormClosingEventArgs e)
-        {
-            this.menu.Show();
-        }
-
-        //--------------------------------------------------------------------------------------------------------------
-        //pone en false el booleano cuando se cambia de valor en los cotroles para verificar la diponibilidad nuevamente
-        private void dtpFechaDesde_ValueChanged(object sender, EventArgs e){boolVerificoDisp = false;}
-        private void dtpFechaHasta_ValueChanged(object sender, EventArgs e){boolVerificoDisp = false;}
-        private void txtCantHues_TextChanged(object sender, EventArgs e){
-            boolVerificoDisp = false;
-            if (txtRegimen.Text != ""){
-                txtRegimen_TextChanged(null, null); //si cambio la cant de huespedes llamo al textChanged para que refreshee
-            }
-        }
-
-        //combo hotel
-        private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e){
-            boolVerificoDisp = false;
-            //obtiene cod_tipo_habitacion
-            Console.WriteLine("la puta que lo pario "+cmbTipoHab.Text);
-            //if (cmbTipoHab.Text != "System.Data.DataRowView")
-            if(terminoDeCargarTodo)
-            {
-                DataRow codRowTipoHab = dataSetHab.Tables[0].Rows[cmbTipoHab.SelectedIndex];            
-                codigoTipoHabitacion = codRowTipoHab["cod_tipo_hab"].ToString();
-            }
-        }
-        //--------------------------------------------------------------------------------------------------------------
-
-        //muestra costo por dia
-        private void txtRegimen_TextChanged(object sender, EventArgs e)
-        {
-            boolVerificoDisp = false;
-
-            //Obtengo el recargo por estrellas del hotel           
-            string consultaSQL = "select recarga_estrellas from THE_FOREIGN_FOUR.Hoteles where cod_hotel=" + codigoHotel + ";";
-            DataTable dt = FrbaHotel.Utils.obtenerDatosBD(consultaSQL);            
-       
-            DataRow row = dt.Rows[0];
-            int incrementoPorEstrellas = Convert.ToInt32(row["recarga_estrellas"]);
-
-            costoPorDia = precioBase * Convert.ToInt32(txtCantHues.Text) + incrementoPorEstrellas;
-            txtCostoXDia.Text = "USD " + (precioBase * Convert.ToInt32(txtCantHues.Text) + incrementoPorEstrellas).ToString();
-        }
+        }       
 
         //verifica la disponibilidad de la reserva
         private bool verificarDisponibilidad()
@@ -252,7 +277,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             txtCostoTotal.Text = "USD " + costoTotal.ToString();
         }
+        //----------------------------------------------------------------------------------------------------------------
+        //----------------------FIN OTROS---------------------------------------------------------------------------------
         
+
+        //SETTERS--------------------------------------------------------------------------- 
+        //metodo llamado del form de regimenes
+        public void setRegimesIsOn(){   regimenesIsOn = false;}
+        //----------------------------------------------------------------------------------
+
         //GETTERS--------------------------------------------------------------------------- 
         public int getCodigoHotel(){    return Convert.ToInt32(codigoHotel);}        
         public int getCodigoTipoHab(){  return Convert.ToInt32(codigoTipoHabitacion);}

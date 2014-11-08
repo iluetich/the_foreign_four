@@ -85,6 +85,7 @@
             this.cmbTipoDoc.Name = "cmbTipoDoc";
             this.cmbTipoDoc.Size = new System.Drawing.Size(88, 21);
             this.cmbTipoDoc.TabIndex = 0;
+            this.cmbTipoDoc.TabStop = false;
             // 
             // label3
             // 
@@ -174,6 +175,7 @@
             // 
             // frmBuscarCliente
             // 
+            this.AcceptButton = this.btnBuscar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnVolver;
