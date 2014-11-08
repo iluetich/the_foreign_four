@@ -201,6 +201,55 @@ RETURN(
 )
 GO
 --***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_cliente(
+					@tipo_doc char(3),
+					@nro_doc numeric(18,0),
+					@mail nvarchar(255))
+RETURNS int
+AS
+BEGIN
+	IF(EXISTS (SELECT cod_cliente
+			   FROM THE_FOREIGN_FOUR.Clientes
+			   WHERE (tipo_doc = @tipo_doc
+			   AND	 nro_doc = @nro_doc)
+			   OR	 mail = @mail))
+		BEGIN
+			RETURN -1
+		END
+	RETURN 1
+END
+GO
+--***********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_cliente(
+					@nombre nvarchar(255),
+					@apellido nvarchar(255),
+					@tipo_doc char(3),
+					@nro_doc numeric(18,0),
+					@mail nvarchar(255),
+					@telefono numeric(18,0),
+					@fecha_nac datetime,
+					@nom_calle nvarchar(255),
+					@nro_calle numeric(18,0),
+					@depto nvarchar(50),
+					@piso numeric(18,0),
+					@nacionalidad nvarchar(255),
+					@localidad nvarchar(255))
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, 
+										   nom_calle, nro_calle, depto, piso, nacionalidad, localidad)
+	VALUES (@nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle,
+										   @depto, @piso, @nacionalidad, @localidad)
+	DECLARE @cod_cliente_registrado numeric(18,0)
+	SET @cod_cliente_registrado = (SELECT cod_cliente
+								   FROM THE_FOREIGN_FOUR.Cliente
+								   WHERE @mail = mail
+								   AND	@nro_doc = nro_doc
+								   AND	@fecha_nac = fecha_nac)
+	RETURN @cod_cliente_registrado
+END
+GO
+--***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_funcionalidades_rol 
 AS
 SELECT r.nombre as 'Rol' , f.nombre as 'Funcionalidad' 
@@ -217,22 +266,6 @@ FROM THE_FOREIGN_FOUR.Usuarios u,THE_FOREIGN_FOUR.UsuariosPorHotel uh,THE_FOREIG
 WHERE u.cod_usuario = uh.cod_usuario
 AND uh.cod_rol = r.cod_rol
 GO
---***********************************************************
-/*
-CREATE VIEW THE_FOREIGN_FOUR.RolesPorHotelesPorUsuarios
-AS
-SELECT u.cod_usuario,u.cod_hotel,r.nombre
-FROM THE_FOREIGN_FOUR.UsuariosPorHotel u,THE_FOREIGN_FOUR.Roles r
-WHERE u.cod_rol = r.cod_rol
-GO*/
---***********************************************************
-/*
-CREATE VIEW THE_FOREIGN_FOUR.FuncionesPorRol
-AS
-SELECT fr.cod_rol,f.nombre
-FROM THE_FOREIGN_FOUR.FuncionalidadPorRol fr,THE_FOREIGN_FOUR.Funcionalidades f
-WHERE fr.cod_funcion = f.cod_funcion
-GO*/
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_todos_los_clientes 
 AS
@@ -311,3 +344,4 @@ UPDATE THE_FOREIGN_FOUR.Roles
 SET estado = 'I'
 WHERE cod_rol = @cod_rol
 GO
+
