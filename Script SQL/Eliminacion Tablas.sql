@@ -30,6 +30,8 @@ DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
 DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_nro_factura
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_cant_huespedes
+DROP FUNCTION THE_FOREIGN_FOUR.func_validar_cliente
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_cliente
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_huesped 
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva 

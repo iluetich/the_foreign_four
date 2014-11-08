@@ -78,5 +78,3 @@ BEGIN
 			FROM THE_FOREIGN_FOUR.Facturas)
 END
 GO
-
-SELECT THE_FOREIGN_FOUR.func_sgte_nro_factura ()
