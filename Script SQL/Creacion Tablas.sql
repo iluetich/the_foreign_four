@@ -123,6 +123,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Reservas (
 	fecha_desde			datetime,
 	fecha_hasta			datetime,
 	cant_noches			int,
+	usuario				nvarchar(255)
 )
 CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
 	cod_reserva			numeric(18,0)			PRIMARY KEY,

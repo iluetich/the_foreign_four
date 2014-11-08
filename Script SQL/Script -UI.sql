@@ -40,7 +40,7 @@ BEGIN
 	BEGIN
 		RETURN -1
 	END
-RETURN 1
+	RETURN 1
 END
 GO
 --***********************************************************
@@ -49,13 +49,15 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
 				 @cod_tipo_hab numeric(18,0),
-				 @cod_regimen int)
+				 @cod_regimen int,
+				 @usuario nvarchar(255))
 AS
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET fecha_desde = @fecha_desde,
 		fecha_hasta = @fecha_hasta,
 		cod_tipo_hab = @cod_tipo_hab,
 		cod_regimen = @cod_regimen,
+		usuario = @usuario,
 		cod_estado_reserva = (SELECT cod_estado
 							  FROM THE_FOREIGN_FOUR.EstadosReserva
 							  WHERE descripcion = 'modificada')
@@ -98,14 +100,15 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
-				 @fecha_creacion datetime)
+				 @fecha_creacion datetime,
+				 @usuario nvarchar(255))
 AS
 BEGIN
 	DECLARE @cod_reserva_generada numeric(18,0)
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
-	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde))
+	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), @usuario)
 	
 	RETURN @cod_reserva_generada
 END
@@ -425,7 +428,7 @@ BEGIN
 			('Listado Estadistico')
 			
 	INSERT INTO THE_FOREIGN_FOUR.FuncionalidadPorRol(cod_rol, cod_funcion)
-	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), (1,10), (1,11), (1,12), --verificar
+	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,9), (1,10), (1,11), (1,12), --verificar
 			(2,1), (2,4), (2,7), (2,8), (2,9), (2,10),
 			(3,7), (3,8),
 			(4,1), (4,2), (4,3), (4,4), (4,5), (4,6), (4,7), (4,8), (4,9), (4,10), (4,11), (4,12)
@@ -686,3 +689,4 @@ RETURN (SELECT MAX(fecha_inicio + cant_noches)
 		FROM THE_FOREIGN_FOUR.Estadias)
 END	
 GO
+
