@@ -801,7 +801,7 @@ RETURN (SELECT MAX(fecha_inicio + cant_noches)
 END	
 GO
 
-CREATE FUNCTION THE_FOREIGN_FOUR.obtener_regimenes (@cod_hotel numeric(18,0))
+CREATE FUNCTION THE_FOREIGN_FOUR.buscar_regimenes_hotel (@cod_hotel numeric(18,0))
 RETURNS TABLE
 AS
 RETURN(
