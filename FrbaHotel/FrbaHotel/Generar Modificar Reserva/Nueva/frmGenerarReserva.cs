@@ -132,20 +132,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //boton a la siguiente ventana
         private void btnSiguietne_Click(object sender, EventArgs e)
         {
-            if (boolVerificoDisp)
-            {
-                if (boolPasaAClientes)
-                {
+            if (boolVerificoDisp){
+                if (boolPasaAClientes){
                     new frmCliente(this).Show();
                     this.Enabled = false;
-                }
-                else
-                {
+                }else{
                     MessageBox.Show("Reserva no disponible, verifique", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            else
-            {
+            }else{
                 MessageBox.Show("Verifique la disponibilidad de la reserva antes de continuar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }  
