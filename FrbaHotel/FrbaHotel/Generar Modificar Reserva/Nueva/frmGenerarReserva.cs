@@ -24,6 +24,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         string codigoHotel;
         int precioBase;
         int costoPorDia;
+        int capacidadHabitacionActual;
         string codigoRegimen;
         string codigoTipoHabitacion;
         DataSet dataSetHotel;
@@ -65,6 +66,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             FrbaHotel.ConexionSQL.establecerConexionBD();
             cargarControles();
             terminoDeCargarTodo = true;
+            cmbHotel.SelectedIndex = 0;
         }
 
         //evento para el cierre del form
@@ -187,33 +189,54 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             boolVerificoDisp = false;
 
             //cargo tipo habitacion dependiendo el hotel seleccionado
-            string itemCombo = (cmbHotel.SelectedIndex + 1).ToString();
-            string consultaSql = "select distinct h.cod_tipo_hab, t.descripcion from THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones t where cod_hotel=" + itemCombo + "and h.cod_tipo_hab = t.cod_tipo_hab";
-            string nombreTabla = "THE_FOREIGN_FOUR.TipoHabitaciones";
-            string nombreCampo = "descripcion";
-            dataSetHab = FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSql);
+            //string itemCombo = (cmbHotel.SelectedIndex + 1).ToString();
+            //string consultaSql = "select distinct h.cod_tipo_hab, t.descripcion from THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones t where cod_hotel=" + itemCombo + "and h.cod_tipo_hab = t.cod_tipo_hab";
 
-            //cargo codigo hotel
             if (terminoDeCargarTodo)
-            {
+            {               
+                //cargo codigo hotel
                 DataRow codRowHotel = dataSetHotel.Tables[0].Rows[cmbHotel.SelectedIndex];
                 codigoHotel = codRowHotel["cod_hotel"].ToString();
+
+                //Console.WriteLine(codigoHotel);
+
+
+                //string consulta = "select * INTO #tipohab from THE_FOREIGN_FOUR.buscar_tipo_hab_hotel(1)";
+                //SqlCommand cmd = new SqlCommand(consulta,FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                //cmd.ExecuteNonQuery();
+
+                //string consultaSQL = "select * from #tipohab;";
+                //string nombreTabla = "#tipohab";
+                //string nombreCampo = "descripcion";
+                //dataSetHab = FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSQL);
+
+                //string consultaSQL = "select distinct h.cod_tipo_hab, t.descripcion from THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones t where cod_hotel=" + codigoHotel + "and h.cod_tipo_hab = t.cod_tipo_hab";
+                string consultaSQL = "select * from THE_FOREIGN_FOUR.buscar_tipo_hab_hotel("+codigoHotel+")";
+                string nombreTabla = "THE_FOREIGN_FOUR.TipoHabitacion";
+                string nombreCampo = "descripcion";
+                dataSetHab = FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSQL);
+
+
+                //consulta = "drop table #tipohab";
+                //cmd = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                //cmd.ExecuteNonQuery();
+
+                
+
             }
         }
 
         //combo hotel
-        private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            boolVerificoDisp = false;
-            //obtiene cod_tipo_habitacion
-            Console.WriteLine("la puta que lo pario " + cmbTipoHab.Text);
-            //if (cmbTipoHab.Text != "System.Data.DataRowView")
-            if (terminoDeCargarTodo)
-            {
-                DataRow codRowTipoHab = dataSetHab.Tables[0].Rows[cmbTipoHab.SelectedIndex];
-                codigoTipoHabitacion = codRowTipoHab["cod_tipo_hab"].ToString();
-            }
-        }
+        //private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+           // boolVerificoDisp = false;
+            //obtiene cod_tipo_habitacion            
+            //if (terminoDeCargarTodo)
+            //{
+              //  DataRow codRowTipoHab = dataSetHab.Tables[0].Rows[cmbTipoHab.SelectedIndex];
+               // codigoTipoHabitacion = codRowTipoHab["cod_tipo_hab"].ToString();
+            //}
+       // }
 
         //muestra costo por dia
         private void txtRegimen_TextChanged(object sender, EventArgs e)
@@ -281,9 +304,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         //verifica que la cantidad de huespedes ingresada 
         private bool verificarCantHuespedesConTipoHabitacion(){
-            //if (cmbCantHues.SelectedIndex != -1){
-            return true; //momentaneo      
-
+            if (cmbCantHues.SelectedIndex != -1){
+                if (Convert.ToInt32(cmbCantHues.Text) <= capacidadHabitacionActual){
+                    return true;
+                }else{
+                    MessageBox.Show("Seleccione un tipo de habitacion con capacidad suficiente", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+                }
+            }
+            return false;
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------

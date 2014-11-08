@@ -215,7 +215,8 @@ RETURNS TABLE
 AS
 RETURN(
 
-	SELECT cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, nro_calle, nacionalidad, pais_origen
+	SELECT cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, 
+			nom_calle, nro_calle, nacionalidad, pais_origen, estado, piso
 	FROM THE_FOREIGN_FOUR.Clientes
 	WHERE nombre LIKE 
 		(CASE WHEN @nombre IS NULL  THEN '%' ELSE @nombre END)
@@ -261,13 +262,14 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_cliente(
 					@depto nvarchar(50),
 					@piso numeric(18,0),
 					@nacionalidad nvarchar(255),
+					@pais_origen nvarchar(255),
 					@localidad nvarchar(255))
 AS
 BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, 
-										   nom_calle, nro_calle, depto, piso, nacionalidad, localidad)
+										   nom_calle, nro_calle, depto, piso, nacionalidad, pais_origen, localidad)
 	VALUES (@nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle,
-										   @depto, @piso, @nacionalidad, @localidad)
+										   @depto, @piso, @nacionalidad, @pais_origen, @localidad)
 	DECLARE @cod_cliente_registrado numeric(18,0)
 	SET @cod_cliente_registrado = (SELECT cod_cliente
 								   FROM THE_FOREIGN_FOUR.Clientes
@@ -296,7 +298,8 @@ GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_todos_los_clientes 
 AS
-SELECT nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, nro_calle, nacionalidad, pais_origen
+SELECT cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, 
+		nro_calle, nacionalidad, pais_origen,  estado, piso
 FROM THE_FOREIGN_FOUR.Clientes
 GO
 --***********************************************************
@@ -383,8 +386,8 @@ BEGIN
 			('cancelacion_cliente'),
 			('cancelacion_noshow'),
 			('efectivizada')
-	INSERT INTO THE_FOREIGN_FOUR.Usuarios(user_name, password)
-	VALUES	('admin', 'w23e')
+	INSERT INTO THE_FOREIGN_FOUR.Usuarios(user_name, password, nombre)
+	VALUES	('admin', 'w23e','Administrador General')
 	INSERT INTO THE_FOREIGN_FOUR.Roles(nombre)
 	VALUES	('Administrador'),
 			('Recepcionista'),
@@ -408,7 +411,7 @@ BEGIN
 	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), (1,10), (1,11), (1,12), --verificar
 			(2,1), (2,4), (2,7), (2,8), (2,9), (2,10),
 			(3,7), (3,8),
-			(4,1), (4,2), (4,3), (4,4), (4,5), (4,6), (4,7), (4,8,), (4,9), (4,10,), (4,11), (4,12)
+			(4,1), (4,2), (4,3), (4,4), (4,5), (4,6), (4,7), (4,8), (4,9), (4,10), (4,11), (4,12)
 			
 	INSERT INTO THE_FOREIGN_FOUR.RegimenPorHotel(cod_hotel, cod_regimen)
 	VALUES	(1,1), (1,2), (1,3), (1,4),
@@ -433,12 +436,74 @@ BEGIN
 			(1, 6, 4), (1, 7, 4), (1, 8, 4), (1, 9, 4), (1, 10, 4),
 			(1, 11, 4), (1, 12, 4), (1, 13, 4), (1, 14, 4), (1, 15, 4), 
 			(1, 16, 4)
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Conrad'
+	WHERE cod_hotel = 1;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Hilton'
+	WHERE cod_hotel = 2;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Sheraton'
+	WHERE cod_hotel = 3;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Palacio Duhau'
+	WHERE cod_hotel = 4;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Melia'
+	WHERE cod_hotel = 5;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Madero'
+	WHERE cod_hotel = 6;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Alvear Palace'
+	WHERE cod_hotel = 7;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Intercontinental'
+	WHERE cod_hotel = 8;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Emeperador'
+	WHERE cod_hotel = 9;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'BA Grand Hotel'
+	WHERE cod_hotel = 10;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Four Seasons'
+	WHERE cod_hotel = 11;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Faena'
+	WHERE cod_hotel = 12;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Regal Pacific'
+	WHERE cod_hotel = 13;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Hotel Club Frances'
+	WHERE cod_hotel = 14;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Caesar Park'
+	WHERE cod_hotel = 15;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Claridge'
+	WHERE cod_hotel = 16;
+	
 END	
 GO
 --*********************************************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
-(
-)
+CREATE FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva ()
 RETURNS numeric(18,0) AS
 BEGIN
 	RETURN (SELECT MAX(cod_reserva) + 1
@@ -500,7 +565,6 @@ RETURN
 )
 GO
 
---******************************************************
 --******************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_facturas
 AS
