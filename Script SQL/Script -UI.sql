@@ -435,6 +435,70 @@ BEGIN
 			(1, 6, 4), (1, 7, 4), (1, 8, 4), (1, 9, 4), (1, 10, 4),
 			(1, 11, 4), (1, 12, 4), (1, 13, 4), (1, 14, 4), (1, 15, 4), 
 			(1, 16, 4)
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Conrad'
+	WHERE cod_hotel = 1;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Hilton'
+	WHERE cod_hotel = 2;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Sheraton'
+	WHERE cod_hotel = 3;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Palacio Duhau'
+	WHERE cod_hotel = 4;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Melia'
+	WHERE cod_hotel = 5;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Madero'
+	WHERE cod_hotel = 6;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Alvear Palace'
+	WHERE cod_hotel = 7;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Intercontinental'
+	WHERE cod_hotel = 8;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Emeperador'
+	WHERE cod_hotel = 9;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'BA Grand Hotel'
+	WHERE cod_hotel = 10;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Four Seasons'
+	WHERE cod_hotel = 11;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Faena'
+	WHERE cod_hotel = 12;
+
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Regal Pacific'
+	WHERE cod_hotel = 13;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Hotel Club Frances'
+	WHERE cod_hotel = 14;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Caesar Park'
+	WHERE cod_hotel = 15;
+	
+	UPDATE THE_FOREIGN_FOUR.Hoteles 
+	SET nombre = 'Claridge'
+	WHERE cod_hotel = 16;
+	
 END	
 GO
 --*********************************************************************************
