@@ -469,3 +469,77 @@ RETURN
 	AND		h.cod_hotel = @cod_hotel
 )
 GO
+
+--******************************************************
+--******************************************************
+CREATE VIEW THE_FOREIGN_FOUR.view_facturas
+AS
+SELECT f.nro_factura, f.cod_estadia, i.nro_item, c.cod_consumible, c.descripcion, c.precio, i.cantidad, f.total
+FROM	THE_FOREIGN_FOUR.Facturas f, 
+		THE_FOREIGN_FOUR.ItemsFactura i,
+		THE_FOREIGN_FOUR.Consumibles c
+WHERE f.nro_factura = i.nro_factura
+AND c.cod_consumible = i.cod_consumible
+GO
+
+
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.facturacion(@cod_estadia int)
+RETURNS TABLE
+AS
+RETURN(
+SELECT *
+FROM THE_FOREIGN_FOUR.view_facturas
+WHERE cod_estadia = @cod_estadia
+)
+GO
+
+--****************************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
+AS
+BEGIN
+	UPDATE THE_FOREIGN_FOUR.Facturas
+	SET total = (SELECT SUM(c.precio * i.cantidad)
+				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
+				WHERE c.cod_consumible = i.cod_consumible
+				AND i.nro_factura = @nro_factura)
+	WHERE nro_factura = @nro_factura
+END
+GO
+
+
+--***********************************************************
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_separar_factura
+ON THE_FOREIGN_FOUR.view_facturas
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT nro_factura, cod_consumible, cantidad
+	FROM inserted
+	DECLARE	@nro_factura numeric(18,0),
+			@cod_consumible numeric(18,0),
+			@cantidad int
+			
+	OPEN TrigInsCursor;
+	
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cod_consumible, @cantidad
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		INSERT INTO THE_FOREIGN_FOUR.ItemsFactura(nro_factura, cod_consumible, cantidad)
+		VALUES (@nro_factura, @cod_consumible, @cantidad)
+		
+		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cod_consumible, @cantidad
+	
+	END
+	
+	EXECUTE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura
+	
+	CLOSE TrigInsCursor;
+	DEALLOCATE TrigInsCursor;
+	
+	
+END
+GO

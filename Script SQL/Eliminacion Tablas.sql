@@ -53,6 +53,10 @@ DROP FUNCTION THE_FOREIGN_FOUR.buscar_tipo_hab_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_habitacion 
 DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades 
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_rol 
+DROP VIEW THE_FOREIGN_FOUR.view_facturas
+DROP FUNCTION THE_FOREIGN_FOUR.facturacion
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura
+
 
 
 DROP SCHEMA THE_FOREIGN_FOUR
