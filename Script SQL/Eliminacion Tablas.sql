@@ -58,13 +58,11 @@ DROP VIEW THE_FOREIGN_FOUR.view_roles_hoteles_usuarios
 DROP VIEW THE_FOREIGN_FOUR.view_todos_los_clientes 
 DROP VIEW THE_FOREIGN_FOUR.view_tipo_hab
 DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades 
-<<<<<<< HEAD
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_rol 
 DROP VIEW THE_FOREIGN_FOUR.view_facturas
 DROP FUNCTION THE_FOREIGN_FOUR.facturacion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura
-=======
->>>>>>> origin/master
+
 
 
 
