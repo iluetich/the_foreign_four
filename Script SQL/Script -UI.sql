@@ -262,13 +262,14 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_cliente(
 					@depto nvarchar(50),
 					@piso numeric(18,0),
 					@nacionalidad nvarchar(255),
+					@pais_origen nvarchar(255),
 					@localidad nvarchar(255))
 AS
 BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, 
-										   nom_calle, nro_calle, depto, piso, nacionalidad, localidad)
+										   nom_calle, nro_calle, depto, piso, nacionalidad, pais_origen, localidad)
 	VALUES (@nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle,
-										   @depto, @piso, @nacionalidad, @localidad)
+										   @depto, @piso, @nacionalidad, @pais_origen, @localidad)
 	DECLARE @cod_cliente_registrado numeric(18,0)
 	SET @cod_cliente_registrado = (SELECT cod_cliente
 								   FROM THE_FOREIGN_FOUR.Clientes
