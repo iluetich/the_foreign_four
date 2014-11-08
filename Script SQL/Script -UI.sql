@@ -25,6 +25,27 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia
 AS
 	INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, nro_habitacion, fecha_inicio, cant_noches)
 	VALUES	(@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches)
+	
+	UPDATE THE_FOREIGN_FOUR.Reservas
+	SET cod_estado_reserva  = (SELECT cod_estado_reserva
+								FROM THE_FOREIGN_FOUR.EstadosReserva
+								WHERE descripcion = 'efectivizada')
+	WHERE cod_reserva = @cod_reserva
+GO
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva
+				(@cod_reserva numeric(18,0))
+RETURNS int
+AS 
+BEGIN
+	IF(NOT EXISTS (SELECT cod_reserva
+				   FROM THE_FOREIGN_FOUR.Reservas
+				   WHERE cod_reserva = @cod_reserva))
+	BEGIN
+		RETURN -1
+	END  
+	RETURN 1
+END
 GO
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva 
@@ -40,7 +61,52 @@ BEGIN
 	BEGIN
 		RETURN -1
 	END
-RETURN 1
+	RETURN 1
+END
+GO
+--*****************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada 
+				(@cod_reserva numeric(18,0),
+				 @cod_hotel int)
+RETURNS int
+AS
+BEGIN
+	DECLARE @codigo int,
+			@estadoReserva int
+			
+	SET @codigo = (SELECT THE_FOREIGN_FOUR.func_validar_reserva(@cod_reserva,@cod_hotel))
+	SET @estadoReserva = (SELECT cod_estado_reserva
+							FROM THE_FOREIGN_FOUR.Reservas
+							WHERE cod_reserva = @cod_reserva)
+	
+	
+	IF( (@codigo = 1) AND (@estadoReserva != 3) AND (@estadoReserva != 4) AND (@estadoReserva != 5))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--**********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada 
+				(@cod_reserva numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	DECLARE @codigo int,
+			@estadoReserva int
+			
+	SET @codigo = (SELECT THE_FOREIGN_FOUR.func_validar_existe_reserva(@cod_reserva))
+	SET @estadoReserva = (SELECT cod_estado_reserva
+							FROM THE_FOREIGN_FOUR.Reservas
+							WHERE cod_reserva = @cod_reserva)
+	
+	
+	IF( (@codigo = 1) AND (@estadoReserva != 3) AND (@estadoReserva != 4) AND (@estadoReserva != 5))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
 END
 GO
 --***********************************************************
@@ -49,13 +115,15 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
 				 @cod_tipo_hab numeric(18,0),
-				 @cod_regimen int)
+				 @cod_regimen int,
+				 @usuario nvarchar(255))
 AS
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET fecha_desde = @fecha_desde,
 		fecha_hasta = @fecha_hasta,
 		cod_tipo_hab = @cod_tipo_hab,
 		cod_regimen = @cod_regimen,
+		usuario = @usuario,
 		cod_estado_reserva = (SELECT cod_estado
 							  FROM THE_FOREIGN_FOUR.EstadosReserva
 							  WHERE descripcion = 'modificada')
@@ -90,6 +158,7 @@ BEGIN
 	VALUES (@cod_reserva, @motivo, @usuario, (SELECT THE_FOREIGN_FOUR.fecha_sys ()))
 END
 GO
+
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				(@cod_hotel int,
@@ -98,19 +167,55 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
-				 @fecha_creacion datetime)
+				 @fecha_creacion datetime,
+				 @usuario nvarchar(255))
 AS
 BEGIN
-	DECLARE @cod_reserva_generada numeric(18,0)
+	DECLARE @cod_reserva_generada numeric(18,0),
+			@cod_estado_reserva int
+			
+	SET @cod_estado_reserva = (SELECT cod_estado
+								  FROM THE_FOREIGN_FOUR.EstadosReserva
+								  WHERE descripcion = 'correcta')
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
-	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde))
+	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), @usuario)
 	
 	RETURN @cod_reserva_generada
 END
 GO
 
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_hotel_inhabilitable 
+				(@cod_hotel int,
+				 @fecha_inicio datetime,
+				 @fecha_fin datetime)
+RETURNS int
+AS
+BEGIN
+	IF(NOT EXISTS (SELECT cod_reserva
+				   FROM	THE_FOREIGN_FOUR.Reservas
+				   WHERE @fecha_inicio BETWEEN fecha_desde AND fecha_hasta
+				   OR	 @fecha_fin BETWEEN fecha_desde AND fecha_hasta))
+	BEGIN 
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--***********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_hotel
+				(@cod_hotel int,
+				 @motivo nvarchar(255),
+				 @fecha_inicio datetime,
+				 @fecha_fin datetime)
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.InactividadHoteles (cod_hotel, descripcion, fecha_desde, fecha_hasta)
+	VALUES (@cod_hotel, @motivo, @fecha_inicio, @fecha_fin)
+END
+GO
 --***********************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_hoteles
 AS
@@ -425,7 +530,7 @@ BEGIN
 			('Listado Estadistico')
 			
 	INSERT INTO THE_FOREIGN_FOUR.FuncionalidadPorRol(cod_rol, cod_funcion)
-	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), (1,10), (1,11), (1,12), --verificar
+	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,9), (1,10), (1,11), (1,12), --verificar
 			(2,1), (2,4), (2,7), (2,8), (2,9), (2,10),
 			(3,7), (3,8),
 			(4,1), (4,2), (4,3), (4,4), (4,5), (4,6), (4,7), (4,8), (4,9), (4,10), (4,11), (4,12)
@@ -605,15 +710,43 @@ WHERE cod_estadia = @cod_estadia
 )
 GO
 
+--**********************************************************
+/*
+El valor de la habitación se obtiene a través de su precio base 
+(ver abm de régimen) multiplicando la cantidad de personas que se 
+alojarán en la habitación (tipo de habitación) y luego de ello aplicando 
+un incremento en función de la categoría del Hotel (cantidad de estrellas)
+*/
+CREATE FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia numeric(18,0))
+RETURNS numeric(18,2)
+AS
+BEGIN
+RETURN(
+	SELECT	(((r.precio* th.capacidad) + (h.cant_estrellas * h.recarga_estrellas))*res.cant_noches)
+	FROM	THE_FOREIGN_FOUR.Regimenes r,
+			THE_FOREIGN_FOUR.view_tipo_hab th,
+			THE_FOREIGN_FOUR.Hoteles h,
+			THE_FOREIGN_FOUR.Estadias e,
+			THE_FOREIGN_FOUR.Reservas res
+	WHERE	e.cod_estadia = @cod_estadia
+	AND		e.cod_reserva = res.cod_reserva
+	AND		res.cod_regimen = r.cod_regimen
+	AND		h.cod_hotel = res.cod_hotel
+	AND		th.cod_tipo_hab = res.cod_tipo_hab
+)
+END
+GO
 --****************************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS
 BEGIN
 	UPDATE THE_FOREIGN_FOUR.Facturas
-	SET total = (SELECT SUM(c.precio * i.cantidad)
-				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
+	SET total = (SELECT (SUM(c.precio * i.cantidad) + THE_FOREIGN_FOUR.calcular_precio_estadia(f.cod_estadia))
+				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i, THE_FOREIGN_FOUR.Facturas f
 				WHERE c.cod_consumible = i.cod_consumible
-				AND i.nro_factura = @nro_factura)
+				AND f.nro_factura = i.nro_factura
+				AND i.nro_factura = @nro_factura
+				GROUP BY f.cod_estadia)
 	WHERE nro_factura = @nro_factura
 END
 GO
@@ -686,3 +819,15 @@ RETURN (SELECT MAX(fecha_inicio + cant_noches)
 		FROM THE_FOREIGN_FOUR.Estadias)
 END	
 GO
+
+CREATE FUNCTION THE_FOREIGN_FOUR.buscar_regimenes_hotel (@cod_hotel numeric(18,0))
+RETURNS TABLE
+AS
+RETURN(
+	SELECT rh.cod_hotel, r.cod_regimen, r.descripcion, r.precio 
+	FROM THE_FOREIGN_FOUR.RegimenPorHotel rh, THE_FOREIGN_FOUR.Regimenes r
+	WHERE rh.cod_regimen = r.cod_regimen
+	AND rh.cod_hotel = @cod_hotel
+)
+GO
+

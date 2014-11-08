@@ -41,7 +41,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             InitializeComponent();
         }
 
-
         //constructor que invoca el menu
         public frmGenerarReserva(MenuDinamico menuPadre)
         {
@@ -74,6 +73,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             cargarControles();
             terminoDeCargarTodo = true;
             cmbHotel.SelectedIndex = 0;
+            
         }
 
         //evento para el cierre del form
@@ -132,20 +132,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //boton a la siguiente ventana
         private void btnSiguietne_Click(object sender, EventArgs e)
         {
-            if (boolVerificoDisp)
-            {
-                if (boolPasaAClientes)
-                {
+            if (boolVerificoDisp){
+                if (boolPasaAClientes){
                     new frmCliente(this).Show();
                     this.Enabled = false;
-                }
-                else
-                {
+                }else{
                     MessageBox.Show("Reserva no disponible, verifique", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            else
-            {
+            }else{
                 MessageBox.Show("Verifique la disponibilidad de la reserva antes de continuar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }  
@@ -194,56 +188,32 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void cmbHotel_SelectedIndexChanged(object sender, EventArgs e)
         {
             boolVerificoDisp = false;
-
-            //cargo tipo habitacion dependiendo el hotel seleccionado
-            //string itemCombo = (cmbHotel.SelectedIndex + 1).ToString();
-            //string consultaSql = "select distinct h.cod_tipo_hab, t.descripcion from THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones t where cod_hotel=" + itemCombo + "and h.cod_tipo_hab = t.cod_tipo_hab";
-
+            
             if (terminoDeCargarTodo)
             {               
                 //cargo codigo hotel
                 DataRow codRowHotel = dataSetHotel.Tables[0].Rows[cmbHotel.SelectedIndex];
                 codigoHotel = codRowHotel["cod_hotel"].ToString();
-
-                //Console.WriteLine(codigoHotel);
-
-
-                //string consulta = "select * INTO #tipohab from THE_FOREIGN_FOUR.buscar_tipo_hab_hotel(1)";
-                //SqlCommand cmd = new SqlCommand(consulta,FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-                //cmd.ExecuteNonQuery();
-
-                //string consultaSQL = "select * from #tipohab;";
-                //string nombreTabla = "#tipohab";
-                //string nombreCampo = "descripcion";
-                //dataSetHab = FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSQL);
-
-                //string consultaSQL = "select distinct h.cod_tipo_hab, t.descripcion from THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones t where cod_hotel=" + codigoHotel + "and h.cod_tipo_hab = t.cod_tipo_hab";
+                
                 string consultaSQL = "select * from THE_FOREIGN_FOUR.buscar_tipo_hab_hotel("+codigoHotel+")";
                 string nombreTabla = "THE_FOREIGN_FOUR.TipoHabitacion";
                 string nombreCampo = "descripcion";
-                dataSetHab = FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSQL);
-
-
-                //consulta = "drop table #tipohab";
-                //cmd = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-                //cmd.ExecuteNonQuery();
-
-                
+                dataSetHab = FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSQL);                            
 
             }
         }
 
         //combo hotel
-        //private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-           // boolVerificoDisp = false;
-            //obtiene cod_tipo_habitacion            
-            //if (terminoDeCargarTodo)
-            //{
-              //  DataRow codRowTipoHab = dataSetHab.Tables[0].Rows[cmbTipoHab.SelectedIndex];
-               // codigoTipoHabitacion = codRowTipoHab["cod_tipo_hab"].ToString();
-            //}
-       // }
+        private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           boolVerificoDisp = false;
+           //obtiene cod_tipo_habitacion            
+            if (terminoDeCargarTodo)
+            {
+                DataRow codRowTipoHab = dataSetHab.Tables[0].Rows[cmbTipoHab.SelectedIndex];
+                codigoTipoHabitacion = codRowTipoHab["cod_tipo_hab"].ToString();
+            }
+        }
 
         //muestra costo por dia
         private void txtRegimen_TextChanged(object sender, EventArgs e)
