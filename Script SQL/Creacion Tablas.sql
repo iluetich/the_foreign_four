@@ -136,6 +136,13 @@ CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
 	fecha_hasta			datetime,
 	cant_noches			int,
 )
+CREATE TABLE THE_FOREIGN_FOUR.Cancelaciones (
+	cod_cancelacion		numeric(18,0)			PRIMARY KEY IDENTITY(1,1),
+	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
+	motivo				varchar(255),
+	usuario				varchar(255),
+	fecha_operacion		datetime
+)
 CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
 	cod_tipo_pago		int						IDENTITY(1,1) PRIMARY KEY,
 	descripcion			nvarchar(255),
