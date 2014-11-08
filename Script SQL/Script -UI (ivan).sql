@@ -1,5 +1,3 @@
-DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
-GO
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
 AS
 BEGIN
@@ -61,8 +59,6 @@ BEGIN
 END	
 GO
 --*********************************************************************************
-DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
-GO
 CREATE FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
 (
 )
@@ -73,8 +69,6 @@ BEGIN
 END
 GO
 --*********************************************************************************
-DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_nro_factura
-GO
 CREATE FUNCTION THE_FOREIGN_FOUR.func_sgte_nro_factura
 (
 )
