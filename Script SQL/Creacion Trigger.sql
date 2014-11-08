@@ -1,4 +1,4 @@
-CREATE TRIGGER trg_clientes_error
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_clientes_error
 ON THE_FOREIGN_FOUR.Clientes
 INSTEAD OF INSERT
 AS
@@ -51,7 +51,7 @@ GO
 
 --*****************************************************
 
-CREATE TRIGGER trg_reservas_error
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_reservas_error
 ON THE_FOREIGN_FOUR.Reservas
 INSTEAD OF INSERT
 AS
@@ -114,7 +114,7 @@ GO
 
 --*****************************************************
 
-CREATE TRIGGER trg_estadias_error
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_estadias_error
 ON THE_FOREIGN_FOUR.Estadias
 INSTEAD OF INSERT
 AS
@@ -193,57 +193,7 @@ END
 GO*/
 --*************************************************
 
-CREATE TRIGGER trg_habitaciones_error
-ON THE_FOREIGN_FOUR.Habitaciones
-INSTEAD OF INSERT
-AS
-BEGIN
-
-	DECLARE TrigInsCursor CURSOR FOR
-	SELECT piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel
-	FROM inserted
-	DECLARE @piso int,
-			@ubicacion nvarchar(255),
-			@cod_tipo_hab numeric(18,0),
-			@nro_habitacion numeric(18,0),
-			@cod_hotel int
-
-	OPEN TrigInsCursor;
-
-	FETCH NEXT FROM TrigInsCursor INTO @piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel
-
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-	
-		IF(@piso IS NULL OR
-		   @ubicacion IS NULL OR
-		   @cod_tipo_hab IS NULL OR
-		   @nro_habitacion IS NULL OR
-		   @cod_hotel IS NULL)
-		   
-		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.HabitacionesDefectuosas (piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel)
-			VALUES (@piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel);
-		END	
-		ELSE
-		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.Habitaciones (piso, ubicacion, cod_tipo_hab, nro_habitacion, cod_hotel)
-			VALUES (@piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel);
-		END			
-			
-		FETCH NEXT FROM TrigInsCursor INTO @piso, @ubicacion, @cod_tipo_hab, @nro_habitacion, @cod_hotel     
-
-  END
-
-  CLOSE TrigInsCursor;
-  DEALLOCATE TrigInsCursor;
-
-END
-GO
-
---***********************************************
-
-CREATE TRIGGER trg_facturas_error
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_facturas_error
 ON THE_FOREIGN_FOUR.Facturas
 INSTEAD OF INSERT
 AS
@@ -292,7 +242,7 @@ GO
 
 --***********************************************
 
-CREATE TRIGGER trg_clientes_por_estadia_err
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_clientes_por_estadia_err
 ON THE_FOREIGN_FOUR.ClientePorEstadia
 INSTEAD OF INSERT
 AS
@@ -335,7 +285,7 @@ GO
 
 --*********************************************************
 
-CREATE TRIGGER trg_itemsFactura_error
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_itemsFactura_error
 ON THE_FOREIGN_FOUR.ItemsFactura
 INSTEAD OF INSERT
 AS

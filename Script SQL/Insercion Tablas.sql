@@ -131,3 +131,12 @@ FROM gd_esquema.Maestra m
 
 --***JUEGO DE DATOS************************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos
+
+
+--** ELIMINACION DE LOS TRIGGERS*******************************
+DROP TRIGGER THE_FOREIGN_FOUR.trg_clientes_error
+DROP TRIGGER THE_FOREIGN_FOUR.trg_reservas_error
+DROP TRIGGER THE_FOREIGN_FOUR.trg_estadias_error
+DROP TRIGGER THE_FOREIGN_FOUR.trg_facturas_error
+DROP TRIGGER THE_FOREIGN_FOUR.trg_clientes_por_estadia_err
+DROP TRIGGER THE_FOREIGN_FOUR.trg_itemsFactura_error
