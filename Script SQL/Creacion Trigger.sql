@@ -300,7 +300,7 @@ BEGIN
 			
 	OPEN TrigInsCursor;
 
-	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible, @descripcion
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
