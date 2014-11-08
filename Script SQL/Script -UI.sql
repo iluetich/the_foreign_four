@@ -210,8 +210,7 @@ AS
 BEGIN
 	IF(EXISTS (SELECT cod_cliente
 			   FROM THE_FOREIGN_FOUR.Clientes
-			   WHERE (tipo_doc = @tipo_doc
-			   AND	 nro_doc = @nro_doc)
+			   WHERE nro_doc = @nro_doc
 			   OR	 mail = @mail))
 		BEGIN
 			RETURN -1
