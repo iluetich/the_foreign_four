@@ -187,10 +187,12 @@ namespace FrbaHotel.ABM_de_Cliente
                     //string connstring = "connection string";
                     SqlConnection cnn = new SqlConnection("Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014");
 	                cnn.Open();
-                    SqlCommand cmd = new SqlCommand();
+                    // SqlCommand cmd = new SqlCommand(); COMENTADO X IVAN
+                    string consulta = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_registrar_cliente @nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle, @depto, @piso, @nacionalidad, @localidad SELECT @output as codigo"; // agregado por ivan
+                    SqlCommand cmd = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+
                     cmd.Connection = cnn;
                     cmd.CommandType = CommandType.Text;
-
                     cmd.Parameters.AddWithValue("@nombre", nombre);
                     cmd.Parameters.AddWithValue("@apellido", apellido);
                     cmd.Parameters.AddWithValue("@tipo_doc", tipoDoc);
@@ -205,7 +207,8 @@ namespace FrbaHotel.ABM_de_Cliente
                     cmd.Parameters.AddWithValue("@fecha_nac", fechaNac);
                     cmd.Parameters.AddWithValue("@estado", estado);
                     cmd.Parameters.AddWithValue("@mail", mail);
-                    
+                    cmd.Parameters.AddWithValue("localidad", localidad); // agregado por ivan
+
                     if (constructorMod)
                     {
                         cmd.CommandText = "UPDATE THE_FOREIGN_FOUR.Clientes SET nombre=@nombre,apellido=@apellido,tipo_doc=@tipo_doc,nro_doc=@nro_doc,mail=@mail,telefono=@telefono,"+
@@ -214,11 +217,13 @@ namespace FrbaHotel.ABM_de_Cliente
                     }
                     else
                     {
-                        cmd.CommandText = "INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre,apellido,tipo_doc,nro_doc,mail,telefono,nom_calle,nro_calle,pais_origen,nacionalidad,piso,depto,fecha_nac,estado) " +
-                                "VALUES (@nombre,@apellido,@tipo_doc,@nro_doc,@mail,@telefono,@nom_calle,@nro_calle,@pais_origen,@nacionalidad,@piso,@depto,@fecha_nac,@estado)";	
-                    }                
-	
-	                cmd.ExecuteNonQuery();
+                    //    cmd.CommandText = "INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre,apellido,tipo_doc,nro_doc,mail,telefono,nom_calle,nro_calle,pais_origen,nacionalidad,piso,depto,fecha_nac,estado) " +
+                    //            "VALUES (@nombre,@apellido,@tipo_doc,@nro_doc,@mail,@telefono,@nom_calle,@nro_calle,@pais_origen,@nacionalidad,@piso,@depto,@fecha_nac,@estado)";	
+                        // try catch de funcion validar_cliente USAR!!!!!!!!!!!!!!!!!!!!!!!!
+                        
+                    }
+                    int codigo_cliente = Convert.ToInt32(cmd.ExecuteScalar());
+	                //cmd.ExecuteNonQuery(); COMENTADO X IVAN
                     cnn.Close();
 
 
@@ -227,6 +232,7 @@ namespace FrbaHotel.ABM_de_Cliente
                         frmClientePadre.Enabled = true;
                         frmClientePadre.Focus();
                         frmClientePadre.cargarParametrosClientes(cmd);
+                        frmClientePadre.setCodigoCliente(Convert.ToInt32(codigo_cliente)); // agregado por ivan
                     }
                     else if (constructorMod)
                     {

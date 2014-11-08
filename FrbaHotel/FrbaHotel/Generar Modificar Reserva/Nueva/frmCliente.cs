@@ -148,7 +148,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
 
         //----SETTERS------------------------------------------
-        public void setCodigoCliente(int codigo) {   codigoCliente = codigo; }
+        public void setCodigoCliente(int codigo) {   
+            codigoCliente = codigo;
+            Console.WriteLine(codigoCliente);
+        }
         //-----------------------------------------------------
     }
 

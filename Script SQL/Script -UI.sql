@@ -241,7 +241,7 @@ BEGIN
 										   @depto, @piso, @nacionalidad, @localidad)
 	DECLARE @cod_cliente_registrado numeric(18,0)
 	SET @cod_cliente_registrado = (SELECT cod_cliente
-								   FROM THE_FOREIGN_FOUR.Cliente
+								   FROM THE_FOREIGN_FOUR.Clientes
 								   WHERE @mail = mail
 								   AND	@nro_doc = nro_doc
 								   AND	@fecha_nac = fecha_nac)
@@ -425,4 +425,3 @@ BEGIN
 			FROM THE_FOREIGN_FOUR.Facturas)
 END
 GO
-
