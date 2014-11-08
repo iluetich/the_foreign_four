@@ -383,29 +383,31 @@ BEGIN
 			('cancelacion_noshow'),
 			('efectivizada')
 	INSERT INTO THE_FOREIGN_FOUR.Usuarios(user_name, password)
-	VALUES	('admin', 'w23b')
+	VALUES	('admin', 'w23e')
 	INSERT INTO THE_FOREIGN_FOUR.Roles(nombre)
-	VALUES	('administrador'),
-			('recepcionista'),
-			('guest')
+	VALUES	('Administrador'),
+			('Recepcionista'),
+			('Guest'),
+			('Administrador General')
 	INSERT INTO THE_FOREIGN_FOUR.Funcionalidades(nombre)
-	VALUES	('login'),
-			('abm_rol'),
-			('abm_usuario'),
-			('abm_cliente'),
-			('abm_hotel'),
-			('abm_habitacion'),
-			('generar_modificar_reserva'),
-			('cancelar_reserva'),
-			('registrar_estadia'),
-			('registrar_consumible'),
-			('facturar_estadia'),
-			('listado_estadistico')
+	VALUES	('ABM Rol'),
+			('ABM Usuario'),
+			('ABM Clientes'),
+			('ABM Hotel'),
+			('ABM Habitacion'),
+			('ABM Regimen De Estadia'),
+			('Generar o Modificar Reserva'),
+			('Cancelar Reserva'),
+			('Registrar Estadia'),
+			('Registrar Consumibles'),
+			('Facturar Estadia'),
+			('Listado Estadistico')
 			
 	INSERT INTO THE_FOREIGN_FOUR.FuncionalidadPorRol(cod_rol, cod_funcion)
-	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), (1,10), (1,11), (1,12),
+	VALUES	(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), (1,10), (1,11), (1,12), --verificar
 			(2,1), (2,4), (2,7), (2,8), (2,9), (2,10),
-			(3,7), (3,8)
+			(3,7), (3,8),
+			(4,1), (4,2), (4,3), (4,4), (4,5), (4,6), (4,7), (4,8,), (4,9), (4,10,), (4,11), (4,12)
 			
 	INSERT INTO THE_FOREIGN_FOUR.RegimenPorHotel(cod_hotel, cod_regimen)
 	VALUES	(1,1), (1,2), (1,3), (1,4),
@@ -426,10 +428,10 @@ BEGIN
 			(16,1), (16,2), (16,3), (16,4)
 			
 	INSERT INTO THE_FOREIGN_FOUR.UsuariosPorHotel(cod_usuario, cod_hotel, cod_rol)
-	VALUES	(1, 1, 1), (1, 2, 1), (1, 3, 1), (1, 4, 1), (1, 5, 1), 
-			(1, 6, 1), (1, 7, 1), (1, 8, 1), (1, 9, 1), (1, 10, 1),
-			(1, 11, 1), (1, 12, 1), (1, 13, 1), (1, 14, 1), (1, 15, 1), 
-			(1, 16, 1)
+	VALUES	(1, 1, 4), (1, 2, 4), (1, 3, 4), (1, 4, 4), (1, 5, 4), 
+			(1, 6, 4), (1, 7, 4), (1, 8, 4), (1, 9, 4), (1, 10, 4),
+			(1, 11, 4), (1, 12, 4), (1, 13, 4), (1, 14, 4), (1, 15, 4), 
+			(1, 16, 4)
 END	
 GO
 --*********************************************************************************
