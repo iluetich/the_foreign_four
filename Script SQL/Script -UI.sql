@@ -67,22 +67,34 @@ GO
 --*****************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada 
 				(@cod_reserva numeric(18,0),
-				 @cod_hotel int)
+				 @cod_hotel int,
+				 @username nvarchar(30))
 RETURNS int
 AS
 BEGIN
 	DECLARE @codigo int,
-			@estadoReserva int
+			@estadoReserva int,
+			@cod_hotel_reserva int
 			
 	SET @codigo = (SELECT THE_FOREIGN_FOUR.func_validar_reserva(@cod_reserva,@cod_hotel))
 	SET @estadoReserva = (SELECT cod_estado_reserva
 							FROM THE_FOREIGN_FOUR.Reservas
 							WHERE cod_reserva = @cod_reserva)
+	SET @cod_hotel_reserva = (SELECT cod_hotel
+								FROM THE_FOREIGN_FOUR.Reservas
+								WHERE cod_reserva = @cod_reserva)
 	
 	
-	IF( (@codigo = 1) AND (@estadoReserva != 3) AND (@estadoReserva != 4) AND (@estadoReserva != 5))
+	IF( (@codigo = 1) AND (@estadoReserva = 1))
 	BEGIN
-		RETURN 1
+		IF(@cod_hotel_reserva = @cod_hotel)
+		BEGIN
+			RETURN -2 --estas tratando de cancelar la reserva con un usuario que no puede
+		END
+		ELSE
+		BEGIN
+			RETURN 1
+		END
 	END
 	RETURN -1
 END
