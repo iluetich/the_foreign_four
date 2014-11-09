@@ -58,7 +58,7 @@ AS
 BEGIN
 
 	DECLARE TrigInsCursor CURSOR FOR
-	SELECT cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, cod_estado_reserva, fecha_creacion, 
+	SELECT cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, /*cod_estado_reserva,*/ fecha_creacion, 
 		   fecha_desde, fecha_hasta, cant_noches  
 	FROM inserted
 	DECLARE @cod_reserva numeric(18,0),
@@ -66,16 +66,21 @@ BEGIN
 			@cod_cliente numeric(18,0),
 			@cod_tipo_hab numeric(18,0),
 			@cod_regimen int,
-			@cod_estado_reserva int,
+			/*@cod_estado_reserva int,*/
 			@fecha_creacion datetime, 
 			@fecha_desde datetime,
 			@fecha_hasta datetime,
-			@cant_noches int
+			@cant_noches int,
+			@fecha_sys datetime
 			
+			
+	SET @fecha_sys = (SELECT MAX(Estadia_Fecha_Inicio + Estadia_Cant_Noches)
+						FROM gd_esquema.Maestra)
+	
 	OPEN TrigInsCursor;
 
 	FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_tipo_hab, @cod_regimen, 
-										@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches
+										/*@cod_estado_reserva,*/ @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -98,11 +103,12 @@ BEGIN
 			INSERT INTO THE_FOREIGN_FOUR.Reservas(cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, 
 						cod_regimen, cod_estado_reserva, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
 			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
-					@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches);
+					(SELECT THE_FOREIGN_FOUR.func_estado_reserva(@fecha_desde, @fecha_sys)), 
+					@fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches);
 		END			
 			
 		FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_tipo_hab, @cod_regimen, 
-											@cod_estado_reserva, @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches      
+											/*@cod_estado_reserva,*/ @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches      
 
   END
 
