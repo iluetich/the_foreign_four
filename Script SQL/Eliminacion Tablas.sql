@@ -48,6 +48,8 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada 
 DROP FUNCTION THE_FOREIGN_FOUR.func_hotel_inhabilitable 
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_regimenes_hotel
+DROP FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_validar_check_in
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva
