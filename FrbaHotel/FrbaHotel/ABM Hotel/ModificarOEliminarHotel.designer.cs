@@ -65,6 +65,7 @@
             this.botonInhabilitar.TabIndex = 34;
             this.botonInhabilitar.Text = "Inhabilitar";
             this.botonInhabilitar.UseVisualStyleBackColor = true;
+            this.botonInhabilitar.Click += new System.EventHandler(this.botonInhabilitar_Click);
             // 
             // botonModificar
             // 
@@ -74,6 +75,7 @@
             this.botonModificar.TabIndex = 33;
             this.botonModificar.Text = "Modificar";
             this.botonModificar.UseVisualStyleBackColor = true;
+            this.botonModificar.Click += new System.EventHandler(this.botonModificar_Click);
             // 
             // botonLimpiar
             // 
@@ -83,6 +85,7 @@
             this.botonLimpiar.TabIndex = 32;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
+            this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
             // 
             // botonBuscar
             // 
@@ -92,6 +95,7 @@
             this.botonBuscar.TabIndex = 31;
             this.botonBuscar.Text = "Buscar";
             this.botonBuscar.UseVisualStyleBackColor = true;
+            this.botonBuscar.Click += new System.EventHandler(this.botonBuscar_Click);
             // 
             // textBoxBuscadorPais
             // 

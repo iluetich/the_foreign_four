@@ -89,6 +89,7 @@
             this.botonInhabilitar.TabIndex = 4;
             this.botonInhabilitar.Text = "Inhabilitar";
             this.botonInhabilitar.UseVisualStyleBackColor = true;
+            this.botonInhabilitar.Click += new System.EventHandler(this.botonInhabilitar_Click);
             // 
             // botonCancelar
             // 
@@ -98,6 +99,7 @@
             this.botonCancelar.TabIndex = 5;
             this.botonCancelar.Text = "Cancelar";
             this.botonCancelar.UseVisualStyleBackColor = true;
+            this.botonCancelar.Click += new System.EventHandler(this.botonCancelar_Click);
             // 
             // dateDesde
             // 
@@ -105,6 +107,7 @@
             this.dateDesde.Name = "dateDesde";
             this.dateDesde.Size = new System.Drawing.Size(220, 20);
             this.dateDesde.TabIndex = 6;
+            this.dateDesde.ValueChanged += new System.EventHandler(this.dateDesde_ValueChanged);
             // 
             // dateHasta
             // 
@@ -112,6 +115,7 @@
             this.dateHasta.Name = "dateHasta";
             this.dateHasta.Size = new System.Drawing.Size(220, 20);
             this.dateHasta.TabIndex = 7;
+            this.dateHasta.ValueChanged += new System.EventHandler(this.dateHasta_ValueChanged);
             // 
             // textBoxMotivo
             // 

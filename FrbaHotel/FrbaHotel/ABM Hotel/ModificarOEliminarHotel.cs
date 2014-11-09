@@ -19,6 +19,7 @@ namespace FrbaHotel.ABM_de_Hotel
             this.menu = menuPadre;
             InitializeComponent();
             dgvHoteles.ReadOnly = true;
+            comboBoxBusCantEstrellas.SelectedIndex = 0;
             this.cargarHoteles();
         }
 
@@ -44,12 +45,10 @@ namespace FrbaHotel.ABM_de_Hotel
                 campoCiudad = true;
             }
 
-
-            //ARREGLAR ESTO QUE NO ANDA
-            /*if (comboBoxBusCantEstrellas.Text != "Todas")
+            if (comboBoxBusCantEstrellas.Text != "Todas")
             {
                 campoEstrellas = true;
-            }*/
+            }
 
             //si alguno de los campos se completo entonces mandale where para setear los criterios
             if (campoNombreHotel || campoPais || campoCiudad || campoEstrellas)
@@ -71,16 +70,16 @@ namespace FrbaHotel.ABM_de_Hotel
                 consultaSql = this.hayOtroCriterio(consultaSql, campoNombreHotel, campoPais, campoCiudad,campoEstrellas);
             }
 
-            /*if (campoEstrellas)
+            if (campoEstrellas)
             {
-                consultaSql = consultaSql + " r.cant_estrellas =" + int.Parse(comboBoxBusCantEstrellas.Text) +" ";
+                consultaSql = consultaSql + " h.cant_estrellas =" + int.Parse(comboBoxBusCantEstrellas.Text) +" ";
                 campoEstrellas = false;
                 consultaSql = this.hayOtroCriterio(consultaSql, campoNombreHotel, campoPais, campoCiudad, campoEstrellas);
-            }*/
+            }
 
             if (campoNombreHotel)
             {
-                consultaSql = consultaSql + " r.nombre LIKE '%" + textBoxBuscadorNombre.Text + "%' ";
+                consultaSql = consultaSql + " h.nombre LIKE '%" + textBoxBuscadorNombre.Text + "%' ";
                 campoNombreHotel = false;
             }
 
@@ -105,6 +104,32 @@ namespace FrbaHotel.ABM_de_Hotel
         private void textBoxBuscadorPais_KeyPress(object sender, KeyPressEventArgs e)
         {
             FrbaHotel.Utils.allowLetters(e);
+        }
+
+        private void botonBuscar_Click(object sender, EventArgs e)
+        {
+            this.cargarHoteles();
+        }
+
+        private void botonLimpiar_Click(object sender, EventArgs e)
+        {
+            FrbaHotel.Utils.limpiarControl(textBoxBuscadorCiudad);
+            FrbaHotel.Utils.limpiarControl(textBoxBuscadorNombre);
+            FrbaHotel.Utils.limpiarControl(textBoxBuscadorPais);
+        }
+
+        private void botonModificar_Click(object sender, EventArgs e)
+        {
+            RegistrarHotel frmModHotel = new RegistrarHotel(this, dgvHoteles.CurrentRow);
+            frmModHotel.Show();
+            this.Hide();
+        }
+
+        private void botonInhabilitar_Click(object sender, EventArgs e)
+        {
+            InHabilitarHotel frmInhabilitar = new InHabilitarHotel(this, dgvHoteles.CurrentRow);
+            frmInhabilitar.Show();
+            this.Hide();
         }
     }
 }
