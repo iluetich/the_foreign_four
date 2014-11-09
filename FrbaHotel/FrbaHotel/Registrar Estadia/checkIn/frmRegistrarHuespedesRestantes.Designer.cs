@@ -30,7 +30,7 @@
         {
             this.groupHues = new System.Windows.Forms.GroupBox();
             this.btnBuscarCliente = new System.Windows.Forms.Button();
-            this.gridDatosHuespedes = new System.Windows.Forms.DataGridView();
+            this.dgvDatosHuespedes = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,7 +40,7 @@
             this.btnAceptar = new System.Windows.Forms.Button();
             this.groupBotonera = new System.Windows.Forms.GroupBox();
             this.groupHues.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridDatosHuespedes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDatosHuespedes)).BeginInit();
             this.groupBotonera.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +48,7 @@
             // 
             this.groupHues.AutoSize = true;
             this.groupHues.Controls.Add(this.btnBuscarCliente);
-            this.groupHues.Controls.Add(this.gridDatosHuespedes);
+            this.groupHues.Controls.Add(this.dgvDatosHuespedes);
             this.groupHues.Controls.Add(this.btnNuevoCliente);
             this.groupHues.Location = new System.Drawing.Point(13, 23);
             this.groupHues.Name = "groupHues";
@@ -68,18 +68,23 @@
             this.btnBuscarCliente.UseVisualStyleBackColor = true;
             this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
             // 
-            // gridDatosHuespedes
+            // dgvDatosHuespedes
             // 
-            this.gridDatosHuespedes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridDatosHuespedes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvDatosHuespedes.AllowUserToAddRows = false;
+            this.dgvDatosHuespedes.AllowUserToResizeColumns = false;
+            this.dgvDatosHuespedes.AllowUserToResizeRows = false;
+            this.dgvDatosHuespedes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvDatosHuespedes.BackgroundColor = System.Drawing.Color.White;
+            this.dgvDatosHuespedes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDatosHuespedes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
             this.Column3,
             this.Column4});
-            this.gridDatosHuespedes.Location = new System.Drawing.Point(30, 67);
-            this.gridDatosHuespedes.Name = "gridDatosHuespedes";
-            this.gridDatosHuespedes.Size = new System.Drawing.Size(377, 150);
-            this.gridDatosHuespedes.TabIndex = 5;
+            this.dgvDatosHuespedes.Location = new System.Drawing.Point(30, 67);
+            this.dgvDatosHuespedes.Name = "dgvDatosHuespedes";
+            this.dgvDatosHuespedes.Size = new System.Drawing.Size(377, 150);
+            this.dgvDatosHuespedes.TabIndex = 5;
             // 
             // Column1
             // 
@@ -165,7 +170,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRegistrarHuespedes_FormClosing);
             this.groupHues.ResumeLayout(false);
             this.groupHues.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridDatosHuespedes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDatosHuespedes)).EndInit();
             this.groupBotonera.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -178,7 +183,7 @@
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.GroupBox groupBotonera;
-        private System.Windows.Forms.DataGridView gridDatosHuespedes;
+        private System.Windows.Forms.DataGridView dgvDatosHuespedes;
         private System.Windows.Forms.Button btnNuevoCliente;
         private System.Windows.Forms.Button btnBuscarCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
