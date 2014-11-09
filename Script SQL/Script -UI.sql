@@ -67,22 +67,34 @@ GO
 --*****************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada 
 				(@cod_reserva numeric(18,0),
-				 @cod_hotel int)
+				 @cod_hotel int,
+				 @username nvarchar(30))
 RETURNS int
 AS
 BEGIN
 	DECLARE @codigo int,
-			@estadoReserva int
+			@estadoReserva int,
+			@cod_hotel_reserva int
 			
 	SET @codigo = (SELECT THE_FOREIGN_FOUR.func_validar_reserva(@cod_reserva,@cod_hotel))
 	SET @estadoReserva = (SELECT cod_estado_reserva
 							FROM THE_FOREIGN_FOUR.Reservas
 							WHERE cod_reserva = @cod_reserva)
+	SET @cod_hotel_reserva = (SELECT cod_hotel
+								FROM THE_FOREIGN_FOUR.Reservas
+								WHERE cod_reserva = @cod_reserva)
 	
 	
-	IF( (@codigo = 1) AND (@estadoReserva != 3) AND (@estadoReserva != 4) AND (@estadoReserva != 5))
+	IF( (@codigo = 1) AND (@estadoReserva = 1))
 	BEGIN
-		RETURN 1
+		IF(@cod_hotel_reserva = @cod_hotel)
+		BEGIN
+			RETURN -2 --estas tratando de cancelar la reserva con un usuario que no puede
+		END
+		ELSE
+		BEGIN
+			RETURN 1
+		END
 	END
 	RETURN -1
 END
@@ -131,17 +143,13 @@ AS
 GO
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva
-				 @cod_reserva numeric(18,0),
+				(@cod_reserva numeric(18,0),
 				 @motivo varchar(255),
-				 @usuario varchar(255),
-				 @cod_hotel int,
-				 @cod_operacion int OUTPUT
+				 @usuario varchar(255))
 AS				
 BEGIN
 	DECLARE @estado varchar(30),
-			@fecha_sistema datetime,
-			@cod_hotel_reserva int
-			
+			@fecha_sistema datetime
 	
 	IF(@usuario IS NULL) 
 	BEGIN
@@ -152,28 +160,14 @@ BEGIN
 		SET @estado = 'cancelacion_recepcion'
 	END
 	
-	SET @cod_hotel_reserva = (SELECT cod_hotel
-								FROM THE_FOREIGN_FOUR.Reservas
-								WHERE cod_reserva = @cod_hotel)
+	UPDATE	THE_FOREIGN_FOUR.Reservas
+	SET		cod_estado_reserva = (SELECT cod_estado
+								  FROM THE_FOREIGN_FOUR.EstadosReserva
+								  WHERE descripcion = @estado)
+	WHERE	cod_reserva = @cod_reserva
 	
-	IF((@estado = 'cancelacion_recepcion') AND (@cod_hotel_reserva != @cod_hotel))
-	BEGIN
-		SET @cod_operacion = -1
-		RETURN
-	END
-	ELSE
-	BEGIN
-		UPDATE	THE_FOREIGN_FOUR.Reservas
-		SET		cod_estado_reserva = (SELECT cod_estado
-									  FROM THE_FOREIGN_FOUR.EstadosReserva
-									  WHERE descripcion = @estado)
-		WHERE	cod_reserva = @cod_reserva
-	
-		INSERT INTO THE_FOREIGN_FOUR.Cancelaciones (cod_reserva, motivo, usuario, fecha_operacion)
-		VALUES (@cod_reserva, @motivo, @usuario, (SELECT THE_FOREIGN_FOUR.fecha_sys ()))
-		SET @cod_operacion = 1
-		RETURN
-	END
+	INSERT INTO THE_FOREIGN_FOUR.Cancelaciones (cod_reserva, motivo, usuario, fecha_operacion)
+	VALUES (@cod_reserva, @motivo, @usuario, (SELECT THE_FOREIGN_FOUR.fecha_sys ()))
 END
 GO
 
