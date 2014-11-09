@@ -1,13 +1,15 @@
-##.Cache
-##.exe
-##.resx
-##.resources
-##.Suo
-##*.Cache
-##*.pdb
+.Cache
+.exe
+.resx
+*.resx
+.resources
+*.resources
+.Suo
+*.Cache
+*.pdb
 
-##FrbaHotel/FrbaHotel/obj/
-##FrbaHotel/FrbaHotel/bin/
+FrbaHotel/FrbaHotel/obj/
+FrbaHotel/FrbaHotel/bin/
 
 
 ## Ignore Visual Studio temporary files, build results, and
