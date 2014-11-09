@@ -1,3 +1,5 @@
+EXEC THE_FOREIGN_FOUR.porc_insercion_estados_reserva
+
 --***CLIENTES********************************
 
 INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
@@ -127,6 +129,7 @@ SELECT DISTINCT (SELECT c.cod_cliente
 				 AND	e.cant_noches = m.Estadia_Cant_Noches
 				 AND	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
+
 
 --***JUEGO DE DATOS************************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos

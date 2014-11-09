@@ -51,7 +51,7 @@
             this.groupCheckin.Size = new System.Drawing.Size(528, 103);
             this.groupCheckin.TabIndex = 0;
             this.groupCheckin.TabStop = false;
-            this.groupCheckin.Text = "Ingreso datos";
+            this.groupCheckin.Text = "CHECK IN";
             // 
             // btnCheckin
             // 
@@ -101,7 +101,7 @@
             this.groupCheckout.Size = new System.Drawing.Size(528, 98);
             this.groupCheckout.TabIndex = 1;
             this.groupCheckout.TabStop = false;
-            this.groupCheckout.Text = "Ingreso datos";
+            this.groupCheckout.Text = "CHECK OUT";
             // 
             // txtCodEstadia
             // 

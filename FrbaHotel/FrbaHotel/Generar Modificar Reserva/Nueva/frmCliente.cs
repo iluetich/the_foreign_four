@@ -137,12 +137,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             //mail
             txtMail.Text = row.Cells[4].Value.ToString();
         }
-
-        //para setear el boolea desde otro form
-        public void setBandClienteRegistrado()
-        {
-            this.boolClienteRegistrado = true;
-        }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------
 
@@ -151,6 +145,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         public void setCodigoCliente(int codigo) {   
             codigoCliente = codigo;
             Console.WriteLine(codigoCliente);
+        }
+
+        //para setear el booleano desde otro form
+        public void setBandClienteRegistrado()
+        {
+            this.boolClienteRegistrado = true;
         }
         //-----------------------------------------------------
     }

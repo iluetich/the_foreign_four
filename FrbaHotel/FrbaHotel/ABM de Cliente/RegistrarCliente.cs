@@ -73,7 +73,18 @@ namespace FrbaHotel.ABM_de_Cliente
             comboBoxEstado.SelectedIndex = 0;//marca que el estado de entrada es H
             labelEstado.Visible = false;
             comboBoxEstado.Visible = false;
-        }        
+        }
+
+        //constructor de formulario registrar huespedes restantes
+        public RegistrarCliente(frmRegistrarHuespedesRestantes newForm)
+        {
+            this.constructorMenu = false;
+            InitializeComponent();
+            comboBoxEstado.SelectedIndex = 0;//marca que el estado de entrada es H
+            labelEstado.Visible = false;
+            comboBoxEstado.Visible = false;
+            frmRegistrarHuespedesRestantesPadre = newForm;
+        }
 
         public void setearDatos(DataGridViewRow dgvr)
         {
@@ -120,16 +131,7 @@ namespace FrbaHotel.ABM_de_Cliente
             InitializeComponent();
         }
 
-        //constructor de formulario registrar cliente
-        public RegistrarCliente(frmRegistrarHuespedesRestantes newForm)
-        {
-            this.constructorMenu = false;
-            InitializeComponent();
-            comboBoxEstado.SelectedIndex = 0;//marca que el estado de entrada es H
-            labelEstado.Visible = false;
-            comboBoxEstado.Visible = false;
-            frmRegistrarHuespedesRestantesPadre = newForm;
-        }
+       
 
         public void RegistrarCliente_FormClosing(object sender, FormClosingEventArgs e){
             if (frmRegistrarHuespedesRestantesPadre != null)
@@ -178,14 +180,9 @@ namespace FrbaHotel.ABM_de_Cliente
             ok = this.validarCampos();
 
             if (ok) 
-            {
-                if (frmRegistrarHuespedesRestantesPadre != null)
-                {
-                    frmRegistrarHuespedesRestantesPadre.llenarGrid(this);
-                    this.Close();
-                }
-                else
-                {
+            {       
+                    //nacho te borre un IF mio que estaba aca
+       
                     //string connstring = "connection string";
                     SqlConnection cnn = new SqlConnection("Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014");
 	                cnn.Open();
@@ -236,6 +233,11 @@ namespace FrbaHotel.ABM_de_Cliente
                         frmClientePadre.cargarParametrosClientes(cmd);
                         frmClientePadre.setCodigoCliente(Convert.ToInt32(codigo_cliente)); // agregado por ivan
                     }
+                    else if (frmRegistrarHuespedesRestantesPadre != null) //agregado por IAN
+                    {
+                        frmRegistrarHuespedesRestantesPadre.cargarParametrosClientes(cmd);
+                        frmRegistrarHuespedesRestantesPadre.setCodigoCliente(Convert.ToInt32(codigo_cliente));
+                    }
                     else if (constructorMod)
                     {
                         frmPadre.Show();
@@ -246,8 +248,8 @@ namespace FrbaHotel.ABM_de_Cliente
                     }
                     this.Close();
                 }
-            }
         }
+        
 
         public Boolean validarCampos()
         {

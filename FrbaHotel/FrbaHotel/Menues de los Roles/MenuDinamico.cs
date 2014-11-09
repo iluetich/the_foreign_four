@@ -170,7 +170,7 @@ namespace FrbaHotel.Menues_de_los_Roles
 
         private void botonRegFacEstadia_Click(object sender, EventArgs e)
         {
-            frmInicioEstadia frmEstadia = new frmInicioEstadia(this);
+            frmInicioEstadia frmEstadia = new frmInicioEstadia(this,userSesion,hotelSesion);
             frmEstadia.Show();
             this.Hide();
         }

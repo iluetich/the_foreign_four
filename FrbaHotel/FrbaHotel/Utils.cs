@@ -94,12 +94,14 @@ namespace FrbaHotel
         }
 
          //Rellena DataGridView con los header y los campos dependiendo del SELECT de la consulta
-        internal static void rellenarDataGridView(DataGridView dgv, string consultaSql)
+        internal static DataSet rellenarDataGridView(DataGridView dgv, string consultaSql)
         {
             DataSet dataSet = new DataSet();
             SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             dataAdapter.Fill(dataSet);
             dgv.DataSource = dataSet.Tables[0];
+
+            return dataSet;
         }
 
         internal static DataSet rellenarCombo(System.Windows.Forms.ComboBox comboBox1, string nombreTabla, string nombreCampo, string consultaSql)
