@@ -63,16 +63,10 @@ namespace FrbaHotel.Cancelar_Reserva
                     cmd.Parameters.AddWithValue("@usuario", user);
                     cmd.Parameters.AddWithValue("@cod_hotel", codigoHotel);
 
-                    //cmd.ExecuteNonQuery();
-                    int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQLCancelar);
-                    if (resultado == 1)
-                        MessageBox.Show("Ha cancelado la reserva satisfactoriamente", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    else
-                        MessageBox.Show("Intento cancelar la reserva desde un hotel al cual no esta registrado en este momento", "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }else{
-                MessageBox.Show("No se ha encontrado la reserva", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }  
+                    cmd.ExecuteNonQuery();                   
+                    MessageBox.Show("Ha cancelado la reserva satisfactoriamente", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               }
+            }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
@@ -99,15 +93,15 @@ namespace FrbaHotel.Cancelar_Reserva
 
             if (user == "Guest"){
                 consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada(" + txtCodReserva.Text + ")";
-                codigoHotel = "null";
             }else{
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodReserva.Text + "," + codigoHotel + ")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodReserva.Text + "," + codigoHotel + "," + user +")";
             }
 
             int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
-            if (resultado == 1){
-                return true;
-            }
+            if (resultado == 1)  { return true; }
+            if (resultado == -1) { MessageBox.Show("No se ha encontrado la reserva", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return false; }
+            if (resultado == -2) { MessageBox.Show("Esta intentando cancelar la reserva con un usuario que no esta registrado para este hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return false; }
+
             return false;
         }
         //----------------------------------------------------------------------------------------------------------------
