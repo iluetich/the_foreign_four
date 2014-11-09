@@ -76,13 +76,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string consultaSQL;
 
             //chequea si la modificacion de la reserva la hace un usuario o un guest
-            if (user == "Guest"){
+            if (user == "Guest"){ 
+               
+                //valida existencia
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada(" + txtCodRes.Text + ")";
+                
                 //consulto por el hotel de la reserva
                 string consultaHotel = "select cod_hotel from THE_FOREIGN_FOUR.Reservas WHERE cod_reserva =" + txtCodRes.Text;
                 SqlCommand cmd = new SqlCommand(consultaHotel, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                 codigoHotel = cmd.ExecuteScalar().ToString();
-                //valida existencia
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada(" + txtCodRes.Text + ")";
+
             }else{
                 consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodRes.Text + "," + codigoHotel + ")";
             }
@@ -99,6 +102,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //----------------------GETTERS-----------------------------
         public string getCodigoReserva(){   return txtCodRes.Text; }
         public string getCodigoHotel() { return codigoHotel; }
+        public string getUsuario() { return user; }
         //----------------------------------------------------------
 
     }
