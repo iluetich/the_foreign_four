@@ -50,8 +50,7 @@ FROM gd_esquema.Maestra m
 
 --***RESERVAS***************************************
 
-INSERT INTO THE_FOREIGN_FOUR.Reservas	(cod_reserva, fecha_desde, cant_noches, cod_hotel, cod_cliente, cod_tipo_hab,
-										 cod_regimen, fecha_hasta)
+INSERT INTO THE_FOREIGN_FOUR.Reservas	(cod_reserva, fecha_desde, cant_noches, cod_hotel, cod_cliente, cod_regimen, fecha_hasta)
 SELECT	DISTINCT m.Reserva_Codigo,
 		m.Reserva_Fecha_Inicio,
 		m.Reserva_Cant_Noches,
@@ -68,8 +67,6 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		FROM THE_FOREIGN_FOUR.Clientes c
 		WHERE	c.nro_doc = m.Cliente_Pasaporte_Nro
 		AND		c.mail = m.Cliente_Mail),
-				
-		m.Habitacion_Tipo_Codigo,
 		
 		(SELECT cod_regimen
 		FROM THE_FOREIGN_FOUR.Regimenes r
@@ -85,10 +82,9 @@ FROM gd_esquema.Maestra m
 --no hace falta validar todos los datos de la reserva mas que el codigo, ni el tipo porque ya esta implicito en el cod_reserva
 --Tampoco hace falta la validacion de los datos del hotel ya que tambien se encuentran implicitos en la reserva
 
-INSERT INTO THE_FOREIGN_FOUR.Estadias (fecha_inicio, cant_noches, nro_habitacion, cod_reserva)
+INSERT INTO THE_FOREIGN_FOUR.Estadias (fecha_inicio, cant_noches, cod_reserva)
 SELECT DISTINCT  m.Estadia_Fecha_Inicio,
 				 m.Estadia_Cant_Noches,
-			     m.Habitacion_Numero,
 				 (SELECT cod_reserva
 				 FROM THE_FOREIGN_FOUR.Reservas r
 				 WHERE	r.cod_reserva = m.Reserva_Codigo) AS 'cod_reserva'
