@@ -1,4 +1,6 @@
 --******TABLAS******************
+DROP TABLE THE_FOREIGN_FOUR.TipoHabitacion_Reservas
+DROP TABLE THE_FOREIGN_FOUR.Habitaciones_Estadia
 DROP TABLE THE_FOREIGN_FOUR.UsuariosPorHotel
 DROP TABLE THE_FOREIGN_FOUR.RegimenPorHotel
 DROP TABLE THE_FOREIGN_FOUR.ClientePorEstadia 
