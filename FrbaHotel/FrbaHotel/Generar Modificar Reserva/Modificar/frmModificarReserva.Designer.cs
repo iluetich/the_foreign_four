@@ -41,6 +41,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
+            this.txtRegimen = new System.Windows.Forms.TextBox();
             this.groupReserva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegimenes)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -78,12 +79,14 @@
             this.lblTipoReg.AutoSize = true;
             this.lblTipoReg.Location = new System.Drawing.Point(36, 121);
             this.lblTipoReg.Name = "lblTipoReg";
-            this.lblTipoReg.Size = new System.Drawing.Size(73, 13);
+            this.lblTipoReg.Size = new System.Drawing.Size(76, 13);
             this.lblTipoReg.TabIndex = 3;
-            this.lblTipoReg.Text = "Tipo Regimen";
+            this.lblTipoReg.Text = "Tipo Regimen:";
+            this.lblTipoReg.Click += new System.EventHandler(this.lblTipoReg_Click);
             // 
             // groupReserva
             // 
+            this.groupReserva.Controls.Add(this.txtRegimen);
             this.groupReserva.Controls.Add(this.dgvRegimenes);
             this.groupReserva.Controls.Add(this.btnVerficarDisponibilidad);
             this.groupReserva.Controls.Add(this.dtpFechaHasta);
@@ -110,16 +113,17 @@
             this.dgvRegimenes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvRegimenes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvRegimenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRegimenes.Location = new System.Drawing.Point(39, 139);
+            this.dgvRegimenes.Location = new System.Drawing.Point(39, 149);
             this.dgvRegimenes.Name = "dgvRegimenes";
             this.dgvRegimenes.ReadOnly = true;
             this.dgvRegimenes.Size = new System.Drawing.Size(313, 116);
             this.dgvRegimenes.TabIndex = 6;
+            this.dgvRegimenes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegimenes_CellClick);
             // 
             // btnVerficarDisponibilidad
             // 
             this.btnVerficarDisponibilidad.AutoSize = true;
-            this.btnVerficarDisponibilidad.Location = new System.Drawing.Point(129, 279);
+            this.btnVerficarDisponibilidad.Location = new System.Drawing.Point(129, 282);
             this.btnVerficarDisponibilidad.Name = "btnVerficarDisponibilidad";
             this.btnVerficarDisponibilidad.Size = new System.Drawing.Size(123, 23);
             this.btnVerficarDisponibilidad.TabIndex = 5;
@@ -179,13 +183,24 @@
             // 
             // btnModificar
             // 
+            this.btnModificar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnModificar.Location = new System.Drawing.Point(197, 37);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(117, 42);
             this.btnModificar.TabIndex = 6;
             this.btnModificar.Text = "Modificar";
-            this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.UseVisualStyleBackColor = false;
             this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
+            // 
+            // txtRegimen
+            // 
+            this.txtRegimen.Location = new System.Drawing.Point(142, 115);
+            this.txtRegimen.Name = "txtRegimen";
+            this.txtRegimen.ReadOnly = true;
+            this.txtRegimen.Size = new System.Drawing.Size(200, 20);
+            this.txtRegimen.TabIndex = 7;
+            this.txtRegimen.TabStop = false;
+            this.txtRegimen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // frmModificarRerserva
             // 
@@ -200,7 +215,6 @@
             this.MaximizeBox = false;
             this.Name = "frmModificarRerserva";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modificar Reserva";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmModificarReserva_FormClosing);
@@ -227,5 +241,6 @@
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnVerficarDisponibilidad;
         private System.Windows.Forms.DataGridView dgvRegimenes;
+        private System.Windows.Forms.TextBox txtRegimen;
     }
 }

@@ -52,7 +52,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodRes, "Codigo reserva")){
-                if (validarReserva()){
+                if (validarReserva()){                    
                     new frmModificarRerserva(this).Show();
                     this.Enabled = false;
                 }else{
@@ -75,10 +75,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             string consultaSQL;
 
+            //chequea si la modificacion de la reserva la hace un usuario o un guest
             if (user == "Guest"){
+                //consulto por el hotel de la reserva
                 string consultaHotel = "select cod_hotel from THE_FOREIGN_FOUR.Reservas WHERE cod_reserva =" + txtCodRes.Text;
                 SqlCommand cmd = new SqlCommand(consultaHotel, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                 codigoHotel = cmd.ExecuteScalar().ToString();
+                //valida existencia
                 consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada(" + txtCodRes.Text + ")";
             }else{
                 consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodRes.Text + "," + codigoHotel + ")";
