@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menues_de_los_Roles;
+using System.Data.SqlClient;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
@@ -26,6 +27,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.menu = menuPadre;
             InitializeComponent();
 
+            FrbaHotel.ConexionSQL.establecerConexionBD();
             user = userSesion;
             codigoHotel = hotelSesion;
         }
@@ -54,7 +56,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     new frmModificarRerserva(this).Show();
                     this.Enabled = false;
                 }else{
-                    MessageBox.Show("No se ha encontrado la reserva", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("No se ha encontrado la reserva o se trata de una reserva cancelada", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -74,9 +76,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string consultaSQL;
 
             if (user == "Guest"){
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva(" + txtCodRes.Text + ")";
+                string consultaHotel = "select cod_hotel from THE_FOREIGN_FOUR.Reservas WHERE cod_reserva =" + txtCodRes.Text;
+                SqlCommand cmd = new SqlCommand(consultaHotel, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                codigoHotel = cmd.ExecuteScalar().ToString();
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada(" + txtCodRes.Text + ")";
             }else{
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva(" + txtCodRes.Text + "," + codigoHotel + ")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodRes.Text + "," + codigoHotel + ")";
             }
 
             int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);

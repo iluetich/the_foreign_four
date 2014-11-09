@@ -16,7 +16,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         bool verifico = false;
         string codigoReserva;
         string codigoHotel;
-
+        string codigoRegimen;
+        string codigoTipoHabitacion;
 
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
@@ -28,6 +29,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             codigoReserva = frmBuscarPadre.getCodigoReserva();
             codigoHotel = frmBuscarPadre.getCodigoHotel();
             cargarTipoHabYRegimen();
+            Console.WriteLine("codigo hotel es: "+codigoHotel);
         }
         //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------
@@ -81,8 +83,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //------------------------------------------------------------------------------------------------------------           
         private bool validarDatosCompletos(){
             return (
-            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &
-            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoReg, "Tipo regimen") &
+            FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &            
             FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
             FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata")
             );
@@ -111,11 +112,26 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string nombreCampo = "descripcion";
             FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSQL);
 
-            consultaSQL = "select * from THE_FOREIGN_FOUR.buscar_tipo_hab_hotel(" + codigoHotel + ")";
-            nombreTabla = "THE_FOREIGN_FOUR.TipoHabitacion";
-            nombreCampo = "descripcion";
-            FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSQL);                         
-        
+            consultaSQL = "select * from THE_FOREIGN_FOUR.buscar_regimenes_hotel(" + codigoHotel + ")";
+            FrbaHotel.Utils.rellenarDataGridView(dgvRegimenes,consultaSQL);
+        }
+
+
+        //evento para cuando se hace click en una celda devuelva la fila correspondiente
+        private void dgvRegimenes_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                DataGridViewRow row = dgvRegimenes.Rows[e.RowIndex];                
+                //codigo regimen
+                codigoRegimen = row.Cells[0].Value.ToString();
+            }
+        }
+
+        private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbTipoHab.SelectedIndex != -1)
+                codigoTipoHabitacion = cmbTipoHab.Text;
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------

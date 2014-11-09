@@ -93,9 +93,9 @@ namespace FrbaHotel.Cancelar_Reserva
             string consultaSQL;
 
             if (user == "Guest"){
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva(" + txtCodReserva.Text + ")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada(" + txtCodReserva.Text + ")";
             }else{
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva(" + txtCodReserva.Text + "," + codigoHotel + ")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodReserva.Text + "," + codigoHotel + ")";
             }
 
             int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
