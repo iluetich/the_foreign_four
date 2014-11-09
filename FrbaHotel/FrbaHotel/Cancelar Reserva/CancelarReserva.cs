@@ -54,20 +54,20 @@ namespace FrbaHotel.Cancelar_Reserva
         private void btnCancelarReserva_Click(object sender, EventArgs e)
         {
             if (validarReserva()){
-                if (validarDatosCompletos())
-                {
-                    string consultaSQLCancelar = "exec THE_FOREIGN_FOUR.proc_cancelar_reserva @cod_reserva,@motivo,@usuario,@cod_hotel";
+                if (validarDatosCompletos()){
+                    string consultaSQLCancelar = "exec THE_FOREIGN_FOUR.proc_cancelar_reserva @cod_reserva,@motivo,@usuario";
                     SqlCommand cmd = new SqlCommand(consultaSQLCancelar, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                     cmd.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(txtCodReserva.Text));
                     cmd.Parameters.AddWithValue("@motivo", txtMotivo.Text);
                     cmd.Parameters.AddWithValue("@usuario", user);
-                    cmd.Parameters.AddWithValue("@cod_hotel", codigoHotel);
 
-                    cmd.ExecuteNonQuery();                   
+                    cmd.ExecuteNonQuery();
                     MessageBox.Show("Ha cancelado la reserva satisfactoriamente", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
-               }
+                }
+            }else{
+                MessageBox.Show("No se ha encontrado la reserva o esta intentando con un usuario que no esta registrado para este hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-        }
+        }        
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
@@ -94,14 +94,12 @@ namespace FrbaHotel.Cancelar_Reserva
             if (user == "Guest"){
                 consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada(" + txtCodReserva.Text + ")";
             }else{
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodReserva.Text + "," + codigoHotel + "," + user +")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodReserva.Text + "," + codigoHotel + ")";
             }
 
             int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
-            if (resultado == 1)  { return true; }
-            if (resultado == -1) { MessageBox.Show("No se ha encontrado la reserva", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return false; }
-            if (resultado == -2) { MessageBox.Show("Esta intentando cancelar la reserva con un usuario que no esta registrado para este hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return false; }
-
+            if (resultado == 1)
+                return true;             
             return false;
         }
         //----------------------------------------------------------------------------------------------------------------
