@@ -418,6 +418,8 @@ BEGIN
 END
 GO
 
+--**************************************************************
+
 /* -- este trigger hay que activarlo despues de la migracion
 
 CREATE TRIGGER trg_items_descripcion

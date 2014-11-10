@@ -9,6 +9,21 @@ RETURN (SELECT	COUNT(c.cod_cliente) AS cantidad_huespedes
 		WHERE @cod_reserva = e.cod_reserva)
 GO		
 --***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_existe_huesped
+				(@mail nvarchar(255))
+RETURNS int
+AS
+BEGIN
+	IF(EXISTS (SELECT cod_cliente
+			   FROM THE_FOREIGN_FOUR.buscar_clientes (NULL, NULL, NULL, NULL, @mail)
+			   WHERE mail = @mail))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_huesped
 				(@cod_cliente numeric(18,0),
 				 @cod_estadia numeric(18,0))
@@ -24,6 +39,9 @@ AS
 BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, fecha_inicio)
 	VALUES	(@cod_reserva, CAST(GETDATE() AS DATETIME))
+	
+	INSERT INTO THE_FOREIGN_FOUR.AuditoriaEstadias (cod_usuario, cod_estadia, cod_operacion)
+	VALUES ((SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), (SELECT cod_estadia FROM THE_FOREIGN_FOUR.Estadias WHERE cod_reserva = @cod_reserva), 'I')
 	
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET cod_estado_reserva  = (SELECT cod_estado_reserva
@@ -130,6 +148,7 @@ AS
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET fecha_desde = @fecha_desde,
 		fecha_hasta = @fecha_hasta,
+		cant_noches = DATEDIFF(DAY, @fecha_desde, @fecha_hasta),
 		cod_regimen = @cod_regimen,
 		usuario = (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)),
 		cod_estado_reserva = (SELECT cod_estado
@@ -175,7 +194,6 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
-				 @fecha_creacion datetime,
 				 @usuario nvarchar(255))
 AS
 BEGIN
@@ -188,7 +206,7 @@ BEGIN
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
 	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)))
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, CAST(GETDATE() AS DATETIME), CONVERT(int, @fecha_hasta - @fecha_desde), (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)))
 	
 	RETURN @cod_reserva_generada
 END
@@ -343,7 +361,7 @@ CREATE FUNCTION THE_FOREIGN_FOUR.buscar_clientes(
 				@apellido nvarchar(255),
 				@tipo_doc char(3),
 				@nro_doc numeric(18,0),
-				@mail nvarchar(255) )
+				@mail nvarchar(255))
 RETURNS TABLE
 AS
 RETURN(
@@ -946,6 +964,31 @@ END
 GO
 
 --***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_existe_factura
+				(@cod_estadia numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF (NOT EXISTS (SELECT nro_factura
+				FROM THE_FOREIGN_FOUR.Facturas
+				WHERE cod_estadia = @cod_estadia))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--***********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
+				(@cod_estadia numeric(18,0))
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.Facturas (cod_estadia, fecha_factura) 
+	VALUES (@cod_estadia, CAST(GETDATE() AS DATETIME))
+END
+GO
+
+--***********************************************************
 CREATE TRIGGER THE_FOREIGN_FOUR.trg_separar_factura
 ON THE_FOREIGN_FOUR.view_facturas
 INSTEAD OF INSERT
@@ -1144,3 +1187,41 @@ BEGIN
 	RETURN -1
 END
 GO
+--********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_usuario
+				(@usuario nvarchar(255))
+AS
+BEGIN
+	UPDATE THE_FOREIGN_FOUR.Usuarios
+	SET estado = 'I'
+	WHERE user_name = @usuario
+END
+GO
+--********************************************************
+
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_consumible
+				(@cod_consumible numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF(EXISTS (SELECT cod_consumible
+			   FROM THE_FOREIGN_FOUR.Consumibles
+			   WHERE cod_consumible = @cod_consumible))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
+				(@nro_factura numeric(18,0),
+				 @cod_consumible numeric(18,0),
+				 @cantidad	int)
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.view_facturas (nro_factura, cod_consumible, cantidad)
+	VALUES	(@nro_factura, @cod_consumible, @cantidad)
+END
+GO
+--**********************************************************

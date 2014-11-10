@@ -210,7 +210,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
                     if (constructorMod)
                     {
-                        cmd.CommandText = "UPDATE THE_FOREIGN_FOUR.Clientes SET nombre=@nombre,apellido=@apellido,tipo_doc=@tipo_doc,nro_doc=@nro_doc,mail=@mail,telefono=@telefono,"+
+                        cmd.CommandText = "UPDATE THE_FOREIGN_FOUR.view_todos_los_clientes SET nombre=@nombre,apellido=@apellido,tipo_doc=@tipo_doc,nro_doc=@nro_doc,mail=@mail,telefono=@telefono," +
                                          "nom_calle=@nom_calle,nro_calle=@nro_calle,pais_origen=@pais_origen,nacionalidad=@nacionalidad,piso=@piso,depto=@depto,fecha_nac=@fecha_nac,estado=@estado,localidad=@localidad"+
                                          " WHERE cod_cliente=" + codCliente;
                     }

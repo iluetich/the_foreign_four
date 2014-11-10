@@ -31,12 +31,13 @@
             this.lblFechaDesd = new System.Windows.Forms.Label();
             this.lblFechaHast = new System.Windows.Forms.Label();
             this.lblTipoHab = new System.Windows.Forms.Label();
-            this.btnVerificarDisp = new System.Windows.Forms.Button();
             this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
             this.btnRegimenes = new System.Windows.Forms.Button();
             this.groupDatos = new System.Windows.Forms.GroupBox();
             this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
+            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.capacidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAgregarHabitacion = new System.Windows.Forms.Button();
             this.txtRegimen = new System.Windows.Forms.TextBox();
             this.txtCostoXDia = new System.Windows.Forms.TextBox();
@@ -50,8 +51,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
-            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.capacidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupDatos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             this.grbPanel2.SuspendLayout();
@@ -79,21 +78,11 @@
             // lblTipoHab
             // 
             this.lblTipoHab.AutoSize = true;
-            this.lblTipoHab.Location = new System.Drawing.Point(19, 117);
+            this.lblTipoHab.Location = new System.Drawing.Point(19, 143);
             this.lblTipoHab.Name = "lblTipoHab";
             this.lblTipoHab.Size = new System.Drawing.Size(85, 13);
             this.lblTipoHab.TabIndex = 0;
             this.lblTipoHab.Text = "Tipo Habitacion:";
-            // 
-            // btnVerificarDisp
-            // 
-            this.btnVerificarDisp.Location = new System.Drawing.Point(22, 19);
-            this.btnVerificarDisp.Name = "btnVerificarDisp";
-            this.btnVerificarDisp.Size = new System.Drawing.Size(129, 23);
-            this.btnVerificarDisp.TabIndex = 7;
-            this.btnVerificarDisp.Text = "Verificar disponibilidad";
-            this.btnVerificarDisp.UseVisualStyleBackColor = true;
-            this.btnVerificarDisp.Click += new System.EventHandler(this.btnVerificarDisp_Click);
             // 
             // dtpFechaDesde
             // 
@@ -116,7 +105,7 @@
             // btnRegimenes
             // 
             this.btnRegimenes.AutoSize = true;
-            this.btnRegimenes.Location = new System.Drawing.Point(22, 253);
+            this.btnRegimenes.Location = new System.Drawing.Point(22, 108);
             this.btnRegimenes.Name = "btnRegimenes";
             this.btnRegimenes.Size = new System.Drawing.Size(141, 23);
             this.btnRegimenes.TabIndex = 6;
@@ -159,14 +148,26 @@
             this.dgvHabitaciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.descripcion,
             this.capacidad});
-            this.dgvHabitaciones.Location = new System.Drawing.Point(24, 144);
+            this.dgvHabitaciones.Location = new System.Drawing.Point(22, 175);
             this.dgvHabitaciones.Name = "dgvHabitaciones";
             this.dgvHabitaciones.Size = new System.Drawing.Size(313, 97);
             this.dgvHabitaciones.TabIndex = 5;
             // 
+            // descripcion
+            // 
+            this.descripcion.HeaderText = "descripcion";
+            this.descripcion.Name = "descripcion";
+            this.descripcion.ReadOnly = true;
+            // 
+            // capacidad
+            // 
+            this.capacidad.HeaderText = "capacidad";
+            this.capacidad.Name = "capacidad";
+            this.capacidad.ReadOnly = true;
+            // 
             // btnAgregarHabitacion
             // 
-            this.btnAgregarHabitacion.Location = new System.Drawing.Point(138, 110);
+            this.btnAgregarHabitacion.Location = new System.Drawing.Point(139, 137);
             this.btnAgregarHabitacion.Name = "btnAgregarHabitacion";
             this.btnAgregarHabitacion.Size = new System.Drawing.Size(199, 23);
             this.btnAgregarHabitacion.TabIndex = 4;
@@ -176,7 +177,7 @@
             // 
             // txtRegimen
             // 
-            this.txtRegimen.Location = new System.Drawing.Point(173, 255);
+            this.txtRegimen.Location = new System.Drawing.Point(173, 110);
             this.txtRegimen.Name = "txtRegimen";
             this.txtRegimen.ReadOnly = true;
             this.txtRegimen.Size = new System.Drawing.Size(164, 20);
@@ -238,7 +239,6 @@
             this.grbPanel2.AutoSize = true;
             this.grbPanel2.Controls.Add(this.txtCostoTotal);
             this.grbPanel2.Controls.Add(this.label2);
-            this.grbPanel2.Controls.Add(this.btnVerificarDisp);
             this.grbPanel2.Controls.Add(this.txtResul);
             this.grbPanel2.Location = new System.Drawing.Point(19, 350);
             this.grbPanel2.Name = "grbPanel2";
@@ -299,21 +299,8 @@
             this.btnSiguiente.UseVisualStyleBackColor = true;
             this.btnSiguiente.Click += new System.EventHandler(this.btnSiguietne_Click);
             // 
-            // descripcion
-            // 
-            this.descripcion.HeaderText = "descripcion";
-            this.descripcion.Name = "descripcion";
-            this.descripcion.ReadOnly = true;
-            // 
-            // capacidad
-            // 
-            this.capacidad.HeaderText = "capacidad";
-            this.capacidad.Name = "capacidad";
-            this.capacidad.ReadOnly = true;
-            // 
             // frmGenerarReserva
             // 
-            this.AcceptButton = this.btnVerificarDisp;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
@@ -347,7 +334,6 @@
         private System.Windows.Forms.Label lblFechaDesd;
         private System.Windows.Forms.Label lblFechaHast;
         private System.Windows.Forms.Label lblTipoHab;
-        private System.Windows.Forms.Button btnVerificarDisp;
         private System.Windows.Forms.Button btnRegimenes;
         private System.Windows.Forms.GroupBox groupDatos;
         private System.Windows.Forms.TextBox txtResul;
