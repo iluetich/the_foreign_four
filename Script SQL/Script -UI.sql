@@ -838,6 +838,57 @@ RETURN(
 	AND rh.cod_hotel = @cod_hotel
 )
 GO
+
+
+--*********************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_cod_usuario (@username nvarchar(30))
+RETURNS numeric(18,0)
+AS
+BEGIN
+RETURN (SELECT cod_usuario
+		FROM THE_FOREIGN_FOUR.Usuarios
+		WHERE user_name = @username)
+END
+GO
+
+--************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_realizar_checkout(@cod_estadia numeric(18,0), @username nvarchar(30))
+AS
+BEGIN
+	DECLARE @cod_usuario numeric(18,0)
+	
+	SET @cod_usuario = (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@username))
+	
+	INSERT INTO THE_FOREIGN_FOUR.AuditoriaEstadias
+	(cod_usuario, cod_operacion, cod_estadia)
+	VALUES (@cod_usuario, 'O', @cod_estadia)
+
+END
+GO
+
+--**********************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_check_out(@cod_estadia numeric(18,0),
+												@username nvarchar(30))
+RETURNS int
+AS
+BEGIN
+	
+	IF( NOT EXISTS(SELECT cod_estadia
+					FROM THE_FOREIGN_FOUR.Estadias
+					WHERE cod_estadia = @cod_estadia)
+		OR EXISTS(SELECT cod_audit
+					FROM THE_FOREIGN_FOUR.AuditoriaEstadias
+					WHERE cod_estadia = @cod_estadia
+					AND cod_operacion = 'O'))
+	BEGIN
+		RETURN -1
+	END
+	
+	EXECUTE THE_FOREIGN_FOUR.proc_realizar_checkout @cod_estadia, @username 
+	RETURN 1
+END
+GO	
+
 --**********************************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
 				(@fecha_uno datetime,
@@ -890,5 +941,6 @@ BEGIN
 		RETURN 0
 	END
 	RETURN -1
+
 END
 GO

@@ -99,7 +99,7 @@ namespace FrbaHotel.Registrar_Estadia
         //----------------------FIN OTROS---------------------------------------------------------------------------------
 
         //----------------------GETTERS-----------------------------
-        //public string getCodigoReserva() { return txtCodRes.Text; }
+        public string getCodigoReserva() { return txtCodReserva.Text; }
         //public string getCodigoHotel() { return codigoHotel; }
         //public string getUsuario() { return user; }
         //----------------------------------------------------------

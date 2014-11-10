@@ -151,7 +151,8 @@ CREATE TABLE THE_FOREIGN_FOUR.Estadias (
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
 	fecha_inicio		datetime,
 	cant_noches			numeric(18,0),
-	precio				numeric(18,2)
+	precio				numeric(18,2),
+	checkout			datetime
 )
 CREATE TABLE THE_FOREIGN_FOUR.EstadiasDefectuosas (
 	cod_estadia			numeric(18,0)			IDENTITY (1,1) PRIMARY KEY,
@@ -215,4 +216,12 @@ CREATE TABLE THE_FOREIGN_FOUR.TipoHabitacion_Reservas (
 	cod_hab_reserva		numeric(18,0)			PRIMARY KEY IDENTITY(1,1),
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
 	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
+)
+	
+CREATE TABLE THE_FOREIGN_FOUR.AuditoriaEstadias (
+	cod_audit			int						IDENTITY(1,1) PRIMARY KEY,
+	cod_usuario			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Usuarios,
+	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
+	cod_operacion		char(1)					CHECK(cod_operacion IN ('I', 'O')),
+	fecha				datetime				DEFAULT getdate()
 )

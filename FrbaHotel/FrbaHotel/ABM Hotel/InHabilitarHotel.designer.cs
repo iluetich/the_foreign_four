@@ -107,7 +107,6 @@
             this.dateDesde.Name = "dateDesde";
             this.dateDesde.Size = new System.Drawing.Size(220, 20);
             this.dateDesde.TabIndex = 6;
-            this.dateDesde.ValueChanged += new System.EventHandler(this.dateDesde_ValueChanged);
             // 
             // dateHasta
             // 
@@ -115,7 +114,6 @@
             this.dateHasta.Name = "dateHasta";
             this.dateHasta.Size = new System.Drawing.Size(220, 20);
             this.dateHasta.TabIndex = 7;
-            this.dateHasta.ValueChanged += new System.EventHandler(this.dateHasta_ValueChanged);
             // 
             // textBoxMotivo
             // 

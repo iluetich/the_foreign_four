@@ -184,13 +184,13 @@ namespace FrbaHotel.ABM_de_Cliente
                     //nacho te borre un IF mio que estaba aca
        
                     //string connstring = "connection string";
-                    SqlConnection cnn = new SqlConnection("Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014");
-	                cnn.Open();
+                    //SqlConnection cnn = new SqlConnection("Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014");
+	                //cnn.Open();
                     // SqlCommand cmd = new SqlCommand(); COMENTADO X IVAN
                     string consulta = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_registrar_cliente @nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle, @depto, @piso,@pais_origen, @nacionalidad, @localidad SELECT @output as codigo"; // agregado por ivan
                     SqlCommand cmd = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
 
-                    cmd.Connection = cnn;
+                    cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue("@nombre", nombre);
                     cmd.Parameters.AddWithValue("@apellido", apellido);
@@ -223,7 +223,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     }
                     int codigo_cliente = Convert.ToInt32(cmd.ExecuteScalar());
 	                //cmd.ExecuteNonQuery(); COMENTADO X IVAN
-                    cnn.Close();
+                    //cnn.Close();
 
 
                     if (frmClientePadre != null)//vuelve al flujo de generar reserva(agregado por ian)
