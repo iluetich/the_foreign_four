@@ -257,6 +257,8 @@ BEGIN
 	SET		@cant_hab_reservadas = (SELECT	COUNT(thr.cod_reserva)
 									FROM	THE_FOREIGN_FOUR.Reservas r JOIN THE_FOREIGN_FOUR.TipoHabitacion_Reservas thr ON(r.cod_reserva = thr.cod_reserva)
 									WHERE	@cod_hotel = r.cod_hotel
+									AND		((r.cod_estado_reserva = 1) 
+									OR		(r.cod_estado_reserva = 6))
 									AND		@cod_tipo_hab = thr.cod_tipo_hab
 									AND		(@fecha_inicio BETWEEN r.fecha_desde AND R.fecha_hasta
 									OR		@fecha_fin BETWEEN r.fecha_desde AND r.fecha_hasta))
@@ -265,6 +267,7 @@ BEGIN
 	RETURN	@cant_hab_disponibles
 END
 GO
+
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
 				(@cod_hotel int,
