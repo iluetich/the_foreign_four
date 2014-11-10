@@ -13,8 +13,6 @@ namespace FrbaHotel.ABM_de_Hotel
     public partial class InHabilitarHotel : Form
     {
         private ModificarOEliminarHotel padre;
-        private DateTime fechaDesde;
-        private DateTime fechaHasta;
         private int cod_hotel;
 
         public InHabilitarHotel(ModificarOEliminarHotel frmPadre, DataGridViewRow fila)
@@ -43,17 +41,18 @@ namespace FrbaHotel.ABM_de_Hotel
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
 
-            dateDesde_ValueChanged(sender, e);
-            dateHasta_ValueChanged(sender, e);
+            //convertir las fechas a un formato valido para que me lo hacepte en a funcion
+            string fechaDesde = dateDesde.Value.ToString("yyyy-dd-MM");
+            string fechaHasta = dateHasta.Value.ToString("yyyy-dd-MM");
 
             cmd.Parameters.AddWithValue("@codHotel", cod_hotel);
-            cmd.Parameters.AddWithValue("@fechaDesde", dateDesde);
-            cmd.Parameters.AddWithValue("@fechaHasta", dateHasta);
+            cmd.Parameters.AddWithValue("@fechaDesde", fechaDesde);
+            cmd.Parameters.AddWithValue("@fechaHasta", fechaHasta);
 
             cmd.CommandText = "SELECT THE_FOREIGN_FOUR.func_hotel_inhabilitable (@codHotel,@fechaDesde,@fechaHasta)";
             
             cmd.CommandType = CommandType.Text;
-            //NO ME TOMA LA FECHA
+            
             int puedeInhabilitar = (int)cmd.ExecuteScalar();
             
             if(puedeInhabilitar > 0)
@@ -63,6 +62,7 @@ namespace FrbaHotel.ABM_de_Hotel
             }
 
             //tercero inhabilitar hotel
+            this.ejecutarProcInhabilitarHotel(fechaDesde,fechaHasta);
 
             //resetear la grid
             padre.cargarHoteles();
@@ -70,14 +70,18 @@ namespace FrbaHotel.ABM_de_Hotel
             this.Close();
         }
 
-        private void dateDesde_ValueChanged(object sender, EventArgs e)
+        public void ejecutarProcInhabilitarHotel(string fechaDesde, string fechaHasta)
         {
-            fechaDesde = dateDesde.Value;
+            SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_inhabilitar_hotel", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@cod_hotel", cod_hotel);
+            cmd.Parameters.AddWithValue("@motivo", textBoxMotivo.Text);
+            cmd.Parameters.AddWithValue("@fecha_inicio", fechaDesde);
+            cmd.Parameters.AddWithValue("@fecha_fin", fechaHasta);
+
+            cmd.ExecuteNonQuery();
         }
 
-        private void dateHasta_ValueChanged(object sender, EventArgs e)
-        {
-            fechaHasta = dateHasta.Value;
-        }
     }
 }

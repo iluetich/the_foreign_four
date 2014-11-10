@@ -165,7 +165,6 @@ GO
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				(@cod_hotel int,
 				 @cod_cliente numeric(18,0),
-				 @cod_tipo_hab numeric(18,0),
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
@@ -177,12 +176,12 @@ BEGIN
 			@cod_estado_reserva int
 			
 	SET @cod_estado_reserva = (SELECT cod_estado
-								  FROM THE_FOREIGN_FOUR.EstadosReserva
-								  WHERE descripcion = 'correcta')
+							   FROM THE_FOREIGN_FOUR.EstadosReserva
+							   WHERE descripcion = 'correcta')
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
-	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), @usuario)
+	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), @usuario)
 	
 	RETURN @cod_reserva_generada
 END
@@ -255,10 +254,10 @@ BEGIN
 								  WHERE		@cod_hotel = ha.cod_hotel
 								  AND		@cod_tipo_hab = ha.cod_tipo_hab) 
 								  
-	SET		@cant_hab_reservadas = (SELECT	COUNT(cod_reserva)
-									FROM	THE_FOREIGN_FOUR.Reservas r
+	SET		@cant_hab_reservadas = (SELECT	COUNT(thr.cod_reserva)
+									FROM	THE_FOREIGN_FOUR.Reservas r JOIN THE_FOREIGN_FOUR.TipoHabitacion_Reservas thr ON(r.cod_reserva = thr.cod_reserva)
 									WHERE	@cod_hotel = r.cod_hotel
-									AND		@cod_tipo_hab = r.cod_tipo_hab
+									AND		@cod_tipo_hab = thr.cod_tipo_hab
 									AND		(@fecha_inicio BETWEEN r.fecha_desde AND R.fecha_hasta
 									OR		@fecha_fin BETWEEN r.fecha_desde AND r.fecha_hasta))
 									
@@ -838,6 +837,57 @@ RETURN(
 	AND rh.cod_hotel = @cod_hotel
 )
 GO
+
+
+--*********************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_cod_usuario (@username nvarchar(30))
+RETURNS numeric(18,0)
+AS
+BEGIN
+RETURN (SELECT cod_usuario
+		FROM THE_FOREIGN_FOUR.Usuarios
+		WHERE user_name = @username)
+END
+GO
+
+--************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_realizar_checkout(@cod_estadia numeric(18,0), @username nvarchar(30))
+AS
+BEGIN
+	DECLARE @cod_usuario numeric(18,0)
+	
+	SET @cod_usuario = (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@username))
+	
+	INSERT INTO THE_FOREIGN_FOUR.AuditoriaEstadias
+	(cod_usuario, cod_operacion, cod_estadia)
+	VALUES (@cod_usuario, 'O', @cod_estadia)
+
+END
+GO
+
+--**********************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_check_out(@cod_estadia numeric(18,0),
+												@username nvarchar(30))
+RETURNS int
+AS
+BEGIN
+	
+	IF( NOT EXISTS(SELECT cod_estadia
+					FROM THE_FOREIGN_FOUR.Estadias
+					WHERE cod_estadia = @cod_estadia)
+		OR EXISTS(SELECT cod_audit
+					FROM THE_FOREIGN_FOUR.AuditoriaEstadias
+					WHERE cod_estadia = @cod_estadia
+					AND cod_operacion = 'O'))
+	BEGIN
+		RETURN -1
+	END
+	
+	EXECUTE THE_FOREIGN_FOUR.proc_realizar_checkout @cod_estadia, @username 
+	RETURN 1
+END
+GO	
+
 --**********************************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
 				(@fecha_uno datetime,
@@ -890,5 +940,6 @@ BEGIN
 		RETURN 0
 	END
 	RETURN -1
+
 END
 GO

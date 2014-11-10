@@ -50,8 +50,7 @@ FROM gd_esquema.Maestra m
 
 --***RESERVAS***************************************
 
-INSERT INTO THE_FOREIGN_FOUR.Reservas	(cod_reserva, fecha_desde, cant_noches, cod_hotel, cod_cliente, cod_tipo_hab,
-										 cod_regimen, fecha_hasta)
+INSERT INTO THE_FOREIGN_FOUR.Reservas	(cod_reserva, fecha_desde, cant_noches, cod_hotel, cod_cliente, cod_regimen, fecha_hasta)
 SELECT	DISTINCT m.Reserva_Codigo,
 		m.Reserva_Fecha_Inicio,
 		m.Reserva_Cant_Noches,
@@ -68,8 +67,6 @@ SELECT	DISTINCT m.Reserva_Codigo,
 		FROM THE_FOREIGN_FOUR.Clientes c
 		WHERE	c.nro_doc = m.Cliente_Pasaporte_Nro
 		AND		c.mail = m.Cliente_Mail),
-				
-		m.Habitacion_Tipo_Codigo,
 		
 		(SELECT cod_regimen
 		FROM THE_FOREIGN_FOUR.Regimenes r
@@ -85,10 +82,9 @@ FROM gd_esquema.Maestra m
 --no hace falta validar todos los datos de la reserva mas que el codigo, ni el tipo porque ya esta implicito en el cod_reserva
 --Tampoco hace falta la validacion de los datos del hotel ya que tambien se encuentran implicitos en la reserva
 
-INSERT INTO THE_FOREIGN_FOUR.Estadias (fecha_inicio, cant_noches, nro_habitacion, cod_reserva)
+INSERT INTO THE_FOREIGN_FOUR.Estadias (fecha_inicio, cant_noches, cod_reserva)
 SELECT DISTINCT  m.Estadia_Fecha_Inicio,
 				 m.Estadia_Cant_Noches,
-			     m.Habitacion_Numero,
 				 (SELECT cod_reserva
 				 FROM THE_FOREIGN_FOUR.Reservas r
 				 WHERE	r.cod_reserva = m.Reserva_Codigo) AS 'cod_reserva'
@@ -130,6 +126,32 @@ SELECT DISTINCT (SELECT c.cod_cliente
 				 AND	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
 
+--***TIPOHABITACION POR RESERVAS********************************
+
+INSERT INTO THE_FOREIGN_FOUR.TipoHabitacion_Reservas (cod_reserva, cod_tipo_hab)
+SELECT DISTINCT (SELECT cod_reserva
+	    FROM THE_FOREIGN_FOUR.Reservas r
+	    WHERE r.cod_reserva = m.Reserva_Codigo) AS 'CODIGO_RESERVA',
+	   (SELECT cod_tipo_hab
+	    FROM THE_FOREIGN_FOUR.TipoHabitaciones th
+	    WHERE	th.cod_tipo_hab = m.Habitacion_Tipo_Codigo) AS 'CODIGO_TIPO_HAB'
+
+FROM gd_esquema.Maestra m
+ --***HABITACIONES POR ESTADIA**********************************
+ 
+INSERT INTO THE_FOREIGN_FOUR.Habitaciones_Estadia (cod_estadia, cod_habitacion)
+SELECT DISTINCT (SELECT cod_estadia	
+				 FROM THE_FOREIGN_FOUR.Estadias e
+				 WHERE e.cod_reserva = m.Reserva_Codigo) AS 'COD_ESTADIA',
+				(SELECT cod_habitacion
+				 FROM THE_FOREIGN_FOUR.Habitaciones h
+				 WHERE	h.nro_habitacion = m.Habitacion_Numero
+				 AND	h.cod_hotel = (SELECT cod_hotel
+									  FROM THE_FOREIGN_FOUR.Hoteles ho
+									  WHERE ho.ciudad = m.Hotel_Ciudad
+									  AND	ho.nom_calle = m.Hotel_Calle
+									  AND	ho.nro_calle = m.Hotel_Nro_Calle)) AS 'COD_HABITACION'
+FROM gd_esquema.Maestra m
 
 --***JUEGO DE DATOS************************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos
@@ -141,4 +163,6 @@ DROP TRIGGER THE_FOREIGN_FOUR.trg_estadias_error
 DROP TRIGGER THE_FOREIGN_FOUR.trg_facturas_error
 DROP TRIGGER THE_FOREIGN_FOUR.trg_clientes_por_estadia_err
 DROP TRIGGER THE_FOREIGN_FOUR.trg_itemsFactura_error
+DROP TRIGGER THE_FOREIGN_FOUR.trg_habitaciones_estadia
+DROP TRIGGER THE_FOREIGN_FOUR.trg_tipohab_reservas
 

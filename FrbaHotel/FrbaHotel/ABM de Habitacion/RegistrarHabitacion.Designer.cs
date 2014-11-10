@@ -47,6 +47,8 @@
             this.comboBoxVista = new System.Windows.Forms.ComboBox();
             this.labelHotel = new System.Windows.Forms.Label();
             this.comboBoxHotel = new System.Windows.Forms.ComboBox();
+            this.textBoxTipoHabitacion = new System.Windows.Forms.TextBox();
+            this.textBoxHotelEncuentra = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -237,11 +239,27 @@
             this.comboBoxHotel.TabIndex = 21;
             this.comboBoxHotel.SelectedIndexChanged += new System.EventHandler(this.comboBoxHotel_SelectedIndexChanged);
             // 
+            // textBoxTipoHabitacion
+            // 
+            this.textBoxTipoHabitacion.Location = new System.Drawing.Point(132, 181);
+            this.textBoxTipoHabitacion.Name = "textBoxTipoHabitacion";
+            this.textBoxTipoHabitacion.Size = new System.Drawing.Size(121, 20);
+            this.textBoxTipoHabitacion.TabIndex = 22;
+            // 
+            // textBoxHotelEncuentra
+            // 
+            this.textBoxHotelEncuentra.Location = new System.Drawing.Point(178, 251);
+            this.textBoxHotelEncuentra.Name = "textBoxHotelEncuentra";
+            this.textBoxHotelEncuentra.Size = new System.Drawing.Size(55, 20);
+            this.textBoxHotelEncuentra.TabIndex = 23;
+            // 
             // RegistrarHabitacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 320);
+            this.ClientSize = new System.Drawing.Size(385, 320);
+            this.Controls.Add(this.textBoxHotelEncuentra);
+            this.Controls.Add(this.textBoxTipoHabitacion);
             this.Controls.Add(this.comboBoxHotel);
             this.Controls.Add(this.labelHotel);
             this.Controls.Add(this.comboBoxVista);
@@ -291,5 +309,7 @@
         private System.Windows.Forms.ComboBox comboBoxVista;
         private System.Windows.Forms.Label labelHotel;
         private System.Windows.Forms.ComboBox comboBoxHotel;
+        private System.Windows.Forms.TextBox textBoxTipoHabitacion;
+        private System.Windows.Forms.TextBox textBoxHotelEncuentra;
     }
 }
