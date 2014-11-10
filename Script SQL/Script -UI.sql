@@ -596,67 +596,67 @@ BEGIN
 	VALUES (1, 'estadia'), (2, 'descuento all inclusive'), (3, 'noches no utilizadas')
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 1;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 2;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 3;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 4;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 5;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 6;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 7;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 8;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 9;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 10;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(50))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 11;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 12;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 13;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 14;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 15;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 16;
 	
 END	
@@ -748,7 +748,7 @@ AS
 BEGIN
 RETURN(
 
-	SELECT DISTINCT	( ((r.precio* th.capacidad) + (h.cant_estrellas * h.recarga_estrellas)))
+	SELECT DISTINCT	( ((r.precio* th.capacidad*th.recargo) + (h.cant_estrellas * h.recarga_estrellas)))
 	FROM	THE_FOREIGN_FOUR.Regimenes r,
 			THE_FOREIGN_FOUR.view_tipo_hab th,
 			THE_FOREIGN_FOUR.Hoteles h,
