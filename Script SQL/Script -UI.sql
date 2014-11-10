@@ -596,67 +596,67 @@ BEGIN
 	VALUES (1, 'estadia'), (2, 'descuento all inclusive'), (3, 'noches no utilizadas')
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Conrad'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 1;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Hilton'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 2;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Sheraton'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 3;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Palacio Duhau'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 4;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Melia'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 5;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Madero'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 6;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Alvear Palace'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 7;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Intercontinental'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 8;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Emeperador'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 9;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'BA Grand Hotel'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 10;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Four Seasons'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(50))
 	WHERE cod_hotel = 11;
-
+	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Faena'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 12;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Regal Pacific'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 13;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Hotel Club Frances'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 14;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Caesar Park'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 15;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Claridge'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS varchar(20))
 	WHERE cod_hotel = 16;
 	
 END	
