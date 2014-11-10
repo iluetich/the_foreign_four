@@ -787,7 +787,7 @@ alojarán en la habitación (tipo de habitación) y luego de ello aplicando
 un incremento en función de la categoría del Hotel (cantidad de estrellas)
 */
 
-CREATE FUNCTION THE_FOREIGN_FOUR.calcular_precio_hab_estadia(@cod_hab_estadia numeric(18,0))
+CREATE FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia numeric(18,0))
 RETURNS numeric(18,2)
 AS
 BEGIN
@@ -798,27 +798,22 @@ DECLARE @cod_regimen numeric(18,0),
 		@cant_noches numeric(18,0)
 
 	SET @cod_regimen = (SELECT DISTINCT res.cod_regimen
-						FROM	THE_FOREIGN_FOUR.Habitaciones_Estadia he,
-								THE_FOREIGN_FOUR.Reservas res,
+						FROM	THE_FOREIGN_FOUR.Reservas res,
 								THE_FOREIGN_FOUR.Estadias e
-						WHERE he.cod_estadia = e.cod_estadia
-						AND	he.cod_hab_estadia = @cod_hab_estadia
+						WHERE e.cod_estadia = @cod_estadia
 						AND e.cod_reserva = res.cod_reserva)
 	
 	SET @cant_noches = (SELECT	res.cant_noches
 						FROM	THE_FOREIGN_FOUR.Reservas res,
-								THE_FOREIGN_FOUR.Estadias e,
-								THE_FOREIGN_FOUR.Habitaciones_Estadia he
-						WHERE	he.cod_estadia = e.cod_estadia
-						AND		he.cod_hab_estadia = @cod_hab_estadia
-						AND		e.cod_reserva = res.cod_reserva)
+								THE_FOREIGN_FOUR.Estadias e
+						WHERE e.cod_estadia = @cod_estadia
+						AND e.cod_reserva = res.cod_reserva)
+	
 						
 	SET @cod_hotel = (SELECT	res.cod_hotel
 						FROM	THE_FOREIGN_FOUR.Reservas res,
-								THE_FOREIGN_FOUR.Estadias e,
-								THE_FOREIGN_FOUR.Habitaciones_Estadia he
-						WHERE	he.cod_estadia = e.cod_estadia
-						AND		he.cod_hab_estadia = @cod_hab_estadia
+								THE_FOREIGN_FOUR.Estadias e
+						WHERE   e.cod_estadia = @cod_estadia
 						AND		e.cod_reserva = res.cod_reserva)
 						
 	SET @cod_tipo_hab = (SELECT	ha.cod_tipo_hab
@@ -826,7 +821,7 @@ DECLARE @cod_regimen numeric(18,0),
 									THE_FOREIGN_FOUR.Habitaciones_Estadia he,
 									THE_FOREIGN_FOUR.Habitaciones ha
 							WHERE	he.cod_estadia = e.cod_estadia
-							AND		he.cod_hab_estadia = @cod_hab_estadia
+							AND		e.cod_estadia = @cod_estadia
 							AND		ha.cod_habitacion = he.cod_habitacion)
 						
 						
@@ -895,7 +890,7 @@ BEGIN
 								FROM THE_FOREIGN_FOUR.Consumibles
 								WHERE descripcion = 'noches no utilizadas')
 								
-	SET @costo_hab_dia = (SELECT THE_FOREIGN_FOUR.calcular_precio_hab_estadia(@cod_estadia))
+	SET @costo_hab_dia = (SELECT THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia))
 	
 	SET @precio = (SELECT
 					CASE @cod_consumible

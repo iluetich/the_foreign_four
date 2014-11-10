@@ -60,7 +60,8 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_existe_factura
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_consumible
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_agregar_hab_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_calcular_precio
-DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_hab_estadia
+DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia
+DROP FUNCTION THE_FOREIGN_FOUR.func_get_precio
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_usuario
