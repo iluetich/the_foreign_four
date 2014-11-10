@@ -111,20 +111,28 @@ BEGIN
 END
 GO
 --***********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_agregar_hab_reserva
+				(@cod_reserva numeric(18,0),
+				 @cod_tipo_hab numeric(18,0))
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.TipoHabitacion_Reservas (cod_reserva, cod_tipo_hab)
+	VALUES (@cod_reserva, @cod_tipo_hab)
+END
+GO
+--***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva
 				(@cod_reserva numeric(18,0),
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
-				 @cod_tipo_hab numeric(18,0),
 				 @cod_regimen int,
 				 @usuario nvarchar(255))
 AS
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET fecha_desde = @fecha_desde,
 		fecha_hasta = @fecha_hasta,
-		cod_tipo_hab = @cod_tipo_hab,
 		cod_regimen = @cod_regimen,
-		usuario = @usuario,
+		usuario = (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)),
 		cod_estado_reserva = (SELECT cod_estado
 							  FROM THE_FOREIGN_FOUR.EstadosReserva
 							  WHERE descripcion = 'modificada')
@@ -157,7 +165,7 @@ BEGIN
 	WHERE	cod_reserva = @cod_reserva
 	
 	INSERT INTO THE_FOREIGN_FOUR.Cancelaciones (cod_reserva, motivo, usuario, fecha_operacion)
-	VALUES (@cod_reserva, @motivo, @usuario, (SELECT THE_FOREIGN_FOUR.fecha_sys ()))
+	VALUES (@cod_reserva, @motivo, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), (SELECT THE_FOREIGN_FOUR.fecha_sys ()))
 END
 GO
 
@@ -181,7 +189,7 @@ BEGIN
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
 	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), @usuario)
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)))
 	
 	RETURN @cod_reserva_generada
 END
