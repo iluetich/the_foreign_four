@@ -941,7 +941,7 @@ BEGIN
 		RETURN 1
 	END
 	ELSE
-	IF(@validacion_fechas = -1) --El dia actual supera al fecha_desde de la reserva
+	IF (@validacion_fechas = -1) --El dia actual supera al fecha_desde de la reserva
 	BEGIN
 		UPDATE THE_FOREIGN_FOUR.Reservas
 		SET	cod_estado_reserva = (SELECT cod_estado
@@ -952,5 +952,22 @@ BEGIN
 	END
 	RETURN -1
 
+END
+GO
+--***************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_hab_hotel
+				(@cod_hotel numeric(18,0)
+				 @nro_habitacion numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF (EXISTS (SELECT nro_habitacion
+				FROM THE_FOREIGN_FOUR.Habitaciones
+				WHERE	nro_habitacion = @nro_habitacion
+				AND		cod_hotel = @cod_hotel))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
 END
 GO
