@@ -1,4 +1,6 @@
 --******TABLAS******************
+DROP TABLE THE_FOREIGN_FOUR.TipoHabitacion_Reservas
+DROP TABLE THE_FOREIGN_FOUR.Habitaciones_Estadia
 DROP TABLE THE_FOREIGN_FOUR.AuditoriaEstadias
 DROP TABLE THE_FOREIGN_FOUR.UsuariosPorHotel
 DROP TABLE THE_FOREIGN_FOUR.RegimenPorHotel
@@ -53,7 +55,6 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_cod_usuario
 DROP FUNCTION THE_FOREIGN_FOUR.func_check_out
 DROP FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_validar_check_in
->>>>>>> origin/master
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva

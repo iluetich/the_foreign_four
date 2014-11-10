@@ -61,7 +61,8 @@ namespace FrbaHotel.IniciarSecion
             //segundo corroborar que exista el usuario ingresado y que esa sea su clave
             string consultaSql = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('"+ this.user_name +"','"+ this.password +"')";
             this.corroborar(consultaSql);
-
+            
+            //LOS SIGUIENTE PASO SE HACEN YA EN EL METODO corroborar
             //tercero verificar si el hotel ingresado esta asociado a su usuario
 
             //cuarto todo ok mostrar menu correspondiente al rol

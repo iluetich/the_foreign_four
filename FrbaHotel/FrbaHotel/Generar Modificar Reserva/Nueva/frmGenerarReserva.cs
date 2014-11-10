@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menues_de_los_Roles;
 using System.Data.SqlClient;
+using FrbaHotel.Generar_Modificar_Reserva.Nueva;
 
 
 namespace FrbaHotel.Generar_Modificar_Reserva
@@ -15,20 +16,19 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     public partial class frmGenerarReserva : Form
     {
         private MenuDinamico menu;
-        frmGenerarReserva instanciaReservaAnterior;
-        bool agregarOtraHabitacion;
+        frmGenerarReserva instanciaReservaAnterior;       
         bool regimenesIsOn;
+        bool habitacionesIsOn;
         bool boolVerificoDisp;
         bool boolPasaAClientes;
         bool terminoDeCargarTodo = false; //para que no rompa el selectindex changed de los combos 
         string codigoHotel;
         int precioBase;
-        int costoPorDia;
-        int capacidadHabitacionActual;
+        int costoPorDia;        
         string codigoRegimen;
         string codigoTipoHabitacion;
-        DataSet dataSetHotel;
-        DataSet dataSetHab;
+        DataSet dataSetHotel;        
+        string user;
 
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
@@ -39,20 +39,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             this.menu = menuPadre;
             InitializeComponent();
-        }
 
-        //constructor que invoca el menu
-        public frmGenerarReserva(MenuDinamico menuPadre)
-        {
-            this.menu = menuPadre;
-            InitializeComponent();
+            codigoHotel = hotelSesion;
+            user = userSesion;
         }
 
         //constructor que se invoca si se quiere agregar otra habitacion
         public frmGenerarReserva(frmGenerarReserva newFrm, bool flag) 
         { 
-          InitializeComponent(); 
-          agregarOtraHabitacion = true;
+          InitializeComponent();
           this.instanciaReservaAnterior = newFrm;
         }
         //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
@@ -66,14 +61,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             //seteo de booleanos
             regimenesIsOn = false;
+            habitacionesIsOn = false;
             boolVerificoDisp = false;
          
             //carga controles desde la BD
             FrbaHotel.ConexionSQL.establecerConexionBD();
-            cargarControles();
-            terminoDeCargarTodo = true;
-            cmbHotel.SelectedIndex = 0;
-            
+            if (user == "Guest"){
+                cmbHotel.Enabled = false;
+            }else{
+                cargarHoteles();
+            }
+            terminoDeCargarTodo = true;            
         }
 
         //evento para el cierre del form
@@ -86,18 +84,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private bool validarDatosCompletos()
         {
             return (
-                FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(cmbCantHues, "cantidad huespedes") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoHab, "Tipo habitacion") &
+                FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &                                
                 FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
                 FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen") &
-                verificarCantHuespedesConTipoHabitacion()
+                FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen")                
             );
         }
 
         //carga de controles desde la BD
-        private void cargarControles()
+        private void cargarHoteles()
         {
             string consultaSql = "select * from THE_FOREIGN_FOUR.Hoteles";
             string nombreTabla = "THE_FOREIGN_FOUR.Hoteles";
@@ -118,15 +113,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //muestra ventana regimenes
         private void btnRegimenes_Click(object sender, EventArgs e)
         {
-            if (cmbCantHues.SelectedIndex != -1){
-                if (!regimenesIsOn){
-                    Console.WriteLine(codigoHotel);
+            if (!regimenesIsOn){
                     new frmRegimenes(this, regimenesIsOn, codigoHotel).Show();
                     regimenesIsOn = true;
-                }
-            }else{
-                MessageBox.Show("Complete la cantidad de huespedes primero");
-            }
+            }           
         }
 
         //boton a la siguiente ventana
@@ -165,7 +155,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
-        }  
+        }
+
+        private void btnAgregarHabitacion_Click(object sender, EventArgs e)
+        {            
+            if (!habitacionesIsOn){
+                new frmHabitaciones(this).Show();
+                habitacionesIsOn = true;
+            }
+        }
         //----------------------FIN BOTONES-----------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------
      
@@ -194,26 +192,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 //cargo codigo hotel
                 DataRow codRowHotel = dataSetHotel.Tables[0].Rows[cmbHotel.SelectedIndex];
                 codigoHotel = codRowHotel["cod_hotel"].ToString();
-                
-                string consultaSQL = "select * from THE_FOREIGN_FOUR.buscar_tipo_hab_hotel("+codigoHotel+")";
-                string nombreTabla = "THE_FOREIGN_FOUR.TipoHabitacion";
-                string nombreCampo = "descripcion";
-                dataSetHab = FrbaHotel.Utils.rellenarCombo(cmbTipoHab, nombreTabla, nombreCampo, consultaSQL);                            
-
             }
-        }
-
-        //combo hotel
-        private void cmbTipoHab_SelectedIndexChanged(object sender, EventArgs e)
-        {
-           boolVerificoDisp = false;
-           //obtiene cod_tipo_habitacion            
-            if (terminoDeCargarTodo)
-            {
-                DataRow codRowTipoHab = dataSetHab.Tables[0].Rows[cmbTipoHab.SelectedIndex];
-                codigoTipoHabitacion = codRowTipoHab["cod_tipo_hab"].ToString();
-            }
-        }
+        }       
 
         //muestra costo por dia
         private void txtRegimen_TextChanged(object sender, EventArgs e)
@@ -226,9 +206,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             DataRow row = dt.Rows[0];
             int incrementoPorEstrellas = Convert.ToInt32(row["recarga_estrellas"]);
-
-            costoPorDia = precioBase * Convert.ToInt32(cmbCantHues.Text) + incrementoPorEstrellas;
-            txtCostoXDia.Text = "USD " + (precioBase * Convert.ToInt32(cmbCantHues.Text) + incrementoPorEstrellas).ToString();
+            //TODO modificar esto
+            //costoPorDia = precioBase * Convert.ToInt32(txtCantHuespedes.Text) + incrementoPorEstrellas;
+            //txtCostoXDia.Text = "USD " + (precioBase * Convert.ToInt32(txtCantHuespedes.Text) + incrementoPorEstrellas).ToString();
         }
         //------------------------------------------------------------------------------------------------------------
         //----------------------FIN EVENTOS TEXTBOX Y COMOBOBOX-------------------------------------------------------
@@ -277,19 +257,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             costoTotal *= cantDias;
 
             txtCostoTotal.Text = "USD " + costoTotal.ToString();
-        }
-
-        //verifica que la cantidad de huespedes ingresada 
-        private bool verificarCantHuespedesConTipoHabitacion(){
-            if (cmbCantHues.SelectedIndex != -1){
-                if (Convert.ToInt32(cmbCantHues.Text) <= capacidadHabitacionActual){
-                    return true;
-                }else{
-                    MessageBox.Show("Seleccione un tipo de habitacion con capacidad suficiente", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return false;
-                }
-            }
-            return false;
+        }        
+       
+        public void filaSeleccionadaDataGridHabitaciones(DataGridViewRow row)
+        {
+            string descripcion = row.Cells[1].Value.ToString();            
+            string capacidad = row.Cells[3].Value.ToString();
+            Console.WriteLine(descripcion);
+            Console.WriteLine(capacidad);
+            dgvHabitaciones.Rows.Add(new[] { descripcion, capacidad});        
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------
@@ -298,6 +274,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //SETTERS--------------------------------------------------------------------------- 
         //metodo llamado del form de regimenes
         public void setRegimesIsOn(){   regimenesIsOn = false;}
+        public void setHabitacionesIsOn() { habitacionesIsOn = false; }
         //----------------------------------------------------------------------------------
 
         //GETTERS--------------------------------------------------------------------------- 
@@ -305,7 +282,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         public int getCodigoTipoHab(){  return Convert.ToInt32(codigoTipoHabitacion);}
         public int getCodigoRegimen(){  return Convert.ToInt32(codigoRegimen);}
         public string getFechaDesde(){  return dtpFechaDesde.Value.ToString("yyyy-dd-MM");}
-        public string getFechaHasta(){  return dtpFechaHasta.Value.ToString("yyyy-dd-MM");}
+        public string getFechaHasta(){  return dtpFechaHasta.Value.ToString("yyyy-dd-MM");}        
         //----------------------------------------------------------------------------------
     }
 }

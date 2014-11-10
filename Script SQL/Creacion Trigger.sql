@@ -58,13 +58,12 @@ AS
 BEGIN
 
 	DECLARE TrigInsCursor CURSOR FOR
-	SELECT cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, cod_regimen, /*cod_estado_reserva,*/ fecha_creacion, 
+	SELECT cod_reserva, cod_hotel, cod_cliente, cod_regimen, /*cod_estado_reserva,*/ fecha_creacion, 
 		   fecha_desde, fecha_hasta, cant_noches  
 	FROM inserted
 	DECLARE @cod_reserva numeric(18,0),
 			@cod_hotel int,
 			@cod_cliente numeric(18,0),
-			@cod_tipo_hab numeric(18,0),
 			@cod_regimen int,
 			/*@cod_estado_reserva int,*/
 			@fecha_creacion datetime, 
@@ -79,7 +78,7 @@ BEGIN
 	
 	OPEN TrigInsCursor;
 
-	FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_tipo_hab, @cod_regimen, 
+	FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_regimen, 
 										/*@cod_estado_reserva,*/ @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches
 
 	WHILE @@FETCH_STATUS = 0
@@ -87,27 +86,26 @@ BEGIN
 	
 		IF(	@cod_hotel IS NULL OR
 			@cod_cliente IS NULL OR
-			@cod_tipo_hab IS NULL OR
 			@cod_regimen IS NULL OR
 			@fecha_desde IS NULL OR
 			@cant_noches IS NULL)
 			
 		BEGIN
 			INSERT INTO THE_FOREIGN_FOUR.ReservasDefectuosas (cod_reserva, cod_hotel, cod_cliente, 
-						cod_tipo_hab, cod_regimen, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
-			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
+						cod_regimen, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
+			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_regimen, 
 					@fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches);
 		END	
 		ELSE
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.Reservas(cod_reserva, cod_hotel, cod_cliente, cod_tipo_hab, 
+			INSERT INTO THE_FOREIGN_FOUR.Reservas(cod_reserva, cod_hotel, cod_cliente, 
 						cod_regimen, cod_estado_reserva, fecha_creacion, fecha_desde, fecha_hasta, cant_noches)
-			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, 
+			VALUES (@cod_reserva, @cod_hotel, @cod_cliente, @cod_regimen, 
 					(SELECT THE_FOREIGN_FOUR.func_estado_reserva(@fecha_desde, @fecha_sys)), 
 					@fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches);
 		END			
 			
-		FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_tipo_hab, @cod_regimen, 
+		FETCH NEXT FROM TrigInsCursor INTO	@cod_reserva, @cod_hotel,@cod_cliente, @cod_regimen, 
 											/*@cod_estado_reserva,*/ @fecha_creacion, @fecha_desde, @fecha_hasta, @cant_noches      
 
   END
@@ -127,7 +125,7 @@ AS
 BEGIN
 
 	DECLARE TrigInsCursor CURSOR FOR
-	SELECT cod_reserva, nro_habitacion, fecha_inicio, cant_noches
+	SELECT cod_reserva, fecha_inicio, cant_noches
 	FROM inserted
 	DECLARE @cod_reserva numeric(18,0),
 			@nro_habitacion numeric(18,0),
@@ -136,27 +134,26 @@ BEGIN
 
 	OPEN TrigInsCursor;
 
-	FETCH NEXT FROM TrigInsCursor INTO @cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches
+	FETCH NEXT FROM TrigInsCursor INTO @cod_reserva, @fecha_inicio, @cant_noches
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
 		IF(@cod_reserva IS NULL OR
-		   @nro_habitacion IS NULL OR
 		   @fecha_inicio IS NULL OR
 		   @cant_noches IS NULL)
 		   
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.EstadiasDefectuosas (cod_reserva, nro_habitacion, fecha_inicio, cant_noches)
-			VALUES (@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches);
+			INSERT INTO THE_FOREIGN_FOUR.EstadiasDefectuosas (cod_reserva, fecha_inicio, cant_noches)
+			VALUES (@cod_reserva, @fecha_inicio, @cant_noches);
 		END	
 		ELSE
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, nro_habitacion, fecha_inicio, cant_noches)
-			VALUES (@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches);
+			INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, fecha_inicio, cant_noches)
+			VALUES (@cod_reserva, @fecha_inicio, @cant_noches);
 		END			
 			
-		FETCH NEXT FROM TrigInsCursor INTO @cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches      
+		FETCH NEXT FROM TrigInsCursor INTO @cod_reserva, @fecha_inicio, @cant_noches      
 
   END
 
@@ -329,6 +326,89 @@ BEGIN
 		END			
 			
 		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible 
+
+  END
+
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
+
+END
+GO
+
+
+--******************
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_tipohab_reservas
+ON THE_FOREIGN_FOUR.TipoHabitacion_Reservas
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT cod_reserva, cod_tipo_hab
+	FROM inserted
+	DECLARE @cod_reserva numeric(18,0),
+			@cod_tipo_hab numeric(18,0)
+			
+	OPEN TrigInsCursor;
+
+	FETCH NEXT FROM TrigInsCursor INTO @cod_reserva, @cod_tipo_hab
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		IF(@cod_reserva IS NULL OR
+		   @cod_tipo_hab IS NULL)
+		BEGIN
+			FETCH NEXT FROM TrigInsCursor INTO @cod_reserva, @cod_tipo_hab
+			CONTINUE
+		END
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.TipoHabitacion_Reservas (cod_reserva, cod_tipo_hab)
+			VALUES (@cod_reserva, @cod_tipo_hab)
+		END	
+			
+		FETCH NEXT FROM TrigInsCursor INTO @cod_reserva, @cod_tipo_hab 
+
+  END
+
+  CLOSE TrigInsCursor;
+  DEALLOCATE TrigInsCursor;
+
+END
+GO
+--****************************************************************
+
+CREATE TRIGGER THE_FOREIGN_FOUR.trg_habitaciones_estadia
+ON THE_FOREIGN_FOUR.Habitaciones_Estadia
+INSTEAD OF INSERT
+AS
+BEGIN
+
+	DECLARE TrigInsCursor CURSOR FOR
+	SELECT cod_estadia, cod_habitacion
+	FROM inserted
+	DECLARE @cod_estadia numeric(18,0),
+			@cod_habitacion numeric(18,0)
+			
+	OPEN TrigInsCursor;
+
+	FETCH NEXT FROM TrigInsCursor INTO @cod_estadia, @cod_habitacion
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+		IF(@cod_estadia IS NULL OR
+		   @cod_habitacion IS NULL)
+		BEGIN
+			FETCH NEXT FROM TrigInsCursor INTO @cod_estadia, @cod_habitacion
+			CONTINUE
+		END
+		ELSE
+		BEGIN
+			INSERT INTO THE_FOREIGN_FOUR.Habitaciones_Estadia (cod_estadia, cod_habitacion)
+			VALUES (@cod_estadia, @cod_habitacion)
+		END	
+			
+		FETCH NEXT FROM TrigInsCursor INTO @cod_estadia, @cod_habitacion 
 
   END
 

@@ -31,19 +31,18 @@
             this.lblFechaDesd = new System.Windows.Forms.Label();
             this.lblFechaHast = new System.Windows.Forms.Label();
             this.lblTipoHab = new System.Windows.Forms.Label();
-            this.cmbTipoHab = new System.Windows.Forms.ComboBox();
             this.btnVerificarDisp = new System.Windows.Forms.Button();
             this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
             this.btnRegimenes = new System.Windows.Forms.Button();
             this.groupDatos = new System.Windows.Forms.GroupBox();
-            this.cmbCantHues = new System.Windows.Forms.ComboBox();
+            this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
+            this.btnAgregarHabitacion = new System.Windows.Forms.Button();
             this.txtRegimen = new System.Windows.Forms.TextBox();
             this.txtCostoXDia = new System.Windows.Forms.TextBox();
             this.lblCostoXDia = new System.Windows.Forms.Label();
             this.cmbHotel = new System.Windows.Forms.ComboBox();
             this.lblSeleccionarHotel = new System.Windows.Forms.Label();
-            this.lblCantHues = new System.Windows.Forms.Label();
             this.txtResul = new System.Windows.Forms.TextBox();
             this.grbPanel2 = new System.Windows.Forms.GroupBox();
             this.txtCostoTotal = new System.Windows.Forms.TextBox();
@@ -51,7 +50,10 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
+            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.capacidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupDatos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             this.grbPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -77,32 +79,18 @@
             // lblTipoHab
             // 
             this.lblTipoHab.AutoSize = true;
-            this.lblTipoHab.Location = new System.Drawing.Point(19, 142);
+            this.lblTipoHab.Location = new System.Drawing.Point(19, 117);
             this.lblTipoHab.Name = "lblTipoHab";
             this.lblTipoHab.Size = new System.Drawing.Size(85, 13);
             this.lblTipoHab.TabIndex = 0;
             this.lblTipoHab.Text = "Tipo Habitacion:";
-            // 
-            // cmbTipoHab
-            // 
-            this.cmbTipoHab.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTipoHab.FormattingEnabled = true;
-            this.cmbTipoHab.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3"});
-            this.cmbTipoHab.Location = new System.Drawing.Point(138, 135);
-            this.cmbTipoHab.Name = "cmbTipoHab";
-            this.cmbTipoHab.Size = new System.Drawing.Size(200, 21);
-            this.cmbTipoHab.TabIndex = 4;
-            this.cmbTipoHab.Tag = "Tipo habitacion";
             // 
             // btnVerificarDisp
             // 
             this.btnVerificarDisp.Location = new System.Drawing.Point(22, 19);
             this.btnVerificarDisp.Name = "btnVerificarDisp";
             this.btnVerificarDisp.Size = new System.Drawing.Size(129, 23);
-            this.btnVerificarDisp.TabIndex = 8;
+            this.btnVerificarDisp.TabIndex = 7;
             this.btnVerificarDisp.Text = "Verificar disponibilidad";
             this.btnVerificarDisp.UseVisualStyleBackColor = true;
             this.btnVerificarDisp.Click += new System.EventHandler(this.btnVerificarDisp_Click);
@@ -128,7 +116,7 @@
             // btnRegimenes
             // 
             this.btnRegimenes.AutoSize = true;
-            this.btnRegimenes.Location = new System.Drawing.Point(22, 171);
+            this.btnRegimenes.Location = new System.Drawing.Point(22, 253);
             this.btnRegimenes.Name = "btnRegimenes";
             this.btnRegimenes.Size = new System.Drawing.Size(141, 23);
             this.btnRegimenes.TabIndex = 6;
@@ -139,45 +127,56 @@
             // groupDatos
             // 
             this.groupDatos.AutoSize = true;
-            this.groupDatos.Controls.Add(this.cmbCantHues);
+            this.groupDatos.Controls.Add(this.dgvHabitaciones);
+            this.groupDatos.Controls.Add(this.btnAgregarHabitacion);
             this.groupDatos.Controls.Add(this.txtRegimen);
             this.groupDatos.Controls.Add(this.txtCostoXDia);
             this.groupDatos.Controls.Add(this.lblCostoXDia);
             this.groupDatos.Controls.Add(this.cmbHotel);
             this.groupDatos.Controls.Add(this.lblSeleccionarHotel);
-            this.groupDatos.Controls.Add(this.lblCantHues);
             this.groupDatos.Controls.Add(this.btnRegimenes);
             this.groupDatos.Controls.Add(this.lblFechaDesd);
             this.groupDatos.Controls.Add(this.dtpFechaHasta);
             this.groupDatos.Controls.Add(this.lblFechaHast);
             this.groupDatos.Controls.Add(this.dtpFechaDesde);
             this.groupDatos.Controls.Add(this.lblTipoHab);
-            this.groupDatos.Controls.Add(this.cmbTipoHab);
             this.groupDatos.Location = new System.Drawing.Point(19, 11);
             this.groupDatos.Name = "groupDatos";
-            this.groupDatos.Size = new System.Drawing.Size(364, 262);
+            this.groupDatos.Size = new System.Drawing.Size(364, 329);
             this.groupDatos.TabIndex = 0;
             this.groupDatos.TabStop = false;
             this.groupDatos.Text = "Datos Reserva";
             // 
-            // cmbCantHues
+            // dgvHabitaciones
             // 
-            this.cmbCantHues.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCantHues.FormattingEnabled = true;
-            this.cmbCantHues.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cmbCantHues.Location = new System.Drawing.Point(138, 108);
-            this.cmbCantHues.Name = "cmbCantHues";
-            this.cmbCantHues.Size = new System.Drawing.Size(200, 21);
-            this.cmbCantHues.TabIndex = 3;
+            this.dgvHabitaciones.AllowUserToAddRows = false;
+            this.dgvHabitaciones.AllowUserToDeleteRows = false;
+            this.dgvHabitaciones.AllowUserToResizeColumns = false;
+            this.dgvHabitaciones.AllowUserToResizeRows = false;
+            this.dgvHabitaciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvHabitaciones.BackgroundColor = System.Drawing.Color.White;
+            this.dgvHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHabitaciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.descripcion,
+            this.capacidad});
+            this.dgvHabitaciones.Location = new System.Drawing.Point(24, 144);
+            this.dgvHabitaciones.Name = "dgvHabitaciones";
+            this.dgvHabitaciones.Size = new System.Drawing.Size(313, 97);
+            this.dgvHabitaciones.TabIndex = 5;
+            // 
+            // btnAgregarHabitacion
+            // 
+            this.btnAgregarHabitacion.Location = new System.Drawing.Point(138, 110);
+            this.btnAgregarHabitacion.Name = "btnAgregarHabitacion";
+            this.btnAgregarHabitacion.Size = new System.Drawing.Size(199, 23);
+            this.btnAgregarHabitacion.TabIndex = 4;
+            this.btnAgregarHabitacion.Text = "Agregar Habitacion";
+            this.btnAgregarHabitacion.UseVisualStyleBackColor = true;
+            this.btnAgregarHabitacion.Click += new System.EventHandler(this.btnAgregarHabitacion_Click);
             // 
             // txtRegimen
             // 
-            this.txtRegimen.Location = new System.Drawing.Point(173, 173);
+            this.txtRegimen.Location = new System.Drawing.Point(173, 255);
             this.txtRegimen.Name = "txtRegimen";
             this.txtRegimen.ReadOnly = true;
             this.txtRegimen.Size = new System.Drawing.Size(164, 20);
@@ -188,17 +187,18 @@
             // txtCostoXDia
             // 
             this.txtCostoXDia.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCostoXDia.Location = new System.Drawing.Point(138, 215);
+            this.txtCostoXDia.Location = new System.Drawing.Point(138, 287);
             this.txtCostoXDia.Name = "txtCostoXDia";
             this.txtCostoXDia.ReadOnly = true;
             this.txtCostoXDia.Size = new System.Drawing.Size(199, 21);
             this.txtCostoXDia.TabIndex = 7;
+            this.txtCostoXDia.TabStop = false;
             this.txtCostoXDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblCostoXDia
             // 
             this.lblCostoXDia.AutoSize = true;
-            this.lblCostoXDia.Location = new System.Drawing.Point(19, 219);
+            this.lblCostoXDia.Location = new System.Drawing.Point(19, 291);
             this.lblCostoXDia.Name = "lblCostoXDia";
             this.lblCostoXDia.Size = new System.Drawing.Size(72, 13);
             this.lblCostoXDia.TabIndex = 15;
@@ -224,15 +224,6 @@
             this.lblSeleccionarHotel.TabIndex = 14;
             this.lblSeleccionarHotel.Text = "Seleccionar Hotel:";
             // 
-            // lblCantHues
-            // 
-            this.lblCantHues.AutoSize = true;
-            this.lblCantHues.Location = new System.Drawing.Point(19, 115);
-            this.lblCantHues.Name = "lblCantHues";
-            this.lblCantHues.Size = new System.Drawing.Size(109, 13);
-            this.lblCantHues.TabIndex = 1;
-            this.lblCantHues.Text = "Cantidad Huespedes:";
-            // 
             // txtResul
             // 
             this.txtResul.Location = new System.Drawing.Point(157, 22);
@@ -249,7 +240,7 @@
             this.grbPanel2.Controls.Add(this.label2);
             this.grbPanel2.Controls.Add(this.btnVerificarDisp);
             this.grbPanel2.Controls.Add(this.txtResul);
-            this.grbPanel2.Location = new System.Drawing.Point(19, 286);
+            this.grbPanel2.Location = new System.Drawing.Point(19, 350);
             this.grbPanel2.Name = "grbPanel2";
             this.grbPanel2.Size = new System.Drawing.Size(364, 86);
             this.grbPanel2.TabIndex = 15;
@@ -279,7 +270,7 @@
             // 
             this.groupBox1.Controls.Add(this.btnCancel);
             this.groupBox1.Controls.Add(this.btnSiguiente);
-            this.groupBox1.Location = new System.Drawing.Point(19, 385);
+            this.groupBox1.Location = new System.Drawing.Point(19, 449);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(364, 50);
             this.groupBox1.TabIndex = 16;
@@ -303,10 +294,22 @@
             this.btnSiguiente.Location = new System.Drawing.Point(173, 19);
             this.btnSiguiente.Name = "btnSiguiente";
             this.btnSiguiente.Size = new System.Drawing.Size(104, 23);
-            this.btnSiguiente.TabIndex = 11;
+            this.btnSiguiente.TabIndex = 8;
             this.btnSiguiente.Text = "Siguiente";
             this.btnSiguiente.UseVisualStyleBackColor = true;
             this.btnSiguiente.Click += new System.EventHandler(this.btnSiguietne_Click);
+            // 
+            // descripcion
+            // 
+            this.descripcion.HeaderText = "descripcion";
+            this.descripcion.Name = "descripcion";
+            this.descripcion.ReadOnly = true;
+            // 
+            // capacidad
+            // 
+            this.capacidad.HeaderText = "capacidad";
+            this.capacidad.Name = "capacidad";
+            this.capacidad.ReadOnly = true;
             // 
             // frmGenerarReserva
             // 
@@ -315,7 +318,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(405, 456);
+            this.ClientSize = new System.Drawing.Size(405, 518);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbPanel2);
             this.Controls.Add(this.groupDatos);
@@ -329,6 +332,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmGenerarReserva_FormClosing);
             this.groupDatos.ResumeLayout(false);
             this.groupDatos.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).EndInit();
             this.grbPanel2.ResumeLayout(false);
             this.grbPanel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -343,13 +347,11 @@
         private System.Windows.Forms.Label lblFechaDesd;
         private System.Windows.Forms.Label lblFechaHast;
         private System.Windows.Forms.Label lblTipoHab;
-        private System.Windows.Forms.ComboBox cmbTipoHab;
         private System.Windows.Forms.Button btnVerificarDisp;
         private System.Windows.Forms.Button btnRegimenes;
         private System.Windows.Forms.GroupBox groupDatos;
         private System.Windows.Forms.TextBox txtResul;
         private System.Windows.Forms.GroupBox grbPanel2;
-        private System.Windows.Forms.Label lblCantHues;
         private System.Windows.Forms.TextBox txtCostoTotal;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -362,6 +364,9 @@
         private System.Windows.Forms.TextBox txtRegimen;
         public System.Windows.Forms.DateTimePicker dtpFechaDesde;
         public System.Windows.Forms.DateTimePicker dtpFechaHasta;
-        private System.Windows.Forms.ComboBox cmbCantHues;
+        private System.Windows.Forms.DataGridView dgvHabitaciones;
+        private System.Windows.Forms.Button btnAgregarHabitacion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn capacidad;
     }
 }
