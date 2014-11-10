@@ -44,7 +44,7 @@ BEGIN
 	VALUES ((SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), (SELECT cod_estadia FROM THE_FOREIGN_FOUR.Estadias WHERE cod_reserva = @cod_reserva), 'I')
 	
 	UPDATE THE_FOREIGN_FOUR.Reservas
-	SET cod_estado_reserva  = (SELECT cod_estado_reserva
+	SET cod_estado_reserva  = (SELECT cod_estado
 								FROM THE_FOREIGN_FOUR.EstadosReserva
 								WHERE descripcion = 'efectivizada')
 	WHERE cod_reserva = @cod_reserva
@@ -877,7 +877,7 @@ RETURN @total
 
 END
 GO
-
+--***********************************************************
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_get_precio (@cod_consumible numeric(18,0), @cod_estadia numeric(18,0))
 RETURNS numeric(18,0)
@@ -1159,6 +1159,12 @@ BEGIN
 
 END
 GO
+DECLARE @A INT
+EXEC @A = THE_FOREIGN_FOUR.proc_validar_check_in 110741, 12
+SELECT @A
+SELECT * FROM THE_FOREIGN_FOUR.Reservas
+
+EXEC THE_FOREIGN_FOUR.proc_generar_reserva 12, 12, 1, '20200101', '20200109', 'admin'
 --***************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_hab_hotel
 				(@cod_hotel numeric(18,0),
@@ -1214,3 +1220,45 @@ BEGIN
 END
 GO
 --**********************************************************
+
+
+
+/* LISTADO ESTADISTICO */
+
+
+
+--TOP 5 HOTELES MAS CANCELACIONES
+CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_cancelaciones_hotel
+					(@fecha_desde datetime,
+					 @fecha_hasta datetime)
+RETURNS TABLE
+AS
+	RETURN (SELECT TOP 5 ho.cod_hotel, COUNT(ca.cod_cancelacion) AS 'cancelaciones'
+			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.Reservas res ON(ho.cod_hotel = res.cod_hotel)
+											 JOIN THE_FOREIGN_FOUR.Cancelaciones ca ON(res.cod_reserva = ca.cod_reserva)
+			WHERE ca.fecha_operacion BETWEEN @fecha_desde AND @fecha_hasta
+			GROUP BY ho.cod_hotel
+			ORDER BY 2 DESC)
+GO
+--TOP 5 HOTELES MAS CONSUMIBLES FACTURADOS
+CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel
+					(@fecha_desde datetime,
+					 @fecha_hasta datetime)
+RETURNS TABLE
+AS
+	RETURN (SELECT TOP 5 ho.cod_hotel, SUM(cantidad)
+			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.Reservas res ON(ho.cod_hotel = res.cod_hotel)
+											 JOIN THE_FOREIGN_FOUR.Estadias es ON(res.cod_reserva = es.cod_estadia)
+											 JOIN THE_FOREIGN_FOUR.Facturas fa ON(es.cod_estadia = fa.cod_estadia)
+											 JOIN THE_FOREIGN_FOUR.ItemsFactura itf ON(fa.nro_factura = itf.nro_factura)
+			WHERE cod_consumible > 1000
+			GROUP BY ho.cod_hotel
+			ORDER BY SUM(cantidad))
+GO
+					 
+					 
+					 
+					 
+					 
+
+
