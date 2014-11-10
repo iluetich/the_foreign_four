@@ -264,6 +264,10 @@ namespace FrbaHotel.ABM_de_Cliente
             {
                 estaOk = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxMail, "Mail");
             }
+            if (estaOk)
+            {
+                estaOk = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxPaisOrigen, "Pais Origen");
+            }
 
             //corrobora que el mail si o si tenga mas de 6 cifras
             if((nroDoc - 999999) < 0)

@@ -172,7 +172,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                 string fechaDesde = dtpFechaDesde.Value.ToString("yyyy-dd-MM");
                 string fechaHasta = dtpFechaHasta.Value.ToString("yyyy-dd-MM");
-                string consultaSQL = "select THE_FOREIGN_FOUR.func_hab_disponibles(" + codigoHotel + "," + codigoTipoHabitacion + ",'" + fechaDesde + "','" + fechaHasta + "') as resultado;";
+                string consultaSQL = "select THE_FOREIGN_FOUR.func_hab_disponibles(" + codigoHotel + "," + codigoTipoHabitacion + ",'" + fechaDesde + "','" + fechaHasta + "')";
                 SqlCommand cmd = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                 cantidadHabDispPorHotelYPorTipoHab = Convert.ToInt32(cmd.ExecuteScalar());
             }
