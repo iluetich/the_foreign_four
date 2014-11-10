@@ -178,7 +178,6 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
-				 @fecha_creacion datetime,
 				 @usuario nvarchar(255))
 AS
 BEGIN
@@ -191,7 +190,7 @@ BEGIN
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
 	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)))
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, CAST(GETDATE() AS DATETIME), CONVERT(int, @fecha_hasta - @fecha_desde), (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)))
 	
 	RETURN @cod_reserva_generada
 END
