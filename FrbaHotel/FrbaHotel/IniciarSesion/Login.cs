@@ -29,7 +29,7 @@ namespace FrbaHotel.IniciarSecion
             rol = rolElegido;
             formPadre = formularioPadre;
             InitializeComponent();
-            string consulta = "select * from THE_FOREIGN_FOUR.Hoteles";
+            string consulta = "SELECT * from THE_FOREIGN_FOUR.Hoteles";
             FrbaHotel.Utils.rellenarComboBox(comboBoxSelecionHotel, "THE_FOREIGN_FOUR.Hoteles", "cod_hotel", consulta);
 
         }
@@ -131,7 +131,15 @@ namespace FrbaHotel.IniciarSecion
                     //si ingreso 3 veces mal el password se inhabilita el usuario
                     if (nroFallos > 3)
                     {
-                        //ACA VA EL PROCEDURE QUE TE INHABILITA EL USUARIO
+                        SqlCommand cmd5 = new SqlCommand("THE_FOREIGN_FOUR.proc_inhabilitar_usuario", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                        cmd5.CommandType = CommandType.StoredProcedure;
+
+                        cmd5.Parameters.AddWithValue("@usuario", user_name);
+
+                        cmd5.ExecuteNonQuery();
+
+                        MessageBox.Show("Se ha inhabilitado su usuario", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
                     }
 
                     this.podesIngresar = false;

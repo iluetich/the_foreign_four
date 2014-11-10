@@ -85,3 +85,4 @@ C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Genera
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.AgregarRol.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.AgregarRol.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Generar_Modificar_Reserva.Nueva.frmHabitaciones.resources
+C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Generar_Modificar_Reserva.Nueva.frmHabitaciones.resources
