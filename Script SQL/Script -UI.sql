@@ -782,7 +782,6 @@ RETURN(
 )
 END
 GO
-
 --**********************************************************
 /*
 El valor de la habitación se obtiene a través de su precio base 
@@ -987,7 +986,8 @@ BEGIN
 							WHERE cod_operacion = 'O'
 							AND cod_estadia = (SELECT cod_estadia
 												FROM THE_FOREIGN_FOUR.Facturas
-												WHERE nro_factura = @nro_factura))
+												WHERE nro_factura = @nro_factura
+												))
 	
 	SET @fecha_ideal = (SELECT r.fecha_hasta
 						FROM THE_FOREIGN_FOUR.Reservas r,
@@ -997,7 +997,7 @@ BEGIN
 						AND f.cod_estadia = e.cod_estadia
 						AND r.cod_reserva = e.cod_reserva)
 	
-	SET @noches_sin_usar = DATEDIFF( DAY, @fecha_ideal,@fecha_check_out)
+	SET @noches_sin_usar = DATEDIFF(DAY, @fecha_check_out, @fecha_ideal)
 	
 	SET @noches_estadia = (SELECT r.cant_noches
 							FROM THE_FOREIGN_FOUR.Reservas r,
@@ -1021,7 +1021,10 @@ BEGIN
 	END
 	
 	INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cod_consumible, cantidad, nro_factura)
-		VALUES (@cod_consumible_estadia, @noches_estadia, @nro_factura)
+	VALUES (@cod_consumible_estadia, @noches_estadia, @nro_factura)
+		
+		
+	EXECUTE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura
 	
 END
 GO
