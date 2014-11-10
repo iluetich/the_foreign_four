@@ -154,6 +154,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2014DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Generar Modificar Reserva\Nueva\frmHabitacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\Nueva\Form1.Designer.cs">
+      <DependentUpon>frmHabitacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generar Modificar Reserva\Nueva\frmHabitaciones.cs">
       <SubType>Form</SubType>
     </Compile>

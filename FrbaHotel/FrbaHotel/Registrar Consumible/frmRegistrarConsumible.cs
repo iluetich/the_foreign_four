@@ -24,7 +24,7 @@ namespace FrbaHotel.Registrar_Consumible
         {
             InitializeComponent();
             frmInicioRegistrarConsumiblePadre = newForm;
-            lblResultCodEstadia.Text = newForm.Controls["groupRegEst"].Controls["txtCodEstadia"].Text;
+            
             
         }
 
@@ -33,7 +33,7 @@ namespace FrbaHotel.Registrar_Consumible
             InitializeComponent();
             frmCheckoutPadre = newForm;
             frmInicioEstadiaPadre = newFormInicioEstadia;
-            lblResultCodEstadia.Text = frmInicioEstadiaPadre.Controls["groupCheckout"].Controls["txtCodEstadia"].Text;
+            
 
         }
 
@@ -50,10 +50,9 @@ namespace FrbaHotel.Registrar_Consumible
         private void btnRegistrarCons_Click(object sender, EventArgs e)
         {
             if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodProducto, "Codigo producto") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(txtCantidad, "Cantidad") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(txtHabitacion, "Nro habitacion"))
+                FrbaHotel.Utils.validarCampoEsteCompleto(txtCantidad, "Cantidad") )
             {
-                agregarConsumible(txtCodProducto.Text, txtCantidad.Text, txtHabitacion.Text);
+                agregarConsumible(txtCodProducto.Text, txtCantidad.Text,"habitacion");
             }
         }
 
