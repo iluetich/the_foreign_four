@@ -7,9 +7,9 @@ SELECT DISTINCT Cliente_Nombre, Cliente_Apellido, Cliente_Fecha_Nac, Cliente_Dom
 FROM gd_esquema.Maestra
 
 --***HOTELES***********************************
-
-INSERT INTO THE_FOREIGN_FOUR.Hoteles (nom_calle, ciudad, nro_calle, cant_estrellas, recarga_estrellas)
-SELECT DISTINCT Hotel_Calle, Hotel_Ciudad, Hotel_Nro_Calle, Hotel_CantEstrella, Hotel_Recarga_Estrella
+INSERT INTO THE_FOREIGN_FOUR.Hoteles (nom_calle, ciudad, nro_calle, cant_estrellas, recarga_estrellas, nombre)
+SELECT DISTINCT Hotel_Calle, Hotel_Ciudad, Hotel_Nro_Calle, 
+				Hotel_CantEstrella, Hotel_Recarga_Estrella, (Hotel_Calle + ' ' + CAST(Hotel_Nro_Calle AS nvarchar(10)))
 FROM gd_esquema.Maestra
 
 --***REGIMENES********************************
