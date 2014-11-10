@@ -20,6 +20,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         bool seleccionoCliente = false;
         int codigoCliente;
         DataSet datosCliente;
+        DataGridViewRow row;
 
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
@@ -77,13 +78,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             if (controlesCargados()){                
                 //busquedas por algunos de los campos
                 if (txtMail.Text != "" & (txtIdentificacion.Text == "" | cmbTipoDoc.SelectedIndex == -1))
-                    consultaSQL = "select * from THE_FOREIGN_FOUR.buscar_clientes(null,null,null,null,'" + txtMail.Text + "');";
+                    consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc from THE_FOREIGN_FOUR.buscar_clientes(null,null,null,null,'" + txtMail.Text + "');";
                 if (txtMail.Text == "" & (txtIdentificacion.Text != "" & cmbTipoDoc.SelectedIndex != -1))
-                    consultaSQL = "select * THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",null);";
+                    consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",null);";
                 if (txtMail.Text != "" & (txtIdentificacion.Text != "" & cmbTipoDoc.SelectedIndex != -1))
-                    consultaSQL = "select * from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
-                
-                FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSQL);
+                    consultaSQL = "select cod_cliente nombre, apellido, tipo_doc, nro_doc from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
+
+                datosCliente = FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSQL);
                 dgvResultCltes.Columns["cod_cliente"].Visible = false;
                 codigoCliente = Convert.ToInt32(dgvResultCltes.Rows[0].Cells["cod_cliente"].Value);
                 
@@ -100,7 +101,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     frmClientePadre.setBandClienteRegistrado();
                     frmClientePadre.setCodigoCliente(codigoCliente);
                 }else if (frmRegistrarHuespedesRestantesPadre != null){
-                    frmRegistrarHuespedesRestantesPadre.obtenerDatos();
+                    frmRegistrarHuespedesRestantesPadre.obtenerDatosDelBuscador(row);
                     frmRegistrarHuespedesRestantesPadre.setCodigoCliente(codigoCliente);
                 }
                 this.Close();
@@ -132,8 +133,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             if (e.RowIndex != -1)
             {
-                DataGridViewRow row = dgvResultCltes.Rows[e.RowIndex];
-                frmClientePadre.filaSeleccionadaDataGrid(row);
+                row = dgvResultCltes.Rows[e.RowIndex];
+                if (frmClientePadre != null){                   
+                    frmClientePadre.filaSeleccionadaDataGrid(row);                    
+                }               
                 seleccionoCliente = true;
             }
         }

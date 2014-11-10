@@ -16,6 +16,7 @@ namespace FrbaHotel.Registrar_Estadia
     {
         frmInicioEstadia frmRegistrarEstadiaPadre;
         string codigoCliente;
+        string codigoReserva;
 
         //----------------------------------------------------------------------------------------------------
         //----------------------CONSTRUCTORES-----------------------------------------------------------------       
@@ -23,6 +24,8 @@ namespace FrbaHotel.Registrar_Estadia
         {
             InitializeComponent();
             frmRegistrarEstadiaPadre = newFrm;
+
+            obtenerCantHuespedes();
         }
         //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------
@@ -84,20 +87,31 @@ namespace FrbaHotel.Registrar_Estadia
         //valido que se haya ingresa al menos un cliente
         private bool validaClientes()
         {
-            if (dgvDatosHuespedes.Rows.Count <= 0){
-                DialogResult boton = MessageBox.Show("No registro ningun huesped ¿Quiere seguir de todas maneras?", "Alerta", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                if (boton == DialogResult.OK){
-                    return true;
-                }else{
-                    return false;
-                }   
-            }
+            if (dgvDatosHuespedes.Rows.Count <= Convert.ToInt32(txtCantHuespedes.Text)){
+                MessageBox.Show("Te faltan registrar huespedes", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }               
             return true;
         }
 
-        public void obtenerDatos()
+        //me paso los datos del cliente que se busco
+        public void obtenerDatosDelBuscador(DataGridViewRow row)
         {
+            string nombre = row.Cells[1].Value.ToString();
+            string apellido = row.Cells[2].Value.ToString();
+            string tipoDocmento = row.Cells[3].Value.ToString();
+            string nroDocumento = row.Cells[4].Value.ToString();
+            dgvDatosHuespedes.Rows.Add(new[] { nroDocumento, nroDocumento, apellido, nombre });
+        
+        }
+        public void obtenerCantHuespedes(){
             
+            codigoReserva = frmRegistrarEstadiaPadre.getCodigoReserva();
+            string consultaSQL = "select * from THE_FOREIGN_FOUR.func_obtener_cant_huespedes("+codigoReserva+")";
+            SqlCommand cmd = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            txtCantHuespedes.Text = cmd.ExecuteScalar().ToString();
+            Console.WriteLine("la cantidad de huespedes es: " + txtCantHuespedes.Text);
+
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------

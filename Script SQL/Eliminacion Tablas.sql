@@ -1,4 +1,5 @@
 --******TABLAS******************
+DROP TABLE THE_FOREIGN_FOUR.AuditoriaEstadias
 DROP TABLE THE_FOREIGN_FOUR.UsuariosPorHotel
 DROP TABLE THE_FOREIGN_FOUR.RegimenPorHotel
 DROP TABLE THE_FOREIGN_FOUR.ClientePorEstadia 
@@ -48,6 +49,11 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada 
 DROP FUNCTION THE_FOREIGN_FOUR.func_hotel_inhabilitable 
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_regimenes_hotel
+DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_cod_usuario
+DROP FUNCTION THE_FOREIGN_FOUR.func_check_out
+DROP FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_validar_check_in
+>>>>>>> origin/master
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva
@@ -60,6 +66,7 @@ DROP PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_cliente
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_rol 
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_habitacion  
 DROP PROCEDURE THE_FOREIGN_FOUR.porc_insercion_estados_reserva
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_realizar_checkout
 DROP VIEW THE_FOREIGN_FOUR.view_hoteles 
 DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades_rol 
 DROP VIEW THE_FOREIGN_FOUR.view_roles_hoteles_usuarios 
