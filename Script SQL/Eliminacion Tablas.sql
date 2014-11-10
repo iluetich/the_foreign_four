@@ -57,6 +57,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_hab_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_agregar_hab_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_calcular_precio
+DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_hab_estadia
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_validar_check_in
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
@@ -80,6 +81,6 @@ DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades
 DROP VIEW THE_FOREIGN_FOUR.view_facturas
 DROP FUNCTION THE_FOREIGN_FOUR.facturacion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura
-DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia
+
 
 DROP SCHEMA THE_FOREIGN_FOUR
