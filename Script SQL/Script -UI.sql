@@ -9,6 +9,21 @@ RETURN (SELECT	COUNT(c.cod_cliente) AS cantidad_huespedes
 		WHERE @cod_reserva = e.cod_reserva)
 GO		
 --***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_existe_huesped
+				(@mail nvarchar(255))
+RETURNS int
+AS
+BEGIN
+	IF(EXISTS (SELECT cod_cliente
+			   FROM THE_FOREIGN_FOUR.Clientes
+			   WHERE mail = @mail))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_huesped
 				(@cod_cliente numeric(18,0),
 				 @cod_estadia numeric(18,0))
@@ -345,7 +360,7 @@ CREATE FUNCTION THE_FOREIGN_FOUR.buscar_clientes(
 				@apellido nvarchar(255),
 				@tipo_doc char(3),
 				@nro_doc numeric(18,0),
-				@mail nvarchar(255) )
+				@mail nvarchar(255))
 RETURNS TABLE
 AS
 RETURN(

@@ -55,6 +55,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_cod_usuario
 DROP FUNCTION THE_FOREIGN_FOUR.func_check_out
 DROP FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_hab_hotel
+DROP FUNCTION THE_FOREIGN_FOUR.func_existe_huesped
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_agregar_hab_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_calcular_precio
 DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_hab_estadia
