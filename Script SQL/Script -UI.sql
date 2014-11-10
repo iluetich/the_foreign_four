@@ -148,6 +148,7 @@ AS
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET fecha_desde = @fecha_desde,
 		fecha_hasta = @fecha_hasta,
+		cant_noches = DATEDIFF(DAY, @fecha_desde, @fecha_hasta),
 		cod_regimen = @cod_regimen,
 		usuario = (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)),
 		cod_estado_reserva = (SELECT cod_estado
