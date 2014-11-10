@@ -964,15 +964,18 @@ BEGIN
 			@fecha_check_out datetime,
 			@fecha_ideal datetime,
 			@noches_estadia numeric(18,0),
-			@noches_sin_usar numeric(18,0)
+			@noches_sin_usar numeric(18,0),
+			@cod_estadia numeric(18,0)
+			
+	SET @cod_estadia = (SELECT cod_estadia
+						FROM THE_FOREIGN_FOUR.Facturas
+						WHERE nro_factura = @nro_factura)
 	
 	SET @cod_regimen = (SELECT r.cod_regimen
 						FROM	THE_FOREIGN_FOUR.Facturas f,
-								THE_FOREIGN_FOUR.Estadias e,
 								THE_FOREIGN_FOUR.Reservas r
 						WHERE f.nro_factura = @nro_factura
-						AND	f.cod_estadia = e.cod_estadia
-						AND e.cod_reserva = r.cod_reserva)
+						AND	f.cod_estadia = @cod_estadia
 						
 	SET @cod_all_inclusive = (SELECT cod_regimen
 								FROM THE_FOREIGN_FOUR.Regimenes
@@ -984,28 +987,21 @@ BEGIN
 	SET @fecha_check_out = (SELECT fecha
 							FROM THE_FOREIGN_FOUR.AuditoriaEstadias
 							WHERE cod_operacion = 'O'
-							AND cod_estadia = (SELECT cod_estadia
-												FROM THE_FOREIGN_FOUR.Facturas
-												WHERE nro_factura = @nro_factura
-												))
+							AND cod_estadia = @cod_estadia)
 	
 	SET @fecha_ideal = (SELECT r.fecha_hasta
 						FROM THE_FOREIGN_FOUR.Reservas r,
-								THE_FOREIGN_FOUR.Estadias e,
 								THE_FOREIGN_FOUR.Facturas f
 						WHERE f.nro_factura = @nro_factura
-						AND f.cod_estadia = e.cod_estadia
-						AND r.cod_reserva = e.cod_reserva)
+						AND f.cod_estadia = @cod_estadia)
 	
 	SET @noches_sin_usar = DATEDIFF(DAY, @fecha_check_out, @fecha_ideal)
 	
 	SET @noches_estadia = (SELECT r.cant_noches
 							FROM THE_FOREIGN_FOUR.Reservas r,
-								 THE_FOREIGN_FOUR.Facturas f,
-								 THE_FOREIGN_FOUR.Estadias e
+								 THE_FOREIGN_FOUR.Facturas f
 							WHERE f.nro_factura = @nro_factura
-							AND f.cod_estadia = e.cod_estadia
-							AND r.cod_reserva = e.cod_reserva) - @noches_sin_usar
+							AND f.cod_estadia = @cod_estadia) - @noches_sin_usar
 		
 							
 	IF (@cod_regimen = @cod_all_inclusive)
@@ -1023,6 +1019,9 @@ BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cod_consumible, cantidad, nro_factura)
 	VALUES (@cod_consumible_estadia, @noches_estadia, @nro_factura)
 		
+	UPDATE THE_FOREIGN_FOUR.Estadias
+	SET cant_noches = @noches_estadia
+	WHERE cod_estadia = @cod_estadia 
 		
 	EXECUTE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura
 	
