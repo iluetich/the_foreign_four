@@ -591,6 +591,10 @@ BEGIN
 			(1, 6, 4), (1, 7, 4), (1, 8, 4), (1, 9, 4), (1, 10, 4),
 			(1, 11, 4), (1, 12, 4), (1, 13, 4), (1, 14, 4), (1, 15, 4), 
 			(1, 16, 4)
+			
+	INSERT INTO THE_FOREIGN_FOUR.Consumibles (cod_consumible, descripcion)
+	VALUES (1, 'estadia'), (2, 'descuento all inclusive'), (3, 'noches no utilizadas')
+
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
 	SET nombre = 'Conrad'
 	WHERE cod_hotel = 1;
@@ -935,13 +939,6 @@ BEGIN
 	
 	DROP TABLE THE_FOREIGN_FOUR.#subtotales
 	
-	/*UPDATE THE_FOREIGN_FOUR.Facturas
-	SET total = (SELECT (SUM((SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, @cod_estadia )) * i.cantidad))
-				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
-				WHERE c.cod_consumible = i.cod_consumible
-				AND i.nro_factura = @nro_factura
-				GROUP BY i.cantidad)
-	WHERE nro_factura = @nro_factura*/
 END
 GO
 
