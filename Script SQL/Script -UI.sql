@@ -827,6 +827,10 @@ AS
 BEGIN
 	
 	DECLARE @cod_hab_estadia numeric(18,0)
+	SET @cod_hab_estadia = (SELECT he.cod_hab_estadia
+							FROM	THE_FOREIGN_FOUR.Facturas f,
+									THE_FOREIGN_FOUR.Habitaciones_Estadia he
+							WHERE f.cod_estadia = he.cod_estadia)
 
 	UPDATE THE_FOREIGN_FOUR.Facturas
 	SET total = (SELECT (SUM(c.precio * i.cantidad) + THE_FOREIGN_FOUR.calcular_precio_hab_estadia(@cod_hab_estadia))
