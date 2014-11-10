@@ -1048,11 +1048,14 @@ END
 GO
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
-				(@cod_estadia numeric(18,0))
+				(@cod_estadia numeric(18,0),
+				 @nro_factura numeric(18,0) OUTPUT)
 AS
 BEGIN
-	INSERT INTO THE_FOREIGN_FOUR.Facturas (cod_estadia, fecha_factura) 
-	VALUES (@cod_estadia, CAST(GETDATE() AS DATETIME))
+	SET @nro_factura = (SELECT THE_FOREIGN_FOUR.func_sgte_nro_factura ())
+	INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, cod_estadia, fecha_factura) 
+	VALUES (@nro_factura , @cod_estadia, CAST(GETDATE() AS DATETIME))
+	RETURN 
 END
 GO
 
