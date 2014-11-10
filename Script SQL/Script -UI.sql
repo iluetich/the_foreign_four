@@ -1046,3 +1046,13 @@ BEGIN
 	RETURN -1
 END
 GO
+--********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_usuario
+				(@usuario nvarchar(255))
+AS
+BEGIN
+	UPDATE THE_FOREIGN_FOUR.Usuarios
+	SET estado = 'I'
+	WHERE user_name = @usuario
+END
+GO
