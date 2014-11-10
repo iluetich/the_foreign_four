@@ -741,7 +741,8 @@ GO
 --******************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_facturas
 AS
-SELECT f.nro_factura, f.cod_estadia, i.nro_item, c.cod_consumible, c.descripcion, c.precio, i.cantidad, f.total
+SELECT f.nro_factura, f.cod_estadia, i.nro_item, c.cod_consumible, c.descripcion, 
+		(SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible)), i.cantidad, f.total
 FROM	THE_FOREIGN_FOUR.Facturas f, 
 		THE_FOREIGN_FOUR.ItemsFactura i,
 		THE_FOREIGN_FOUR.Consumibles c
