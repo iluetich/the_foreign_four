@@ -740,9 +740,10 @@ GO
 
 --******************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_facturas
+(nro_factura, cod_estadia, cod_consumible, descripcion, precio_unitario, cantidad, total_factura)
 AS
-SELECT f.nro_factura, f.cod_estadia, i.nro_item, c.cod_consumible, c.descripcion, 
-		(SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible)), i.cantidad, f.total
+SELECT f.nro_factura, f.cod_estadia, c.cod_consumible, c.descripcion, 
+		(SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, f.cod_estadia)), i.cantidad, f.total
 FROM	THE_FOREIGN_FOUR.Facturas f, 
 		THE_FOREIGN_FOUR.ItemsFactura i,
 		THE_FOREIGN_FOUR.Consumibles c
@@ -752,13 +753,13 @@ GO
 
 
 --***********************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.facturacion(@cod_estadia int)
+CREATE FUNCTION THE_FOREIGN_FOUR.facturacion(@nro_factura int)
 RETURNS TABLE
 AS
 RETURN(
 SELECT *
 FROM THE_FOREIGN_FOUR.view_facturas
-WHERE cod_estadia = @cod_estadia
+WHERE nro_factura = @nro_factura
 )
 GO
 
