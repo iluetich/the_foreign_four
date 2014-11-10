@@ -1232,12 +1232,6 @@ BEGIN
 
 END
 GO
-DECLARE @A INT
-EXEC @A = THE_FOREIGN_FOUR.proc_validar_check_in 110741, 12
-SELECT @A
-SELECT * FROM THE_FOREIGN_FOUR.Reservas
-
-EXEC THE_FOREIGN_FOUR.proc_generar_reserva 12, 12, 1, '20200101', '20200109', 'admin'
 --***************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_hab_hotel
 				(@cod_hotel numeric(18,0),
@@ -1319,14 +1313,28 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 ho.cod_hotel, SUM(cantidad)
+	RETURN (SELECT TOP 5 ho.cod_hotel, SUM(cantidad) AS 'consumibles'
 			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.Reservas res ON(ho.cod_hotel = res.cod_hotel)
 											 JOIN THE_FOREIGN_FOUR.Estadias es ON(res.cod_reserva = es.cod_estadia)
 											 JOIN THE_FOREIGN_FOUR.Facturas fa ON(es.cod_estadia = fa.cod_estadia)
 											 JOIN THE_FOREIGN_FOUR.ItemsFactura itf ON(fa.nro_factura = itf.nro_factura)
-			WHERE cod_consumible > 1000
+			WHERE	cod_consumible > 1000
+			AND		fa.fecha_factura BETWEEN @fecha_desde AND @fecha_hasta
 			GROUP BY ho.cod_hotel
-			ORDER BY SUM(cantidad))
+			ORDER BY 2 DESC)
+GO
+--TOP 5 HOTELES MAS INACTIVOS
+CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_inactividad_hotel
+					(@fecha_desde datetime,
+					 @fecha_hasta datetime)
+RETURNS TABLE
+AS
+	RETURN (SELECT TOP 5 ho.cod_hotel, SUM(DATEDIFF(day, ih.fecha_desde, ih.fecha_hasta)) AS 'dias inactivos'
+			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.InactividadHoteles ih ON(ho.cod_hotel = ih.cod_hotel)
+			WHERE	ih.fecha_desde >= @fecha_desde
+			AND		ih.fecha_hasta <= @fecha_hasta
+			GROUP BY ho.cod_hotel
+			ORDER BY 2 DESC)
 GO
 					 
 					 

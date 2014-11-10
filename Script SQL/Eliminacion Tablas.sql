@@ -30,6 +30,9 @@ DROP TABLE THE_FOREIGN_FOUR.Funcionalidades
 DROP TABLE THE_FOREIGN_FOUR.Roles 
 
 --*******FUNC / PROC / VIEWS *****************
+DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_inactividad_hotel
+DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel
+DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_cancelaciones_hotel
 DROP FUNCTION THE_FOREIGN_FOUR.func_estado_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.fecha_sys
 DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
