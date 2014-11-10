@@ -1123,7 +1123,7 @@ BEGIN
 		RETURN -1
 	END
 	
-	EXECUTE THE_FOREIGN_FOUR.proc_realizar_checkout @cod_estadia, @username 
+	--EXECUTE THE_FOREIGN_FOUR.proc_realizar_checkout @cod_estadia, @username 
 	RETURN 1
 END
 GO	

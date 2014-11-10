@@ -40,7 +40,6 @@
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.groupBotonera = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupHues.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosHuespedes)).BeginInit();
             this.groupBotonera.SuspendLayout();
@@ -158,7 +157,6 @@
             // 
             // groupBotonera
             // 
-            this.groupBotonera.Controls.Add(this.textBox1);
             this.groupBotonera.Controls.Add(this.btnAceptar);
             this.groupBotonera.Controls.Add(this.btnVolver);
             this.groupBotonera.Location = new System.Drawing.Point(13, 260);
@@ -166,13 +164,6 @@
             this.groupBotonera.Size = new System.Drawing.Size(433, 100);
             this.groupBotonera.TabIndex = 3;
             this.groupBotonera.TabStop = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(96, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(240, 20);
-            this.textBox1.TabIndex = 3;
             // 
             // frmRegistrarHuespedesRestantes
             // 
@@ -194,7 +185,6 @@
             this.groupHues.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosHuespedes)).EndInit();
             this.groupBotonera.ResumeLayout(false);
-            this.groupBotonera.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -214,6 +204,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.TextBox txtCantHuespedes;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }

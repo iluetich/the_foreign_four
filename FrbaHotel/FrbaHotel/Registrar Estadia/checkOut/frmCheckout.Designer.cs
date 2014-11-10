@@ -65,6 +65,7 @@
             this.btnMasDias.TabIndex = 0;
             this.btnMasDias.Text = "Quedarme mas dias";
             this.btnMasDias.UseVisualStyleBackColor = true;
+            this.btnMasDias.Click += new System.EventHandler(this.btnMasDias_Click);
             // 
             // btnVolver
             // 

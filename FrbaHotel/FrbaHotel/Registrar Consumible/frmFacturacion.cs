@@ -12,13 +12,16 @@ namespace FrbaHotel.Registrar_Consumible
     public partial class frmFacturacion : Form
     {
         frmRegistrarConsumible frmRegistrarConsumiblePadre;
+        private long nroFactura;
 
         public frmFacturacion(){ InitializeComponent();}
-        public frmFacturacion(frmRegistrarConsumible newForm)
+        public frmFacturacion(frmRegistrarConsumible newForm,long nroFacturaParametro)
         {
+            nroFactura = nroFacturaParametro;
             InitializeComponent();
             frmRegistrarConsumiblePadre = newForm;
 
+            FrbaHotel.Utils.rellenarDataGridView(dgvFacturaDetalle, "SELECT * FROM THE_FOREIGN_FOUR.facturacion ("+ nroFactura +")");
         }
 
         private void btnEmitirFactura_Click(object sender, EventArgs e)

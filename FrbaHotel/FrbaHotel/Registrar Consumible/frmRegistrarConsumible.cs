@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Registrar_Estadia;
 using FrbaHotel.Registrar_Estadia.checkOut;
+using System.Data.SqlClient;
 
 namespace FrbaHotel.Registrar_Consumible
 {
@@ -17,6 +18,7 @@ namespace FrbaHotel.Registrar_Consumible
         frmInicioEstadia frmInicioEstadiaPadre;
         frmCheckout frmCheckoutPadre;
         int fila;
+        private long nroFactura;
 
         public frmRegistrarConsumible(){InitializeComponent();}
 
@@ -28,18 +30,42 @@ namespace FrbaHotel.Registrar_Consumible
             
         }
 
-        public frmRegistrarConsumible(frmCheckout newForm, frmInicioEstadia newFormInicioEstadia)
+        public frmRegistrarConsumible(frmCheckout newForm, frmInicioEstadia newFormInicioEstadia,long nroFacturaParametro)
         {
+            nroFactura = nroFacturaParametro;
             InitializeComponent();
             frmCheckoutPadre = newForm;
             frmInicioEstadiaPadre = newFormInicioEstadia;
-            
-
         }
 
         private void bntAceptar_Click(object sender, EventArgs e)
         {
-            new frmFacturacion(this).Show();
+            //registrar los consumibles por factura
+            for (int i = 0; i < dgvConsumibles.RowCount - 1; i++)
+            {
+                DataGridViewRow fila = dgvConsumibles.Rows[i];
+
+                SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_registrar_consumible", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@nro_factura", nroFactura);
+                cmd.Parameters.AddWithValue("@cod_consumible",long.Parse(fila.Cells[0].Value.ToString()));
+                cmd.Parameters.AddWithValue("@cantidad", int.Parse(fila.Cells[1].Value.ToString()));
+
+                cmd.ExecuteNonQuery();
+            }
+
+            //confirmo factura
+
+            SqlCommand cmd2 = new SqlCommand("THE_FOREIGN_FOUR.confirmar_factura", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd2.CommandType = CommandType.StoredProcedure;
+
+            cmd2.Parameters.AddWithValue("@nro_factura", nroFactura);
+
+            cmd2.ExecuteNonQuery();
+            //-------------------------------
+
+            new frmFacturacion(this,nroFactura).Show();
             this.Enabled = false;
         }
 

@@ -82,9 +82,31 @@ namespace FrbaHotel.Registrar_Estadia
         {
             if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodEstadia, "Codigo estadia"))
             {
-                new frmCheckout(this).Show();
-                this.Enabled = false;
+                object resultado = this.ejecutarConsultaLong("SELECT THE_FOREIGN_FOUR.func_check_out (" + txtCodEstadia.Text + ",'"+ user +"')");
+
+                if (int.Parse(resultado.ToString()) == 1)
+                {
+                    new frmCheckout(this,txtCodEstadia.Text,user).Show();
+                    this.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("ERROR no existe la estadia o la estadia ya finalizo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
+        }
+
+        public object ejecutarConsultaLong(string consulta)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = consulta;
+
+            cmd.CommandType = CommandType.Text;
+
+            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+
+            return cmd.ExecuteScalar();
         }
 
         private void botonVolver_Click(object sender, EventArgs e)
