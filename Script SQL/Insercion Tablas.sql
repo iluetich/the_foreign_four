@@ -126,6 +126,32 @@ SELECT DISTINCT (SELECT c.cod_cliente
 				 AND	e.cod_reserva = m.Reserva_Codigo)
 FROM gd_esquema.Maestra m
 
+--***TIPOHABITACION POR RESERVAS********************************
+
+INSERT INTO THE_FOREIGN_FOUR.TipoHabitacion_Reservas (cod_reserva, cod_tipo_hab)
+SELECT DISTINCT (SELECT cod_reserva
+	    FROM THE_FOREIGN_FOUR.Reservas r
+	    WHERE r.cod_reserva = m.Reserva_Codigo) AS 'CODIGO_RESERVA',
+	   (SELECT cod_tipo_hab
+	    FROM THE_FOREIGN_FOUR.TipoHabitaciones th
+	    WHERE	th.cod_tipo_hab = m.Habitacion_Tipo_Codigo) AS 'CODIGO_TIPO_HAB'
+
+FROM gd_esquema.Maestra m
+ --***HABITACIONES POR ESTADIA**********************************
+ 
+INSERT INTO THE_FOREIGN_FOUR.Habitaciones_Estadia (cod_estadia, cod_habitacion)
+SELECT DISTINCT (SELECT cod_estadia	
+				 FROM THE_FOREIGN_FOUR.Estadias e
+				 WHERE e.cod_reserva = m.Reserva_Codigo) AS 'COD_ESTADIA',
+				(SELECT cod_habitacion
+				 FROM THE_FOREIGN_FOUR.Habitaciones h
+				 WHERE	h.nro_habitacion = m.Habitacion_Numero
+				 AND	h.cod_hotel = (SELECT cod_hotel
+									  FROM THE_FOREIGN_FOUR.Hoteles ho
+									  WHERE ho.ciudad = m.Hotel_Ciudad
+									  AND	ho.nom_calle = m.Hotel_Calle
+									  AND	ho.nro_calle = m.Hotel_Nro_Calle)) AS 'COD_HABITACION'
+FROM gd_esquema.Maestra m
 
 --***JUEGO DE DATOS************************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos
@@ -137,4 +163,6 @@ DROP TRIGGER THE_FOREIGN_FOUR.trg_estadias_error
 DROP TRIGGER THE_FOREIGN_FOUR.trg_facturas_error
 DROP TRIGGER THE_FOREIGN_FOUR.trg_clientes_por_estadia_err
 DROP TRIGGER THE_FOREIGN_FOUR.trg_itemsFactura_error
+DROP TRIGGER THE_FOREIGN_FOUR.trg_habitaciones_estadia
+DROP TRIGGER THE_FOREIGN_FOUR.trg_tipohab_reservas
 
