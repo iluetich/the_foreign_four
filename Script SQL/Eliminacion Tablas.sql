@@ -82,6 +82,7 @@ DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_rol
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_habitacion  
 DROP PROCEDURE THE_FOREIGN_FOUR.porc_insercion_estados_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_realizar_checkout
+DROP PROCEDURE THE_FOREIGN_FOUR.confirmar_factura
 DROP VIEW THE_FOREIGN_FOUR.view_hoteles 
 DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades_rol 
 DROP VIEW THE_FOREIGN_FOUR.view_roles_hoteles_usuarios 

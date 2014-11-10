@@ -953,6 +953,79 @@ BEGIN
 END
 GO
 
+--**********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.confirmar_factura (@nro_factura numeric(18,0))
+AS
+BEGIN
+	DECLARE @cod_regimen numeric(18,0),
+			@cod_all_inclusive numeric(18,0),
+			@cod_consumible_inclusive numeric(18,0),
+			@cod_consumible_noches numeric(18,0),
+			@cod_consumible_estadia numeric(18,0),
+			@fecha_check_out datetime,
+			@fecha_ideal datetime,
+			@noches_estadia numeric(18,0),
+			@noches_sin_usar numeric(18,0)
+	
+	SET @cod_regimen = (SELECT r.cod_regimen
+						FROM	THE_FOREIGN_FOUR.Facturas f,
+								THE_FOREIGN_FOUR.Estadias e,
+								THE_FOREIGN_FOUR.Reservas r
+						WHERE f.nro_factura = @nro_factura
+						AND	f.cod_estadia = e.cod_estadia
+						AND e.cod_reserva = r.cod_reserva)
+						
+	SET @cod_all_inclusive = (SELECT cod_regimen
+								FROM THE_FOREIGN_FOUR.Regimenes
+								WHERE descripcion = 'All inclusive')	
+								
+	SET @cod_consumible_inclusive = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('descuento all inclusive'))
+	SET @cod_consumible_estadia = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('estadia'))
+	SET @cod_consumible_noches = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('noches no utilizadas'))
+	SET @fecha_check_out = (SELECT fecha
+							FROM THE_FOREIGN_FOUR.AuditoriaEstadias
+							WHERE cod_operacion = 'O'
+							AND cod_estadia = (SELECT cod_estadia
+												FROM THE_FOREIGN_FOUR.Facturas
+												WHERE nro_factura = @nro_factura))
+	
+	SET @fecha_ideal = (SELECT r.fecha_hasta
+						FROM THE_FOREIGN_FOUR.Reservas r,
+								THE_FOREIGN_FOUR.Estadias e,
+								THE_FOREIGN_FOUR.Facturas f
+						WHERE f.nro_factura = @nro_factura
+						AND f.cod_estadia = e.cod_estadia
+						AND r.cod_reserva = e.cod_reserva)
+	
+	SET @noches_sin_usar = DATEDIFF( DAY, @fecha_ideal,@fecha_check_out)
+	
+	SET @noches_estadia = (SELECT r.cant_noches
+							FROM THE_FOREIGN_FOUR.Reservas r,
+								 THE_FOREIGN_FOUR.Facturas f,
+								 THE_FOREIGN_FOUR.Estadias e
+							WHERE f.nro_factura = @nro_factura
+							AND f.cod_estadia = e.cod_estadia
+							AND r.cod_reserva = e.cod_reserva) - @noches_sin_usar
+		
+							
+	IF (@cod_regimen = @cod_all_inclusive)
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cod_consumible, cantidad, nro_factura)
+		VALUES (@cod_consumible_inclusive, 1, @nro_factura)
+	END
+	
+	IF(@noches_sin_usar > 0 )
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cod_consumible, cantidad, nro_factura)
+		VALUES (@cod_consumible_noches, @noches_sin_usar, @nro_factura)
+	END
+	
+	INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cod_consumible, cantidad, nro_factura)
+		VALUES (@cod_consumible_estadia, @noches_estadia, @nro_factura)
+	
+END
+GO
+
 
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_existe_factura
