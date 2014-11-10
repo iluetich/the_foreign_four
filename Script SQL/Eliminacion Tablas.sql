@@ -30,6 +30,9 @@ DROP TABLE THE_FOREIGN_FOUR.Funcionalidades
 DROP TABLE THE_FOREIGN_FOUR.Roles 
 
 --*******FUNC / PROC / VIEWS *****************
+DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_inactividad_hotel
+DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel
+DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_cancelaciones_hotel
 DROP FUNCTION THE_FOREIGN_FOUR.func_estado_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.fecha_sys
 DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
@@ -82,6 +85,7 @@ DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_rol
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_habitacion  
 DROP PROCEDURE THE_FOREIGN_FOUR.porc_insercion_estados_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_realizar_checkout
+DROP PROCEDURE THE_FOREIGN_FOUR.confirmar_factura
 DROP VIEW THE_FOREIGN_FOUR.view_hoteles 
 DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades_rol 
 DROP VIEW THE_FOREIGN_FOUR.view_roles_hoteles_usuarios 
