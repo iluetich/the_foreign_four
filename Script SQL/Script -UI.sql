@@ -860,7 +860,30 @@ BEGIN
 END
 GO
 
-
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_existe_factura
+				(@cod_estadia numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF (NOT EXISTS (SELECT nro_factura
+				FROM THE_FOREIGN_FOUR.Facturas
+				WHERE cod_estadia = @cod_estadia))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--***********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
+				(@cod_estadia numeric(18,0))
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.Facturas (cod_estadia, fecha_factura) 
+	VALUES (@cod_estadia, CAST(GETDATE() AS DATETIME))
+END
+GO
 --***********************************************************
 CREATE TRIGGER THE_FOREIGN_FOUR.trg_separar_factura
 ON THE_FOREIGN_FOUR.view_facturas
