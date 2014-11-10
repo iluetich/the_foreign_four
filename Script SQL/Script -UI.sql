@@ -1093,3 +1093,31 @@ BEGIN
 	WHERE user_name = @usuario
 END
 GO
+--********************************************************
+
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_consumible
+				(@cod_consumible numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF(EXISTS (SELECT cod_consumible
+			   FROM THE_FOREIGN_FOUR.Consumibles
+			   WHERE cod_consumible = @cod_consumible))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
+				(@nro_factura numeric(18,0),
+				 @cod_consumible numeric(18,0),
+				 @cantidad	int)
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.view_facturas (nro_factura, cod_consumible, cantidad)
+	VALUES	(@nro_factura, @cod_consumible, @cantidad)
+END
+GO
+--**********************************************************
