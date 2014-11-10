@@ -217,7 +217,6 @@ CREATE TABLE THE_FOREIGN_FOUR.TipoHabitacion_Reservas (
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
 	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 )
-	
 CREATE TABLE THE_FOREIGN_FOUR.AuditoriaEstadias (
 	cod_audit			int						IDENTITY(1,1) PRIMARY KEY,
 	cod_usuario			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Usuarios,
