@@ -208,9 +208,9 @@ CREATE TABLE THE_FOREIGN_FOUR.UsuariosPorHotel (
 	PRIMARY KEY(cod_usuario, cod_hotel)
 )
 CREATE TABLE THE_FOREIGN_FOUR.Habitaciones_Estadia (
+	cod_hab_estadia		numeric(18,0)			PRIMARY KEY IDENTITY(1,1),
 	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
 	cod_habitacion		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Habitaciones
-	PRIMARY KEY(cod_estadia, cod_habitacion)
 )
 CREATE TABLE THE_FOREIGN_FOUR.TipoHabitacion_Reservas (
 	cod_hab_reserva		numeric(18,0)			PRIMARY KEY IDENTITY(1,1),
