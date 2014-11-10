@@ -62,11 +62,45 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (validaClientes()){
+            if (validaClientes())
+            {
+                //NACHO----------------------(agrega los huespedes a la tabla huespedes por estadia)
+                //OBTENER EL COD DE ESTADIA GENERADO POR LA RESERVA
+                object cod_estadia = this.ejecutarConsultaLong("SELECT THE_FOREIGN_FOUR.func_obtener_estadia (" + codigoReserva + ")");
+
+                //REGISTRA EL HUESPED EN LA ESTADIA
+                for(int i = 0;i < dgvDatosHuespedes.RowCount ;i++)
+                {
+                    //obtener el codigo de cliente por cada fila del data grid
+                    string consulta = "SELECT cod_cliente FROM THE_FOREIGN_FOUR.buscar_clientes(NULL,NULL,NULL,"+ int.Parse(dgvDatosHuespedes.Rows[i].Cells[1].Value.ToString()) +",NULL)";
+                    object codigoCliente = this.ejecutarConsultaLong(consulta);
+
+                    SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_registrar_huesped", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@cod_cliente",long.Parse(codigoCliente.ToString()));
+                    cmd.Parameters.AddWithValue("@cod_estadia",long.Parse(cod_estadia.ToString())); 
+
+                    cmd.ExecuteNonQuery();
+                }
+                //------------------------------------------------------------------
                 MessageBox.Show("Felicidades ha hecho checkIN", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
                 frmRegistrarEstadiaPadre.Close();
             }
+        }
+
+        public object ejecutarConsultaLong(string consulta)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = consulta;
+
+            cmd.CommandType = CommandType.Text;
+
+            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+
+            return cmd.ExecuteScalar();
         }
         //----------------------FIN BOTONES--------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------

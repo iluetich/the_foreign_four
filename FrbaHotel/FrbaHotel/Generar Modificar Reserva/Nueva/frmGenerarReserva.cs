@@ -170,6 +170,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 //cargo codigo hotel
                 DataRow codRowHotel = dataSetHotel.Tables[0].Rows[cmbHotel.SelectedIndex];
                 codigoHotel = codRowHotel["cod_hotel"].ToString();
+<<<<<<< HEAD
+=======
+
+                string fechaDesde = dtpFechaDesde.Value.ToString("yyyy-dd-MM");
+                string fechaHasta = dtpFechaHasta.Value.ToString("yyyy-dd-MM");
+                string consultaSQL = "select THE_FOREIGN_FOUR.func_hab_disponibles(" + codigoHotel + "," + codigoTipoHabitacion + ",'" + fechaDesde + "','" + fechaHasta + "')";
+                SqlCommand cmd = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                cantidadHabDispPorHotelYPorTipoHab = Convert.ToInt32(cmd.ExecuteScalar());
+>>>>>>> 3614dbdaa3339f94df8f6592aaa170d8f4f80080
             }
         }       
 

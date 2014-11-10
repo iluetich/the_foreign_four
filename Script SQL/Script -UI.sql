@@ -15,7 +15,7 @@ RETURNS int
 AS
 BEGIN
 	IF(EXISTS (SELECT cod_cliente
-			   FROM THE_FOREIGN_FOUR.Clientes
+			   FROM THE_FOREIGN_FOUR.buscar_clientes (NULL, NULL, NULL, NULL, @mail)
 			   WHERE mail = @mail))
 	BEGIN
 		RETURN 1
@@ -44,7 +44,7 @@ BEGIN
 	VALUES ((SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), (SELECT cod_estadia FROM THE_FOREIGN_FOUR.Estadias WHERE cod_reserva = @cod_reserva), 'I')
 	
 	UPDATE THE_FOREIGN_FOUR.Reservas
-	SET cod_estado_reserva  = (SELECT cod_estado_reserva
+	SET cod_estado_reserva  = (SELECT cod_estado
 								FROM THE_FOREIGN_FOUR.EstadosReserva
 								WHERE descripcion = 'efectivizada')
 	WHERE cod_reserva = @cod_reserva
@@ -148,6 +148,7 @@ AS
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET fecha_desde = @fecha_desde,
 		fecha_hasta = @fecha_hasta,
+		cant_noches = DATEDIFF(DAY, @fecha_desde, @fecha_hasta),
 		cod_regimen = @cod_regimen,
 		usuario = (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)),
 		cod_estado_reserva = (SELECT cod_estado
@@ -590,68 +591,72 @@ BEGIN
 			(1, 6, 4), (1, 7, 4), (1, 8, 4), (1, 9, 4), (1, 10, 4),
 			(1, 11, 4), (1, 12, 4), (1, 13, 4), (1, 14, 4), (1, 15, 4), 
 			(1, 16, 4)
+			
+	INSERT INTO THE_FOREIGN_FOUR.Consumibles (cod_consumible, descripcion)
+	VALUES (1, 'estadia'), (2, 'descuento all inclusive'), (3, 'noches no utilizadas')
+
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Conrad'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 1;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Hilton'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 2;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Sheraton'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 3;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Palacio Duhau'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 4;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Melia'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 5;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Madero'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 6;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Alvear Palace'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 7;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Intercontinental'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 8;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Emeperador'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 9;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'BA Grand Hotel'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 10;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Four Seasons'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 11;
-
+	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Faena'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 12;
 
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Regal Pacific'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 13;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Hotel Club Frances'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 14;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Caesar Park'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 15;
 	
 	UPDATE THE_FOREIGN_FOUR.Hoteles 
-	SET nombre = 'Claridge'
+	SET nombre = nom_calle + ' ' + CAST(nro_calle AS nvarchar(10))
 	WHERE cod_hotel = 16;
 	
 END	
@@ -733,41 +738,17 @@ RETURN
 )
 GO
 
---******************************************************
-CREATE VIEW THE_FOREIGN_FOUR.view_facturas
-AS
-SELECT f.nro_factura, f.cod_estadia, i.nro_item, c.cod_consumible, c.descripcion, c.precio, i.cantidad, f.total
-FROM	THE_FOREIGN_FOUR.Facturas f, 
-		THE_FOREIGN_FOUR.ItemsFactura i,
-		THE_FOREIGN_FOUR.Consumibles c
-WHERE f.nro_factura = i.nro_factura
-AND c.cod_consumible = i.cod_consumible
-GO
-
-
---***********************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.facturacion(@cod_estadia int)
-RETURNS TABLE
-AS
-RETURN(
-SELECT *
-FROM THE_FOREIGN_FOUR.view_facturas
-WHERE cod_estadia = @cod_estadia
-)
-GO
-
 --**************************************************************
-
+--lo calcula por dia, si queres saber toda una estadia lo tenes que multiplicar por la cant de noches
 CREATE FUNCTION THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen		numeric(18,0),
 														@cod_hotel		numeric(18,0),
-														@cod_tipo_hab	numeric(18,0),
-														@cant_noches		int)
+														@cod_tipo_hab	numeric(18,0))
 RETURNS numeric(18,2)
 AS
 BEGIN
 RETURN(
 
-	SELECT DISTINCT	( ((r.precio* th.capacidad) + (h.cant_estrellas * h.recarga_estrellas))*@cant_noches)
+	SELECT DISTINCT	( ((r.precio* th.capacidad*th.recargo) + (h.cant_estrellas * h.recarga_estrellas)))
 	FROM	THE_FOREIGN_FOUR.Regimenes r,
 			THE_FOREIGN_FOUR.view_tipo_hab th,
 			THE_FOREIGN_FOUR.Hoteles h,
@@ -778,7 +759,6 @@ RETURN(
 )
 END
 GO
-
 --**********************************************************
 /*
 El valor de la habitación se obtiene a través de su precio base 
@@ -787,7 +767,7 @@ alojarán en la habitación (tipo de habitación) y luego de ello aplicando
 un incremento en función de la categoría del Hotel (cantidad de estrellas)
 */
 
-CREATE FUNCTION THE_FOREIGN_FOUR.calcular_precio_hab_estadia(@cod_hab_estadia numeric(18,0))
+CREATE FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia numeric(18,0))
 RETURNS numeric(18,2)
 AS
 BEGIN
@@ -798,27 +778,22 @@ DECLARE @cod_regimen numeric(18,0),
 		@cant_noches numeric(18,0)
 
 	SET @cod_regimen = (SELECT DISTINCT res.cod_regimen
-						FROM	THE_FOREIGN_FOUR.Habitaciones_Estadia he,
-								THE_FOREIGN_FOUR.Reservas res,
+						FROM	THE_FOREIGN_FOUR.Reservas res,
 								THE_FOREIGN_FOUR.Estadias e
-						WHERE he.cod_estadia = e.cod_estadia
-						AND	he.cod_hab_estadia = @cod_hab_estadia
+						WHERE e.cod_estadia = @cod_estadia
 						AND e.cod_reserva = res.cod_reserva)
 	
 	SET @cant_noches = (SELECT	res.cant_noches
 						FROM	THE_FOREIGN_FOUR.Reservas res,
-								THE_FOREIGN_FOUR.Estadias e,
-								THE_FOREIGN_FOUR.Habitaciones_Estadia he
-						WHERE	he.cod_estadia = e.cod_estadia
-						AND		he.cod_hab_estadia = @cod_hab_estadia
-						AND		e.cod_reserva = res.cod_reserva)
+								THE_FOREIGN_FOUR.Estadias e
+						WHERE e.cod_estadia = @cod_estadia
+						AND e.cod_reserva = res.cod_reserva)
+	
 						
 	SET @cod_hotel = (SELECT	res.cod_hotel
 						FROM	THE_FOREIGN_FOUR.Reservas res,
-								THE_FOREIGN_FOUR.Estadias e,
-								THE_FOREIGN_FOUR.Habitaciones_Estadia he
-						WHERE	he.cod_estadia = e.cod_estadia
-						AND		he.cod_hab_estadia = @cod_hab_estadia
+								THE_FOREIGN_FOUR.Estadias e
+						WHERE   e.cod_estadia = @cod_estadia
 						AND		e.cod_reserva = res.cod_reserva)
 						
 	SET @cod_tipo_hab = (SELECT	ha.cod_tipo_hab
@@ -826,40 +801,271 @@ DECLARE @cod_regimen numeric(18,0),
 									THE_FOREIGN_FOUR.Habitaciones_Estadia he,
 									THE_FOREIGN_FOUR.Habitaciones ha
 							WHERE	he.cod_estadia = e.cod_estadia
-							AND		he.cod_hab_estadia = @cod_hab_estadia
+							AND		e.cod_estadia = @cod_estadia
 							AND		ha.cod_habitacion = he.cod_habitacion)
 						
 						
 						
-	RETURN(	SELECT THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen, @cod_hotel, @cod_tipo_hab, @cant_noches )
-)
+	RETURN( SELECT THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen, @cod_hotel, @cod_tipo_hab))
 END
 GO
 
+--********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.buscar_cod_consumible (@descripcion nvarchar(255))
+RETURNS numeric(18,0)
+AS
+BEGIN
+RETURN(SELECT cod_consumible
+		FROM THE_FOREIGN_FOUR.Consumibles
+		WHERE descripcion = @descripcion)
+END
+GO
 
+--*******************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_calcular_total_consumibles_posta (@cod_estadia numeric(18,0))
+RETURNS numeric(18,2)
+AS
+BEGIN
 
+	DECLARE @total numeric(18,2),
+			@nro_factura numeric(18,0),
+			@cod_cons_estadia numeric(18,0),
+			@cod_cons_all_inc numeric(18,0),
+			@cod_cons_noches_canc numeric(18,0)
+			
+	SET @cod_cons_estadia = THE_FOREIGN_FOUR.buscar_cod_consumible('estadia')
+	SET @cod_cons_all_inc = THE_FOREIGN_FOUR.buscar_cod_consumible ('descuento all inclusive')
+	SET @cod_cons_noches_canc = THE_FOREIGN_FOUR.buscar_cod_consumible ('noches no utilizadas')
+								
+SET @nro_factura = (SELECT nro_factura
+					FROM THE_FOREIGN_FOUR.Facturas
+					WHERE cod_estadia = @cod_estadia)
+
+SET @total = (SELECT(SUM(c.precio * i.cantidad))
+				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
+				WHERE c.cod_consumible = i.cod_consumible
+				AND i.nro_factura = @nro_factura
+				AND c.cod_consumible != @cod_cons_all_inc
+				AND c.cod_consumible != @cod_cons_estadia
+				AND c.cod_consumible != @cod_cons_noches_canc)
+				
+RETURN @total
+
+END
+GO
+--***********************************************************
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_get_precio (@cod_consumible numeric(18,0), @cod_estadia numeric(18,0))
+RETURNS numeric(18,0)
+AS
+BEGIN
+	DECLARE @cod_cons_estadia numeric(18,0),
+			@cod_cons_all_inc numeric(18,0),
+			@cod_cons_noches_canc numeric(18,0),
+			@precio numeric(18,2),
+			@costo_hab_dia numeric(18,2)
+			
+	SET @cod_cons_estadia = THE_FOREIGN_FOUR.buscar_cod_consumible ('estadia')
+	SET @cod_cons_all_inc = THE_FOREIGN_FOUR.buscar_cod_consumible ('descuento all inclusive')
+	SET @cod_cons_noches_canc = THE_FOREIGN_FOUR.buscar_cod_consumible ('noches no utilizadas')
+								
+	SET @costo_hab_dia = (SELECT THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia))
+	
+	SET @precio = (SELECT
+					CASE @cod_consumible
+						WHEN @cod_cons_estadia THEN @costo_hab_dia /* precio estadia*/ 
+						WHEN @cod_cons_all_inc THEN -(SELECT THE_FOREIGN_FOUR.func_calcular_total_consumibles_posta(@cod_estadia)) /*resta all inclusive*/
+						WHEN @cod_cons_noches_canc THEN @costo_hab_dia /*noches no utilizadas*/
+						ELSE (SELECT precio  
+								FROM THE_FOREIGN_FOUR.Consumibles
+								WHERE cod_consumible = @cod_consumible)
+						END)
+	
+	RETURN @precio
+END
+GO									
 --****************************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS
 BEGIN
 	
-	DECLARE @cod_hab_estadia numeric(18,0)
-	SET @cod_hab_estadia = (SELECT he.cod_hab_estadia
-							FROM	THE_FOREIGN_FOUR.Facturas f,
-									THE_FOREIGN_FOUR.Habitaciones_Estadia he
-							WHERE f.cod_estadia = he.cod_estadia)
-
+	DECLARE @cod_estadia numeric(18,0), 
+			@total numeric(18,2),
+			@sub_total numeric(18,2)
+	SET @cod_estadia = (SELECT f.cod_estadia
+						FROM	THE_FOREIGN_FOUR.Facturas f
+						WHERE nro_factura = @nro_factura)
+			
+	
+	SELECT (THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, @cod_estadia) * i.cantidad) 'subtotal'
+	INTO THE_FOREIGN_FOUR.#subtotales
+	FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
+	WHERE c.cod_consumible = i.cod_consumible
+	AND i.nro_factura = @nro_factura
+	GROUP BY i.nro_item, cantidad, c.cod_consumible
+	
+	
+	SET @total = (SELECT SUM (subtotal)
+					FROM THE_FOREIGN_FOUR.#subtotales)
+	
 	UPDATE THE_FOREIGN_FOUR.Facturas
-	SET total = (SELECT (SUM(c.precio * i.cantidad) + THE_FOREIGN_FOUR.calcular_precio_hab_estadia(@cod_hab_estadia))
-				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i, THE_FOREIGN_FOUR.Facturas f
-				WHERE c.cod_consumible = i.cod_consumible
-				AND f.nro_factura = i.nro_factura
-				AND i.nro_factura = @nro_factura
-				GROUP BY f.cod_estadia)
+	SET total = @total
 	WHERE nro_factura = @nro_factura
+	
+	DROP TABLE THE_FOREIGN_FOUR.#subtotales
+	
 END
 GO
 
+--******************************************************
+
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_estadia (@cod_reserva numeric(18,0))
+RETURNS numeric(18,0)
+AS
+BEGIN
+	RETURN (SELECT DISTINCT cod_estadia
+			FROM THE_FOREIGN_FOUR.Estadias
+			WHERE cod_reserva = @cod_reserva)
+END
+GO
+
+--**********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.confirmar_factura (@nro_factura numeric(18,0))
+AS
+BEGIN
+	DECLARE @cod_regimen numeric(18,0),
+			@cod_all_inclusive numeric(18,0),
+			@cod_consumible_inclusive numeric(18,0),
+			@cod_consumible_noches numeric(18,0),
+			@cod_consumible_estadia numeric(18,0),
+			@fecha_check_out datetime,
+			@fecha_ideal datetime,
+			@noches_estadia numeric(18,0),
+			@noches_sin_usar numeric(18,0)
+	
+	SET @cod_regimen = (SELECT r.cod_regimen
+						FROM	THE_FOREIGN_FOUR.Facturas f,
+								THE_FOREIGN_FOUR.Estadias e,
+								THE_FOREIGN_FOUR.Reservas r
+						WHERE f.nro_factura = @nro_factura
+						AND	f.cod_estadia = e.cod_estadia
+						AND e.cod_reserva = r.cod_reserva)
+						
+	SET @cod_all_inclusive = (SELECT cod_regimen
+								FROM THE_FOREIGN_FOUR.Regimenes
+								WHERE descripcion = 'All inclusive')	
+								
+	SET @cod_consumible_inclusive = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('descuento all inclusive'))
+	SET @cod_consumible_estadia = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('estadia'))
+	SET @cod_consumible_noches = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('noches no utilizadas'))
+	SET @fecha_check_out = (SELECT fecha
+							FROM THE_FOREIGN_FOUR.AuditoriaEstadias
+							WHERE cod_operacion = 'O'
+							AND cod_estadia = (SELECT cod_estadia
+												FROM THE_FOREIGN_FOUR.Facturas
+												WHERE nro_factura = @nro_factura
+												))
+	
+	SET @fecha_ideal = (SELECT r.fecha_hasta
+						FROM THE_FOREIGN_FOUR.Reservas r,
+								THE_FOREIGN_FOUR.Estadias e,
+								THE_FOREIGN_FOUR.Facturas f
+						WHERE f.nro_factura = @nro_factura
+						AND f.cod_estadia = e.cod_estadia
+						AND r.cod_reserva = e.cod_reserva)
+	
+	SET @noches_sin_usar = DATEDIFF(DAY, @fecha_check_out, @fecha_ideal)
+	
+	SET @noches_estadia = (SELECT r.cant_noches
+							FROM THE_FOREIGN_FOUR.Reservas r,
+								 THE_FOREIGN_FOUR.Facturas f,
+								 THE_FOREIGN_FOUR.Estadias e
+							WHERE f.nro_factura = @nro_factura
+							AND f.cod_estadia = e.cod_estadia
+							AND r.cod_reserva = e.cod_reserva) - @noches_sin_usar
+		
+							
+	IF (@cod_regimen = @cod_all_inclusive)
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cod_consumible, cantidad, nro_factura)
+		VALUES (@cod_consumible_inclusive, 1, @nro_factura)
+	END
+	
+	IF(@noches_sin_usar > 0 )
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cod_consumible, cantidad, nro_factura)
+		VALUES (@cod_consumible_noches, @noches_sin_usar, @nro_factura)
+	END
+	
+	INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cod_consumible, cantidad, nro_factura)
+	VALUES (@cod_consumible_estadia, @noches_estadia, @nro_factura)
+		
+		
+	EXECUTE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura
+	
+	UPDATE THE_FOREIGN_FOUR.Estadias
+	SET cant_noches = @noches_estadia
+	WHERE cod_estadia = (SELECT cod_estadia
+						FROM THE_FOREIGN_FOUR.Facturas
+						WHERE nro_factura = @nro_factura)
+												
+	
+END
+GO
+
+
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_existe_factura
+				(@cod_estadia numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF (NOT EXISTS (SELECT nro_factura
+				FROM THE_FOREIGN_FOUR.Facturas
+				WHERE cod_estadia = @cod_estadia))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--***********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
+				(@cod_estadia numeric(18,0),
+				 @nro_factura numeric(18,0) OUTPUT)
+AS
+BEGIN
+	SET @nro_factura = (SELECT THE_FOREIGN_FOUR.func_sgte_nro_factura ())
+	INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, cod_estadia, fecha_factura) 
+	VALUES (@nro_factura , @cod_estadia, CAST(GETDATE() AS DATETIME))
+	RETURN 
+END
+GO
+
+--******************************************************
+CREATE VIEW THE_FOREIGN_FOUR.view_facturas
+(nro_factura, cod_estadia, cod_consumible, descripcion, precio_unitario, cantidad, total_factura)
+AS
+SELECT f.nro_factura, f.cod_estadia, c.cod_consumible, c.descripcion, 
+		(SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, f.cod_estadia)), i.cantidad, f.total
+FROM	THE_FOREIGN_FOUR.Facturas f, 
+		THE_FOREIGN_FOUR.ItemsFactura i,
+		THE_FOREIGN_FOUR.Consumibles c
+WHERE f.nro_factura = i.nro_factura
+AND c.cod_consumible = i.cod_consumible
+GO
+
+
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.facturacion(@nro_factura int)
+RETURNS TABLE
+AS
+RETURN(
+SELECT *
+FROM THE_FOREIGN_FOUR.view_facturas
+WHERE nro_factura = @nro_factura
+)
+GO
 
 --***********************************************************
 CREATE TRIGGER THE_FOREIGN_FOUR.trg_separar_factura
@@ -887,8 +1093,6 @@ BEGIN
 		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cod_consumible, @cantidad
 	
 	END
-	
-	EXECUTE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura
 	
 	CLOSE TrigInsCursor;
 	DEALLOCATE TrigInsCursor;
@@ -1070,3 +1274,87 @@ BEGIN
 	WHERE user_name = @usuario
 END
 GO
+--********************************************************
+
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_consumible
+				(@cod_consumible numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF(EXISTS (SELECT cod_consumible
+			   FROM THE_FOREIGN_FOUR.Consumibles
+			   WHERE cod_consumible = @cod_consumible))
+	BEGIN
+		RETURN 1
+	END
+	RETURN -1
+END
+GO
+--********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
+				(@nro_factura numeric(18,0),
+				 @cod_consumible numeric(18,0),
+				 @cantidad	int)
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.view_facturas (nro_factura, cod_consumible, cantidad)
+	VALUES	(@nro_factura, @cod_consumible, @cantidad)
+END
+GO
+--**********************************************************
+
+
+
+/* LISTADO ESTADISTICO */
+
+
+
+--TOP 5 HOTELES MAS CANCELACIONES
+CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_cancelaciones_hotel
+					(@fecha_desde datetime,
+					 @fecha_hasta datetime)
+RETURNS TABLE
+AS
+	RETURN (SELECT TOP 5 ho.cod_hotel, COUNT(ca.cod_cancelacion) AS 'cancelaciones'
+			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.Reservas res ON(ho.cod_hotel = res.cod_hotel)
+											 JOIN THE_FOREIGN_FOUR.Cancelaciones ca ON(res.cod_reserva = ca.cod_reserva)
+			WHERE ca.fecha_operacion BETWEEN @fecha_desde AND @fecha_hasta
+			GROUP BY ho.cod_hotel
+			ORDER BY 2 DESC)
+GO
+--TOP 5 HOTELES MAS CONSUMIBLES FACTURADOS
+CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel
+					(@fecha_desde datetime,
+					 @fecha_hasta datetime)
+RETURNS TABLE
+AS
+	RETURN (SELECT TOP 5 ho.cod_hotel, SUM(cantidad) AS 'consumibles'
+			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.Reservas res ON(ho.cod_hotel = res.cod_hotel)
+											 JOIN THE_FOREIGN_FOUR.Estadias es ON(res.cod_reserva = es.cod_estadia)
+											 JOIN THE_FOREIGN_FOUR.Facturas fa ON(es.cod_estadia = fa.cod_estadia)
+											 JOIN THE_FOREIGN_FOUR.ItemsFactura itf ON(fa.nro_factura = itf.nro_factura)
+			WHERE	cod_consumible > 1000
+			AND		fa.fecha_factura BETWEEN @fecha_desde AND @fecha_hasta
+			GROUP BY ho.cod_hotel
+			ORDER BY 2 DESC)
+GO
+--TOP 5 HOTELES MAS INACTIVOS
+CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_inactividad_hotel
+					(@fecha_desde datetime,
+					 @fecha_hasta datetime)
+RETURNS TABLE
+AS
+	RETURN (SELECT TOP 5 ho.cod_hotel, SUM(DATEDIFF(day, ih.fecha_desde, ih.fecha_hasta)) AS 'dias inactivos'
+			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.InactividadHoteles ih ON(ho.cod_hotel = ih.cod_hotel)
+			WHERE	ih.fecha_desde >= @fecha_desde
+			AND		ih.fecha_hasta <= @fecha_hasta
+			GROUP BY ho.cod_hotel
+			ORDER BY 2 DESC)
+GO
+					 
+					 
+					 
+					 
+					 
+
+

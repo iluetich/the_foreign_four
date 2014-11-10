@@ -55,13 +55,26 @@ namespace FrbaHotel.Registrar_Estadia
         {
             if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodReserva, "Codigo reserva")) //valida text box completo
             {
-                if (validarReserva()){
+                if (validarReserva())
+                {
+                    //REGISTRAR ESTADIA----
+                    this.registrarEstadia();
+                    //-------------
                     new frmRegistrarHuespedesRestantes(this).Show();
                     this.Enabled = false;
-                }else{
-                    MessageBox.Show("Reserva no valida","Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
+        }
+
+        public void registrarEstadia()
+        {
+            SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_registrar_estadia", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@cod_reserva", txtCodReserva.Text);
+            cmd.Parameters.AddWithValue("@usuario", user);
+            
+            cmd.ExecuteNonQuery();
         }
 
         //evento click boton check  out
@@ -90,7 +103,28 @@ namespace FrbaHotel.Registrar_Estadia
             string consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodReserva.Text + "," + codigoHotel + ")";
             
             int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
-            if (resultado == 1){
+
+            //validar check in si se puede hacer el dia actual
+            string consulta = "DECLARE @resultado numeric(18,0); EXEC @resultado = THE_FOREIGN_FOUR.proc_validar_check_in " + txtCodReserva.Text + "," + codigoHotel + ";SELECT @resultado";
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = consulta;
+
+            cmd.CommandType = CommandType.Text;
+
+            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
+
+            int resultadoCheckIn = Convert.ToInt32(cmd.ExecuteScalar());
+            if (resultadoCheckIn != 1)
+            {
+                MessageBox.Show("ERROR el check in no se hizo en el dia que se genero la Reserva", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            if (resultado != 1)
+            {
+                MessageBox.Show("Reserva no valida", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            if (resultado == 1 && resultadoCheckIn == 1){
                 return true;
             }
             return false;

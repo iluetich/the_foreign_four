@@ -154,7 +154,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
             //prepara la consulta para ejecutar
             string consulta = "UPDATE THE_FOREIGN_FOUR.Clientes SET estado ='I' WHERE mail = '"+ celdaFilaSeleccionada.Value.ToString() +"'";
-
+            //proc_inhabilitar_cliente
             //ejecuta la consulta
             FrbaHotel.Utils.ejecutarConsulta(consulta);
 
