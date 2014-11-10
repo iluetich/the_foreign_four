@@ -15,7 +15,7 @@ RETURNS int
 AS
 BEGIN
 	IF(EXISTS (SELECT cod_cliente
-			   FROM THE_FOREIGN_FOUR.Clientes
+			   FROM THE_FOREIGN_FOUR.buscar_clientes (NULL, NULL, NULL, NULL, @mail)
 			   WHERE mail = @mail))
 	BEGIN
 		RETURN 1
