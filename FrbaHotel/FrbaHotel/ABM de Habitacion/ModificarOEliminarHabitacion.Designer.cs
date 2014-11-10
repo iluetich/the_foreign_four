@@ -33,17 +33,18 @@
             this.botonModificar = new System.Windows.Forms.Button();
             this.botonLimpiar = new System.Windows.Forms.Button();
             this.botonBuscar = new System.Windows.Forms.Button();
-            this.listBoxClientes = new System.Windows.Forms.ListBox();
-            this.textBoxBuscadorPais = new System.Windows.Forms.TextBox();
-            this.comboBoxBusTipoHab = new System.Windows.Forms.ComboBox();
-            this.textBoxBuscadorNombre = new System.Windows.Forms.TextBox();
+            this.texBoxPiso = new System.Windows.Forms.TextBox();
+            this.texBoxNroHab = new System.Windows.Forms.TextBox();
             this.labelPiso = new System.Windows.Forms.Label();
             this.labelUbicacion = new System.Windows.Forms.Label();
-            this.labelTipoHabitacion = new System.Windows.Forms.Label();
             this.labelNroHab = new System.Windows.Forms.Label();
             this.tituloBuscador = new System.Windows.Forms.Label();
             this.Titulo = new System.Windows.Forms.Label();
-            this.checkBoxUbicacion = new System.Windows.Forms.CheckBox();
+            this.comboBoxUbicacion = new System.Windows.Forms.ComboBox();
+            this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
+            this.labelHotel = new System.Windows.Forms.Label();
+            this.comboBoxHotel = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             this.SuspendLayout();
             // 
             // botonVolver
@@ -58,16 +59,17 @@
             // 
             // botonInhabilitar
             // 
-            this.botonInhabilitar.Location = new System.Drawing.Point(415, 241);
+            this.botonInhabilitar.Location = new System.Drawing.Point(93, 338);
             this.botonInhabilitar.Name = "botonInhabilitar";
             this.botonInhabilitar.Size = new System.Drawing.Size(75, 23);
             this.botonInhabilitar.TabIndex = 50;
             this.botonInhabilitar.Text = "Inhabilitar";
             this.botonInhabilitar.UseVisualStyleBackColor = true;
+            this.botonInhabilitar.Click += new System.EventHandler(this.botonInhabilitar_Click);
             // 
             // botonModificar
             // 
-            this.botonModificar.Location = new System.Drawing.Point(415, 197);
+            this.botonModificar.Location = new System.Drawing.Point(12, 338);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(75, 23);
             this.botonModificar.TabIndex = 49;
@@ -76,57 +78,45 @@
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(108, 156);
+            this.botonLimpiar.Location = new System.Drawing.Point(270, 157);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.botonLimpiar.TabIndex = 48;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
+            this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
             // 
             // botonBuscar
             // 
-            this.botonBuscar.Location = new System.Drawing.Point(12, 157);
+            this.botonBuscar.Location = new System.Drawing.Point(158, 157);
             this.botonBuscar.Name = "botonBuscar";
             this.botonBuscar.Size = new System.Drawing.Size(75, 23);
             this.botonBuscar.TabIndex = 47;
             this.botonBuscar.Text = "Buscar";
             this.botonBuscar.UseVisualStyleBackColor = true;
+            this.botonBuscar.Click += new System.EventHandler(this.botonBuscar_Click);
             // 
-            // listBoxClientes
+            // texBoxPiso
             // 
-            this.listBoxClientes.FormattingEnabled = true;
-            this.listBoxClientes.Location = new System.Drawing.Point(12, 188);
-            this.listBoxClientes.Name = "listBoxClientes";
-            this.listBoxClientes.Size = new System.Drawing.Size(395, 134);
-            this.listBoxClientes.TabIndex = 46;
+            this.texBoxPiso.Location = new System.Drawing.Point(429, 88);
+            this.texBoxPiso.Name = "texBoxPiso";
+            this.texBoxPiso.Size = new System.Drawing.Size(62, 20);
+            this.texBoxPiso.TabIndex = 45;
+            this.texBoxPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorPais_KeyPress);
             // 
-            // textBoxBuscadorPais
+            // texBoxNroHab
             // 
-            this.textBoxBuscadorPais.Location = new System.Drawing.Point(319, 127);
-            this.textBoxBuscadorPais.Name = "textBoxBuscadorPais";
-            this.textBoxBuscadorPais.Size = new System.Drawing.Size(40, 20);
-            this.textBoxBuscadorPais.TabIndex = 45;
-            // 
-            // comboBoxBusTipoHab
-            // 
-            this.comboBoxBusTipoHab.FormattingEnabled = true;
-            this.comboBoxBusTipoHab.Location = new System.Drawing.Point(293, 85);
-            this.comboBoxBusTipoHab.Name = "comboBoxBusTipoHab";
-            this.comboBoxBusTipoHab.Size = new System.Drawing.Size(133, 21);
-            this.comboBoxBusTipoHab.TabIndex = 44;
-            // 
-            // textBoxBuscadorNombre
-            // 
-            this.textBoxBuscadorNombre.Location = new System.Drawing.Point(90, 84);
-            this.textBoxBuscadorNombre.Name = "textBoxBuscadorNombre";
-            this.textBoxBuscadorNombre.Size = new System.Drawing.Size(45, 20);
-            this.textBoxBuscadorNombre.TabIndex = 42;
+            this.texBoxNroHab.Location = new System.Drawing.Point(90, 84);
+            this.texBoxNroHab.Name = "texBoxNroHab";
+            this.texBoxNroHab.Size = new System.Drawing.Size(68, 20);
+            this.texBoxNroHab.TabIndex = 42;
+            this.texBoxNroHab.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorNombre_KeyPress);
             // 
             // labelPiso
             // 
             this.labelPiso.AutoSize = true;
             this.labelPiso.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPiso.Location = new System.Drawing.Point(279, 128);
+            this.labelPiso.Location = new System.Drawing.Point(389, 89);
             this.labelPiso.Name = "labelPiso";
             this.labelPiso.Size = new System.Drawing.Size(34, 15);
             this.labelPiso.TabIndex = 41;
@@ -136,21 +126,11 @@
             // 
             this.labelUbicacion.AutoSize = true;
             this.labelUbicacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelUbicacion.Location = new System.Drawing.Point(9, 124);
+            this.labelUbicacion.Location = new System.Drawing.Point(178, 89);
             this.labelUbicacion.Name = "labelUbicacion";
             this.labelUbicacion.Size = new System.Drawing.Size(65, 15);
             this.labelUbicacion.TabIndex = 40;
             this.labelUbicacion.Text = "Ubicacion:";
-            // 
-            // labelTipoHabitacion
-            // 
-            this.labelTipoHabitacion.AutoSize = true;
-            this.labelTipoHabitacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTipoHabitacion.Location = new System.Drawing.Point(174, 85);
-            this.labelTipoHabitacion.Name = "labelTipoHabitacion";
-            this.labelTipoHabitacion.Size = new System.Drawing.Size(113, 15);
-            this.labelTipoHabitacion.TabIndex = 39;
-            this.labelTipoHabitacion.Text = "Tipo de Habitacion:";
             // 
             // labelNroHab
             // 
@@ -183,35 +163,65 @@
             this.Titulo.TabIndex = 36;
             this.Titulo.Text = "Modificar/Eliminar Habitacion";
             // 
-            // checkBoxUbicacion
+            // comboBoxUbicacion
             // 
-            this.checkBoxUbicacion.AutoSize = true;
-            this.checkBoxUbicacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxUbicacion.Location = new System.Drawing.Point(81, 124);
-            this.checkBoxUbicacion.Name = "checkBoxUbicacion";
-            this.checkBoxUbicacion.Size = new System.Drawing.Size(164, 19);
-            this.checkBoxUbicacion.TabIndex = 52;
-            this.checkBoxUbicacion.Text = "(Si - Externo/No - Interno)";
-            this.checkBoxUbicacion.UseVisualStyleBackColor = true;
+            this.comboBoxUbicacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxUbicacion.FormattingEnabled = true;
+            this.comboBoxUbicacion.Items.AddRange(new object[] {
+            "Todos",
+            "Externo",
+            "Interno"});
+            this.comboBoxUbicacion.Location = new System.Drawing.Point(250, 86);
+            this.comboBoxUbicacion.Name = "comboBoxUbicacion";
+            this.comboBoxUbicacion.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxUbicacion.TabIndex = 52;
+            // 
+            // dgvHabitaciones
+            // 
+            this.dgvHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHabitaciones.Location = new System.Drawing.Point(12, 186);
+            this.dgvHabitaciones.Name = "dgvHabitaciones";
+            this.dgvHabitaciones.Size = new System.Drawing.Size(478, 146);
+            this.dgvHabitaciones.TabIndex = 53;
+            // 
+            // labelHotel
+            // 
+            this.labelHotel.AutoSize = true;
+            this.labelHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelHotel.Location = new System.Drawing.Point(12, 123);
+            this.labelHotel.Name = "labelHotel";
+            this.labelHotel.Size = new System.Drawing.Size(135, 15);
+            this.labelHotel.TabIndex = 54;
+            this.labelHotel.Text = "Hotel al que Pertenece:";
+            // 
+            // comboBoxHotel
+            // 
+            this.comboBoxHotel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxHotel.FormattingEnabled = true;
+            this.comboBoxHotel.Location = new System.Drawing.Point(154, 123);
+            this.comboBoxHotel.Name = "comboBoxHotel";
+            this.comboBoxHotel.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxHotel.TabIndex = 55;
+            this.comboBoxHotel.SelectedIndexChanged += new System.EventHandler(this.comboBoxHotel_SelectedIndexChanged);
             // 
             // ModificarOEliminarHabitacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(502, 373);
-            this.Controls.Add(this.checkBoxUbicacion);
+            this.Controls.Add(this.comboBoxHotel);
+            this.Controls.Add(this.labelHotel);
+            this.Controls.Add(this.dgvHabitaciones);
+            this.Controls.Add(this.comboBoxUbicacion);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.botonInhabilitar);
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.botonLimpiar);
             this.Controls.Add(this.botonBuscar);
-            this.Controls.Add(this.listBoxClientes);
-            this.Controls.Add(this.textBoxBuscadorPais);
-            this.Controls.Add(this.comboBoxBusTipoHab);
-            this.Controls.Add(this.textBoxBuscadorNombre);
+            this.Controls.Add(this.texBoxPiso);
+            this.Controls.Add(this.texBoxNroHab);
             this.Controls.Add(this.labelPiso);
             this.Controls.Add(this.labelUbicacion);
-            this.Controls.Add(this.labelTipoHabitacion);
             this.Controls.Add(this.labelNroHab);
             this.Controls.Add(this.tituloBuscador);
             this.Controls.Add(this.Titulo);
@@ -219,6 +229,7 @@
             this.Name = "ModificarOEliminarHabitacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarOEliminarHabitacion";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,16 +242,16 @@
         private System.Windows.Forms.Button botonModificar;
         private System.Windows.Forms.Button botonLimpiar;
         private System.Windows.Forms.Button botonBuscar;
-        private System.Windows.Forms.ListBox listBoxClientes;
-        private System.Windows.Forms.TextBox textBoxBuscadorPais;
-        private System.Windows.Forms.ComboBox comboBoxBusTipoHab;
-        private System.Windows.Forms.TextBox textBoxBuscadorNombre;
+        private System.Windows.Forms.TextBox texBoxPiso;
+        private System.Windows.Forms.TextBox texBoxNroHab;
         private System.Windows.Forms.Label labelPiso;
         private System.Windows.Forms.Label labelUbicacion;
-        private System.Windows.Forms.Label labelTipoHabitacion;
         private System.Windows.Forms.Label labelNroHab;
         private System.Windows.Forms.Label tituloBuscador;
         private System.Windows.Forms.Label Titulo;
-        private System.Windows.Forms.CheckBox checkBoxUbicacion;
+        private System.Windows.Forms.ComboBox comboBoxUbicacion;
+        private System.Windows.Forms.DataGridView dgvHabitaciones;
+        private System.Windows.Forms.Label labelHotel;
+        private System.Windows.Forms.ComboBox comboBoxHotel;
     }
 }

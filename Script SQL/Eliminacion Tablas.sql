@@ -51,6 +51,9 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_hotel_inhabilitable
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_regimenes_hotel
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_cod_usuario
 DROP FUNCTION THE_FOREIGN_FOUR.func_check_out
+DROP FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_validar_check_in
+>>>>>>> origin/master
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva

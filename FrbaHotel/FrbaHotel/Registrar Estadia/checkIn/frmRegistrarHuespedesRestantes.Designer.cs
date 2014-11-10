@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupHues = new System.Windows.Forms.GroupBox();
+            this.txtCantHuespedes = new System.Windows.Forms.TextBox();
             this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.dgvDatosHuespedes = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,6 +48,7 @@
             // groupHues
             // 
             this.groupHues.AutoSize = true;
+            this.groupHues.Controls.Add(this.txtCantHuespedes);
             this.groupHues.Controls.Add(this.btnBuscarCliente);
             this.groupHues.Controls.Add(this.dgvDatosHuespedes);
             this.groupHues.Controls.Add(this.btnNuevoCliente);
@@ -56,6 +58,17 @@
             this.groupHues.TabIndex = 0;
             this.groupHues.TabStop = false;
             this.groupHues.Text = "Huespedes";
+            // 
+            // txtCantHuespedes
+            // 
+            this.txtCantHuespedes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCantHuespedes.Location = new System.Drawing.Point(368, 19);
+            this.txtCantHuespedes.Name = "txtCantHuespedes";
+            this.txtCantHuespedes.ReadOnly = true;
+            this.txtCantHuespedes.Size = new System.Drawing.Size(29, 22);
+            this.txtCantHuespedes.TabIndex = 6;
+            this.txtCantHuespedes.TabStop = false;
+            this.txtCantHuespedes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnBuscarCliente
             // 
@@ -190,5 +203,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.TextBox txtCantHuespedes;
     }
 }

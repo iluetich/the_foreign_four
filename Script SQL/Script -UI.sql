@@ -17,20 +17,21 @@ AS
 	VALUES	(@cod_cliente, @cod_estadia)
 GO
 --***********************************************************
-CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia -- asignar un nro de habitacion y ese mismo numero
+														 -- retornarlo.
 				(@cod_reserva numeric(18,0),
-				 @nro_habitacion numeric(18,0),
-				 @fecha_inicio datetime,
-				 @cant_noches numeric(18,0))
+				 @usuario nvarchar(255))
 AS
-	INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, nro_habitacion, fecha_inicio, cant_noches)
-	VALUES	(@cod_reserva, @nro_habitacion, @fecha_inicio, @cant_noches)
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, fecha_inicio)
+	VALUES	(@cod_reserva, CAST(GETDATE() AS DATETIME))
 	
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET cod_estado_reserva  = (SELECT cod_estado_reserva
 								FROM THE_FOREIGN_FOUR.EstadosReserva
 								WHERE descripcion = 'efectivizada')
 	WHERE cod_reserva = @cod_reserva
+END
 GO
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva
@@ -838,6 +839,7 @@ RETURN(
 )
 GO
 
+
 --*********************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_cod_usuario (@username nvarchar(30))
 RETURNS numeric(18,0)
@@ -884,6 +886,61 @@ BEGIN
 	
 	EXECUTE THE_FOREIGN_FOUR.proc_realizar_checkout @cod_estadia, @username 
 	RETURN 1
+END
+GO	
+
+--**********************************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
+				(@fecha_uno datetime,
+				 @fecha_dos datetime)
+RETURNS int
+AS
+BEGIN
+	IF ((DATEDIFF(YEAR, @fecha_uno, @fecha_dos) = 0) AND
+		(DATEDIFF(MONTH, @fecha_uno, @fecha_dos) = 0) AND
+		(DATEDIFF(DAY, @fecha_uno, @fecha_dos) = 0))
+	BEGIN
+		RETURN 1
+	END
+	ELSE 
+	IF(@fecha_uno > @fecha_dos)
+	BEGIN
+		RETURN 0
+	END
+	RETURN -1
+END
+GO
+--**********************************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_validar_check_in
+				(@cod_reserva numeric(18,0),
+				 @cod_hotel int)
+AS
+BEGIN
+	DECLARE @validacion_reserva int,
+			@validacion_fechas int,
+			@fecha_inicio_reserva datetime,
+			@puede_check_in int
+			
+	SET		@validacion_reserva = THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada (@cod_reserva, @cod_hotel)
+	SET		@fecha_inicio_reserva = (SELECT fecha_desde FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva)
+	SET		@validacion_fechas = THE_FOREIGN_FOUR.func_igual_fecha(@fecha_inicio_reserva, GETDATE())
 	
+	IF	((@validacion_reserva = 1) AND
+		 (@validacion_fechas = 1))
+	BEGIN
+		RETURN 1
+	END
+	ELSE
+	IF(@validacion_fechas = -1) --El dia actual supera al fecha_desde de la reserva
+	BEGIN
+		UPDATE THE_FOREIGN_FOUR.Reservas
+		SET	cod_estado_reserva = (SELECT cod_estado
+								  FROM THE_FOREIGN_FOUR.EstadosReserva
+								  WHERE descripcion = 'cancelacion_noshow')
+		WHERE cod_reserva = @cod_reserva
+		RETURN 0
+	END
+	RETURN -1
+
 END
 GO
