@@ -36,8 +36,6 @@ C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.pdb
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Cliente.ModificarOBorrarCliente.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Cliente.RegistrarCliente.resources
-C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Habitacion.InhabilitarHabitacion.resources
-C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Habitacion.ModificarHabitacion.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Habitacion.ModificarOEliminarHabitacion.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Habitacion.RegistrarHabitacion.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Generar_Modificar_Reserva.frmCliente.resources
@@ -78,7 +76,6 @@ C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Hotel.ModificarOEliminarHotel.resources
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Hotel.RegistrarHotel.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Hotel.InHabilitarHotel.resources
-C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Hotel.ModificarHotel.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Hotel.ModificarOEliminarHotel.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Hotel.RegistrarHotel.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Generar_Modificar_Reserva.frmBuscarReserva.resources
@@ -87,3 +84,4 @@ C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Genera
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Generar_Modificar_Reserva.frmRegimenes.resources
 C:\Users\ignacio\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.AgregarRol.resources
 C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.ABM_de_Usuario.AgregarRol.resources
+C:\Documents and Settings\ian\Mis documentos\GDD\git\the_foreign_four\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Generar_Modificar_Reserva.Nueva.frmHabitaciones.resources
