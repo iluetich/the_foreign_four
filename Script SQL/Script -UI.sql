@@ -738,31 +738,6 @@ RETURN
 )
 GO
 
---******************************************************
-CREATE VIEW THE_FOREIGN_FOUR.view_facturas
-(nro_factura, cod_estadia, cod_consumible, descripcion, precio_unitario, cantidad, total_factura)
-AS
-SELECT f.nro_factura, f.cod_estadia, c.cod_consumible, c.descripcion, 
-		(SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, f.cod_estadia)), i.cantidad, f.total
-FROM	THE_FOREIGN_FOUR.Facturas f, 
-		THE_FOREIGN_FOUR.ItemsFactura i,
-		THE_FOREIGN_FOUR.Consumibles c
-WHERE f.nro_factura = i.nro_factura
-AND c.cod_consumible = i.cod_consumible
-GO
-
-
---***********************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.facturacion(@nro_factura int)
-RETURNS TABLE
-AS
-RETURN(
-SELECT *
-FROM THE_FOREIGN_FOUR.view_facturas
-WHERE nro_factura = @nro_factura
-)
-GO
-
 --**************************************************************
 --lo calcula por dia, si queres saber toda una estadia lo tenes que multiplicar por la cant de noches
 CREATE FUNCTION THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen		numeric(18,0),
@@ -966,18 +941,15 @@ BEGIN
 			@fecha_check_out datetime,
 			@fecha_ideal datetime,
 			@noches_estadia numeric(18,0),
-			@noches_sin_usar numeric(18,0),
-			@cod_estadia numeric(18,0)
-			
-	SET @cod_estadia = (SELECT cod_estadia
-						FROM THE_FOREIGN_FOUR.Facturas
-						WHERE nro_factura = @nro_factura)
+			@noches_sin_usar numeric(18,0)
 	
 	SET @cod_regimen = (SELECT r.cod_regimen
 						FROM	THE_FOREIGN_FOUR.Facturas f,
+								THE_FOREIGN_FOUR.Estadias e,
 								THE_FOREIGN_FOUR.Reservas r
 						WHERE f.nro_factura = @nro_factura
-						AND	f.cod_estadia = @cod_estadia
+						AND	f.cod_estadia = e.cod_estadia
+						AND e.cod_reserva = r.cod_reserva)
 						
 	SET @cod_all_inclusive = (SELECT cod_regimen
 								FROM THE_FOREIGN_FOUR.Regimenes
@@ -989,21 +961,28 @@ BEGIN
 	SET @fecha_check_out = (SELECT fecha
 							FROM THE_FOREIGN_FOUR.AuditoriaEstadias
 							WHERE cod_operacion = 'O'
-							AND cod_estadia = @cod_estadia)
+							AND cod_estadia = (SELECT cod_estadia
+												FROM THE_FOREIGN_FOUR.Facturas
+												WHERE nro_factura = @nro_factura
+												))
 	
 	SET @fecha_ideal = (SELECT r.fecha_hasta
 						FROM THE_FOREIGN_FOUR.Reservas r,
+								THE_FOREIGN_FOUR.Estadias e,
 								THE_FOREIGN_FOUR.Facturas f
 						WHERE f.nro_factura = @nro_factura
-						AND f.cod_estadia = @cod_estadia)
+						AND f.cod_estadia = e.cod_estadia
+						AND r.cod_reserva = e.cod_reserva)
 	
 	SET @noches_sin_usar = DATEDIFF(DAY, @fecha_check_out, @fecha_ideal)
 	
 	SET @noches_estadia = (SELECT r.cant_noches
 							FROM THE_FOREIGN_FOUR.Reservas r,
-								 THE_FOREIGN_FOUR.Facturas f
+								 THE_FOREIGN_FOUR.Facturas f,
+								 THE_FOREIGN_FOUR.Estadias e
 							WHERE f.nro_factura = @nro_factura
-							AND f.cod_estadia = @cod_estadia) - @noches_sin_usar
+							AND f.cod_estadia = e.cod_estadia
+							AND r.cod_reserva = e.cod_reserva) - @noches_sin_usar
 		
 							
 	IF (@cod_regimen = @cod_all_inclusive)
@@ -1021,11 +1000,15 @@ BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cod_consumible, cantidad, nro_factura)
 	VALUES (@cod_consumible_estadia, @noches_estadia, @nro_factura)
 		
-	UPDATE THE_FOREIGN_FOUR.Estadias
-	SET cant_noches = @noches_estadia
-	WHERE cod_estadia = @cod_estadia 
 		
 	EXECUTE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura
+	
+	UPDATE THE_FOREIGN_FOUR.Estadias
+	SET cant_noches = @noches_estadia
+	WHERE cod_estadia = (SELECT cod_estadia
+						FROM THE_FOREIGN_FOUR.Facturas
+						WHERE nro_factura = @nro_factura)
+												
 	
 END
 GO
@@ -1057,6 +1040,31 @@ BEGIN
 	VALUES (@nro_factura , @cod_estadia, CAST(GETDATE() AS DATETIME))
 	RETURN 
 END
+GO
+
+--******************************************************
+CREATE VIEW THE_FOREIGN_FOUR.view_facturas
+(nro_factura, cod_estadia, cod_consumible, descripcion, precio_unitario, cantidad, total_factura)
+AS
+SELECT f.nro_factura, f.cod_estadia, c.cod_consumible, c.descripcion, 
+		(SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, f.cod_estadia)), i.cantidad, f.total
+FROM	THE_FOREIGN_FOUR.Facturas f, 
+		THE_FOREIGN_FOUR.ItemsFactura i,
+		THE_FOREIGN_FOUR.Consumibles c
+WHERE f.nro_factura = i.nro_factura
+AND c.cod_consumible = i.cod_consumible
+GO
+
+
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.facturacion(@nro_factura int)
+RETURNS TABLE
+AS
+RETURN(
+SELECT *
+FROM THE_FOREIGN_FOUR.view_facturas
+WHERE nro_factura = @nro_factura
+)
 GO
 
 --***********************************************************
