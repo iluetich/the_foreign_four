@@ -17,8 +17,7 @@ AS
 	VALUES	(@cod_cliente, @cod_estadia)
 GO
 --***********************************************************
-CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia -- asignar un nro de habitacion y ese mismo numero
-														 -- retornarlo.
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
 				(@cod_reserva numeric(18,0),
 				 @usuario nvarchar(255))
 AS
@@ -244,7 +243,7 @@ RETURN
 		 WHERE	r.estado = 'H'
 		 AND	@cod_hotel = rph.cod_hotel)
 GO
---***********************************************************
+--**************************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hab_disponibles
 				(@cod_hotel int,
 				 @cod_tipo_hab numeric(18,0),
@@ -435,6 +434,16 @@ AS
 SELECT cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, 
 		nro_calle, nacionalidad, pais_origen,  estado, piso
 FROM THE_FOREIGN_FOUR.Clientes
+GO
+--***********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_cliente
+					(@mail nvarchar(255))
+AS
+BEGIN
+	UPDATE THE_FOREIGN_FOUR.Clientes
+	SET estado = 'I'
+	WHERE mail = @mail
+END
 GO
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_cliente (@mail nvarchar(255))
