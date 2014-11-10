@@ -149,8 +149,10 @@ BEGIN
 		END	
 		ELSE
 		BEGIN
+		
 			INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, fecha_inicio, cant_noches)
 			VALUES (@cod_reserva, @fecha_inicio, @cant_noches);
+
 		END			
 			
 		FETCH NEXT FROM TrigInsCursor INTO @cod_reserva, @fecha_inicio, @cant_noches      

@@ -153,7 +153,10 @@ SELECT DISTINCT (SELECT cod_estadia
 									  AND	ho.nro_calle = m.Hotel_Nro_Calle)) AS 'COD_HABITACION'
 FROM gd_esquema.Maestra m
 
---***JUEGO DE DATOS************************************************
+--** CHECKOUT MIGRACION ESTADIAS ******************************
+EXEC THE_FOREIGN_FOUR.proc_checkout_migracion
+
+--** JUEGO DE DATOS********************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos
 
 --** ELIMINACION DE LOS TRIGGERS*******************************
@@ -165,4 +168,7 @@ DROP TRIGGER THE_FOREIGN_FOUR.trg_clientes_por_estadia_err
 DROP TRIGGER THE_FOREIGN_FOUR.trg_itemsFactura_error
 DROP TRIGGER THE_FOREIGN_FOUR.trg_habitaciones_estadia
 DROP TRIGGER THE_FOREIGN_FOUR.trg_tipohab_reservas
+--** ELIMINACION PROCEDURES MIGRACION**************************
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_checkout_migracion
 

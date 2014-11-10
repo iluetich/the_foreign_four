@@ -224,3 +224,4 @@ CREATE TABLE THE_FOREIGN_FOUR.AuditoriaEstadias (
 	cod_operacion		char(1)					CHECK(cod_operacion IN ('I', 'O')),
 	fecha				datetime				DEFAULT getdate()
 )
+

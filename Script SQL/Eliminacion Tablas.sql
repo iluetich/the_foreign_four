@@ -34,7 +34,6 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_inactividad_hotel
 DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel
 DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_cancelaciones_hotel
 DROP FUNCTION THE_FOREIGN_FOUR.func_estado_reserva
-DROP FUNCTION THE_FOREIGN_FOUR.fecha_sys
 DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_cod_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_nro_factura
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_cant_huespedes
@@ -68,7 +67,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia
 DROP FUNCTION THE_FOREIGN_FOUR.func_get_precio
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_cod_consumible
 DROP FUNCTION THE_FOREIGN_FOUR.func_calcular_total_consumibles_posta
-DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_hab_estadia
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_checkout_migracion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_usuario

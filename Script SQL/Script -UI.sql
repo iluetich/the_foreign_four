@@ -302,22 +302,19 @@ BEGIN
 									
 									
 	SET		@cant_hab_checkout = (	SELECT	COUNT(th.cod_tipo_hab)
-									FROM	THE_FOREIGN_FOUR.AuditoriaEstadias a,
-											THE_FOREIGN_FOUR.Reservas r,
+									FROM	THE_FOREIGN_FOUR.Reservas r,
 											THE_FOREIGN_FOUR.Estadias e,
 											THE_FOREIGN_FOUR.TipoHabitacion_Reservas th
-									WHERE	a.cod_estadia = e.cod_estadia
-									AND		e.cod_reserva = r.cod_reserva
+									WHERE	r.cod_reserva = e.cod_reserva
+									AND		e.cod_reserva = th.cod_reserva
 									AND		th.cod_tipo_hab = @cod_tipo_hab
-									AND		th.cod_reserva = r.cod_reserva
-									AND		@fecha_inicio > a.fecha
+									AND		@fecha_inicio > e.checkout
 									AND		@fecha_fin <= r.fecha_hasta)
 									
 	SET		@cant_hab_disponibles = @cant_hab_por_tipo - @cant_hab_reservadas + @cant_hab_canceladas + @cant_hab_checkout
 	RETURN	@cant_hab_disponibles
 END
 GO
-
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad
 				(@cod_hotel int,
@@ -1263,6 +1260,13 @@ BEGIN
 END
 GO
 --**********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_checkout_migracion
+AS
+BEGIN
+	UPDATE THE_FOREIGN_FOUR.Estadias
+	SET checkout = fecha_inicio + cant_noches
+END
+GO
 
 
 
