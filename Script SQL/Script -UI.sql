@@ -923,24 +923,11 @@ BEGIN
 	FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
 	WHERE c.cod_consumible = i.cod_consumible
 	AND i.nro_factura = @nro_factura
-	GROUP BY i.cantidad, c.cod_consumible
+	GROUP BY i.nro_item, cantidad, c.cod_consumible
 	
-	DECLARE CursorSubtotales CURSOR FOR
-	SELECT subtotal 
-	FROM THE_FOREIGN_FOUR.#subtotales
 	
-	OPEN CursorSubtotales;
-	
-	FETCH NEXT FROM CursorSubtotales INTO @sub_total;
-	
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-		SET @total = @total + @sub_total
-		FETCH NEXT FROM CursorSubtotales INTO @sub_total;
-	END
-	
-	CLOSE CursorSubtotales;
-	DEALLOCATE CursorSubtotales;
+	SET @total = (SELECT SUM (subtotal)
+					FROM THE_FOREIGN_FOUR.#subtotales)
 	
 	UPDATE THE_FOREIGN_FOUR.Facturas
 	SET total = @total
