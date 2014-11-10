@@ -730,6 +730,29 @@ WHERE cod_estadia = @cod_estadia
 )
 GO
 
+--**************************************************************
+
+CREATE FUNCTION THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen		numeric(18,0),
+														@cod_hotel		numeric(18,0),
+														@cod_tipo_hab	numeric(18,0),
+														@cant_noches		int)
+RETURNS numeric(18,2)
+AS
+BEGIN
+RETURN(
+
+	SELECT DISTINCT	( ((r.precio* th.capacidad) + (h.cant_estrellas * h.recarga_estrellas))*@cant_noches)
+	FROM	THE_FOREIGN_FOUR.Regimenes r,
+			THE_FOREIGN_FOUR.view_tipo_hab th,
+			THE_FOREIGN_FOUR.Hoteles h,
+			THE_FOREIGN_FOUR.Estadias e
+	WHERE	h.cod_hotel = @cod_hotel
+	AND		th.cod_tipo_hab = @cod_tipo_hab
+	AND		r.cod_regimen = @cod_regimen
+)
+END
+GO
+
 --**********************************************************
 /*
 El valor de la habitación se obtiene a través de su precio base 
@@ -737,6 +760,7 @@ El valor de la habitación se obtiene a través de su precio base
 alojarán en la habitación (tipo de habitación) y luego de ello aplicando 
 un incremento en función de la categoría del Hotel (cantidad de estrellas)
 */
+/*
 CREATE FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia numeric(18,0))
 RETURNS numeric(18,2)
 AS
@@ -756,6 +780,9 @@ RETURN(
 )
 END
 GO
+*/
+
+
 --****************************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS

@@ -56,6 +56,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_check_out
 DROP FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_hab_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_agregar_hab_reserva
+DROP FUNCTION THE_FOREIGN_FOUR.func_calcular_precio
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_validar_check_in
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_hotel
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
