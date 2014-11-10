@@ -20,9 +20,11 @@ namespace FrbaHotel.IniciarSecion
         private string codHotelElegido;
         private Boolean podesIngresar; //variable que se cambia cuando alguno de los checkeos no da positivo
         private Boolean eligieronHotel;
+        private int nroFallos;
 
         public Login(InicioDelSistema formularioPadre,string rolElegido)
         {
+            nroFallos = 0;
             eligieronHotel = false;
             rol = rolElegido;
             formPadre = formularioPadre;
@@ -69,21 +71,17 @@ namespace FrbaHotel.IniciarSecion
         {
             this.podesIngresar = true;
             
-            string stringConnection = "Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014";
-            SqlConnection conexion = new SqlConnection();
-            conexion.ConnectionString = stringConnection;
-            
             //corrobora user_name AYUDA MEMORIA MUY IMPORTANTE NO OLVIDARSE LAS COMILLAS CUANDO SE PONEN STRING EN SQL
             SqlCommand cmd2 = new SqlCommand();
             cmd2.CommandText = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[Usuarios] WHERE user_name='" + this.user_name +"'";
             cmd2.CommandType = CommandType.Text;
-            cmd2.Connection = conexion;
+            cmd2.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
 
             //corrobora password
             SqlCommand cmd = new SqlCommand();          
             cmd.CommandText = consultaSql;
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = conexion;
+            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
 
             //para que no me salte error si no se elige nada
             string consultaCmd3;
@@ -113,8 +111,6 @@ namespace FrbaHotel.IniciarSecion
             cmd4.CommandType = CommandType.Text;
             cmd4.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
 
-            conexion.Open();
-
             int resultadoUserName = (int)cmd2.ExecuteScalar();
 
             if (resultadoUserName == 0)
@@ -129,6 +125,14 @@ namespace FrbaHotel.IniciarSecion
                 if (resultadoPassword == 0)
                 {
                     MessageBox.Show("Contraseña Incorrecta", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    nroFallos++;
+                    
+                    //si ingreso 3 veces mal el password se inhabilita el usuario
+                    if (nroFallos > 3)
+                    {
+                        //ACA VA EL PROCEDURE QUE TE INHABILITA EL USUARIO
+                    }
+
                     this.podesIngresar = false;
                 }
 
@@ -147,8 +151,6 @@ namespace FrbaHotel.IniciarSecion
                     this.podesIngresar = false;
                 }
             }
-
-            conexion.Close();
 
             if (podesIngresar) 
             {
