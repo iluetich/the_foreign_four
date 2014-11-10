@@ -160,6 +160,12 @@ namespace FrbaHotel.ABM_de_Habitacion
             this.cargarHabitaciones(false);     
         }
 
-        //HACER EL BOTON DE MODIFICAR
+        private void botonModificar_Click(object sender, EventArgs e)
+        {
+            RegistrarHabitacion frmModHabitacion = new RegistrarHabitacion(this, dgvHabitaciones.CurrentRow);
+            frmModHabitacion.Show();
+            this.Hide();
+        }
+
     }
 }
