@@ -1,7 +1,5 @@
 .Cache
 .exe
-.resx
-*.resx
 .resources
 *.resources
 .Suo
