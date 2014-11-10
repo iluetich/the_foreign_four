@@ -165,7 +165,6 @@ GO
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				(@cod_hotel int,
 				 @cod_cliente numeric(18,0),
-				 @cod_tipo_hab numeric(18,0),
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
@@ -177,12 +176,12 @@ BEGIN
 			@cod_estado_reserva int
 			
 	SET @cod_estado_reserva = (SELECT cod_estado
-								  FROM THE_FOREIGN_FOUR.EstadosReserva
-								  WHERE descripcion = 'correcta')
+							   FROM THE_FOREIGN_FOUR.EstadosReserva
+							   WHERE descripcion = 'correcta')
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
-	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_tipo_hab, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), @usuario)
+	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), @usuario)
 	
 	RETURN @cod_reserva_generada
 END
@@ -255,10 +254,10 @@ BEGIN
 								  WHERE		@cod_hotel = ha.cod_hotel
 								  AND		@cod_tipo_hab = ha.cod_tipo_hab) 
 								  
-	SET		@cant_hab_reservadas = (SELECT	COUNT(cod_reserva)
-									FROM	THE_FOREIGN_FOUR.Reservas r
+	SET		@cant_hab_reservadas = (SELECT	COUNT(thr.cod_reserva)
+									FROM	THE_FOREIGN_FOUR.Reservas r JOIN THE_FOREIGN_FOUR.TipoHabitacion_Reservas thr ON(r.cod_reserva = thr.cod_reserva)
 									WHERE	@cod_hotel = r.cod_hotel
-									AND		@cod_tipo_hab = r.cod_tipo_hab
+									AND		@cod_tipo_hab = thr.cod_tipo_hab
 									AND		(@fecha_inicio BETWEEN r.fecha_desde AND R.fecha_hasta
 									OR		@fecha_fin BETWEEN r.fecha_desde AND r.fecha_hasta))
 									
