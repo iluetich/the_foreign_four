@@ -834,6 +834,17 @@ DECLARE @cod_regimen numeric(18,0),
 END
 GO
 
+--********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.buscar_cod_consumible (@descripcion nvarchar(255))
+RETURNS numeric(18,0)
+AS
+BEGIN
+RETURN(SELECT cod_consumible
+		FROM THE_FOREIGN_FOUR.Consumibles
+		WHERE descripcion = @descripcion)
+END
+GO
+
 --*******************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_calcular_total_consumibles_posta (@cod_estadia numeric(18,0))
 RETURNS numeric(18,2)
@@ -846,15 +857,9 @@ BEGIN
 			@cod_cons_all_inc numeric(18,0),
 			@cod_cons_noches_canc numeric(18,0)
 			
-	SET @cod_cons_estadia = (SELECT cod_consumible
-								FROM THE_FOREIGN_FOUR.Consumibles
-								WHERE descripcion = 'estadia')
-	SET @cod_cons_all_inc = (SELECT cod_consumible
-								FROM THE_FOREIGN_FOUR.Consumibles
-								WHERE descripcion = 'descuento all inclusive')
-	SET @cod_cons_noches_canc = (SELECT cod_consumible
-								FROM THE_FOREIGN_FOUR.Consumibles
-								WHERE descripcion = 'noches no utilizadas')
+	SET @cod_cons_estadia = THE_FOREIGN_FOUR.buscar_cod_consumible('estadia')
+	SET @cod_cons_all_inc = THE_FOREIGN_FOUR.buscar_cod_consumible ('descuento all inclusive')
+	SET @cod_cons_noches_canc = THE_FOREIGN_FOUR.buscar_cod_consumible ('noches no utilizadas')
 								
 SET @nro_factura = (SELECT nro_factura
 					FROM THE_FOREIGN_FOUR.Facturas
@@ -884,15 +889,9 @@ BEGIN
 			@precio numeric(18,2),
 			@costo_hab_dia numeric(18,2)
 			
-	SET @cod_cons_estadia = (SELECT cod_consumible
-								FROM THE_FOREIGN_FOUR.Consumibles
-								WHERE descripcion = 'estadia')
-	SET @cod_cons_all_inc = (SELECT cod_consumible
-								FROM THE_FOREIGN_FOUR.Consumibles
-								WHERE descripcion = 'descuento all inclusive')
-	SET @cod_cons_noches_canc = (SELECT cod_consumible
-								FROM THE_FOREIGN_FOUR.Consumibles
-								WHERE descripcion = 'noches no utilizadas')
+	SET @cod_cons_estadia = THE_FOREIGN_FOUR.buscar_cod_consumible ('estadia')
+	SET @cod_cons_all_inc = THE_FOREIGN_FOUR.buscar_cod_consumible ('descuento all inclusive')
+	SET @cod_cons_noches_canc = THE_FOREIGN_FOUR.buscar_cod_consumible ('noches no utilizadas')
 								
 	SET @costo_hab_dia = (SELECT THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia))
 	
@@ -941,6 +940,19 @@ BEGIN
 	
 END
 GO
+
+--******************************************************
+
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_estadia (@cod_reserva numeric(18,0))
+RETURNS numeric(18,0)
+AS
+BEGIN
+	RETURN (SELECT DISTINCT cod_estadia
+			FROM THE_FOREIGN_FOUR.Estadias
+			WHERE cod_reserva = @cod_reserva)
+END
+GO
+
 
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_existe_factura
@@ -993,8 +1005,6 @@ BEGIN
 		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cod_consumible, @cantidad
 	
 	END
-	
-	EXECUTE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura
 	
 	CLOSE TrigInsCursor;
 	DEALLOCATE TrigInsCursor;
