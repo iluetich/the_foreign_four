@@ -25,6 +25,9 @@ BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, fecha_inicio)
 	VALUES	(@cod_reserva, CAST(GETDATE() AS DATETIME))
 	
+	INSERT INTO THE_FOREIGN_FOUR.AuditoriaEstadias (cod_usuario, cod_estadia, cod_operacion)
+	VALUES ((SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), (SELECT cod_estadia FROM THE_FOREIGN_FOUR.Estadias WHERE cod_reserva = @cod_reserva), 'I')
+	
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET cod_estado_reserva  = (SELECT cod_estado_reserva
 								FROM THE_FOREIGN_FOUR.EstadosReserva
