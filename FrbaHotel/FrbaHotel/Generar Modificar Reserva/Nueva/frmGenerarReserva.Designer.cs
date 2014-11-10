@@ -51,6 +51,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupDatos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             this.grbPanel2.SuspendLayout();
@@ -237,6 +238,7 @@
             // grbPanel2
             // 
             this.grbPanel2.AutoSize = true;
+            this.grbPanel2.Controls.Add(this.button1);
             this.grbPanel2.Controls.Add(this.txtCostoTotal);
             this.grbPanel2.Controls.Add(this.label2);
             this.grbPanel2.Controls.Add(this.txtResul);
@@ -299,6 +301,16 @@
             this.btnSiguiente.UseVisualStyleBackColor = true;
             this.btnSiguiente.Click += new System.EventHandler(this.btnSiguietne_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(22, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 17;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmGenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -354,5 +366,6 @@
         private System.Windows.Forms.Button btnAgregarHabitacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn capacidad;
+        private System.Windows.Forms.Button button1;
     }
 }

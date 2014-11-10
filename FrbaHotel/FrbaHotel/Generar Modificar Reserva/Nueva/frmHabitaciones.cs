@@ -13,6 +13,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva.Nueva
     {
         frmGenerarReserva frmGenerarReservaPadre;
         string codigoHotel;
+        DataTable dataTableHabitaciones;
 
         public frmHabitaciones(frmGenerarReserva newFrm)
         {
@@ -27,6 +28,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva.Nueva
         {
             string consultaSQL = "select * from THE_FOREIGN_FOUR.buscar_tipo_hab_hotel(" + codigoHotel + ")";
             FrbaHotel.Utils.rellenarDataGridView(dgvHabitaciones, consultaSQL);
+
             dgvHabitaciones.Columns["cod_tipo_hab"].Visible = false;
             dgvHabitaciones.Columns["recargo"].Visible = false;
             dgvHabitaciones.Columns["capacidad"].Visible = false;
