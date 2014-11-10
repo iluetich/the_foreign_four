@@ -740,17 +740,16 @@ WHERE cod_estadia = @cod_estadia
 GO
 
 --**************************************************************
-
+--lo calcula por dia, si queres saber toda una estadia lo tenes que multiplicar por la cant de noches
 CREATE FUNCTION THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen		numeric(18,0),
 														@cod_hotel		numeric(18,0),
-														@cod_tipo_hab	numeric(18,0),
-														@cant_noches		int)
+														@cod_tipo_hab	numeric(18,0))
 RETURNS numeric(18,2)
 AS
 BEGIN
 RETURN(
 
-	SELECT DISTINCT	( ((r.precio* th.capacidad) + (h.cant_estrellas * h.recarga_estrellas))*@cant_noches)
+	SELECT DISTINCT	( ((r.precio* th.capacidad) + (h.cant_estrellas * h.recarga_estrellas)))
 	FROM	THE_FOREIGN_FOUR.Regimenes r,
 			THE_FOREIGN_FOUR.view_tipo_hab th,
 			THE_FOREIGN_FOUR.Hoteles h,
@@ -814,35 +813,137 @@ DECLARE @cod_regimen numeric(18,0),
 						
 						
 						
-	RETURN(	SELECT THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen, @cod_hotel, @cod_tipo_hab, @cant_noches )
-)
+	RETURN( SELECT THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen, @cod_hotel, @cod_tipo_hab))
 END
 GO
 
+--*******************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_calcular_total_consumibles_posta (@cod_estadia numeric(18,0))
+RETURNS numeric(18,2)
+AS
+BEGIN
 
+	DECLARE @total numeric(18,2),
+			@nro_factura numeric(18,0),
+			@cod_cons_estadia numeric(18,0),
+			@cod_cons_all_inc numeric(18,0),
+			@cod_cons_noches_canc numeric(18,0)
+			
+	SET @cod_cons_estadia = (SELECT cod_consumible
+								FROM THE_FOREIGN_FOUR.Consumibles
+								WHERE descripcion = 'estadia')
+	SET @cod_cons_all_inc = (SELECT cod_consumible
+								FROM THE_FOREIGN_FOUR.Consumibles
+								WHERE descripcion = 'descuento all inclusive')
+	SET @cod_cons_noches_canc = (SELECT cod_consumible
+								FROM THE_FOREIGN_FOUR.Consumibles
+								WHERE descripcion = 'noches no utilizadas')
+								
+SET @nro_factura = (SELECT nro_factura
+					FROM THE_FOREIGN_FOUR.Facturas
+					WHERE cod_estadia = @cod_estadia)
 
+SET @total = (SELECT(SUM(c.precio * i.cantidad))
+				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
+				WHERE c.cod_consumible = i.cod_consumible
+				AND i.nro_factura = @nro_factura
+				AND c.cod_consumible != @cod_cons_all_inc
+				AND c.cod_consumible != @cod_cons_estadia
+				AND c.cod_consumible != @cod_cons_noches_canc)
+				
+RETURN @total
+
+END
+GO
+
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_get_precio (@cod_consumible numeric(18,0), @cod_estadia numeric(18,0))
+RETURNS numeric(18,0)
+AS
+BEGIN
+	DECLARE @cod_cons_estadia numeric(18,0),
+			@cod_cons_all_inc numeric(18,0),
+			@cod_cons_noches_canc numeric(18,0),
+			@precio numeric(18,2),
+			@costo_hab_dia numeric(18,2)
+			
+	SET @cod_cons_estadia = (SELECT cod_consumible
+								FROM THE_FOREIGN_FOUR.Consumibles
+								WHERE descripcion = 'estadia')
+	SET @cod_cons_all_inc = (SELECT cod_consumible
+								FROM THE_FOREIGN_FOUR.Consumibles
+								WHERE descripcion = 'descuento all inclusive')
+	SET @cod_cons_noches_canc = (SELECT cod_consumible
+								FROM THE_FOREIGN_FOUR.Consumibles
+								WHERE descripcion = 'noches no utilizadas')
+								
+	SET @costo_hab_dia = (SELECT THE_FOREIGN_FOUR.calcular_precio_hab_estadia(@cod_estadia))
+	
+	SET @precio = (SELECT
+					CASE @cod_consumible
+						WHEN @cod_cons_estadia THEN @costo_hab_dia /* precio estadia*/ 
+						WHEN @cod_cons_all_inc THEN -(SELECT THE_FOREIGN_FOUR.func_calcular_total_consumibles_posta(@cod_estadia)) /*resta all inclusive*/
+						WHEN @cod_cons_noches_canc THEN @costo_hab_dia /*noches no utilizadas*/
+						ELSE (SELECT precio  
+								FROM THE_FOREIGN_FOUR.Consumibles
+								WHERE cod_consumible = @cod_consumible)
+						END)
+	
+	RETURN @precio
+END
+GO									
 --****************************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS
 BEGIN
 	
-	DECLARE @cod_hab_estadia numeric(18,0)
-	SET @cod_hab_estadia = (SELECT he.cod_hab_estadia
-							FROM	THE_FOREIGN_FOUR.Facturas f,
-									THE_FOREIGN_FOUR.Habitaciones_Estadia he
-							WHERE f.cod_estadia = he.cod_estadia)
-
+	DECLARE @cod_estadia numeric(18,0), 
+			@total numeric(18,2),
+			@sub_total numeric(18,2)
+	SET @cod_estadia = (SELECT f.cod_estadia
+						FROM	THE_FOREIGN_FOUR.Facturas f
+						WHERE nro_factura = @nro_factura)
+			
+	
+	SELECT (THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, @cod_estadia) * i.cantidad) 'subtotal'
+	INTO THE_FOREIGN_FOUR.#subtotales
+	FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
+	WHERE c.cod_consumible = i.cod_consumible
+	AND i.nro_factura = @nro_factura
+	GROUP BY i.cantidad, c.cod_consumible
+	
+	DECLARE CursorSubtotales CURSOR FOR
+	SELECT subtotal 
+	FROM THE_FOREIGN_FOUR.#subtotales
+	
+	OPEN CursorSubtotales;
+	
+	FETCH NEXT FROM CursorSubtotales INTO @sub_total;
+	
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		SET @total = @total + @sub_total
+		FETCH NEXT FROM CursorSubtotales INTO @sub_total;
+	END
+	
+	CLOSE CursorSubtotales;
+	DEALLOCATE CursorSubtotales;
+	
 	UPDATE THE_FOREIGN_FOUR.Facturas
-	SET total = (SELECT (SUM(c.precio * i.cantidad) + THE_FOREIGN_FOUR.calcular_precio_hab_estadia(@cod_hab_estadia))
-				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i, THE_FOREIGN_FOUR.Facturas f
-				WHERE c.cod_consumible = i.cod_consumible
-				AND f.nro_factura = i.nro_factura
-				AND i.nro_factura = @nro_factura
-				GROUP BY f.cod_estadia)
+	SET total = @total
 	WHERE nro_factura = @nro_factura
+	
+	DROP TABLE THE_FOREIGN_FOUR.#subtotales
+	
+	/*UPDATE THE_FOREIGN_FOUR.Facturas
+	SET total = (SELECT (SUM((SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, @cod_estadia )) * i.cantidad))
+				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
+				WHERE c.cod_consumible = i.cod_consumible
+				AND i.nro_factura = @nro_factura
+				GROUP BY i.cantidad)
+	WHERE nro_factura = @nro_factura*/
 END
 GO
-
 
 --***********************************************************
 CREATE TRIGGER THE_FOREIGN_FOUR.trg_separar_factura
