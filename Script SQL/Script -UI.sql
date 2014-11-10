@@ -816,8 +816,11 @@ GO
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS
 BEGIN
+	
+	DECLARE @cod_hab_estadia numeric(18,0)
+
 	UPDATE THE_FOREIGN_FOUR.Facturas
-	SET total = (SELECT (SUM(c.precio * i.cantidad) + THE_FOREIGN_FOUR.calcular_precio_estadia(f.cod_estadia))
+	SET total = (SELECT (SUM(c.precio * i.cantidad) + THE_FOREIGN_FOUR.calcular_precio_hab_estadia(@cod_hab_estadia))
 				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i, THE_FOREIGN_FOUR.Facturas f
 				WHERE c.cod_consumible = i.cod_consumible
 				AND f.nro_factura = i.nro_factura
@@ -1012,7 +1015,7 @@ END
 GO
 --***************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_hab_hotel
-				(@cod_hotel numeric(18,0)
+				(@cod_hotel numeric(18,0),
 				 @nro_habitacion numeric(18,0))
 RETURNS int
 AS
