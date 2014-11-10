@@ -17,14 +17,16 @@ AS
 	VALUES	(@cod_cliente, @cod_estadia)
 GO
 --***********************************************************
-CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia -- asignar un nro de habitacion y ese mismo numero
-														 -- retornarlo.
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
 				(@cod_reserva numeric(18,0),
 				 @usuario nvarchar(255))
 AS
 BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, fecha_inicio)
 	VALUES	(@cod_reserva, CAST(GETDATE() AS DATETIME))
+	
+	INSERT INTO THE_FOREIGN_FOUR.AuditoriaEstadias (cod_usuario, cod_estadia, cod_operacion)
+	VALUES ((SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), (SELECT cod_estadia FROM THE_FOREIGN_FOUR.Estadias WHERE cod_reserva = @cod_reserva), 'I')
 	
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET cod_estado_reserva  = (SELECT cod_estado_reserva
@@ -165,7 +167,7 @@ BEGIN
 	WHERE	cod_reserva = @cod_reserva
 	
 	INSERT INTO THE_FOREIGN_FOUR.Cancelaciones (cod_reserva, motivo, usuario, fecha_operacion)
-	VALUES (@cod_reserva, @motivo, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), (SELECT THE_FOREIGN_FOUR.fecha_sys ()))
+	VALUES (@cod_reserva, @motivo, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), GETDATE())
 END
 GO
 
@@ -176,7 +178,6 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 				 @cod_regimen int,
 				 @fecha_desde datetime,
 				 @fecha_hasta datetime,
-				 @fecha_creacion datetime,
 				 @usuario nvarchar(255))
 AS
 BEGIN
@@ -189,7 +190,7 @@ BEGIN
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
 	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, @fecha_creacion, CONVERT(int, @fecha_hasta - @fecha_desde), (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)))
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, CAST(GETDATE() AS DATETIME), CONVERT(int, @fecha_hasta - @fecha_desde), (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)))
 	
 	RETURN @cod_reserva_generada
 END
@@ -244,7 +245,7 @@ RETURN
 		 WHERE	r.estado = 'H'
 		 AND	@cod_hotel = rph.cod_hotel)
 GO
---***********************************************************
+--**************************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hab_disponibles
 				(@cod_hotel int,
 				 @cod_tipo_hab numeric(18,0),
@@ -435,6 +436,16 @@ AS
 SELECT cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, nom_calle, 
 		nro_calle, nacionalidad, pais_origen,  estado, piso
 FROM THE_FOREIGN_FOUR.Clientes
+GO
+--***********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_cliente
+					(@mail nvarchar(255))
+AS
+BEGIN
+	UPDATE THE_FOREIGN_FOUR.Clientes
+	SET estado = 'I'
+	WHERE mail = @mail
+END
 GO
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_cliente (@mail nvarchar(255))
@@ -760,35 +771,71 @@ El valor de la habitación se obtiene a través de su precio base
 alojarán en la habitación (tipo de habitación) y luego de ello aplicando 
 un incremento en función de la categoría del Hotel (cantidad de estrellas)
 */
-/*
-CREATE FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia numeric(18,0))
+
+CREATE FUNCTION THE_FOREIGN_FOUR.calcular_precio_hab_estadia(@cod_hab_estadia numeric(18,0))
 RETURNS numeric(18,2)
 AS
 BEGIN
-RETURN(
-	SELECT	(((r.precio* th.capacidad) + (h.cant_estrellas * h.recarga_estrellas))*res.cant_noches)
-	FROM	THE_FOREIGN_FOUR.Regimenes r,
-			THE_FOREIGN_FOUR.view_tipo_hab th,
-			THE_FOREIGN_FOUR.Hoteles h,
-			THE_FOREIGN_FOUR.Estadias e,
-			THE_FOREIGN_FOUR.Reservas res
-	WHERE	e.cod_estadia = @cod_estadia
-	AND		e.cod_reserva = res.cod_reserva
-	AND		res.cod_regimen = r.cod_regimen
-	AND		h.cod_hotel = res.cod_hotel
-	AND		th.cod_tipo_hab = res.cod_tipo_hab
+
+DECLARE @cod_regimen numeric(18,0),
+		@cod_hotel	numeric(18,0),
+		@cod_tipo_hab numeric(18,0),
+		@cant_noches numeric(18,0)
+
+	SET @cod_regimen = (SELECT DISTINCT res.cod_regimen
+						FROM	THE_FOREIGN_FOUR.Habitaciones_Estadia he,
+								THE_FOREIGN_FOUR.Reservas res,
+								THE_FOREIGN_FOUR.Estadias e
+						WHERE he.cod_estadia = e.cod_estadia
+						AND	he.cod_hab_estadia = @cod_hab_estadia
+						AND e.cod_reserva = res.cod_reserva)
+	
+	SET @cant_noches = (SELECT	res.cant_noches
+						FROM	THE_FOREIGN_FOUR.Reservas res,
+								THE_FOREIGN_FOUR.Estadias e,
+								THE_FOREIGN_FOUR.Habitaciones_Estadia he
+						WHERE	he.cod_estadia = e.cod_estadia
+						AND		he.cod_hab_estadia = @cod_hab_estadia
+						AND		e.cod_reserva = res.cod_reserva)
+						
+	SET @cod_hotel = (SELECT	res.cod_hotel
+						FROM	THE_FOREIGN_FOUR.Reservas res,
+								THE_FOREIGN_FOUR.Estadias e,
+								THE_FOREIGN_FOUR.Habitaciones_Estadia he
+						WHERE	he.cod_estadia = e.cod_estadia
+						AND		he.cod_hab_estadia = @cod_hab_estadia
+						AND		e.cod_reserva = res.cod_reserva)
+						
+	SET @cod_tipo_hab = (SELECT	ha.cod_tipo_hab
+							FROM	THE_FOREIGN_FOUR.Estadias e,
+									THE_FOREIGN_FOUR.Habitaciones_Estadia he,
+									THE_FOREIGN_FOUR.Habitaciones ha
+							WHERE	he.cod_estadia = e.cod_estadia
+							AND		he.cod_hab_estadia = @cod_hab_estadia
+							AND		ha.cod_habitacion = he.cod_habitacion)
+						
+						
+						
+	RETURN(	SELECT THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen, @cod_hotel, @cod_tipo_hab, @cant_noches )
 )
 END
 GO
-*/
+
 
 
 --****************************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS
 BEGIN
+	
+	DECLARE @cod_hab_estadia numeric(18,0)
+	SET @cod_hab_estadia = (SELECT he.cod_hab_estadia
+							FROM	THE_FOREIGN_FOUR.Facturas f,
+									THE_FOREIGN_FOUR.Habitaciones_Estadia he
+							WHERE f.cod_estadia = he.cod_estadia)
+
 	UPDATE THE_FOREIGN_FOUR.Facturas
-	SET total = (SELECT (SUM(c.precio * i.cantidad) + THE_FOREIGN_FOUR.calcular_precio_estadia(f.cod_estadia))
+	SET total = (SELECT (SUM(c.precio * i.cantidad) + THE_FOREIGN_FOUR.calcular_precio_hab_estadia(@cod_hab_estadia))
 				FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i, THE_FOREIGN_FOUR.Facturas f
 				WHERE c.cod_consumible = i.cod_consumible
 				AND f.nro_factura = i.nro_factura
@@ -983,7 +1030,7 @@ END
 GO
 --***************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_hab_hotel
-				(@cod_hotel numeric(18,0)
+				(@cod_hotel numeric(18,0),
 				 @nro_habitacion numeric(18,0))
 RETURNS int
 AS
@@ -996,5 +1043,15 @@ BEGIN
 		RETURN 1
 	END
 	RETURN -1
+END
+GO
+--********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_usuario
+				(@usuario nvarchar(255))
+AS
+BEGIN
+	UPDATE THE_FOREIGN_FOUR.Usuarios
+	SET estado = 'I'
+	WHERE user_name = @usuario
 END
 GO

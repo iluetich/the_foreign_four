@@ -56,9 +56,7 @@ namespace FrbaHotel.Menues_de_los_Roles
 
             cmd.CommandText = consulta;
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = sqlConnection1;
-
-            sqlConnection1.Open();
+            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
 
             reader = cmd.ExecuteReader();
 
@@ -72,8 +70,6 @@ namespace FrbaHotel.Menues_de_los_Roles
                     this.registrarBoton(funcionalidad);
                 }
             }
-
-            sqlConnection1.Close();
         }
 
         public void registrarBoton(string funcionalidad)

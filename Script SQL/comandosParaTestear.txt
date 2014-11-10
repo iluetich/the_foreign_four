@@ -119,3 +119,31 @@ WHERE cod_estadia = 1
 EXECUTE THE_FOREIGN_FOUR.proc_actualizar_total_factura 2428783
 
 SELECT THE_FOREIGN_FOUR.calcular_precio_estadia(1)
+
+--************************************
+SELECT * FROM THE_FOREIGN_FOUR.Habitaciones_Estadia
+
+--cod_hab_estadia = 1, cod_estadia = 19168, cod_habitacion = 286
+
+SELECT cod_reserva 
+FROM THE_FOREIGN_FOUR.Estadias
+WHERE cod_estadia = 19168
+
+SELECT *
+FROM THE_FOREIGN_FOUR.Reservas
+WHERE cod_reserva = 108166
+
+SELECT *
+FROM THE_FOREIGN_FOUR.TipoHabitacion_Reservas
+WHERE cod_reserva = 108166
+
+--cod_hotel = 15
+--cod_regime = 1
+--cant_noches = 4
+--cod_tipo_hab = 1003
+
+SELECT THE_FOREIGN_FOUR.calcular_precio_hab_estadia(1)
+
+SELECT THE_FOREIGN_FOUR.func_calcular_precio(1,15,1003,4)
+
+--*********************************************
