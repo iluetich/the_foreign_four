@@ -94,6 +94,7 @@ BEGIN
 	DEALLOCATE CursorHabitaciones;
 	--**cursor********
 	
+	DROP TABLE THE_FOREIGN_FOUR.#TipoHabReserva
 	
 END
 GO
@@ -764,6 +765,22 @@ RETURN(
 )
 END
 GO
+--*************************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_tipo_hab_estadia(@cod_estadia numeric(18,0))
+RETURNS TABLE
+AS
+RETURN (
+	SELECT	ha.cod_tipo_hab
+	FROM	THE_FOREIGN_FOUR.Estadias e,
+	THE_FOREIGN_FOUR.Habitaciones_Estadia he,
+	THE_FOREIGN_FOUR.Habitaciones ha
+	WHERE	he.cod_estadia = e.cod_estadia
+	AND		e.cod_estadia = @cod_estadia
+	AND		ha.cod_habitacion = he.cod_habitacion
+)
+
+GO
+
 --**********************************************************
 /*
 El valor de la habitación se obtiene a través de su precio base 
@@ -771,7 +788,6 @@ El valor de la habitación se obtiene a través de su precio base
 alojarán en la habitación (tipo de habitación) y luego de ello aplicando 
 un incremento en función de la categoría del Hotel (cantidad de estrellas)
 */
-
 CREATE FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia numeric(18,0))
 RETURNS numeric(18,2)
 AS
@@ -779,8 +795,8 @@ BEGIN
 
 DECLARE @cod_regimen numeric(18,0),
 		@cod_hotel	numeric(18,0),
-		@cod_tipo_hab numeric(18,0),
-		@cant_noches numeric(18,0)
+		@cant_noches numeric(18,0),
+		@precio numeric(18,0)
 
 	SET @cod_regimen = (SELECT DISTINCT res.cod_regimen
 						FROM	THE_FOREIGN_FOUR.Reservas res,
@@ -801,17 +817,25 @@ DECLARE @cod_regimen numeric(18,0),
 						WHERE   e.cod_estadia = @cod_estadia
 						AND		e.cod_reserva = res.cod_reserva)
 						
-	SET @cod_tipo_hab = (SELECT	ha.cod_tipo_hab
-							FROM	THE_FOREIGN_FOUR.Estadias e,
-									THE_FOREIGN_FOUR.Habitaciones_Estadia he,
-									THE_FOREIGN_FOUR.Habitaciones ha
-							WHERE	he.cod_estadia = e.cod_estadia
-							AND		e.cod_estadia = @cod_estadia
-							AND		ha.cod_habitacion = he.cod_habitacion)
+	DECLARE CursorTipoHab CURSOR FOR
+	SELECT *
+	FROM THE_FOREIGN_FOUR.func_tipo_hab_estadia(@cod_estadia)
+	DECLARE @cod_tipo_hab numeric(18,0)
+	
+	OPEN CursorTipoHab;
+	
+	FETCH NEXT FROM CursorTipoHab INTO @cod_tipo_hab
+	
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		SET @precio = (SELECT THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen, @cod_hotel, @cod_tipo_hab))
+		FETCH NEXT FROM CursorTipoHab INTO @cod_tipo_hab
+	END
+	
+	CLOSE CursorTipoHab;
+	DEALLOCATE CursorTipoHab;						
 						
-						
-						
-	RETURN( SELECT THE_FOREIGN_FOUR.func_calcular_precio (@cod_regimen, @cod_hotel, @cod_tipo_hab))
+	RETURN(@precio)
 END
 GO
 
@@ -874,7 +898,7 @@ BEGIN
 	SET @cod_cons_all_inc = THE_FOREIGN_FOUR.buscar_cod_consumible ('descuento all inclusive')
 	SET @cod_cons_noches_canc = THE_FOREIGN_FOUR.buscar_cod_consumible ('noches no utilizadas')
 								
-	SET @costo_hab_dia = (SELECT THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia))
+	SET @costo_hab_dia = (SELECT THE_FOREIGN_FOUR.calcular_precio_estadia(77646/*@cod_estadia*/))
 	
 	SET @precio = (SELECT
 					CASE @cod_consumible
@@ -890,6 +914,7 @@ BEGIN
 END
 GO									
 --****************************************************************
+--DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura 
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS
 BEGIN
@@ -908,7 +933,6 @@ BEGIN
 	WHERE c.cod_consumible = i.cod_consumible
 	AND i.nro_factura = @nro_factura
 	GROUP BY i.nro_item, cantidad, c.cod_consumible
-	
 	
 	SET @total = (SELECT SUM (subtotal)
 					FROM THE_FOREIGN_FOUR.#subtotales)
@@ -1313,6 +1337,33 @@ BEGIN
 	SET checkout = fecha_inicio + cant_noches
 END
 GO
+
+--**************************************
+CREATE VIEW THE_FOREIGN_FOUR.view_habitaciones_disp
+(cod_habitacion, nro_habitacion, piso, cod_hotel, cod_tipo_hab, fecha_desde)
+AS
+SELECT	h.cod_habitacion, h.nro_habitacion, h.piso, h.cod_hotel, h.cod_tipo_hab, e.checkout
+		
+FROM	THE_FOREIGN_FOUR.Habitaciones h,
+		THE_FOREIGN_FOUR.Habitaciones_Estadia he,
+		THE_FOREIGN_FOUR.Estadias e
+WHERE	h.cod_habitacion = he.cod_habitacion
+AND		he.cod_estadia = e.cod_estadia
+GO
+
+--***************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles (@fecha_desde datetime, @cod_tipo_hab numeric(18,0), @cod_hotel numeric(18,0))
+RETURNS TABLE
+AS
+RETURN(
+		SELECT  *
+		FROM	THE_FOREIGN_FOUR.view_habitaciones_disp d
+		WHERE	d.cod_tipo_hab = @cod_tipo_hab
+		AND		d.cod_hotel = @cod_hotel
+		AND		CAST(d.fecha_desde AS datetime) < @fecha_desde
+)
+GO
+
 
 
 
