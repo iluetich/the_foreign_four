@@ -31,14 +31,21 @@ AS
 	INSERT INTO THE_FOREIGN_FOUR.ClientePorEstadia (cod_cliente, cod_estadia)
 	VALUES	(@cod_cliente, @cod_estadia)
 GO
+
+
 --***********************************************************
+--DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
 				(@cod_reserva numeric(18,0),
 				 @usuario nvarchar(255))
 AS
 BEGIN
+
+	DECLARE @fecha_inicio datetime
+	SET @fecha_inicio = CAST(GETDATE() AS DATETIME)
+	
 	INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, fecha_inicio)
-	VALUES	(@cod_reserva, CAST(GETDATE() AS DATETIME))
+	VALUES	(@cod_reserva, @fecha_inicio)
 	
 	INSERT INTO THE_FOREIGN_FOUR.AuditoriaEstadias (cod_usuario, cod_estadia, cod_operacion)
 	VALUES ((SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), (SELECT cod_estadia FROM THE_FOREIGN_FOUR.Estadias WHERE cod_reserva = @cod_reserva), 'I')
@@ -48,6 +55,46 @@ BEGIN
 								FROM THE_FOREIGN_FOUR.EstadosReserva
 								WHERE descripcion = 'efectivizada')
 	WHERE cod_reserva = @cod_reserva
+	
+	
+	
+	DECLARE  @cod_estadia numeric(18,0),
+				@cod_hotel numeric(18,0)
+	SET @cod_estadia = (SELECT cod_estadia
+						FROM THE_FOREIGN_FOUR.Estadias
+						WHERE cod_reserva = @cod_reserva
+						AND fecha_inicio = @fecha_inicio)
+	SET @cod_hotel = (SELECT DISTINCT cod_hotel
+					 FROM THE_FOREIGN_FOUR.Reservas
+					 WHERE cod_reserva = @cod_reserva)	
+	
+	
+	SELECT	cod_tipo_hab
+	INTO THE_FOREIGN_FOUR.#TipoHabReserva
+	FROM THE_FOREIGN_FOUR.TipoHabitacion_Reservas
+	WHERE cod_reserva = @cod_reserva
+	
+	--**cursor********
+	DECLARE CursorHabitaciones CURSOR FOR
+	SELECT *
+	FROM THE_FOREIGN_FOUR.#TipoHabReserva
+	DECLARE @cod_tipo_hab numeric(18,0)
+	OPEN CursorHabitaciones;
+	FETCH NEXT FROM CursorHabitaciones INTO @cod_tipo_hab
+	
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.Habitaciones_Estadia (cod_estadia, cod_habitacion)
+		VALUES (@cod_estadia, (SELECT MIN(cod_habitacion)
+								FROM THE_FOREIGN_FOUR.func_obtener_hab_disponibles(@fecha_inicio, @cod_tipo_hab, @cod_hotel)))
+		
+		FETCH NEXT FROM CursorHabitaciones INTO @cod_tipo_hab
+	END
+	CLOSE CursorHabitaciones;
+	DEALLOCATE CursorHabitaciones;
+	--**cursor********
+	
+	
 END
 GO
 --***********************************************************
@@ -1145,7 +1192,6 @@ BEGIN
 		RETURN -1
 	END
 	
-	--EXECUTE THE_FOREIGN_FOUR.proc_realizar_checkout @cod_estadia, @username 
 	RETURN 1
 END
 GO	
@@ -1317,31 +1363,7 @@ AS
 			ORDER BY 2 DESC)
 GO
 
---************************************************
-CREATE VIEW THE_FOREIGN_FOUR.view_habitaciones_disp
-(cod_habitacion, nro_habitacion, piso, cod_hotel, cod_tipo_hab, fecha_desde)
-AS
-SELECT	h.cod_habitacion, h.nro_habitacion, h.piso, h.cod_hotel, h.cod_tipo_hab, e.checkout
-		
-FROM	THE_FOREIGN_FOUR.Habitaciones h,
-		THE_FOREIGN_FOUR.Habitaciones_Estadia he,
-		THE_FOREIGN_FOUR.Estadias e
-WHERE	h.cod_habitacion = he.cod_habitacion
-AND		he.cod_estadia = e.cod_estadia
-GO
 
---***************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles (@fecha_desde datetime, @cod_tipo_hab numeric(18,0), @cod_hotel numeric(18,0))
-RETURNS TABLE
-AS
-RETURN(
-		SELECT  *
-		FROM	THE_FOREIGN_FOUR.view_habitaciones_disp d
-		WHERE	d.cod_tipo_hab = @cod_tipo_hab
-		AND		d.cod_hotel = @cod_hotel
-		AND		CAST(d.fecha_desde AS datetime) < @fecha_desde
-)
-GO
 					 
 					 
 					 
