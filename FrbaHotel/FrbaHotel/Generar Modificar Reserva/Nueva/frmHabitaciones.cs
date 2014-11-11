@@ -12,8 +12,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva.Nueva
     public partial class frmHabitaciones : Form
     {
         frmGenerarReserva frmGenerarReservaPadre;
-        string codigoHotel;
-        DataTable dataTableHabitaciones;
+        string codigoHotel;        
 
         public frmHabitaciones(frmGenerarReserva newFrm)
         {
@@ -40,8 +39,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva.Nueva
             if (e.RowIndex != -1)
             {
                 DataGridViewRow row = dgvHabitaciones.Rows[e.RowIndex];
-                frmGenerarReservaPadre.filaSeleccionadaDataGridHabitaciones(row);
+                frmGenerarReservaPadre.filaSeleccionadaDataGridHabitaciones(row);                
                 this.Close();
+                
             }
         }
 
@@ -54,7 +54,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva.Nueva
         //evento para cuando se cierra el form
         private void frmHabitaciones_FormClosing(object sender, FormClosingEventArgs e)
         {
-            frmGenerarReservaPadre.setHabitacionesIsOn();
+            frmGenerarReservaPadre.Enabled = true;
+            frmGenerarReservaPadre.setHabitacionesIsOn();        
         }
     }
 }

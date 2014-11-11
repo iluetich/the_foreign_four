@@ -51,7 +51,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.lblEstado = new System.Windows.Forms.Label();
             this.groupDatos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             this.grbPanel2.SuspendLayout();
@@ -238,7 +238,7 @@
             // grbPanel2
             // 
             this.grbPanel2.AutoSize = true;
-            this.grbPanel2.Controls.Add(this.button1);
+            this.grbPanel2.Controls.Add(this.lblEstado);
             this.grbPanel2.Controls.Add(this.txtCostoTotal);
             this.grbPanel2.Controls.Add(this.label2);
             this.grbPanel2.Controls.Add(this.txtResul);
@@ -262,7 +262,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(91, 53);
+            this.label2.Location = new System.Drawing.Point(65, 52);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(60, 13);
             this.label2.TabIndex = 15;
@@ -301,15 +301,14 @@
             this.btnSiguiente.UseVisualStyleBackColor = true;
             this.btnSiguiente.Click += new System.EventHandler(this.btnSiguietne_Click);
             // 
-            // button1
+            // lblEstado
             // 
-            this.button1.Location = new System.Drawing.Point(22, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.lblEstado.AutoSize = true;
+            this.lblEstado.Location = new System.Drawing.Point(65, 29);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Size = new System.Drawing.Size(86, 13);
+            this.lblEstado.TabIndex = 16;
+            this.lblEstado.Text = "Estado Reserva:";
             // 
             // frmGenerarReserva
             // 
@@ -366,6 +365,6 @@
         private System.Windows.Forms.Button btnAgregarHabitacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn capacidad;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lblEstado;
     }
 }
