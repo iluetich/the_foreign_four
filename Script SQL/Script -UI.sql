@@ -1444,9 +1444,17 @@ AS
 			GROUP BY ho.cod_hotel
 			ORDER BY 2 DESC)
 GO
-
-
-					 
-					 
-
-
+--TOP 5 HABITACIONES MAS ACTIVAS
+CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_ocupacion_habitacion
+					(@fecha_desde datetime,
+					 @fecha_hasta datetime)
+RETURNS TABLE
+AS
+	RETURN (SELECT	TOP 5 ha.cod_habitacion, ha.cod_hotel, ha.nro_habitacion, COUNT(he.cod_estadia) 'veces ocupada', SUM(e.cant_noches) 'noches ocupada'
+			FROM	THE_FOREIGN_FOUR.Habitaciones ha JOIN THE_FOREIGN_FOUR.Habitaciones_Estadia he ON(ha.cod_habitacion = he.cod_habitacion)
+													 JOIN THE_FOREIGN_FOUR.Estadias e ON(he.cod_estadia = e.cod_estadia)
+			WHERE	e.fecha_inicio BETWEEN @fecha_desde AND @fecha_hasta
+			OR		e.checkout BETWEEN @fecha_desde AND @fecha_hasta
+			GROUP BY ha.cod_habitacion, ha.cod_hotel, ha.nro_habitacion
+			ORDER BY 4 DESC, 5 DESC)
+GO
