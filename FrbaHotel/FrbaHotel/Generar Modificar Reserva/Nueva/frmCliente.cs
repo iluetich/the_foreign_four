@@ -17,7 +17,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         frmGenerarReserva frmGenerarReservaPadre;
         bool boolClienteRegistrado;
         int codigoCliente;
-
+        int codigoReserva;
 
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
@@ -87,20 +87,23 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //alta reserva
         private void generarReserva()
         {
-            string consultaSQL = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_generar_reserva @cod_hotel, @cod_cliente, @cod_tipo_hab, @cod_regimen, @fecha_desde, @fecha_hasta, @usuario SELECT @output as resultado";
+            agregarHabitaciones();
+
+            string consultaSQL = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_generar_reserva @cod_hotel, @cod_cliente, @cod_regimen, @fecha_desde, @fecha_hasta, @usuario SELECT @output as resultado";
             SqlCommand command = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             command.Parameters.AddWithValue("@cod_hotel", frmGenerarReservaPadre.getCodigoHotel());
-            command.Parameters.AddWithValue("@cod_cliente", codigoCliente);
-            command.Parameters.AddWithValue("@cod_tipo_hab", frmGenerarReservaPadre.getCodigoTipoHab());
+            command.Parameters.AddWithValue("@cod_cliente", codigoCliente);            
             command.Parameters.AddWithValue("@cod_regimen", frmGenerarReservaPadre.getCodigoRegimen());
             command.Parameters.AddWithValue("@fecha_desde", frmGenerarReservaPadre.getFechaDesde());
             command.Parameters.AddWithValue("@fecha_hasta", frmGenerarReservaPadre.getFechaHasta());
             command.Parameters.AddWithValue("@usuario", frmGenerarReservaPadre.getUserName());
 
-            Int32 codigo = Convert.ToInt32(command.ExecuteScalar());
+            int codigo = Convert.ToInt32(command.ExecuteScalar());
             txtCodigoReserva.Text = codigo.ToString();
+            codigoReserva = codigo;
 
             MessageBox.Show("Felicidades ha generado una nueva reserva \n su codigo reserva es: "+txtCodigoReserva.Text,"Congrats",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            volverAlMenu();
         }
 
         //muestro los datos del cliente que se acaba de registrar o buscar
@@ -120,6 +123,35 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             txtIden.Text = row.Cells[3].Value.ToString();            
             //mail
             txtMail.Text = row.Cells[4].Value.ToString();
+        }
+
+        //agrega las habitaciones a la tabla de ruptura
+        private void agregarHabitaciones(){
+            DataGridView dgvHabitaciones = frmGenerarReservaPadre.getDGVHabitaciones();
+
+            SqlCommand cmd;
+            int cod_tipo_hab;
+            string habitacionSQL;
+
+            foreach (DataGridViewRow row in dgvHabitaciones.Rows){
+                
+                cod_tipo_hab = Convert.ToInt32(row.Cells["codigo"].Value);
+                habitacionSQL = "THE_FOREIGN_FOUR.proc_agregar_hab_reserva @cod_reserva, @cod_tipo_hab";
+                cmd = new SqlCommand(habitacionSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                cmd.Parameters.AddWithValue("@cod_tipo_hab", cod_tipo_hab);
+                cmd.Parameters.AddWithValue("@cod_reserva", codigoReserva);
+                //cmd.ExecuteNonQuery();
+                Console.WriteLine("cod hab: "+cod_tipo_hab);
+                Console.WriteLine("reserva: " + codigoReserva.ToString());
+                              
+            }
+
+        }
+        //vuelve al menu
+        private void volverAlMenu()
+        {
+            this.Close();
+            frmGenerarReservaPadre.Close();
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------

@@ -77,17 +77,22 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string consultaSQL="";
             if (controlesCargados()){                
                 //busquedas por algunos de los campos
-                if (txtMail.Text != "" & (txtIdentificacion.Text == "" | cmbTipoDoc.SelectedIndex == -1))
-                    consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc from THE_FOREIGN_FOUR.buscar_clientes(null,null,null,null,'" + txtMail.Text + "');";
-                if (txtMail.Text == "" & (txtIdentificacion.Text != "" & cmbTipoDoc.SelectedIndex != -1))
-                    consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",null);";
-                if (txtMail.Text != "" & (txtIdentificacion.Text != "" & cmbTipoDoc.SelectedIndex != -1))
-                    consultaSQL = "select cod_cliente nombre, apellido, tipo_doc, nro_doc from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
+                try
+                {
+                    if (txtMail.Text != "" & (txtIdentificacion.Text == "" | cmbTipoDoc.SelectedIndex == -1))
+                        consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc from THE_FOREIGN_FOUR.buscar_clientes(null,null,null,null,'" + txtMail.Text + "');";
+                    if (txtMail.Text == "" & (txtIdentificacion.Text != "" & cmbTipoDoc.SelectedIndex != -1))
+                        consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",null);";
+                    if (txtMail.Text != "" & (txtIdentificacion.Text != "" & cmbTipoDoc.SelectedIndex != -1))
+                        consultaSQL = "select cod_cliente nombre, apellido, tipo_doc, nro_doc from THE_FOREIGN_FOUR.buscar_clientes(null,null,'" + cmbTipoDoc.Text + "'," + txtIdentificacion.Text + ",'" + txtMail.Text + "');";
 
-                datosCliente = FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSQL);
-                dgvResultCltes.Columns["cod_cliente"].Visible = false;
-                codigoCliente = Convert.ToInt32(dgvResultCltes.Rows[0].Cells["cod_cliente"].Value);
-                
+                    datosCliente = FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSQL);
+                    dgvResultCltes.Columns["cod_cliente"].Visible = false;
+                    codigoCliente = Convert.ToInt32(dgvResultCltes.Rows[0].Cells["cod_cliente"].Value);
+                }
+                catch (Exception ex) {
+                    MessageBox.Show(ex.ToString(),"Revisa los parametros de tu busqueda");
+                }                
             }else{
                 MessageBox.Show("Complete al menos un campo");
             }

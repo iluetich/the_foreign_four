@@ -45,6 +45,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             codigoHotel = hotelSesion;
             user = userSesion;
             costoTotal = 0;
+            dgvHabitaciones.Columns["codigo"].Visible = false;
         }
         //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------
@@ -67,7 +68,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 cmbHotel.Enabled = false;
             }else{
                 cargarHoteles();
-            }
+            }           
             terminoDeCargarTodo = true;            
         }
 
@@ -257,9 +258,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 boolVerificoDisp = true;
                 
                 if (verificarDisponibilidad()){
+                    //agrego las habitaciones a la tabla
+                    string codigo = row.Cells[0].Value.ToString();
                     string descripcion = row.Cells[1].Value.ToString();
                     string capacidad = row.Cells[3].Value.ToString();
-                    dgvHabitaciones.Rows.Add(new[] { descripcion, capacidad }); 
+                    dgvHabitaciones.Rows.Add(new[] { codigo, descripcion, capacidad }); 
 
                     txtResul.BackColor = Color.Green;
                     txtResul.Text = "Disponible";
@@ -344,6 +347,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         public int getCodigoRegimen(){  return Convert.ToInt32(codigoRegimen);}
         public string getFechaDesde(){  return dtpFechaDesde.Value.ToString("yyyy-dd-MM");}
         public string getFechaHasta(){  return dtpFechaHasta.Value.ToString("yyyy-dd-MM");}
-        public string getUserName() { return user; }
+        public string getUserName() {   return user; }
+        public DataGridView getDGVHabitaciones(){ return dgvHabitaciones;}  
     }
 }

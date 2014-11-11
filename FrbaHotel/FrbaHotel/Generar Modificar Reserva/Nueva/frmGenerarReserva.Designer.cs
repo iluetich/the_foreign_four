@@ -36,8 +36,6 @@
             this.btnRegimenes = new System.Windows.Forms.Button();
             this.groupDatos = new System.Windows.Forms.GroupBox();
             this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
-            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.capacidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAgregarHabitacion = new System.Windows.Forms.Button();
             this.txtRegimen = new System.Windows.Forms.TextBox();
             this.txtCostoXDia = new System.Windows.Forms.TextBox();
@@ -46,12 +44,15 @@
             this.lblSeleccionarHotel = new System.Windows.Forms.Label();
             this.txtResul = new System.Windows.Forms.TextBox();
             this.grbPanel2 = new System.Windows.Forms.GroupBox();
+            this.lblEstado = new System.Windows.Forms.Label();
             this.txtCostoTotal = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
-            this.lblEstado = new System.Windows.Forms.Label();
+            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.capacidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupDatos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             this.grbPanel2.SuspendLayout();
@@ -147,24 +148,13 @@
             this.dgvHabitaciones.BackgroundColor = System.Drawing.Color.White;
             this.dgvHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHabitaciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.codigo,
             this.descripcion,
             this.capacidad});
             this.dgvHabitaciones.Location = new System.Drawing.Point(22, 175);
             this.dgvHabitaciones.Name = "dgvHabitaciones";
             this.dgvHabitaciones.Size = new System.Drawing.Size(313, 97);
             this.dgvHabitaciones.TabIndex = 5;
-            // 
-            // descripcion
-            // 
-            this.descripcion.HeaderText = "descripcion";
-            this.descripcion.Name = "descripcion";
-            this.descripcion.ReadOnly = true;
-            // 
-            // capacidad
-            // 
-            this.capacidad.HeaderText = "capacidad";
-            this.capacidad.Name = "capacidad";
-            this.capacidad.ReadOnly = true;
             // 
             // btnAgregarHabitacion
             // 
@@ -248,6 +238,15 @@
             this.grbPanel2.TabIndex = 15;
             this.grbPanel2.TabStop = false;
             // 
+            // lblEstado
+            // 
+            this.lblEstado.AutoSize = true;
+            this.lblEstado.Location = new System.Drawing.Point(65, 29);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Size = new System.Drawing.Size(86, 13);
+            this.lblEstado.TabIndex = 16;
+            this.lblEstado.Text = "Estado Reserva:";
+            // 
             // txtCostoTotal
             // 
             this.txtCostoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -301,14 +300,23 @@
             this.btnSiguiente.UseVisualStyleBackColor = true;
             this.btnSiguiente.Click += new System.EventHandler(this.btnSiguietne_Click);
             // 
-            // lblEstado
+            // codigo
             // 
-            this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(65, 29);
-            this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(86, 13);
-            this.lblEstado.TabIndex = 16;
-            this.lblEstado.Text = "Estado Reserva:";
+            this.codigo.HeaderText = "codigo";
+            this.codigo.Name = "codigo";
+            this.codigo.ReadOnly = true;
+            // 
+            // descripcion
+            // 
+            this.descripcion.HeaderText = "descripcion";
+            this.descripcion.Name = "descripcion";
+            this.descripcion.ReadOnly = true;
+            // 
+            // capacidad
+            // 
+            this.capacidad.HeaderText = "capacidad";
+            this.capacidad.Name = "capacidad";
+            this.capacidad.ReadOnly = true;
             // 
             // frmGenerarReserva
             // 
@@ -363,8 +371,9 @@
         public System.Windows.Forms.DateTimePicker dtpFechaHasta;
         private System.Windows.Forms.DataGridView dgvHabitaciones;
         private System.Windows.Forms.Button btnAgregarHabitacion;
+        private System.Windows.Forms.Label lblEstado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn capacidad;
-        private System.Windows.Forms.Label lblEstado;
     }
 }
