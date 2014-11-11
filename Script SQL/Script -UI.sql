@@ -1316,7 +1316,32 @@ AS
 			GROUP BY ho.cod_hotel
 			ORDER BY 2 DESC)
 GO
-					 
+
+--************************************************
+CREATE VIEW THE_FOREIGN_FOUR.view_habitaciones_disp
+(cod_habitacion, nro_habitacion, piso, cod_hotel, cod_tipo_hab, fecha_desde)
+AS
+SELECT	h.cod_habitacion, h.nro_habitacion, h.piso, h.cod_hotel, h.cod_tipo_hab, e.checkout
+		
+FROM	THE_FOREIGN_FOUR.Habitaciones h,
+		THE_FOREIGN_FOUR.Habitaciones_Estadia he,
+		THE_FOREIGN_FOUR.Estadias e
+WHERE	h.cod_habitacion = he.cod_habitacion
+AND		he.cod_estadia = e.cod_estadia
+GO
+
+--***************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles (@fecha_desde datetime, @cod_tipo_hab numeric(18,0), @cod_hotel numeric(18,0))
+RETURNS TABLE
+AS
+RETURN(
+		SELECT  *
+		FROM	THE_FOREIGN_FOUR.view_habitaciones_disp d
+		WHERE	d.cod_tipo_hab = @cod_tipo_hab
+		AND		d.cod_hotel = @cod_hotel
+		AND		CAST(d.fecha_desde AS datetime) < @fecha_desde
+)
+GO
 					 
 					 
 					 

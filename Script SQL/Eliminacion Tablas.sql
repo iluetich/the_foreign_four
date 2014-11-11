@@ -67,6 +67,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia
 DROP FUNCTION THE_FOREIGN_FOUR.func_get_precio
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_cod_consumible
 DROP FUNCTION THE_FOREIGN_FOUR.func_calcular_total_consumibles_posta
+DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_checkout_migracion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
@@ -94,6 +95,7 @@ DROP VIEW THE_FOREIGN_FOUR.view_todos_los_clientes
 DROP VIEW THE_FOREIGN_FOUR.view_tipo_hab
 DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades 
 DROP VIEW THE_FOREIGN_FOUR.view_facturas
+DROP VIEW THE_FOREIGN_FOUR.view_habitaciones_disp
 DROP FUNCTION THE_FOREIGN_FOUR.facturacion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura
 
