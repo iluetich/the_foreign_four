@@ -11,6 +11,7 @@ DROP TABLE THE_FOREIGN_FOUR.ItemsFacturaDefectuosos
 DROP TABLE THE_FOREIGN_FOUR.Consumibles
 DROP TABLE THE_FOREIGN_FOUR.Facturas
 DROP TABLE THE_FOREIGN_FOUR.FacturasDefectuosas
+DROP TABLE THE_FOREIGN_FOUR.Pagos
 DROP TABLE THE_FOREIGN_FOUR.Estadias
 DROP TABLE THE_FOREIGN_FOUR.EstadiasDefectuosas 
 DROP TABLE THE_FOREIGN_FOUR.TiposPago 
@@ -40,6 +41,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_sgte_nro_factura
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_cant_huespedes
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_cliente
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_regimenes_hab 
+DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles
 DROP FUNCTION THE_FOREIGN_FOUR.func_hab_disponibles 
 DROP FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad 
 DROP FUNCTION THE_FOREIGN_FOUR.login_password 
@@ -62,7 +64,6 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_existe_huesped
 DROP FUNCTION THE_FOREIGN_FOUR.func_existe_factura
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_estadia
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_consumible
-DROP PROCEDURE THE_FOREIGN_FOUR.proc_agregar_hab_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_calcular_precio
 DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia
 DROP FUNCTION THE_FOREIGN_FOUR.func_get_precio
@@ -70,6 +71,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.buscar_cod_consumible
 DROP FUNCTION THE_FOREIGN_FOUR.func_calcular_total_consumibles_posta
 --DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles
 DROP FUNCTION THE_FOREIGN_FOUR.func_tipo_hab_estadia
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_agregar_hab_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_checkout_migracion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
@@ -81,6 +83,7 @@ DROP PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_cliente
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_huesped 
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_pago
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva 
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_cliente 
@@ -98,6 +101,7 @@ DROP VIEW THE_FOREIGN_FOUR.view_tipo_hab
 DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades 
 DROP VIEW THE_FOREIGN_FOUR.view_facturas
 DROP VIEW THE_FOREIGN_FOUR.view_habitaciones_disp
+DROP VIEW THE_FOREIGN_FOUR.view_tipos_pago
 DROP FUNCTION THE_FOREIGN_FOUR.facturacion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura
 

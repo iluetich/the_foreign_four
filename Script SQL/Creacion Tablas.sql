@@ -141,11 +141,6 @@ CREATE TABLE THE_FOREIGN_FOUR.Cancelaciones (
 	usuario				varchar(255),
 	fecha_operacion		datetime
 )
-CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
-	cod_tipo_pago		numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
-	descripcion			nvarchar(255),
-	nro_tarjeta			numeric(18,0),
-)
 CREATE TABLE THE_FOREIGN_FOUR.Estadias (
 	cod_estadia			numeric(18,0)			IDENTITY (1,1) PRIMARY KEY,
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
@@ -160,10 +155,21 @@ CREATE TABLE THE_FOREIGN_FOUR.EstadiasDefectuosas (
 	fecha_inicio		datetime,
 	cant_noches			numeric(18,0),
 )
+CREATE TABLE THE_FOREIGN_FOUR.TiposPago (
+	cod_tipo_pago		numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
+	descripcion			nvarchar(255),
+)
+CREATE TABLE THE_FOREIGN_FOUR.Pagos (
+	cod_pago			numeric(18,0)			PRIMARY KEY IDENTITY(1,1),
+	cod_tipo_pago		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TiposPago,
+	nro_tarjeta			nvarchar(30),
+	nro_factura			numeric(18,0)			UNIQUE,
+	fecha_pago			datetime				DEFAULT GETDATE(),
+)
 CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 	nro_factura			numeric(18,0)			PRIMARY KEY,
 	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
-	cod_tipo_pago		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TiposPago,
+	cod_pago			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Pagos,
 	fecha_factura		datetime,
 	total				numeric(18,2),
 )

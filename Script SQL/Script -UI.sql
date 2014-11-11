@@ -664,6 +664,9 @@ BEGIN
 			
 	INSERT INTO THE_FOREIGN_FOUR.Consumibles (cod_consumible, descripcion)
 	VALUES (1, 'estadia'), (2, 'descuento all inclusive'), (3, 'noches no utilizadas')
+	
+	INSERT INTO THE_FOREIGN_FOUR.TiposPago (descripcion)
+	VALUES ('Contado'), ('Tarjeta de Credito')
 
 END	
 GO
@@ -1363,9 +1366,37 @@ RETURN(
 		AND		CAST(d.fecha_desde AS datetime) < @fecha_desde
 )
 GO
-
-
-
+--****************************************************
+CREATE VIEW THE_FOREIGN_FOUR.view_tipos_pago
+AS
+SELECT cod_tipo_pago, descripcion
+FROM THE_FOREIGN_FOUR.TiposPago
+GO
+--****************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_pago
+					(@nro_factura numeric(18,0),
+					 @cod_tipo_pago numeric(18,0),
+					 @nro_tarjeta nvarchar(30))
+AS
+BEGIN
+	
+	IF(@cod_tipo_pago = 1)
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.Pagos (cod_tipo_pago, nro_tarjeta, nro_factura)
+		VALUES (@cod_tipo_pago, 'Abonó al contado', @nro_factura)
+	END
+	ELSE
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.Pagos (cod_tipo_pago, nro_tarjeta, nro_factura)
+		VALUES (@cod_tipo_pago, @nro_tarjeta, @nro_factura)
+	END
+	
+	UPDATE	THE_FOREIGN_FOUR.Facturas
+	SET		cod_pago = (SELECT cod_pago FROM THE_FOREIGN_FOUR.Pagos WHERE nro_factura = @nro_factura)
+	WHERE	nro_factura = @nro_factura
+	
+END
+GO
 
 /* LISTADO ESTADISTICO */
 
@@ -1415,8 +1446,6 @@ AS
 GO
 
 
-					 
-					 
 					 
 					 
 
