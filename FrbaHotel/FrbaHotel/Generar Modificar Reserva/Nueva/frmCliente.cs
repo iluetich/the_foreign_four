@@ -87,8 +87,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //alta reserva
         private void generarReserva()
         {
-            agregarHabitaciones();
-
             string consultaSQL = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_generar_reserva @cod_hotel, @cod_cliente, @cod_regimen, @fecha_desde, @fecha_hasta, @usuario SELECT @output as resultado";
             SqlCommand command = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             command.Parameters.AddWithValue("@cod_hotel", frmGenerarReservaPadre.getCodigoHotel());
@@ -102,6 +100,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             txtCodigoReserva.Text = codigo.ToString();
             codigoReserva = codigo;
 
+            agregarHabitaciones();
+
             MessageBox.Show("Felicidades ha generado una nueva reserva \n su codigo reserva es: "+txtCodigoReserva.Text,"Congrats",MessageBoxButtons.OK,MessageBoxIcon.Information);
             volverAlMenu();
         }
@@ -114,8 +114,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             txtMail.Text = cmd.Parameters["@mail"].Value.ToString();
         }
 
-        //obtengo la fila seleccionada del grid de regimenes para llenar el textbox con el regimen
-        public void filaSeleccionadaDataGrid(DataGridViewRow row)
+        //obtengo la fila seleccionada del grid de los clientes buscados
+        public void filaSeleccionadaDataGridClientes(DataGridViewRow row)
         {
             //tipo documento
             txtTipoIden.Text = row.Cells[2].Value.ToString();
@@ -133,20 +133,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             int cod_tipo_hab;
             string habitacionSQL;
 
-            foreach (DataGridViewRow row in dgvHabitaciones.Rows){
-                
+            foreach (DataGridViewRow row in dgvHabitaciones.Rows){                
                 cod_tipo_hab = Convert.ToInt32(row.Cells["codigo"].Value);
                 habitacionSQL = "THE_FOREIGN_FOUR.proc_agregar_hab_reserva @cod_reserva, @cod_tipo_hab";
                 cmd = new SqlCommand(habitacionSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                 cmd.Parameters.AddWithValue("@cod_tipo_hab", cod_tipo_hab);
                 cmd.Parameters.AddWithValue("@cod_reserva", codigoReserva);
-                //cmd.ExecuteNonQuery();
-                Console.WriteLine("cod hab: "+cod_tipo_hab);
-                Console.WriteLine("reserva: " + codigoReserva.ToString());
-                              
+                cmd.ExecuteNonQuery();                                         
             }
-
         }
+
         //vuelve al menu
         private void volverAlMenu()
         {
@@ -159,8 +155,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         //----SETTERS------------------------------------------
         public void setCodigoCliente(int codigo) {   
-            codigoCliente = codigo;
-            Console.WriteLine(codigoCliente);
+            codigoCliente = codigo;            
         }
 
         //para setear el booleano desde otro form

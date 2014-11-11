@@ -22,8 +22,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         bool boolPasaAClientes;
         bool cargaDevueltaDispTipoHab;
         bool terminoDeCargarTodo = false; 
-        string codigoHotel;
-        int precioBase;
+        string codigoHotel;        
         int costoPorDia;
         int costoTotal;
         string codigoRegimen;
@@ -186,6 +185,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void txtRegimen_TextChanged(object sender, EventArgs e)
         {
             boolVerificoDisp = false;
+            cargaDevueltaDispTipoHab = false;
+            limpiar();
         }
         //------------------------------------------------------------------------------------------------------------
         //----------------------FIN EVENTOS TEXTBOX Y COMOBOBOX-------------------------------------------------------
@@ -195,9 +196,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //------------------------------------------------------------------------------------------------------------           
         //obtengo la fila seleccionada del grid de regimenes para llenar el textbox con el regimen
         public void filaSeleccionadaDataGrid(DataGridViewRow row)
-        {
-            //precio base del regimen            
-            precioBase = Convert.ToInt32(row.Cells[2].Value);        
+        {            
             //actualizo txtbox
             txtRegimen.Text = row.Cells[1].Value.ToString();
             //codigo regimen
@@ -307,8 +306,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 cod_tipo_hab = row["cod_tipo_hab"].ToString();
                 disponibilidadSQL = "select THE_FOREIGN_FOUR.func_hab_disponibles(" + codigoHotel + "," + cod_tipo_hab + ",'" + fechaDesde + "','" + fechaHasta + "')";
                 cmd = new SqlCommand(disponibilidadSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-                disponibilidad = cmd.ExecuteScalar().ToString();
-                Console.WriteLine(cod_tipo_hab+": "+disponibilidad);
+                disponibilidad = cmd.ExecuteScalar().ToString();              
                 //insert en la tabla
                 string insertSQL = "INSERT INTO THE_FOREIGN_FOUR.#TipoHabDisponibles (cod_tipo_hab, disponibilidad)VALUES(" + cod_tipo_hab + "," + disponibilidad + ")";
                 cmd = new SqlCommand(insertSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
@@ -330,6 +328,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             txtCostoTotal.Text = "";
             txtCostoXDia.Text = "";
             txtResul.Text = "";
+            txtResul.BackColor = Color.Empty;
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------
