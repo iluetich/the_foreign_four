@@ -34,6 +34,7 @@ GO
 
 
 --***********************************************************
+--DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
 				(@cod_reserva numeric(18,0),
 				 @usuario nvarchar(255))
@@ -63,7 +64,7 @@ BEGIN
 						FROM THE_FOREIGN_FOUR.Estadias
 						WHERE cod_reserva = @cod_reserva
 						AND fecha_inicio = @fecha_inicio)
-	SET @cod_hotel = (SELECT cod_hotel
+	SET @cod_hotel = (SELECT DISTINCT cod_hotel
 					 FROM THE_FOREIGN_FOUR.Reservas
 					 WHERE cod_reserva = @cod_reserva)	
 	
@@ -84,7 +85,7 @@ BEGIN
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 		INSERT INTO THE_FOREIGN_FOUR.Habitaciones_Estadia (cod_estadia, cod_habitacion)
-		VALUES (@cod_estadia, (SELECT TOP 1 cod_habitacion
+		VALUES (@cod_estadia, (SELECT MIN(cod_habitacion)
 								FROM THE_FOREIGN_FOUR.func_obtener_hab_disponibles(@fecha_inicio, @cod_tipo_hab, @cod_hotel)))
 		
 		FETCH NEXT FROM CursorHabitaciones INTO @cod_tipo_hab
@@ -1191,7 +1192,6 @@ BEGIN
 		RETURN -1
 	END
 	
-	--EXECUTE THE_FOREIGN_FOUR.proc_realizar_checkout @cod_estadia, @username 
 	RETURN 1
 END
 GO	
