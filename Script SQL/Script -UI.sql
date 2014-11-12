@@ -1400,12 +1400,20 @@ GO
 --*********************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_habitacion_reservada
 						(@cod_reserva numeric(18,0),
-						 @cod_tipo_hab numeric(18,0))
+						 @cod_tipo_hab numeric(18,0),
+						 @usuario nvarchar(255))
 AS
 BEGIN
 	DELETE	THE_FOREIGN_FOUR.TipoHabitacion_Reservas
 	WHERE	cod_reserva = @cod_reserva
 	AND		cod_tipo_hab = cod_tipo_hab
+	
+	UPDATE	THE_FOREIGN_FOUR.Reservas
+	SET		usuario = @usuario,		
+			cod_estado_reserva = (SELECT cod_estado
+								  FROM THE_FOREIGN_FOUR.EstadosReserva
+								  WHERE descripcion = 'modificada')
+	WHERE	cod_reserva = @cod_reserva
 END
 GO
 /* LISTADO ESTADISTICO */
