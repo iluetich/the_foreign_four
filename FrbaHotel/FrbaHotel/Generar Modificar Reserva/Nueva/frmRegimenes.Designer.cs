@@ -38,7 +38,7 @@
             this.dgvRegimenes.AllowUserToDeleteRows = false;
             this.dgvRegimenes.AllowUserToResizeColumns = false;
             this.dgvRegimenes.AllowUserToResizeRows = false;
-            this.dgvRegimenes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvRegimenes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRegimenes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvRegimenes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvRegimenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
