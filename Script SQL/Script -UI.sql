@@ -887,6 +887,7 @@ END
 GO
 --***********************************************************
 --***********************************************************
+--DROP FUNCTION THE_FOREIGN_FOUR.func_get_precio
 CREATE FUNCTION THE_FOREIGN_FOUR.func_get_precio (@cod_consumible numeric(18,0), @cod_estadia numeric(18,0))
 RETURNS numeric(18,0)
 AS
@@ -901,7 +902,7 @@ BEGIN
 	SET @cod_cons_all_inc = THE_FOREIGN_FOUR.buscar_cod_consumible ('descuento all inclusive')
 	SET @cod_cons_noches_canc = THE_FOREIGN_FOUR.buscar_cod_consumible ('noches no utilizadas')
 								
-	SET @costo_hab_dia = (SELECT THE_FOREIGN_FOUR.calcular_precio_estadia(77646/*@cod_estadia*/))
+	SET @costo_hab_dia = (SELECT THE_FOREIGN_FOUR.calcular_precio_estadia(@cod_estadia))
 	
 	SET @precio = (SELECT
 					CASE @cod_consumible
