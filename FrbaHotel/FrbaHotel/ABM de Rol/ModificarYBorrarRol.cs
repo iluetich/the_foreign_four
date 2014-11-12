@@ -25,7 +25,7 @@ namespace FrbaHotel.ABM_de_Rol
 
         public void cargarGrid()
         {
-            string consulta = "SELECT * FROM THE_FOREIGN_FOUR.Roles";
+            string consulta = "SELECT * FROM THE_FOREIGN_FOUR.Roles WHERE nombre!='Administrador General'";
             FrbaHotel.Utils.rellenarDataGridView(dgvBuscarRol, consulta);
         }
 
