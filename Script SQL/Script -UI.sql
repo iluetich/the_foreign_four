@@ -392,7 +392,7 @@ GO
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.login_password 
 				(@user_name nvarchar(30), 
-				@password nvarchar(30))
+				 @password nvarchar(255))
 RETURNS TABLE  
 AS
 RETURN(

@@ -32,7 +32,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Hoteles (
 CREATE TABLE THE_FOREIGN_FOUR.Usuarios (
 	cod_usuario			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	user_name			nvarchar(30)			UNIQUE,
-	password			nvarchar(30),
+	password			nvarchar(255),
 	nombre				nvarchar(60),
 	apellido			nvarchar(60),
 	tipo_doc			nvarchar(3)				DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
