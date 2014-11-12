@@ -102,6 +102,7 @@ namespace FrbaHotel.ABM_de_Hotel
                     table.Rows.Add(row);
                 }
             }
+            reader.Close();
             reader.Dispose();
 
             //3) mostralos en la tabla

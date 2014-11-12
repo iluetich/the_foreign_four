@@ -100,6 +100,7 @@ namespace FrbaHotel.ABM_de_Rol
                     table.Rows.Add(row);
                 }
             }
+            reader.Close();
             reader.Dispose();
 
             this.refrezcarPantalla();
