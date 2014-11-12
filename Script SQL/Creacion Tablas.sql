@@ -146,7 +146,6 @@ CREATE TABLE THE_FOREIGN_FOUR.Estadias (
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
 	fecha_inicio		datetime,
 	cant_noches			numeric(18,0),
-	precio				numeric(18,2),
 	checkout			datetime
 )
 CREATE TABLE THE_FOREIGN_FOUR.EstadiasDefectuosas (
