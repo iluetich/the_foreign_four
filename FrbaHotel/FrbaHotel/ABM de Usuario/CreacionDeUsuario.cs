@@ -95,7 +95,8 @@ namespace FrbaHotel.ABM_de_Usuario
             {
                 while (reader.Read())
                 {
-                    int hotel = reader.GetInt32(2);
+
+                    int hotel = int.Parse(reader.GetDecimal(2).ToString());
                     string rol = reader.GetString(3);
 
                     DataRow row = table.NewRow();
