@@ -767,7 +767,6 @@ BEGIN
 							FROM THE_FOREIGN_FOUR.Reservas
 							WHERE cod_reserva = @cod_reserva)
 	
-	
 	IF( (@codigo = 1) AND (@estadoReserva = 1 OR @estadoReserva = 2))
 	BEGIN
 		RETURN 1
@@ -2131,6 +2130,7 @@ AS
 			ORDER BY 7 DESC)
 GO
 
+EXEC THE_FOREIGN_FOUR.porc_insercion_estados_reserva
 --***CLIENTES********************************
 
 INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
