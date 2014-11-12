@@ -34,7 +34,6 @@ GO
 
 
 --***********************************************************
---DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
 				(@cod_reserva numeric(18,0),
 				 @usuario nvarchar(255))
@@ -920,7 +919,6 @@ BEGIN
 END
 GO									
 --****************************************************************
---DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura 
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS
 BEGIN
@@ -1157,15 +1155,6 @@ BEGIN
 END
 GO
 --******************************************************
-/*CREATE FUNCTION THE_FOREIGN_FOUR.fecha_sys() --ya no se usa, porque se usa directamente una variable en el trigger de reservas
-RETURNS datetime
-AS
-BEGIN
-RETURN (SELECT MAX(fecha_inicio + cant_noches)
-		FROM THE_FOREIGN_FOUR.Estadias)
-END	
-GO*/
-
 CREATE FUNCTION THE_FOREIGN_FOUR.buscar_regimenes_hotel (@cod_hotel numeric(18,0))
 RETURNS TABLE
 AS
@@ -1200,6 +1189,10 @@ BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.AuditoriaEstadias
 	(cod_usuario, cod_operacion, cod_estadia)
 	VALUES (@cod_usuario, 'O', @cod_estadia)
+	
+	UPDATE THE_FOREIGN_FOUR.Estadias
+	SET checkout = GETDATE()
+	WHERE cod_estadia = @cod_estadia
 
 END
 GO
