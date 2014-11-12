@@ -66,7 +66,7 @@ namespace FrbaHotel.Listado_Estadistico
                         clienteConMayorCantidadDePuntos();
                         break;
                 }
-            }catch(Exception e){
+            }catch(Exception){
                 if (cmbTipoListado.SelectedIndex == 4)
                     MessageBox.Show("Tiempo de espera cadudado", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 MessageBox.Show("No hay datos sobre el año ingresado", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
