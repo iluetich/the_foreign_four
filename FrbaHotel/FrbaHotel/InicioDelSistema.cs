@@ -32,7 +32,7 @@ namespace FrbaHotel
         public void cargarRolesDisponibles()
         {
             string consultaSql = "SELECT * FROM THE_FOREIGN_FOUR.Roles WHERE estado='H'";
-            FrbaHotel.Utils.rellenarComboBox(comboBoxEleccionRol, "THE_FOREIGN_FOUR.Roles", "nombre", consultaSql);
+            FrbaHotel.Utils.rellenarCombo(comboBoxEleccionRol, "THE_FOREIGN_FOUR.Roles", "nombre", consultaSql);
         }
 
         private void BotonIngresar_Click(object sender, EventArgs e)

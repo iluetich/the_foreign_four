@@ -30,7 +30,7 @@ namespace FrbaHotel.IniciarSecion
             formPadre = formularioPadre;
             InitializeComponent();
             string consulta = "SELECT * from THE_FOREIGN_FOUR.Hoteles";
-            FrbaHotel.Utils.rellenarComboBox(comboBoxSelecionHotel, "THE_FOREIGN_FOUR.Hoteles", "cod_hotel", consulta);
+            FrbaHotel.Utils.rellenarCombo(comboBoxSelecionHotel, "THE_FOREIGN_FOUR.Hoteles", "cod_hotel", consulta);
 
         }
 
