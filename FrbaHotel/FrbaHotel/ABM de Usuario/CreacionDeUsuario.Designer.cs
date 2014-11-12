@@ -62,7 +62,6 @@
             this.comboBoxTipoDoc = new System.Windows.Forms.ComboBox();
             this.dgvRolesHoteles = new System.Windows.Forms.DataGridView();
             this.botonQuitarRol = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRolesHoteles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -388,19 +387,11 @@
             this.botonQuitarRol.UseVisualStyleBackColor = true;
             this.botonQuitarRol.Click += new System.EventHandler(this.botonQuitarRol_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(124, 194);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(259, 20);
-            this.textBox1.TabIndex = 43;
-            // 
             // CreacionDeUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(599, 400);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.botonQuitarRol);
             this.Controls.Add(this.dgvRolesHoteles);
             this.Controls.Add(this.comboBoxTipoDoc);
@@ -481,6 +472,5 @@
         private System.Windows.Forms.ComboBox comboBoxTipoDoc;
         private System.Windows.Forms.DataGridView dgvRolesHoteles;
         private System.Windows.Forms.Button botonQuitarRol;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }
