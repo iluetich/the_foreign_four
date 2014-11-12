@@ -166,37 +166,6 @@ END
 GO
 
 --*****************************************************
-/*
-
-El valor de la habitación se obtiene a través de su precio base
-multiplicando la cantidad de personas que se alojarán en la habitación (tipo de habitación)
-y luego de ello aplicando un incremento en función de la categoría del Hotel (cantidad de estrellas)
-
-CREATE TRIGGER trg_precio_estadia
-ON THE_FOREIGN_FOUR.Estadias
-AFTER INSERT
-AS
-BEGIN
-	DECLARE TrgInsCursor CURSOR FOR
-	SELECT cod_reserva FROM inserted
-	DECLARE @cod_reserva numeric(18,0)
-	
-	OPEN  TrgInsCursor
-	FETCH NEXT FROM TrgInsCurson INTO @cod_reserva
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-		UPDATE THE_FOREIGN_FOUR.Estadias
-		SET precio = (	SELECT r.cant_noches * th.recargo
-						FROM	THE_FOREIGN_FOUR.Reservas r,
-						THE_FOREIGN_FOUR.TipoHabitaciones th
-						WHERE r.cod_
-	
-	END
-	CLOSE TrgInsCursor
-	DEALLOCATE TrgInsCursor
-END
-GO*/
---*************************************************
 
 CREATE TRIGGER THE_FOREIGN_FOUR.trg_facturas_error
 ON THE_FOREIGN_FOUR.Facturas
@@ -419,42 +388,3 @@ BEGIN
 
 END
 GO
-
---**************************************************************
-
-/* -- este trigger hay que activarlo despues de la migracion
-
-CREATE TRIGGER trg_items_descripcion
-ON THE_FOREIGN_FOUR.ItemsFactura
-AFTER INSERT
-AS
-BEGIN
-
-	DECLARE TrigCursor CURSOR FOR
-	SELECT cod_consumible, nro_factura
-	FROM inserted
-	DECLARE @cod_consumible numeric(18,0)
-			@nro_factura numeric(18,0)
-			
-	OPEN TrigCursor;
-
-	FETCH NEXT FROM TrigCursor INTO @cod_consumible, @nro_factura
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-	
-		UPDATE THE_FOREIGN_FOUR.ItemsFactura 
-		SET descripcion = (SELECT descripcion
-		                   FROM THE_FOREIGN_FOUR.Consumibles
-		                   WHERE cod_consumible = @cod_consumible)
-		WHERE cod_consumible = @cod_consumible
-		AND nro_factura = @nro_factura;
-			
-		FETCH NEXT FROM TrigCursor INTO @cod_consumible, @nro_factura  
-
-	END
-
-  CLOSE TrigCursor;
-  DEALLOCATE TrigCursor;
-
-END
-GO*/
