@@ -41,8 +41,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.menu = menuPadre;
             InitializeComponent();
 
-            codigoHotel = hotelSesion;
-            user = userSesion;
+            codigoHotel = hotelSesion; 
+            user = userSesion; 
             costoTotal = 0;
             dgvHabitaciones.Columns["codigo"].Visible = false;
         }
@@ -83,12 +83,20 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //valida que los campos esten completos
         private bool validarDatosCompletos()
         {
-            return (
-                FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &                                
-                FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen") 
-            );
+            if (user != "Guest"){
+                return (                    
+                    FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
+                    FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata") &
+                    FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen")
+                );
+            }else{
+                return (
+                    FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &
+                    FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
+                    FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata") &
+                    FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen")
+                );
+            }
         }
 
         //carga de controles desde la BD

@@ -34,7 +34,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             
             //llena la grid con los regimenes del hotel seleccionado
             string consultaSql = "select r.cod_regimen, descripcion, precio from THE_FOREIGN_FOUR.RegimenPorHotel rxh, THE_FOREIGN_FOUR.Regimenes r where cod_hotel = " + codigoHotel + "and r.cod_regimen = rxh.cod_regimen;";
-            FrbaHotel.Utils.rellenarDataGridView(dgvRegimenes, consultaSql);         
+            FrbaHotel.Utils.rellenarDataGridView(dgvRegimenes, consultaSql);
+            dgvRegimenes.Columns["cod_regimen"].Visible = false;
         }
 
         //evento para cuando se hace click en una celda devuelva la fila correspondiente
