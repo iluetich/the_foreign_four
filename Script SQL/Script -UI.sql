@@ -204,7 +204,15 @@ AS
 	WHERE @cod_reserva = cod_reserva
 GO
 --***********************************************************
-
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_liberar_habitaciones
+					(@cod_reserva numeric(18,0))
+AS
+BEGIN
+	DELETE	THE_FOREIGN_FOUR.TipoHabitacion_Reservas
+	WHERE	cod_reserva = @cod_reserva
+END
+GO
+--***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva
 				(@cod_reserva numeric(18,0),
 				 @motivo varchar(255),
@@ -1411,14 +1419,6 @@ BEGIN
 END
 GO
 --***********************************************************
-CREATE PROCEDURE THE_FOREIGN_FOUR.proc_liberar_habitaciones
-					(@cod_reserva numeric(18,0))
-AS
-BEGIN
-	DELETE	THE_FOREIGN_FOUR.TipoHabitacion_Reservas
-	WHERE	cod_reserva = @cod_reserva
-END
-GO
 /* LISTADO ESTADISTICO */
 
 
