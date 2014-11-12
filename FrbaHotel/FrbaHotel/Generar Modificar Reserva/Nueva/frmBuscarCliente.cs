@@ -88,7 +88,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     dgvResultCltes.Columns["cod_cliente"].Visible = false;
                     codigoCliente = Convert.ToInt32(dgvResultCltes.Rows[0].Cells["cod_cliente"].Value);
                 }
-                catch (Exception ex) {
+                catch (Exception) {
                     MessageBox.Show("No hubo coincidencias, revisa los parametros de tu busqueda","Atencion");
                 }                
             }else{

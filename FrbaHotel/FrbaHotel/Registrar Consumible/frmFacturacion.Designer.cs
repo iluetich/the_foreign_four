@@ -31,7 +31,9 @@
             this.groupFacturaDetalle = new System.Windows.Forms.GroupBox();
             this.dgvFacturaDetalle = new System.Windows.Forms.DataGridView();
             this.groupDetalleDias = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.txtNroTarj = new System.Windows.Forms.TextBox();
+            this.lbltNroTarj = new System.Windows.Forms.Label();
+            this.cmbTipoPago = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtDiasNoAlojados = new System.Windows.Forms.TextBox();
             this.txtDiasAlojados = new System.Windows.Forms.TextBox();
@@ -58,6 +60,13 @@
             // 
             // dgvFacturaDetalle
             // 
+            this.dgvFacturaDetalle.AllowUserToAddRows = false;
+            this.dgvFacturaDetalle.AllowUserToDeleteRows = false;
+            this.dgvFacturaDetalle.AllowUserToResizeColumns = false;
+            this.dgvFacturaDetalle.AllowUserToResizeRows = false;
+            this.dgvFacturaDetalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvFacturaDetalle.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvFacturaDetalle.BackgroundColor = System.Drawing.Color.White;
             this.dgvFacturaDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFacturaDetalle.Location = new System.Drawing.Point(15, 29);
             this.dgvFacturaDetalle.Name = "dgvFacturaDetalle";
@@ -66,7 +75,9 @@
             // 
             // groupDetalleDias
             // 
-            this.groupDetalleDias.Controls.Add(this.comboBox1);
+            this.groupDetalleDias.Controls.Add(this.txtNroTarj);
+            this.groupDetalleDias.Controls.Add(this.lbltNroTarj);
+            this.groupDetalleDias.Controls.Add(this.cmbTipoPago);
             this.groupDetalleDias.Controls.Add(this.label3);
             this.groupDetalleDias.Controls.Add(this.txtDiasNoAlojados);
             this.groupDetalleDias.Controls.Add(this.txtDiasAlojados);
@@ -79,18 +90,37 @@
             this.groupDetalleDias.TabStop = false;
             this.groupDetalleDias.Text = "Informacion";
             // 
-            // comboBox1
+            // txtNroTarj
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(422, 51);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 5;
+            this.txtNroTarj.Location = new System.Drawing.Point(515, 53);
+            this.txtNroTarj.MaxLength = 30;
+            this.txtNroTarj.Name = "txtNroTarj";
+            this.txtNroTarj.Size = new System.Drawing.Size(121, 20);
+            this.txtNroTarj.TabIndex = 7;
+            // 
+            // lbltNroTarj
+            // 
+            this.lbltNroTarj.AutoSize = true;
+            this.lbltNroTarj.Location = new System.Drawing.Point(420, 57);
+            this.lbltNroTarj.Name = "lbltNroTarj";
+            this.lbltNroTarj.Size = new System.Drawing.Size(59, 13);
+            this.lbltNroTarj.TabIndex = 6;
+            this.lbltNroTarj.Text = "Nro tarjeta:";
+            // 
+            // cmbTipoPago
+            // 
+            this.cmbTipoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTipoPago.FormattingEnabled = true;
+            this.cmbTipoPago.Location = new System.Drawing.Point(515, 26);
+            this.cmbTipoPago.Name = "cmbTipoPago";
+            this.cmbTipoPago.Size = new System.Drawing.Size(121, 21);
+            this.cmbTipoPago.TabIndex = 5;
+            this.cmbTipoPago.SelectedIndexChanged += new System.EventHandler(this.cmbTipoPago_SelectedIndexChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(419, 25);
+            this.label3.Location = new System.Drawing.Point(419, 29);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(86, 13);
             this.label3.TabIndex = 4;
@@ -174,7 +204,7 @@
             this.Name = "frmFacturacion";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Emitir Factura";            
+            this.Text = "Emitir Factura";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmFacturacion_FormClosing);
             this.groupFacturaDetalle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturaDetalle)).EndInit();
@@ -195,10 +225,12 @@
         private System.Windows.Forms.TextBox txtDiasNoAlojados;
         private System.Windows.Forms.TextBox txtDiasAlojados;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbTipoPago;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBotonera;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnEmitirFactura;
+        private System.Windows.Forms.TextBox txtNroTarj;
+        private System.Windows.Forms.Label lbltNroTarj;
     }
 }
