@@ -322,7 +322,6 @@ BEGIN
 	DECLARE @cant_hab_por_tipo int,
 			@cant_hab_reservadas int,
 			@cant_hab_disponibles int,
-			@cant_hab_canceladas int,
 			@cant_hab_checkout int
 
 	SET		@cant_hab_por_tipo = (SELECT	COUNT(nro_habitacion)
@@ -338,17 +337,6 @@ BEGIN
 									AND		@cod_tipo_hab = thr.cod_tipo_hab
 									AND		(@fecha_inicio BETWEEN r.fecha_desde AND r.fecha_hasta
 									OR		@fecha_fin BETWEEN r.fecha_desde AND r.fecha_hasta))
-	
-	SET		@cant_hab_canceladas = (SELECT	COUNT(th.cod_tipo_hab)
-									FROM	THE_FOREIGN_FOUR.Cancelaciones c, 
-											THE_FOREIGN_FOUR.Reservas r,
-											THE_FOREIGN_FOUR.TipoHabitacion_Reservas th
-									WHERE	c.cod_reserva = r.cod_reserva
-									AND		th.cod_reserva = r.cod_reserva
-									AND		th.cod_tipo_hab = @cod_tipo_hab
-									AND		@fecha_inicio > c.fecha_operacion
-									AND		@fecha_fin <= r.fecha_hasta) 
-									
 									
 	SET		@cant_hab_checkout = (	SELECT	COUNT(th.cod_tipo_hab)
 									FROM	THE_FOREIGN_FOUR.Reservas r,
@@ -359,8 +347,18 @@ BEGIN
 									AND		th.cod_tipo_hab = @cod_tipo_hab
 									AND		@fecha_inicio > e.checkout
 									AND		@fecha_fin <= r.fecha_hasta)
-									
-	SET		@cant_hab_disponibles = @cant_hab_por_tipo - @cant_hab_reservadas + @cant_hab_canceladas + @cant_hab_checkout
+	IF(EXISTS (SELECT	cod_tarea
+				FROM	THE_FOREIGN_FOUR.InactividadHoteles
+				WHERE	cod_hotel = @cod_hotel
+				AND		(@fecha_inicio BETWEEN fecha_desde AND fecha_hasta
+				OR		 @fecha_fin BETWEEN fecha_desde AND fecha_hasta)))	
+	BEGIN
+		SET @cant_hab_disponibles = -33
+	END	
+	ELSE
+	BEGIN		
+		SET	@cant_hab_disponibles = @cant_hab_por_tipo - @cant_hab_reservadas + @cant_hab_checkout
+	END
 	RETURN	@cant_hab_disponibles
 END
 GO
@@ -1509,6 +1507,3 @@ AS
 			GROUP BY c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, f.nro_factura, e.cod_estadia
 			ORDER BY 7 DESC)
 GO
-
-SELECT * FROM THE_FOREIGN_FOUR.InactividadHoteles
-select * from the_foreign_four.Reservas where cod_hotel = 8

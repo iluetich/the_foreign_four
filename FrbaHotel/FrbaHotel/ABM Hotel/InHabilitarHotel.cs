@@ -55,7 +55,7 @@ namespace FrbaHotel.ABM_de_Hotel
             
             int puedeInhabilitar = (int)cmd.ExecuteScalar();
             
-            if(puedeInhabilitar > 0)
+            if(puedeInhabilitar < 0)
             {
                 estaOk = false;
                 MessageBox.Show("EL hotel no se puede Inhabilitar ya que se han hecho reservas para ese periodo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
