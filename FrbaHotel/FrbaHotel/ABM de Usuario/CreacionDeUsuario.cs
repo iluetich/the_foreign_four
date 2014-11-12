@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menues_de_los_Roles;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 
 namespace FrbaHotel.ABM_de_Usuario
 {
@@ -20,6 +21,7 @@ namespace FrbaHotel.ABM_de_Usuario
         private DataSet dataSet;
         private DateTime fechaDeNac;
         private Boolean constructorMod;
+        private string passwordAnterior;
 
         public CreacionDeUsuario(MenuDinamico menuPadre)
         {
@@ -48,6 +50,7 @@ namespace FrbaHotel.ABM_de_Usuario
         public void setearDatos(DataGridViewRow fila)
         {
             textBoxUsername.Text = fila.Cells["user_name"].Value.ToString();
+            passwordAnterior = fila.Cells["password"].Value.ToString();
             textBoxPassword1.Text = fila.Cells["password"].Value.ToString();
             textBoxPassword2.Text = fila.Cells["password"].Value.ToString();
             string estadoComboBox = fila.Cells["estado"].Value.ToString();
@@ -241,7 +244,17 @@ namespace FrbaHotel.ABM_de_Usuario
             cmd.CommandType = CommandType.Text;
 
             cmd.Parameters.AddWithValue("@fechaNacimiento", fechaDeNac);
-            cmd.Parameters.AddWithValue("@password", textBoxPassword1.Text);
+
+            string contraseña;
+            if (passwordAnterior == textBoxPassword1.Text)
+            {
+                contraseña = passwordAnterior;
+            }
+            else
+            {
+                contraseña = FrbaHotel.Utils.encriptarContraseña(textBoxPassword1.Text);
+            }
+            cmd.Parameters.AddWithValue("@password", contraseña);
             cmd.Parameters.AddWithValue("@nombre", textBoxNombre.Text);
             cmd.Parameters.AddWithValue("@apellido", textBoxApellido.Text);
             cmd.Parameters.AddWithValue("@tipo_doc", tipoDoc);
@@ -270,8 +283,9 @@ namespace FrbaHotel.ABM_de_Usuario
 
             cmd.Parameters.AddWithValue("@fechaNacimiento", fechaDeNac);
 
-            cmd.CommandText = "INSERT INTO THE_FOREIGN_FOUR.Usuarios (user_name,password,nombre,apellido,tipo_doc,nro_doc,mail,telefono,direccion,fecha_nac,estado)" + 
-                        " VALUES ('"+ textBoxUsername.Text +"','"+ textBoxPassword1.Text +"','"+ textBoxNombre.Text +"','"+ textBoxApellido.Text +"','"+ tipoDoc +"',"+ nroDoc +",'"+ textBoxMail.Text +"','"+ textBoxTelefono.Text +"','"+ textBoxDireccion.Text +"',@fechaNacimiento,'"+ estado +"')";
+            string contraseña = FrbaHotel.Utils.encriptarContraseña(textBoxPassword1.Text);
+            cmd.CommandText = "INSERT INTO THE_FOREIGN_FOUR.Usuarios (user_name,password,nombre,apellido,tipo_doc,nro_doc,mail,telefono,direccion,fecha_nac,estado)" +
+                        " VALUES ('" + textBoxUsername.Text + "','" + contraseña +"','" + textBoxNombre.Text + "','" + textBoxApellido.Text + "','" + tipoDoc + "'," + nroDoc + ",'" + textBoxMail.Text + "','" + textBoxTelefono.Text + "','" + textBoxDireccion.Text + "',@fechaNacimiento,'" + estado + "')";
 
             cmd.ExecuteNonQuery();
             

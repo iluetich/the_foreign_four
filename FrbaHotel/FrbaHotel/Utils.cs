@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
+using System.Security.Cryptography;
 
 namespace FrbaHotel
 {
@@ -193,5 +194,36 @@ namespace FrbaHotel
             return int.Parse(codUsuario);
         }
 
+        //encriptar la contraseña
+        internal static string encriptarContraseña(string contraseña)
+        {
+            UnicodeEncoding codificador = new
+            UnicodeEncoding();
+
+            string encriptar = contraseña;
+
+            byte[] datos = codificador.GetBytes(encriptar);
+
+            byte[] resultado;
+
+            SHA256 encriptarSHA = new
+            SHA256CryptoServiceProvider();
+
+            resultado = encriptarSHA.ComputeHash(datos);
+
+            StringBuilder sBuilder = new
+            StringBuilder();
+
+            // Repite a travez de cada byte de el hash y formatea cada uno como un string hexadecimal.
+
+            for (int i = 0; i < resultado.Length; i++)
+            {
+
+            sBuilder.Append(resultado[i].ToString("x2"));
+
+            }
+
+            return sBuilder.ToString();
+        }
     }
 }
