@@ -392,7 +392,7 @@ GO
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.login_password 
 				(@user_name nvarchar(30), 
-				@password nvarchar(30))
+				 @password nvarchar(255))
 RETURNS TABLE  
 AS
 RETURN(
@@ -611,7 +611,7 @@ AS
 BEGIN
 	
 	INSERT INTO THE_FOREIGN_FOUR.Usuarios(user_name, password, nombre)
-	VALUES	('admin', 'w23e','Administrador General')
+	VALUES	('admin', '52d77462b24987175c8d7dab901a5967e927ffc8d0b6e4a234e07a4aec5e3724','Administrador General')
 	INSERT INTO THE_FOREIGN_FOUR.Roles(nombre)
 	VALUES	('Administrador'),
 			('Recepcionista'),
