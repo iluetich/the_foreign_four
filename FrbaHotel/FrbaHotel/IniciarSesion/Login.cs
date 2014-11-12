@@ -173,7 +173,8 @@ namespace FrbaHotel.IniciarSecion
 
         public Boolean corroborarPassword()
         {
-            string consultaSql = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('" + this.user_name + "','" + this.password + "')";
+            string contraseña = FrbaHotel.Utils.encriptarContraseña(this.password);
+            string consultaSql = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('" + this.user_name + "','"+ contraseña +"')";
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = consultaSql;
             cmd.CommandType = CommandType.Text;

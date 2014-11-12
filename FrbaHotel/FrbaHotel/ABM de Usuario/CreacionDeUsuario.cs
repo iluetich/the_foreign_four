@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menues_de_los_Roles;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 
 namespace FrbaHotel.ABM_de_Usuario
 {
@@ -241,7 +242,9 @@ namespace FrbaHotel.ABM_de_Usuario
             cmd.CommandType = CommandType.Text;
 
             cmd.Parameters.AddWithValue("@fechaNacimiento", fechaDeNac);
-            cmd.Parameters.AddWithValue("@password", textBoxPassword1.Text);
+
+            string contraseña = FrbaHotel.Utils.encriptarContraseña(textBoxPassword1.Text);
+            cmd.Parameters.AddWithValue("@password", contraseña);
             cmd.Parameters.AddWithValue("@nombre", textBoxNombre.Text);
             cmd.Parameters.AddWithValue("@apellido", textBoxApellido.Text);
             cmd.Parameters.AddWithValue("@tipo_doc", tipoDoc);
@@ -270,8 +273,9 @@ namespace FrbaHotel.ABM_de_Usuario
 
             cmd.Parameters.AddWithValue("@fechaNacimiento", fechaDeNac);
 
-            cmd.CommandText = "INSERT INTO THE_FOREIGN_FOUR.Usuarios (user_name,password,nombre,apellido,tipo_doc,nro_doc,mail,telefono,direccion,fecha_nac,estado)" + 
-                        " VALUES ('"+ textBoxUsername.Text +"','"+ textBoxPassword1.Text +"','"+ textBoxNombre.Text +"','"+ textBoxApellido.Text +"','"+ tipoDoc +"',"+ nroDoc +",'"+ textBoxMail.Text +"','"+ textBoxTelefono.Text +"','"+ textBoxDireccion.Text +"',@fechaNacimiento,'"+ estado +"')";
+            string contraseña = FrbaHotel.Utils.encriptarContraseña(textBoxPassword1.Text);
+            cmd.CommandText = "INSERT INTO THE_FOREIGN_FOUR.Usuarios (user_name,password,nombre,apellido,tipo_doc,nro_doc,mail,telefono,direccion,fecha_nac,estado)" +
+                        " VALUES ('" + textBoxUsername.Text + "','" + contraseña +"','" + textBoxNombre.Text + "','" + textBoxApellido.Text + "','" + tipoDoc + "'," + nroDoc + ",'" + textBoxMail.Text + "','" + textBoxTelefono.Text + "','" + textBoxDireccion.Text + "',@fechaNacimiento,'" + estado + "')";
 
             cmd.ExecuteNonQuery();
             
