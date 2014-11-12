@@ -1519,7 +1519,3 @@ AS
 			GROUP BY c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, f.nro_factura, e.cod_estadia
 			ORDER BY 7 DESC)
 GO
-
-SELECT * FROM THE_FOREIGN_FOUR.InactividadHoteles
-select * from the_foreign_four.Hoteles where cod_hotel = 8
-SELECT THE_FOREIGN_FOUR.func_hotel_inhabilitable (1, '20201117', '20201121')
