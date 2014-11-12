@@ -74,6 +74,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //evento para el cierre del form
         private void frmGenerarReserva_FormClosing(Object sender, FormClosingEventArgs e)
         {
+            //chequea si existe la tabla temporal
+            string checkTablaSQL = "IF OBJECT_ID('tempdb.THE_FOREIGN_FOUR.#TipoHabDisponibles', 'U') IS NOT NULL DROP TABLE THE_FOREIGN_FOUR.#TipoHabDisponibles";
+            SqlCommand cmd = new SqlCommand(checkTablaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd.ExecuteNonQuery();
+
             this.menu.Show();
         }
 
@@ -169,7 +174,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void cmbHotel_SelectedIndexChanged(object sender, EventArgs e)
         {
             limpiar();
-
+            
             boolVerificoDisp = false;
             cargaDevueltaDispTipoHab = false;
             
