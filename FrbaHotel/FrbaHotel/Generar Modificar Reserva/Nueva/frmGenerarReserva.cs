@@ -59,10 +59,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             regimenesIsOn = false;
             habitacionesIsOn = false;
             boolVerificoDisp = false;
-            cargaDevueltaDispTipoHab = false;
-         
-            //carga controles desde la BD
-            FrbaHotel.ConexionSQL.establecerConexionBD();
+            cargaDevueltaDispTipoHab = false;         
+            
             if (user != "Guest"){
                 cmbHotel.Enabled = false;
             }else{
