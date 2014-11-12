@@ -1189,6 +1189,10 @@ BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.AuditoriaEstadias
 	(cod_usuario, cod_operacion, cod_estadia)
 	VALUES (@cod_usuario, 'O', @cod_estadia)
+	
+	UPDATE THE_FOREIGN_FOUR.Estadias
+	SET checkout = GETDATE()
+	WHERE cod_estadia = @cod_estadia
 
 END
 GO
