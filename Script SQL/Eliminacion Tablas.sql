@@ -32,6 +32,9 @@ DROP TABLE THE_FOREIGN_FOUR.Funcionalidades
 DROP TABLE THE_FOREIGN_FOUR.Roles 
 
 --*******FUNC / PROC / VIEWS *****************
+DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_monto_consumibles
+DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente
+DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_ocupacion_habitacion
 DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_inactividad_hotel
 DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel
 DROP FUNCTION THE_FOREIGN_FOUR.func_estadistica_cancelaciones_hotel
@@ -69,10 +72,11 @@ DROP FUNCTION THE_FOREIGN_FOUR.calcular_precio_estadia
 DROP FUNCTION THE_FOREIGN_FOUR.func_get_precio
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_cod_consumible
 DROP FUNCTION THE_FOREIGN_FOUR.func_calcular_total_consumibles_posta
---DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles
 DROP FUNCTION THE_FOREIGN_FOUR.func_tipo_hab_estadia
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_habitacion_reservada
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_agregar_hab_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_checkout_migracion
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_liberar_habitaciones
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_usuario

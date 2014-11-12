@@ -230,6 +230,8 @@ BEGIN
 								  WHERE descripcion = @estado)
 	WHERE	cod_reserva = @cod_reserva
 	
+	EXEC THE_FOREIGN_FOUR.proc_liberar_habitaciones @cod_reserva
+	
 	INSERT INTO THE_FOREIGN_FOUR.Cancelaciones (cod_reserva, motivo, usuario, fecha_operacion)
 	VALUES (@cod_reserva, @motivo, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), GETDATE())
 END
