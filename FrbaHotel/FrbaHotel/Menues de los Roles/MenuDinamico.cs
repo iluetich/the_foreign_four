@@ -70,6 +70,9 @@ namespace FrbaHotel.Menues_de_los_Roles
                     this.registrarBoton(funcionalidad);
                 }
             }
+
+            reader.Close();
+            reader.Dispose();
         }
 
         public void registrarBoton(string funcionalidad)

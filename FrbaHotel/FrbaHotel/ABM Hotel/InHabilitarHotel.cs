@@ -61,13 +61,16 @@ namespace FrbaHotel.ABM_de_Hotel
                 MessageBox.Show("EL hotel no se puede Inhabilitar ya que se han hecho reservas para ese periodo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            //tercero inhabilitar hotel
-            this.ejecutarProcInhabilitarHotel(fechaDesde,fechaHasta);
+            if (estaOk)
+            {
+                //tercero inhabilitar hotel
+                this.ejecutarProcInhabilitarHotel(fechaDesde, fechaHasta);
 
-            //resetear la grid
-            padre.cargarHoteles();
-            padre.Show();
-            this.Close();
+                //resetear la grid
+                padre.cargarHoteles();
+                padre.Show();
+                this.Close();
+            }
         }
 
         public void ejecutarProcInhabilitarHotel(string fechaDesde, string fechaHasta)
