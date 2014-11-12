@@ -38,6 +38,7 @@
             this.btnGenerar = new System.Windows.Forms.Button();
             this.dgvListado = new System.Windows.Forms.DataGridView();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.lblMsg = new System.Windows.Forms.Label();
             lblTipoListado = new System.Windows.Forms.Label();
             this.groupListado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
@@ -107,9 +108,11 @@
             this.cmbTipoListado.Name = "cmbTipoListado";
             this.cmbTipoListado.Size = new System.Drawing.Size(362, 21);
             this.cmbTipoListado.TabIndex = 5;
+            this.cmbTipoListado.SelectedIndexChanged += new System.EventHandler(this.cmbTipoListado_SelectedIndexChanged);
             // 
             // groupListado
             // 
+            this.groupListado.Controls.Add(this.lblMsg);
             this.groupListado.Controls.Add(this.btnGenerar);
             this.groupListado.Controls.Add(this.cmbTipoListado);
             this.groupListado.Controls.Add(this.lblAño);
@@ -146,12 +149,12 @@
             this.dgvListado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvListado.Location = new System.Drawing.Point(15, 178);
             this.dgvListado.Name = "dgvListado";
-            this.dgvListado.Size = new System.Drawing.Size(687, 167);
+            this.dgvListado.Size = new System.Drawing.Size(687, 143);
             this.dgvListado.TabIndex = 7;
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(627, 360);
+            this.btnVolver.Location = new System.Drawing.Point(627, 332);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(75, 23);
             this.btnVolver.TabIndex = 8;
@@ -159,12 +162,20 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
+            // lblMsg
+            // 
+            this.lblMsg.AutoSize = true;
+            this.lblMsg.Location = new System.Drawing.Point(119, 116);
+            this.lblMsg.Name = "lblMsg";
+            this.lblMsg.Size = new System.Drawing.Size(0, 13);
+            this.lblMsg.TabIndex = 7;
+            // 
             // frmListadoEstadistico
             // 
             this.AcceptButton = this.btnGenerar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(720, 397);
+            this.ClientSize = new System.Drawing.Size(720, 368);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dgvListado);
             this.Controls.Add(this.groupListado);
@@ -193,5 +204,6 @@
         private System.Windows.Forms.Button btnGenerar;
         private System.Windows.Forms.DataGridView dgvListado;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Label lblMsg;
     }
 }

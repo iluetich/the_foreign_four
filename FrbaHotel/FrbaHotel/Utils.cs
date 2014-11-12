@@ -98,6 +98,7 @@ namespace FrbaHotel
         {
             DataSet dataSet = new DataSet();
             SqlDataAdapter dataAdapter = new SqlDataAdapter(consultaSql, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            dataAdapter.SelectCommand.CommandTimeout = 600;
             dataAdapter.Fill(dataSet);
             dgv.DataSource = dataSet.Tables[0];
 
