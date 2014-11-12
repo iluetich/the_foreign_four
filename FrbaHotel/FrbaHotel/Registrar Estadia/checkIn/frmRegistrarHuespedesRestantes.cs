@@ -152,7 +152,7 @@ namespace FrbaHotel.Registrar_Estadia
 
 
         //----SETTERS------------------------------------------------------------------
-        public void setCodigoCliente(int codigo) { codigoCliente = codigo.ToString(); }
+        public void setCodigoCliente(int codigo) { codigoCliente = codigo.ToString(); }       
         //-----------------------------------------------------------------------------
 
     }

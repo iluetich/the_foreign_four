@@ -137,8 +137,8 @@ CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
 CREATE TABLE THE_FOREIGN_FOUR.Cancelaciones (
 	cod_cancelacion		numeric(18,0)			PRIMARY KEY IDENTITY(1,1),
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
+	usuario				numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Usuarios,
 	motivo				varchar(255),
-	usuario				varchar(255),
 	fecha_operacion		datetime
 )
 CREATE TABLE THE_FOREIGN_FOUR.Estadias (

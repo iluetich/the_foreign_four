@@ -27,7 +27,6 @@ namespace FrbaHotel.Cancelar_Reserva
             InitializeComponent();
             user = userSesion;
             codigoHotel = hotelSesion;
-            FrbaHotel.ConexionSQL.establecerConexionBD();
         }
 
         public frmCancelarReserva(MenuDinamico menuPadre)

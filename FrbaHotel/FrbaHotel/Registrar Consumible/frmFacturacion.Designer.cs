@@ -175,6 +175,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Emitir Factura";
+            this.Load += new System.EventHandler(this.frmFacturacion_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmFacturacion_FormClosing);
             this.groupFacturaDetalle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturaDetalle)).EndInit();

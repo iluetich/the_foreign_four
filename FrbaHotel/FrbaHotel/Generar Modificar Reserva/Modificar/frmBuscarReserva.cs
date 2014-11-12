@@ -26,8 +26,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             this.menu = menuPadre;
             InitializeComponent();
-
-            FrbaHotel.ConexionSQL.establecerConexionBD();//TODO BORRAR ESTA PORQUERIA DESPUES
+          
             user = userSesion;
             codigoHotel = hotelSesion;
         }

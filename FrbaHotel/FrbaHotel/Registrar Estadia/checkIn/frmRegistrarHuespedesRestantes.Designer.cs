@@ -180,6 +180,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registrar Huespedes Restantes";
+            this.Load += new System.EventHandler(this.frmRegistrarHuespedesRestantes_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRegistrarHuespedes_FormClosing);
             this.groupHues.ResumeLayout(false);
             this.groupHues.PerformLayout();

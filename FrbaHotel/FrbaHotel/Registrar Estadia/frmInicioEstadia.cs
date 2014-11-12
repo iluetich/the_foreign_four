@@ -24,9 +24,7 @@ namespace FrbaHotel.Registrar_Estadia
         public frmInicioEstadia(MenuDinamico menuPadre, string userSesion, string hotelSesion)
         {
             this.menu = menuPadre;
-            InitializeComponent();
-
-            FrbaHotel.ConexionSQL.establecerConexionBD();// TODO: BORRAR ESTA PORQUERIA DESPUES
+            InitializeComponent();           
 
             user = userSesion;
             codigoHotel = hotelSesion;

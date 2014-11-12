@@ -20,12 +20,7 @@ namespace FrbaHotel.Listado_Estadistico
         {
             //seteo el padre del formulario
             this.menu = menuPadre;
-            InitializeComponent();
-            FrbaHotel.ConexionSQL.establecerConexionBD();
-             //oculto columnas
-            //for (int i = 0; i < dgvListado.Columns.Count; i++ )
-              //  this.dgvListado.Columns[i].Visible = false;
-            
+            InitializeComponent();            
         }   
         
         //boton que genera el listado

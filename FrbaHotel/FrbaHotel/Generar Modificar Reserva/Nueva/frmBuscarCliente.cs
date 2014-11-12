@@ -24,7 +24,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
         //constructor generico
-        public frmBuscarCliente() { InitializeComponent(); FrbaHotel.ConexionSQL.establecerConexionBD();}
+        public frmBuscarCliente() { InitializeComponent();}
 
         //constructor del flujo de registrar los huespedes que queda
         public frmBuscarCliente(frmRegistrarHuespedesRestantes newForm)
