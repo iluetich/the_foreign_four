@@ -1397,7 +1397,17 @@ BEGIN
 	
 END
 GO
-
+--*********************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_habitacion_reservada
+						(@cod_reserva numeric(18,0),
+						 @cod_tipo_hab numeric(18,0))
+AS
+BEGIN
+	DELETE	THE_FOREIGN_FOUR.TipoHabitacion_Reservas
+	WHERE	cod_reserva = @cod_reserva
+	AND		cod_tipo_hab = cod_tipo_hab
+END
+GO
 /* LISTADO ESTADISTICO */
 
 
@@ -1470,6 +1480,7 @@ BEGIN
 			WHERE	cod_consumible > 2000)
 END
 GO
+
 --TOP 5 CLIENTES
 CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente
 					(@fecha_desde datetime,
