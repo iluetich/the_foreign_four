@@ -65,7 +65,7 @@ namespace FrbaHotel.Cancelar_Reserva
                     MessageBox.Show("Ha cancelado la reserva satisfactoriamente", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }else{
-                MessageBox.Show("No se ha encontrado la reserva o esta intentando con un usuario que no esta registrado para este hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("No se ha encontrado la reserva \no se trata de una reserva ya cancelada \no esta intentando con un usuario que no esta registrado para este hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }        
 
