@@ -21,6 +21,7 @@ namespace FrbaHotel.ABM_de_Usuario
         private DataSet dataSet;
         private DateTime fechaDeNac;
         private Boolean constructorMod;
+        private string passwordAnterior;
 
         public CreacionDeUsuario(MenuDinamico menuPadre)
         {
@@ -49,6 +50,7 @@ namespace FrbaHotel.ABM_de_Usuario
         public void setearDatos(DataGridViewRow fila)
         {
             textBoxUsername.Text = fila.Cells["user_name"].Value.ToString();
+            passwordAnterior = fila.Cells["password"].Value.ToString();
             textBoxPassword1.Text = fila.Cells["password"].Value.ToString();
             textBoxPassword2.Text = fila.Cells["password"].Value.ToString();
             string estadoComboBox = fila.Cells["estado"].Value.ToString();
@@ -243,7 +245,15 @@ namespace FrbaHotel.ABM_de_Usuario
 
             cmd.Parameters.AddWithValue("@fechaNacimiento", fechaDeNac);
 
-            string contraseña = FrbaHotel.Utils.encriptarContraseña(textBoxPassword1.Text);
+            string contraseña;
+            if (passwordAnterior == textBoxPassword1.Text)
+            {
+                contraseña = passwordAnterior;
+            }
+            else
+            {
+                contraseña = FrbaHotel.Utils.encriptarContraseña(textBoxPassword1.Text);
+            }
             cmd.Parameters.AddWithValue("@password", contraseña);
             cmd.Parameters.AddWithValue("@nombre", textBoxNombre.Text);
             cmd.Parameters.AddWithValue("@apellido", textBoxApellido.Text);
