@@ -131,7 +131,8 @@ namespace FrbaHotel.IniciarSecion
 
         public Boolean tieneElHotel()
         {
-            string consultaCmd3 = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('" + this.user_name + "','" + this.password + "')"
+            string contraseñaEncriptada = FrbaHotel.Utils.encriptarContraseña(this.password);
+            string consultaCmd3 = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('" + this.user_name + "','" + contraseñaEncriptada + "')"
                                 + " WHERE cod_hotel = " + this.codHotelElegido;
 
             SqlCommand cmd3 = new SqlCommand();
@@ -228,6 +229,5 @@ namespace FrbaHotel.IniciarSecion
             eligieronHotel = true;
             this.codHotelElegido = comboBoxSelecionHotel.Text;
         }
-
     }
 }
