@@ -264,7 +264,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //hace update a la tabla de tipo habitacion por reserva
         private void updatearHabitaciones()
         {
-
+            string updateSQL = "exec THE_FOREIGN_FOUR.proc_liberar_habitaciones @cod_reserva";
+            SqlCommand cmd = new SqlCommand(updateSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd.Parameters.AddWithValue("@cod_reserva",Convert.ToInt32(codigoReserva));
+            cmd.ExecuteNonQuery();        
         }
 
         private void agregarHabitaciones()
