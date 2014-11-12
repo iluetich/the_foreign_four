@@ -322,7 +322,6 @@ BEGIN
 	DECLARE @cant_hab_por_tipo int,
 			@cant_hab_reservadas int,
 			@cant_hab_disponibles int,
-			@cant_hab_canceladas int,
 			@cant_hab_checkout int
 
 	SET		@cant_hab_por_tipo = (SELECT	COUNT(nro_habitacion)
@@ -338,17 +337,6 @@ BEGIN
 									AND		@cod_tipo_hab = thr.cod_tipo_hab
 									AND		(@fecha_inicio BETWEEN r.fecha_desde AND r.fecha_hasta
 									OR		@fecha_fin BETWEEN r.fecha_desde AND r.fecha_hasta))
-	
-	SET		@cant_hab_canceladas = (SELECT	COUNT(th.cod_tipo_hab)
-									FROM	THE_FOREIGN_FOUR.Cancelaciones c, 
-											THE_FOREIGN_FOUR.Reservas r,
-											THE_FOREIGN_FOUR.TipoHabitacion_Reservas th
-									WHERE	c.cod_reserva = r.cod_reserva
-									AND		th.cod_reserva = r.cod_reserva
-									AND		th.cod_tipo_hab = @cod_tipo_hab
-									AND		@fecha_inicio > c.fecha_operacion
-									AND		@fecha_fin <= r.fecha_hasta) 
-									
 									
 	SET		@cant_hab_checkout = (	SELECT	COUNT(th.cod_tipo_hab)
 									FROM	THE_FOREIGN_FOUR.Reservas r,
@@ -369,7 +357,7 @@ BEGIN
 	END	
 	ELSE
 	BEGIN		
-		SET	@cant_hab_disponibles = @cant_hab_por_tipo - @cant_hab_reservadas --+ @cant_hab_canceladas + @cant_hab_checkout
+		SET	@cant_hab_disponibles = @cant_hab_por_tipo - @cant_hab_reservadas + @cant_hab_checkout
 	END
 	RETURN	@cant_hab_disponibles
 END
