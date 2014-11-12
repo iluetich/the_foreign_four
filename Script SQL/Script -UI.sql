@@ -359,8 +359,18 @@ BEGIN
 									AND		th.cod_tipo_hab = @cod_tipo_hab
 									AND		@fecha_inicio > e.checkout
 									AND		@fecha_fin <= r.fecha_hasta)
-									
-	SET		@cant_hab_disponibles = @cant_hab_por_tipo - @cant_hab_reservadas + @cant_hab_canceladas + @cant_hab_checkout
+	IF(EXISTS (SELECT	cod_tarea
+				FROM	THE_FOREIGN_FOUR.InactividadHoteles
+				WHERE	cod_hotel = @cod_hotel
+				AND		(@fecha_inicio BETWEEN fecha_desde AND fecha_hasta
+				OR		 @fecha_fin BETWEEN fecha_desde AND fecha_hasta)))	
+	BEGIN
+		SET @cant_hab_disponibles = -33
+	END	
+	ELSE
+	BEGIN		
+		SET	@cant_hab_disponibles = @cant_hab_por_tipo - @cant_hab_reservadas --+ @cant_hab_canceladas + @cant_hab_checkout
+	END
 	RETURN	@cant_hab_disponibles
 END
 GO
@@ -1511,4 +1521,5 @@ AS
 GO
 
 SELECT * FROM THE_FOREIGN_FOUR.InactividadHoteles
-select * from the_foreign_four.Reservas where cod_hotel = 8
+select * from the_foreign_four.Hoteles where cod_hotel = 8
+SELECT THE_FOREIGN_FOUR.func_hotel_inhabilitable (1, '20201117', '20201121')
