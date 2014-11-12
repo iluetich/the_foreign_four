@@ -166,7 +166,10 @@ namespace FrbaHotel.ABM_de_Cliente
             Boolean ok;
             nombre = textBoxNombre.Text;
             apellido = textBoxApellido.Text;
-            piso = int.Parse(textBoxPiso.Text);
+            if (textBoxPiso.Text != "")
+            {
+                piso = int.Parse(textBoxPiso.Text);
+            }
             calle = textBoxCalle.Text;
             departamento = textBoxDepto.Text;
             nroDoc = int.Parse(textBoxNroDoc.Text);
@@ -187,7 +190,17 @@ namespace FrbaHotel.ABM_de_Cliente
                     //SqlConnection cnn = new SqlConnection("Data Source=localHost\\SQLSERVER2008;Initial Catalog=GD2C2014;Persist Security Info=True;User ID=gd;Password=gd2014");
 	                //cnn.Open();
                     // SqlCommand cmd = new SqlCommand(); COMENTADO X IVAN
-                    string consulta = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_registrar_cliente @nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle, @depto, @piso,@pais_origen, @nacionalidad, @localidad SELECT @output as codigo"; // agregado por ivan
+
+                string consulta;      
+
+                if (textBoxPiso.Text == "")
+                    {
+                        consulta = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_registrar_cliente @nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle, @depto, null,@pais_origen, @nacionalidad, @localidad SELECT @output as codigo"; // agregado por ivan
+                    }
+                    else
+                    {
+                        consulta = "DECLARE @output numeric(18,0) EXEC @output = THE_FOREIGN_FOUR.proc_registrar_cliente @nombre, @apellido, @tipo_doc, @nro_doc, @mail, @telefono, @fecha_nac, @nom_calle, @nro_calle, @depto, @piso,@pais_origen, @nacionalidad, @localidad SELECT @output as codigo"; // agregado por ivan
+                    }
                     SqlCommand cmd = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
 
                     cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
@@ -201,18 +214,28 @@ namespace FrbaHotel.ABM_de_Cliente
                     cmd.Parameters.AddWithValue("@nro_calle", nroCalle);
                     cmd.Parameters.AddWithValue("@pais_origen", paisOrigen);
                     cmd.Parameters.AddWithValue("@nacionalidad", nacionalidad);
-                    cmd.Parameters.AddWithValue("@piso", piso);
+                    cmd.Parameters.AddWithValue("@piso", piso);                       
                     cmd.Parameters.AddWithValue("@depto", departamento);
                     cmd.Parameters.AddWithValue("@fecha_nac", fechaNac);
                     cmd.Parameters.AddWithValue("@estado", estado);
                     cmd.Parameters.AddWithValue("@mail", mail);
                     cmd.Parameters.AddWithValue("@localidad", localidad); // agregado por ivan
 
+                //contempla el caso de que sea null el numero de piso, para que no tire error
                     if (constructorMod)
                     {
-                        cmd.CommandText = "UPDATE THE_FOREIGN_FOUR.view_todos_los_clientes SET nombre=@nombre,apellido=@apellido,tipo_doc=@tipo_doc,nro_doc=@nro_doc,mail=@mail,telefono=@telefono," +
-                                         "nom_calle=@nom_calle,nro_calle=@nro_calle,pais_origen=@pais_origen,nacionalidad=@nacionalidad,piso=@piso,depto=@depto,fecha_nac=@fecha_nac,estado=@estado,localidad=@localidad"+
-                                         " WHERE cod_cliente=" + codCliente;
+                        if (textBoxPiso.Text == "")
+                        {
+                            cmd.CommandText = "UPDATE THE_FOREIGN_FOUR.Clientes SET nombre=@nombre,apellido=@apellido,tipo_doc=@tipo_doc,nro_doc=@nro_doc,mail=@mail,telefono=@telefono," +
+                                    "nom_calle=@nom_calle,nro_calle=@nro_calle,pais_origen=@pais_origen,nacionalidad=@nacionalidad,piso=null,depto=@depto,fecha_nac=@fecha_nac,estado=@estado,localidad=@localidad" +
+                                    " WHERE cod_cliente=" + codCliente;
+                        }
+                        else
+                        {
+                            cmd.CommandText = "UPDATE THE_FOREIGN_FOUR.Clientes SET nombre=@nombre,apellido=@apellido,tipo_doc=@tipo_doc,nro_doc=@nro_doc,mail=@mail,telefono=@telefono," +
+                                    "nom_calle=@nom_calle,nro_calle=@nro_calle,pais_origen=@pais_origen,nacionalidad=@nacionalidad,piso=@piso,depto=@depto,fecha_nac=@fecha_nac,estado=@estado,localidad=@localidad" +
+                                    " WHERE cod_cliente=" + codCliente;
+                        }
                     }
                     else
                     {
