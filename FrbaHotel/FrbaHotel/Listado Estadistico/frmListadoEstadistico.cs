@@ -13,45 +13,32 @@ namespace FrbaHotel.Listado_Estadistico
     public partial class frmListadoEstadistico : Form
     {
         private MenuDinamico menu;
+        string fechaDesde;
+        string fechaHasta;
 
         public frmListadoEstadistico(MenuDinamico menuPadre)
         {
             //seteo el padre del formulario
             this.menu = menuPadre;
             InitializeComponent();
-            //Autoajusto celdas
-            this.dgvListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            //oculto columnas
-            for (int i = 0; i < dgvListado.Columns.Count; i++ )
-                this.dgvListado.Columns[i].Visible = false;
+            FrbaHotel.ConexionSQL.establecerConexionBD();
+             //oculto columnas
+            //for (int i = 0; i < dgvListado.Columns.Count; i++ )
+              //  this.dgvListado.Columns[i].Visible = false;
             
-        }
-
-        public frmListadoEstadistico()
-        {
-            InitializeComponent();
-            //Autoajusto celdas
-            this.dgvListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            //oculto columnas
-            for (int i = 0; i < dgvListado.Columns.Count; i++)
-                this.dgvListado.Columns[i].Visible = false;
-
-        }
+        }   
         
+        //boton que genera el listado
         private void btnGenerar_Click(object sender, EventArgs e)
         {
             if (validarCampos()){
                 muestraColumnasTipoListado();
             }
-
-            
-
         }
 
         private void txtAño_KeyPress(object sender, KeyPressEventArgs e) { FrbaHotel.Utils.allowNumbers(e); }
 
+        //valida que los campos para ingresar sean correctos
         private bool validarCampos()
         {
             return(
@@ -61,75 +48,116 @@ namespace FrbaHotel.Listado_Estadistico
             );
         }
 
+        //rellena la grid
         private void muestraColumnasTipoListado()
         {
-            switch (cmbTipoListado.SelectedIndex)
-            {
-                case 0:
-                    this.dgvListado.Columns[clmHotel.Name].Visible = true;
-                    this.dgvListado.Columns[clmCantResCanc.Name].Visible = true;
-                    this.dgvListado.Columns[clmCantConsFact.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantDiasFueraServ.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantDiasOcup.Name].Visible = false;
-                    this.dgvListado.Columns[clmCliente.Name].Visible = false;
-                    this.dgvListado.Columns[clmHabitacion.Name].Visible = false;
-                    this.dgvListado.Columns[clmPuntaje.Name].Visible = false;
-                    break;
-                case 1:
-                    this.dgvListado.Columns[clmHotel.Name].Visible = true;
-                    this.dgvListado.Columns[clmCantResCanc.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantConsFact.Name].Visible = true;
-                    this.dgvListado.Columns[clmCantDiasFueraServ.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantDiasOcup.Name].Visible = false;
-                    this.dgvListado.Columns[clmCliente.Name].Visible = false;
-                    this.dgvListado.Columns[clmHabitacion.Name].Visible = false;
-                    this.dgvListado.Columns[clmPuntaje.Name].Visible = false;
-                    break;
-                case 2:
-                    this.dgvListado.Columns[clmHotel.Name].Visible = true;
-                    this.dgvListado.Columns[clmCantResCanc.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantConsFact.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantDiasFueraServ.Name].Visible = true;
-                    this.dgvListado.Columns[clmCantDiasOcup.Name].Visible = false;
-                    this.dgvListado.Columns[clmCliente.Name].Visible = false;
-                    this.dgvListado.Columns[clmHabitacion.Name].Visible = false;
-                    this.dgvListado.Columns[clmPuntaje.Name].Visible = false;
-                    break;
-                case 3:
-                    this.dgvListado.Columns[clmHotel.Name].Visible = true;
-                    this.dgvListado.Columns[clmCantResCanc.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantConsFact.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantDiasFueraServ.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantDiasOcup.Name].Visible = true;
-                    this.dgvListado.Columns[clmCliente.Name].Visible = false;
-                    this.dgvListado.Columns[clmHabitacion.Name].Visible = true;
-                    this.dgvListado.Columns[clmPuntaje.Name].Visible = false;
-                    break;
-                case 4:
-                    this.dgvListado.Columns[clmHotel.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantResCanc.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantConsFact.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantDiasFueraServ.Name].Visible = false;
-                    this.dgvListado.Columns[clmCantDiasOcup.Name].Visible = false;
-                    this.dgvListado.Columns[clmCliente.Name].Visible = true;
-                    this.dgvListado.Columns[clmHabitacion.Name].Visible = false;
-                    this.dgvListado.Columns[clmPuntaje.Name].Visible = true;
-                    break;
+            try{
+                //depende cual sea el caso muestra ejecuta la consulta correspondiente
+                switch (cmbTipoListado.SelectedIndex)
+                {
+                    case 0:
+                        hotelesConMayorCantidadDeReservas();
+                        break;
+                    case 1:
+                        hotelesMayorCantidadConsumiblesFacturados();
+                        break;
+                    case 2:
+                        hotelesMayorCantidadDiasFueraDeServicio();
+                        break;
+                    case 3:
+                        habitacionesMayorCantidadDiasVecesQueFueronOcupadas();
+                        break;
+                    case 4:
+                        clienteConMayorCantidadDePuntos();
+                        break;
+                }
+            }catch(Exception e){
+                if (cmbTipoListado.SelectedIndex == 4)
+                    MessageBox.Show("Tiempo de espera cadudado", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("No hay datos sobre el año ingresado", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
+        //vuelve al menu raiz
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        //evento para el cierre del form desde la X
         private void frmListadoEstadistico_FormClosing(object sender, FormClosingEventArgs e){
             this.menu.Show();
         }
 
+        //requerimiento
+        private void hotelesConMayorCantidadDeReservas()
+        {
+            armarFecha();
+            Console.WriteLine(fechaDesde + " - " + fechaHasta);
+            string consultaSQL = "select * from THE_FOREIGN_FOUR.func_estadistica_cancelaciones_hotel('" + fechaDesde + "','" + fechaHasta + "')";
+            FrbaHotel.Utils.rellenarDataGridView(dgvListado,consultaSQL);
+        }
+
+        //requerimiento
+        private void hotelesMayorCantidadConsumiblesFacturados()
+        {
+            armarFecha();
+            Console.WriteLine(fechaDesde + " - " + fechaHasta);
+            string consultaSQL = "select * from THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel('" + fechaDesde + "','" + fechaHasta + "')";
+            FrbaHotel.Utils.rellenarDataGridView(dgvListado, consultaSQL);
+        }
+
+        //requerimiento
+        private void hotelesMayorCantidadDiasFueraDeServicio(){
+            armarFecha();
+            Console.WriteLine(fechaDesde + " - " + fechaHasta);
+            string consultaSQL = "select * from THE_FOREIGN_FOUR.func_estadistica_inactividad_hotel('" + fechaDesde + "','" + fechaHasta + "')";
+            FrbaHotel.Utils.rellenarDataGridView(dgvListado, consultaSQL);
+        }
+
+        //requerimiento
+        private void habitacionesMayorCantidadDiasVecesQueFueronOcupadas(){
+            armarFecha();
+            Console.WriteLine(fechaDesde + " - " + fechaHasta);
+            string consultaSQL = "select * from THE_FOREIGN_FOUR.func_estadistica_ocupacion_habitacion('" + fechaDesde + "','" + fechaHasta + "')";
+            FrbaHotel.Utils.rellenarDataGridView(dgvListado, consultaSQL);
+        }
+
+        //requerimiento
+        private void clienteConMayorCantidadDePuntos(){
+            armarFecha();
+            Console.WriteLine(fechaDesde + " - " + fechaHasta);
+            string consultaSQL = "select * from THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente('" + fechaDesde + "','" + fechaHasta + "')";
+            FrbaHotel.Utils.rellenarDataGridView(dgvListado, consultaSQL);         
+        }
+
+        //builder de fecha
+        private void armarFecha()
+        {
+            //yyyy-dd-MM
+            switch (cmbTrimestre.SelectedIndex)
+            {
+                case 0:
+                    fechaDesde = txtAño.Text + "-" + "01-01";
+                    fechaHasta = txtAño.Text + "-" + "31-03";
+                break;
+                case 1:
+                    fechaDesde = txtAño.Text + "-" + "01-04";
+                    fechaHasta = txtAño.Text + "-" + "30-06";
+                break;
+                case 2:
+                    fechaDesde = txtAño.Text + "-" + "01-07";
+                    fechaHasta = txtAño.Text + "-" + "30-09";
+                break;
+                case 3:
+                    fechaDesde = txtAño.Text + "-" + "01-10";
+                    fechaHasta = txtAño.Text + "-" + "31-12";
+                break;
+            }
+        }
+
+       
 
 
     }
-
-
 }

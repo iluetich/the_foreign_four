@@ -37,14 +37,6 @@
             this.groupListado = new System.Windows.Forms.GroupBox();
             this.btnGenerar = new System.Windows.Forms.Button();
             this.dgvListado = new System.Windows.Forms.DataGridView();
-            this.clmHotel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmCantResCanc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmCantConsFact = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmCantDiasFueraServ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmCantDiasOcup = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmPuntaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnVolver = new System.Windows.Forms.Button();
             lblTipoListado = new System.Windows.Forms.Label();
             this.groupListado.SuspendLayout();
@@ -92,10 +84,10 @@
             this.cmbTrimestre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTrimestre.FormattingEnabled = true;
             this.cmbTrimestre.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4"});
+            "Trimestre 1:   01 - 01  - ->  03 - 31",
+            "Trimestre 2:   04 - 01  - ->  06 - 30",
+            "Trimestre 3:   07 - 01  - ->  09 - 30",
+            "Trimestre 4:   10 - 01  - ->  12 - 31"});
             this.cmbTrimestre.Location = new System.Drawing.Point(93, 51);
             this.cmbTrimestre.Name = "cmbTrimestre";
             this.cmbTrimestre.Size = new System.Drawing.Size(362, 21);
@@ -144,72 +136,22 @@
             // 
             // dgvListado
             // 
+            this.dgvListado.AllowUserToAddRows = false;
+            this.dgvListado.AllowUserToDeleteRows = false;
+            this.dgvListado.AllowUserToResizeColumns = false;
+            this.dgvListado.AllowUserToResizeRows = false;
+            this.dgvListado.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvListado.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvListado.BackgroundColor = System.Drawing.Color.White;
             this.dgvListado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvListado.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clmHotel,
-            this.clmCantResCanc,
-            this.clmCantConsFact,
-            this.clmCantDiasFueraServ,
-            this.clmHabitacion,
-            this.clmCantDiasOcup,
-            this.clmCliente,
-            this.clmPuntaje});
             this.dgvListado.Location = new System.Drawing.Point(15, 178);
             this.dgvListado.Name = "dgvListado";
-            this.dgvListado.Size = new System.Drawing.Size(687, 264);
+            this.dgvListado.Size = new System.Drawing.Size(687, 167);
             this.dgvListado.TabIndex = 7;
-            // 
-            // clmHotel
-            // 
-            this.clmHotel.HeaderText = "Hotel";
-            this.clmHotel.Name = "clmHotel";
-            this.clmHotel.ReadOnly = true;
-            // 
-            // clmCantResCanc
-            // 
-            this.clmCantResCanc.HeaderText = "Cantidad Reservas Canceladas";
-            this.clmCantResCanc.Name = "clmCantResCanc";
-            this.clmCantResCanc.ReadOnly = true;
-            // 
-            // clmCantConsFact
-            // 
-            this.clmCantConsFact.HeaderText = "Cantidad Consumibles Facturados";
-            this.clmCantConsFact.Name = "clmCantConsFact";
-            this.clmCantConsFact.ReadOnly = true;
-            // 
-            // clmCantDiasFueraServ
-            // 
-            this.clmCantDiasFueraServ.HeaderText = "Cantidad Dias Fuera de Servicio";
-            this.clmCantDiasFueraServ.Name = "clmCantDiasFueraServ";
-            this.clmCantDiasFueraServ.ReadOnly = true;
-            // 
-            // clmHabitacion
-            // 
-            this.clmHabitacion.HeaderText = "Habitacion";
-            this.clmHabitacion.Name = "clmHabitacion";
-            this.clmHabitacion.ReadOnly = true;
-            // 
-            // clmCantDiasOcup
-            // 
-            this.clmCantDiasOcup.HeaderText = "Cantidad Dias Ocupada";
-            this.clmCantDiasOcup.Name = "clmCantDiasOcup";
-            this.clmCantDiasOcup.ReadOnly = true;
-            // 
-            // clmCliente
-            // 
-            this.clmCliente.HeaderText = "Cliente";
-            this.clmCliente.Name = "clmCliente";
-            this.clmCliente.ReadOnly = true;
-            // 
-            // clmPuntaje
-            // 
-            this.clmPuntaje.HeaderText = "Puntaje";
-            this.clmPuntaje.Name = "clmPuntaje";
-            this.clmPuntaje.ReadOnly = true;
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(625, 461);
+            this.btnVolver.Location = new System.Drawing.Point(627, 360);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(75, 23);
             this.btnVolver.TabIndex = 8;
@@ -222,7 +164,7 @@
             this.AcceptButton = this.btnGenerar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(720, 501);
+            this.ClientSize = new System.Drawing.Size(720, 397);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dgvListado);
             this.Controls.Add(this.groupListado);
@@ -251,13 +193,5 @@
         private System.Windows.Forms.Button btnGenerar;
         private System.Windows.Forms.DataGridView dgvListado;
         private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmHotel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmCantResCanc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmCantConsFact;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmCantDiasFueraServ;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmHabitacion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmCantDiasOcup;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmCliente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmPuntaje;
     }
 }
