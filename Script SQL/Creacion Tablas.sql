@@ -48,7 +48,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	cod_cliente			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nombre				nvarchar(255),
 	apellido			nvarchar(255),
-	tipo_doc			char(3)					DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
+	tipo_doc			varchar(3)				DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
 	nro_doc				numeric(18,0)			UNIQUE,
 	mail				nvarchar(255)			UNIQUE,
 	telefono			nvarchar(60),
@@ -68,7 +68,7 @@ CREATE TABLE THE_FOREIGN_FOUR.ClientesDefectuosos (
 	cod_cliente			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nombre				nvarchar(255),
 	apellido			nvarchar(255),
-	tipo_doc			char(3)					DEFAULT 'PAS',
+	tipo_doc			varchar(3),
 	nro_doc				numeric(18,0),
 	mail				nvarchar(255),
 	telefono			nvarchar(60),
@@ -228,5 +228,10 @@ CREATE TABLE THE_FOREIGN_FOUR.AuditoriaEstadias (
 	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
 	cod_operacion		char(1)					CHECK(cod_operacion IN ('I', 'O')),
 	fecha				datetime				DEFAULT getdate()
+)
+CREATE TABLE THE_FOREIGN_FOUR.Consumibles_Estadia (
+	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
+	cod_consumible		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Consumibles,
+	cantidad			int,
 )
 

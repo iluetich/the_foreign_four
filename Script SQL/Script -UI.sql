@@ -268,7 +268,21 @@ BEGIN
 	RETURN @cod_reserva_generada
 END
 GO
-
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_fecha_reserva
+				(@cod_hotel numeric(18,0),
+				 @fecha_desde datetime)
+RETURNS int
+AS
+BEGIN
+	IF ((SELECT fecha_creacion FROM THE_FOREIGN_FOUR.Hoteles WHERE cod_hotel = @cod_hotel) > @fecha_desde OR
+		GETDATE() > @fecha_desde)
+	BEGIN
+		RETURN -1
+	END
+	RETURN 1
+END
+GO
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hotel_inhabilitable 
 				(@cod_hotel int,
@@ -279,8 +293,9 @@ AS
 BEGIN
 	IF(NOT EXISTS (SELECT cod_reserva
 				   FROM	THE_FOREIGN_FOUR.Reservas
-				   WHERE fecha_desde BETWEEN @fecha_inicio AND @fecha_fin
-				   OR	 fecha_hasta BETWEEN @fecha_inicio AND @fecha_fin))
+				   WHERE	cod_hotel = @cod_hotel
+				   AND		(fecha_desde BETWEEN @fecha_inicio AND @fecha_fin
+				   OR		 fecha_hasta BETWEEN @fecha_inicio AND @fecha_fin)))
 	BEGIN 
 		RETURN 1
 	END
@@ -1324,14 +1339,38 @@ BEGIN
 END
 GO
 --********************************************************
-CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
-				(@nro_factura numeric(18,0),
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia
+				(@cod_estadia numeric(18,0),
 				 @cod_consumible numeric(18,0),
-				 @cantidad	int)
+				 @cantidad int)
 AS
 BEGIN
-	INSERT INTO THE_FOREIGN_FOUR.view_facturas (nro_factura, cod_consumible, cantidad)
-	VALUES	(@nro_factura, @cod_consumible, @cantidad)
+	IF (@cod_estadia IS NULL OR
+		@cod_consumible IS NULL OR
+		@cantidad <= 0)
+	BEGIN
+		RAISERROR (15600,-1,-1, 'THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia')
+	END
+	INSERT INTO THE_FOREIGN_FOUR.Consumibles_Estadia (cod_estadia, cod_consumible, cantidad)
+	VALUES (@cod_estadia, @cod_consumible, @cantidad)
+END
+GO
+--********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumibles
+				(@nro_factura numeric(18,0))
+AS
+BEGIN
+	IF (@nro_factura IS NULL)
+	BEGIN 
+		RAISERROR (15600,-1,-1, 'THE_FOREIGN_FOUR.proc_registrar_consumibles')
+	END
+	ELSE
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.view_facturas (nro_factura, cod_consumible, cantidad)
+		(SELECT	f.nro_factura, ce.cod_consumible, ce.cantidad
+		 FROM	THE_FOREIGN_FOUR.Consumibles_Estadia ce JOIN THE_FOREIGN_FOUR.Facturas f ON(ce.cod_estadia = f.cod_estadia)
+		 WHERE	f.nro_factura = @nro_factura)
+	END
 END
 GO
 --**********************************************************
@@ -1416,6 +1455,37 @@ BEGIN
 								  FROM THE_FOREIGN_FOUR.EstadosReserva
 								  WHERE descripcion = 'modificada')
 	WHERE	cod_reserva = @cod_reserva
+END
+GO
+--**********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_crear_habitacion
+				(@cod_hotel numeric(18,0),
+				 @nro_habitacion numeric(18,0),
+				 @piso numeric(18,0),
+				 @ubicacion varchar(50),
+				 @cod_tipo_hab numeric(18,0),
+				 @descripcion nvarchar(255))
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.Habitaciones (cod_hotel, nro_habitacion, piso, ubicacion, cod_tipo_hab, descripcion)
+	VALUES (@cod_hotel, @nro_habitacion, @piso, @ubicacion, @cod_tipo_hab, @descripcion)
+END
+GO
+--**********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_existe_habitacion
+				(@cod_hotel numeric(18,0),
+				 @nro_habitacion numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF (EXISTS (SELECT	@nro_habitacion
+				FROM	THE_FOREIGN_FOUR.Habitaciones
+				WHERE	cod_hotel = @cod_hotel
+				AND		nro_habitacion = @nro_habitacion))
+	BEGIN
+		RETURN 1
+	END
+	RETURN 0
 END
 GO
 --***********************************************************
