@@ -1,5 +1,6 @@
 
 --******TABLAS******************
+DROP TABLE THE_FOREIGN_FOUR.Consumibles_Estadia
 DROP TABLE THE_FOREIGN_FOUR.TipoHabitacion_Reservas
 DROP TABLE THE_FOREIGN_FOUR.Habitaciones_Estadia
 DROP TABLE THE_FOREIGN_FOUR.AuditoriaEstadias
@@ -73,6 +74,10 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_get_precio
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_cod_consumible
 DROP FUNCTION THE_FOREIGN_FOUR.func_calcular_total_consumibles_posta
 DROP FUNCTION THE_FOREIGN_FOUR.func_tipo_hab_estadia
+DROP FUNCTION THE_FOREIGN_FOUR.func_existe_habitacion
+DROP FUNCTION THE_FOREIGN_FOUR.func_validar_fecha_reserva
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_crear_habitacion
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_habitacion_reservada
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_agregar_hab_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_checkout_migracion
