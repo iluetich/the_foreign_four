@@ -462,15 +462,15 @@ RETURN(
 			nom_calle, nro_calle, nacionalidad, pais_origen, estado, piso
 	FROM THE_FOREIGN_FOUR.Clientes
 	WHERE nombre LIKE 
-		(CASE WHEN @nombre IS NULL  THEN '%' ELSE @nombre END)
+		(CASE WHEN @nombre IS NULL  THEN '%' ELSE @nombre +'%' END)
 	AND apellido LIKE
-		(CASE WHEN @apellido IS NULL THEN '%' ELSE @apellido END)
+		(CASE WHEN @apellido IS NULL THEN '%' ELSE @apellido +'%' END)
 	AND tipo_doc LIKE 
-		(CASE WHEN @tipo_doc IS NULL THEN '%' ELSE  @tipo_doc END)
+		(CASE WHEN @tipo_doc IS NULL THEN '%' ELSE  @tipo_doc +'%' END)
 	AND CAST(nro_doc AS nvarchar(10)) LIKE 
-		(CASE WHEN @nro_doc IS NULL THEN '%' ELSE CAST(@nro_doc AS nvarchar(10)) END)
+		(CASE WHEN @nro_doc IS NULL THEN '%' ELSE CAST(@nro_doc AS nvarchar(10))+'%' END)
 	AND mail LIKE 
-		(CASE WHEN @mail IS NULL THEN '%' ELSE @mail   END)
+		(CASE WHEN @mail IS NULL THEN '%' ELSE @mail+'%' END)
 )
 GO
 --***********************************************************

@@ -31,91 +31,41 @@ namespace FrbaHotel.ABM_de_Cliente
 
         public void cargarClientes()
         {
-            string consultaSql = "SELECT * FROM THE_FOREIGN_FOUR.Clientes c";
+            string nombre;
+            string apellido;
+            string tipo_doc;
+            string nro_doc;
+            string mail;
 
-            Boolean campoNroDoc = false;
-            Boolean campoNombre = false;
-            Boolean campoApellido = false;
-            Boolean campoTipoDoc = false;
-            Boolean campoMail = false;
+            if (textBoxBuscadorNombre.Text == "")
+                nombre = "null";
+            else nombre = "'" + textBoxBuscadorNombre.Text + "'";
 
-            if (textBoxBuscadorNroDoc.Text != "")
-            {
-                campoNroDoc = true;
-            }
-            if (textBoxBuscadorApellido.Text != "")
-            {
-                campoApellido = true;
-            }
-            if (textBoxBuscadorMail.Text != "")
-            {
-                campoMail = true;
-            }
-            if (textBoxBuscadorNombre.Text != "")
-            {
-                campoNombre = true;
-            }
-            if (TipoDoc != "")
-            {
-                campoTipoDoc = true;
-            }
+            if (textBoxBuscadorApellido.Text == "")
+                apellido = "null";
+            else apellido = "'" + textBoxBuscadorApellido.Text + "'";
 
-            //si alguno de los campos se completo entonces mandale where para setear los criterios
-            if (campoNroDoc || campoTipoDoc || campoNombre || campoMail || campoApellido)
-            {
-                consultaSql = consultaSql + " WHERE ";
-            }
+            if (TipoDoc == "")
+                tipo_doc = "null";
+            else tipo_doc = "'" + TipoDoc + "'";
 
-            if (campoNombre)
-            {
-                consultaSql = consultaSql + " c.nombre LIKE '%"+ textBoxBuscadorNombre.Text +"%' ";
-                campoNombre = false;
-                consultaSql = this.hayOtroCriterio(consultaSql, campoNroDoc, campoTipoDoc, campoMail, campoApellido);
-            }
+            if (textBoxBuscadorNroDoc.Text == "")
+                nro_doc = "null";
+            else nro_doc = ""+ int.Parse(textBoxBuscadorNroDoc.Text)+"";
 
-            if (campoApellido)
-            {
-                consultaSql = consultaSql + " c.apellido LIKE '%" + textBoxBuscadorApellido.Text + "%' ";
-                campoApellido = false;
-                consultaSql = this.hayOtroCriterio(consultaSql, campoNroDoc, campoTipoDoc, campoMail, campoNombre);
-            }
+            if (textBoxBuscadorMail.Text == "")
+                mail = "null";
+            else mail = "'" + textBoxBuscadorMail.Text + "'"; 
 
-            if (campoMail)
-            {
-                consultaSql = consultaSql + " c.mail LIKE '%" + textBoxBuscadorMail.Text + "%' ";
-                campoMail = false;
-                consultaSql = this.hayOtroCriterio(consultaSql, campoNroDoc, campoTipoDoc, campoNombre, campoApellido);
-            }
 
-            if (campoNroDoc)
-            {
-                consultaSql = consultaSql + " c.nro_doc = " + textBoxBuscadorNroDoc.Text + " ";
-                campoNroDoc = false;
-                consultaSql = this.hayOtroCriterio(consultaSql, campoNombre, campoTipoDoc, campoMail, campoApellido);
-            }
-
-            if (campoTipoDoc)
-            {
-                consultaSql = consultaSql + " c.tipo_doc = '" + TipoDoc + "' ";
-                campoTipoDoc = false;
-                consultaSql = this.hayOtroCriterio(consultaSql, campoNroDoc, campoTipoDoc, campoMail, campoApellido);
-            }
-
+            string consultaSql = "SELECT * FROM THE_FOREIGN_FOUR.buscar_clientes ("+ nombre +","+ apellido +", "+tipo_doc+", "+nro_doc+", "+ mail +")";
+            
             FrbaHotel.Utils.rellenarDataGridView(datGridViewClientes, consultaSql);
-        }
-
-
-        public string hayOtroCriterio(string consulta,Boolean campo1,Boolean campo2,Boolean campo3,Boolean campo4)
-        {
-            if (campo1 || campo2 || campo3 || campo4)
-            {
-                consulta = consulta + " AND ";
-            }
-            return consulta;
         }
 
         private void botonBuscar_Click(object sender, EventArgs e)
         {
+            this.comboBoxBuscadorTipoDoc_SelectedIndexChanged(sender, e);
             this.cargarClientes();
         }
 
