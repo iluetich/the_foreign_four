@@ -84,7 +84,7 @@ namespace FrbaHotel.Registrar_Estadia
 
                 if (int.Parse(resultado.ToString()) == 1)
                 {
-                    new frmCheckout(this,txtCodEstadia.Text,user).Show();
+                    new frmCheckout(this,txtCodEstadia.Text,user,menu).Show();
                     this.Enabled = false;
                 }
                 else

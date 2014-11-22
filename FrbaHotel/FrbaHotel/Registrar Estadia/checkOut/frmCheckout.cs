@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Registrar_Consumible;
 using System.Data.SqlClient;
+using FrbaHotel.Generar_Modificar_Reserva;
+using FrbaHotel.Menues_de_los_Roles;
 
 
 namespace FrbaHotel.Registrar_Estadia.checkOut
@@ -17,17 +19,33 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         frmInicioEstadia frmInicioEstadiaPadre;
         private string codEstadia;
         private string user;
+        MenuDinamico menuRaiz;
 
+        //------------------------------------------------------------------------------------------------
+        //---------------------CONSTRUCTORES--------------------------------------------------------------
         public frmCheckout(){InitializeComponent();}
         
-        public frmCheckout(frmInicioEstadia newForm,string codEstadiaParametro,string userParametro) {
+        public frmCheckout(frmInicioEstadia newForm,string codEstadiaParametro,string userParametro, MenuDinamico menuRaiz) {
             codEstadia = codEstadiaParametro;
             user = userParametro;
             InitializeComponent();
             frmInicioEstadiaPadre = newForm;
-        
+            this.menuRaiz = menuRaiz;        
         }
+       
+        //-----------------------------------------------------------------------------------------------------
+        //----------------------EVENTOS DEL FORM--------------------------------------------------------------- 
+        private void frmCheckout_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            frmInicioEstadiaPadre.Enabled = true;
+            frmInicioEstadiaPadre.Focus();
+        }
+        //----------------------FIN EVENTOS DEL FORM-----------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
 
+
+        //----------------------------------------------------------------------------------------------------
+        //----------------------BOTONES-----------------------------------------------------------------------         
         private void btnCheckout_Click(object sender, EventArgs e)
         {
             //ejecutar el procedure que realiza el checkout
@@ -50,12 +68,6 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
             new frmRegistrarConsumible(this, frmInicioEstadiaPadre,long.Parse(nroFactura.ToString())).Show();
         }
 
-        private void frmCheckout_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            frmInicioEstadiaPadre.Enabled = true;
-            frmInicioEstadiaPadre.Focus();
-        }
-
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -64,6 +76,10 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         private void btnMasDias_Click(object sender, EventArgs e)
         {
             //TE DERIBA A HACER UNA NUEVA RESERVA
+            new frmGenerarReserva(menuRaiz, user, "").Show();
         }
+        //----------------------FIN BOTONES--------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------
+
     }
 }

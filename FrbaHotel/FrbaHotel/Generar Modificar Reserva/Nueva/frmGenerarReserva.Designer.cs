@@ -36,6 +36,9 @@
             this.btnRegimenes = new System.Windows.Forms.Button();
             this.groupDatos = new System.Windows.Forms.GroupBox();
             this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
+            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.capacidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAgregarHabitacion = new System.Windows.Forms.Button();
             this.txtRegimen = new System.Windows.Forms.TextBox();
             this.txtCostoXDia = new System.Windows.Forms.TextBox();
@@ -50,9 +53,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.capacidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupDatos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             this.grbPanel2.SuspendLayout();
@@ -110,7 +110,7 @@
             this.btnRegimenes.Location = new System.Drawing.Point(22, 108);
             this.btnRegimenes.Name = "btnRegimenes";
             this.btnRegimenes.Size = new System.Drawing.Size(141, 23);
-            this.btnRegimenes.TabIndex = 6;
+            this.btnRegimenes.TabIndex = 3;
             this.btnRegimenes.Text = "Seleccionar regimen";
             this.btnRegimenes.UseVisualStyleBackColor = true;
             this.btnRegimenes.Click += new System.EventHandler(this.btnRegimenes_Click);
@@ -156,6 +156,24 @@
             this.dgvHabitaciones.Size = new System.Drawing.Size(313, 97);
             this.dgvHabitaciones.TabIndex = 5;
             // 
+            // codigo
+            // 
+            this.codigo.HeaderText = "codigo";
+            this.codigo.Name = "codigo";
+            this.codigo.ReadOnly = true;
+            // 
+            // descripcion
+            // 
+            this.descripcion.HeaderText = "descripcion";
+            this.descripcion.Name = "descripcion";
+            this.descripcion.ReadOnly = true;
+            // 
+            // capacidad
+            // 
+            this.capacidad.HeaderText = "capacidad";
+            this.capacidad.Name = "capacidad";
+            this.capacidad.ReadOnly = true;
+            // 
             // btnAgregarHabitacion
             // 
             this.btnAgregarHabitacion.Location = new System.Drawing.Point(139, 137);
@@ -173,6 +191,7 @@
             this.txtRegimen.ReadOnly = true;
             this.txtRegimen.Size = new System.Drawing.Size(164, 20);
             this.txtRegimen.TabIndex = 16;
+            this.txtRegimen.TabStop = false;
             this.txtRegimen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtRegimen.TextChanged += new System.EventHandler(this.txtRegimen_TextChanged);
             // 
@@ -223,6 +242,7 @@
             this.txtResul.ReadOnly = true;
             this.txtResul.Size = new System.Drawing.Size(156, 20);
             this.txtResul.TabIndex = 9;
+            this.txtResul.TabStop = false;
             this.txtResul.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // grbPanel2
@@ -256,6 +276,7 @@
             this.txtCostoTotal.ReadOnly = true;
             this.txtCostoTotal.Size = new System.Drawing.Size(156, 21);
             this.txtCostoTotal.TabIndex = 10;
+            this.txtCostoTotal.TabStop = false;
             this.txtCostoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
@@ -283,7 +304,7 @@
             this.btnCancel.Location = new System.Drawing.Point(92, 19);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 9;
+            this.btnCancel.TabIndex = 7;
             this.btnCancel.TabStop = false;
             this.btnCancel.Text = "Volver";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -295,28 +316,10 @@
             this.btnSiguiente.Location = new System.Drawing.Point(173, 19);
             this.btnSiguiente.Name = "btnSiguiente";
             this.btnSiguiente.Size = new System.Drawing.Size(104, 23);
-            this.btnSiguiente.TabIndex = 8;
+            this.btnSiguiente.TabIndex = 6;
             this.btnSiguiente.Text = "Siguiente";
             this.btnSiguiente.UseVisualStyleBackColor = true;
             this.btnSiguiente.Click += new System.EventHandler(this.btnSiguietne_Click);
-            // 
-            // codigo
-            // 
-            this.codigo.HeaderText = "codigo";
-            this.codigo.Name = "codigo";
-            this.codigo.ReadOnly = true;
-            // 
-            // descripcion
-            // 
-            this.descripcion.HeaderText = "descripcion";
-            this.descripcion.Name = "descripcion";
-            this.descripcion.ReadOnly = true;
-            // 
-            // capacidad
-            // 
-            this.capacidad.HeaderText = "capacidad";
-            this.capacidad.Name = "capacidad";
-            this.capacidad.ReadOnly = true;
             // 
             // frmGenerarReserva
             // 

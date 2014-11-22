@@ -38,6 +38,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         public frmGenerarReserva(MenuDinamico menuPadre,string userSesion, string hotelSesion)
         {
+            FrbaHotel.ConexionSQL.establecerConexionBD();
             this.menu = menuPadre;
             InitializeComponent();
 
@@ -263,7 +264,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {            
             codigoTipoHabitacion = row.Cells[0].Value.ToString();
 
-            if (validarDatosCompletos() & FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)){
+            if (validarDatosCompletos() & FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)
+                & validarFechaContraHotel()){
 
                 boolVerificoDisp = true;
                 
@@ -281,7 +283,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 }else{
                     txtResul.BackColor = Color.Red;
                     txtResul.Text = "NO Disponible";
-                    MessageBox.Show("Modifique su reserva","Reserva No disponible");
+                    MessageBox.Show("Agoto las habitaciones disponibles, modifique su reserva","Reserva No disponible");
                     limpiarGridHabitaciones();
                 }
             }                  
@@ -332,6 +334,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             cargarTipoHabitacionesDisponibles();
             txtCostoTotal.Text = "";
             txtCostoXDia.Text = "";
+            costoPorDia = 0;
+            costoTotal = 0;
         }
         private void limpiar()
         {
@@ -340,6 +344,29 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             txtCostoXDia.Text = "";
             txtResul.Text = "";
             txtResul.BackColor = Color.Empty;
+            costoPorDia = 0;
+            costoTotal = 0;
+        }
+
+        private bool validarFechaContraHotel()
+        {
+            string fechaDesde = dtpFechaDesde.Value.ToString("yyyy-dd-MM");
+            string consultaSQL = "select THE_FOREIGN_FOUR.func_validar_fecha_reserva(@cod_hotel,@fecha_desde)";
+
+            SqlCommand cmd = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd.Parameters.AddWithValue("@cod_hotel", Convert.ToInt32(codigoHotel));
+            cmd.Parameters.AddWithValue("@fecha_desde", fechaDesde);
+
+            int resultado = Convert.ToInt32(cmd.ExecuteScalar());
+            if (resultado == 1)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Ingrese una fecha de inicio mayor a la actual", "Advertencia Fecha Antigua", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------
