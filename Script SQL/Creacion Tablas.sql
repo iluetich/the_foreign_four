@@ -3,7 +3,7 @@ CREATE SCHEMA THE_FOREIGN_FOUR AUTHORIZATION gd
 CREATE TABLE THE_FOREIGN_FOUR.Roles (
 	cod_rol				numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nombre				nvarchar(30)			UNIQUE,
-	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),
+	estado				char(1)					DEFAULT 'H' CHECK(estado IN ('H', 'I')),o
 )
 CREATE TABLE THE_FOREIGN_FOUR.Funcionalidades (
 	cod_funcion			numeric(18,0)			IDENTITY (1,1) PRIMARY KEY,
@@ -169,6 +169,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 	nro_factura			numeric(18,0)			PRIMARY KEY,
 	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
 	cod_pago			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Pagos,
+	cod_cliente			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Clientes,
 	fecha_factura		datetime,
 	total				numeric(18,2),
 )

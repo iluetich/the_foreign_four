@@ -1086,13 +1086,25 @@ GO
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
 				(@cod_estadia numeric(18,0),
-				 @nro_factura numeric(18,0) OUTPUT)
+				 @nro_factura numeric(18,0) OUTPUT,
+				 @cod_cliente numeric(18,0))
 AS
 BEGIN
+	IF (NOT EXISTS (SELECT cod_cliente
+		FROM THE_FOREIGN_FOUR.ClientePorEstadia 
+		WHERE cod_estadia = @cod_estadia
+		AND cod_cliente = @cod_cliente))
+	BEGIN
+		SET @nro_factura = -1
+	END
+	ELSE
+	BEGIN
 	SET @nro_factura = (SELECT THE_FOREIGN_FOUR.func_sgte_nro_factura ())
 	INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, cod_estadia, fecha_factura) 
 	VALUES (@nro_factura , @cod_estadia, CAST(GETDATE() AS DATETIME))
+	END
 	RETURN 
+	
 END
 GO
 
