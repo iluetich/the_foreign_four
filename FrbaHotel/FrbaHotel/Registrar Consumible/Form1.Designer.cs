@@ -41,7 +41,7 @@
             this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnFacturar = new System.Windows.Forms.Button();
             this.groupBotonera = new System.Windows.Forms.GroupBox();
-            this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.groupRegConsu.SuspendLayout();
             this.groupConsumible.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsumibles)).BeginInit();
@@ -162,7 +162,7 @@
             // 
             // groupBotonera
             // 
-            this.groupBotonera.Controls.Add(this.btnCancelar);
+            this.groupBotonera.Controls.Add(this.btnVolver);
             this.groupBotonera.Controls.Add(this.btnFacturar);
             this.groupBotonera.Location = new System.Drawing.Point(12, 300);
             this.groupBotonera.Name = "groupBotonera";
@@ -170,22 +170,22 @@
             this.groupBotonera.TabIndex = 3;
             this.groupBotonera.TabStop = false;
             // 
-            // btnCancelar
+            // btnVolver
             // 
-            this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancelar.Location = new System.Drawing.Point(40, 24);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 6;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnVolver.Location = new System.Drawing.Point(40, 24);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 23);
+            this.btnVolver.TabIndex = 6;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // frmRegistrarConsumible
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancelar;
+            this.CancelButton = this.btnVolver;
             this.ClientSize = new System.Drawing.Size(784, 372);
             this.Controls.Add(this.groupBotonera);
             this.Controls.Add(this.groupConsumible);
@@ -219,7 +219,7 @@
         private System.Windows.Forms.DataGridView dgvConsumibles;
         private System.Windows.Forms.Button btnFacturar;
         private System.Windows.Forms.GroupBox groupBotonera;
-        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescripcion;

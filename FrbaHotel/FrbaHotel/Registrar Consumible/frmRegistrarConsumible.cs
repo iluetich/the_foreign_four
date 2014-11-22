@@ -27,16 +27,18 @@ namespace FrbaHotel.Registrar_Consumible
         {
             InitializeComponent();
             frmInicioRegistrarConsumiblePadre = newForm;
-            codigoEstadia = codEstadia;
+            this.codigoEstadia = codEstadia;
             btnFacturar.Text = "Aceptar";
         }
 
-        public frmRegistrarConsumible(frmCheckout newForm, frmInicioEstadia newFormInicioEstadia,long nroFacturaParametro)
+        public frmRegistrarConsumible(frmCheckout newForm, frmInicioEstadia newFormInicioEstadia,long nroFacturaParametro, string codEstadia)
         {
             nroFactura = nroFacturaParametro;
             InitializeComponent();
             frmCheckoutPadre = newForm;
             frmInicioEstadiaPadre = newFormInicioEstadia;
+            btnVolver.Enabled = false;
+            this.codigoEstadia = codEstadia;
         }
         //---------------------------------------------------------------------------------------------------------------------
 
@@ -66,52 +68,39 @@ namespace FrbaHotel.Registrar_Consumible
         //---------------------------------------------------------------------------------------------------------------------
         private void bntAceptar_Click(object sender, EventArgs e)
         {
-            if (dgvConsumibles.Rows.Count < 1){
-                MessageBox.Show("No agrego ningun consumible", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
+            if (dgvConsumibles.Rows.Count > 0){
+                //registrar consumible
+                for (int i = 0; i < dgvConsumibles.RowCount - 1; i++)
+                {
+                    DataGridViewRow fila = dgvConsumibles.Rows[i];
+                    SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    Console.WriteLine("el codigo de estadia es: " + codigoEstadia);
+                    cmd.Parameters.AddWithValue("@cod_estadia", Convert.ToInt32(codigoEstadia));
+                    cmd.Parameters.AddWithValue("@cod_consumible", long.Parse(fila.Cells[0].Value.ToString()));
+                    cmd.Parameters.AddWithValue("@cantidad", int.Parse(fila.Cells[1].Value.ToString()));
+                    cmd.ExecuteNonQuery();
+                }
             }
 
-            if(frmCheckoutPadre != null){
-                    //registrar los consumibles por factura
-                    for (int i = 0; i < dgvConsumibles.RowCount - 1; i++)
-                    {
-                        DataGridViewRow fila = dgvConsumibles.Rows[i];
-
-                        SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_registrar_consumible", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue("@nro_factura", nroFactura);
-                        cmd.Parameters.AddWithValue("@cod_consumible",long.Parse(fila.Cells[0].Value.ToString()));
-                        cmd.Parameters.AddWithValue("@cantidad", int.Parse(fila.Cells[1].Value.ToString()));
-
-                        cmd.ExecuteNonQuery();
-                    }
+            if(frmCheckoutPadre != null){           
+                    //Confirma consumible
+                    SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_registrar_consumibles", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@nro_factura", nroFactura);
+                    cmd.ExecuteNonQuery();                    
 
                     //confirmo factura
-
                     SqlCommand cmd2 = new SqlCommand("THE_FOREIGN_FOUR.confirmar_factura", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                     cmd2.CommandType = CommandType.StoredProcedure;
-
                     cmd2.Parameters.AddWithValue("@nro_factura", nroFactura);
-
                     cmd2.ExecuteNonQuery();
                     //-------------------------------
 
                     new frmFacturacion(this,nroFactura).Show();
                     this.Enabled = false;
 
-            }else if (frmInicioRegistrarConsumiblePadre != null) {
-                    
-                    for (int i = 0; i < dgvConsumibles.RowCount - 1; i++){
-                        DataGridViewRow fila = dgvConsumibles.Rows[i];
-                        SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue("@cod_estadia", Convert.ToInt32(codigoEstadia));
-                        cmd.Parameters.AddWithValue("@cod_consumible",long.Parse(fila.Cells[0].Value.ToString()));
-                        cmd.Parameters.AddWithValue("@cantidad", int.Parse(fila.Cells[1].Value.ToString()));
-                        cmd.ExecuteNonQuery();
-                    }
+            }else if (frmInicioRegistrarConsumiblePadre != null) {                 
 
                     MessageBox.Show("Consumibles registrados", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();

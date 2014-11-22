@@ -20,6 +20,7 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         private string codEstadia;
         private string user;
         MenuDinamico menuRaiz;
+        string codigoCliente;
 
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
@@ -27,10 +28,12 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         
         public frmCheckout(frmInicioEstadia newForm,string codEstadiaParametro,string userParametro, MenuDinamico menuRaiz) {
             codEstadia = codEstadiaParametro;
-            user = userParametro;
-            InitializeComponent();
+            user = userParametro;            
             frmInicioEstadiaPadre = newForm;
-            this.menuRaiz = menuRaiz;        
+            this.menuRaiz = menuRaiz;
+
+            InitializeComponent();
+            llenarGridClientes();
         }
        
         //-----------------------------------------------------------------------------------------------------
@@ -58,14 +61,14 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
             cmd.ExecuteNonQuery();
 
             //crear Factura
-            string consulta = "DECLARE @output numeric(18,0) EXEC THE_FOREIGN_FOUR.proc_crear_factura "+ codEstadia +", @output OUTPUT SELECT @output";
+            string consulta = "DECLARE @output numeric(18,0) EXEC THE_FOREIGN_FOUR.proc_crear_factura "+ codEstadia +", @output OUTPUT,"+ codigoCliente +" SELECT @output";
             SqlCommand cmd2 = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             cmd2.CommandType = CommandType.Text;
 
             object nroFactura = cmd2.ExecuteScalar();
 
             MessageBox.Show("Se procedera a registrar los consumibles adicionales", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            new frmRegistrarConsumible(this, frmInicioEstadiaPadre,long.Parse(nroFactura.ToString())).Show();
+            new frmRegistrarConsumible(this, frmInicioEstadiaPadre,long.Parse(nroFactura.ToString()),codEstadia).Show();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
@@ -80,6 +83,13 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         }
         //----------------------FIN BOTONES--------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------
+
+        private void llenarGridClientes(){
+
+
+
+        }
+
 
     }
 }
