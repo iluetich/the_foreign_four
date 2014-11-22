@@ -129,6 +129,8 @@ namespace FrbaHotel.ABM_de_Habitacion
 
         private void botonRegistrar_Click(object sender, EventArgs e)
         {
+            this.comboBoxHotel_SelectedIndexChanged(sender, e);
+
             Boolean estaOk = true;
             // corroborar campos completos
             estaOk = this.camposCompletos(estaOk);
@@ -136,9 +138,9 @@ namespace FrbaHotel.ABM_de_Habitacion
             // corroborar numero de habitacion unico en el hotel que se crea
             if(!constructorMod)
             {
-                string consulta = "SELECT COUNT(*) FROM THE_FOREIGN_FOUR.Habitaciones WHERE cod_hotel="+ hotelDeHabitacion +" AND nro_habitacion=" + textBoxNumHabitacion.Text;//SEGUIR
+                string consulta = "SELECT THE_FOREIGN_FOUR.func_validar_hab_hotel (" + int.Parse(comboBoxHotel.Text) + ","+ int.Parse(textBoxNumHabitacion.Text) +")";
                 int unicoNroHabEnHotel = FrbaHotel.Utils.ejecutarConsultaResulInt(consulta);
-                if (unicoNroHabEnHotel > 0)
+                if (unicoNroHabEnHotel < 0)
                 {
                     estaOk = false;
                     MessageBox.Show("ERROR el numero de Habitacion ingresado ya existe para ese hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
