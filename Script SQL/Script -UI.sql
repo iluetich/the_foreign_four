@@ -1601,13 +1601,11 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, CAST((THE_FOREIGN_FOUR.func_obtener_monto_consumibles (f.nro_factura) / 5) + (THE_FOREIGN_FOUR.calcular_precio_estadia (e.cod_estadia) / 10) AS int) AS 'puntaje'
-			FROM THE_FOREIGN_FOUR.Clientes c JOIN THE_FOREIGN_FOUR.Reservas r ON(c.cod_cliente = r.cod_cliente)
-											 JOIN THE_FOREIGN_FOUR.Estadias e ON(r.cod_reserva = e.cod_reserva)
-											 JOIN THE_FOREIGN_FOUR.Facturas f ON(e.cod_estadia = f.cod_estadia)
+	RETURN (SELECT TOP 5 c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, CAST((THE_FOREIGN_FOUR.func_obtener_monto_consumibles (f.nro_factura) / 5) + (THE_FOREIGN_FOUR.calcular_precio_estadia (f.cod_estadia) / 10) AS int) AS 'puntaje'
+			FROM THE_FOREIGN_FOUR.Clientes c JOIN THE_FOREIGN_FOUR.Facturas f ON(c.cod_cliente = f.cod_cliente)
 											 JOIN THE_FOREIGN_FOUR.ItemsFactura i ON(f.nro_factura = i.nro_factura)
 			WHERE f.fecha_factura BETWEEN @fecha_desde AND @fecha_hasta
-			GROUP BY c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, f.nro_factura, e.cod_estadia
+			GROUP BY c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, f.nro_factura, f.cod_estadia
 			ORDER BY 7 DESC)
 GO
 

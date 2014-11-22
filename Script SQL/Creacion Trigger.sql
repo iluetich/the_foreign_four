@@ -174,16 +174,17 @@ AS
 BEGIN
 
 	DECLARE TrigInsCursor CURSOR FOR
-	SELECT nro_factura, fecha_factura, total, cod_estadia
+	SELECT nro_factura, fecha_factura, total, cod_cliente, cod_estadia
 	FROM inserted
 	DECLARE @nro_factura numeric(18,0),
 			@fecha_factura datetime,
 			@total numeric(18,2),
+			@cod_cliente numeric(18,0),
 			@cod_estadia numeric(18,0)
 
 	OPEN TrigInsCursor;
 
-	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_estadia
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_cliente, @cod_estadia
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -191,6 +192,7 @@ BEGIN
 		IF(@nro_factura IS NULL OR
 		   @fecha_factura IS NULL OR
 		   @total IS NULL OR
+		   @cod_cliente IS NULL OR
 		   @cod_estadia IS NULL)
 		   		   
 		BEGIN
@@ -199,11 +201,11 @@ BEGIN
 		END	
 		ELSE
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_estadia)
-			VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia);
+			INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_cliente, cod_estadia)
+			VALUES (@nro_factura, @fecha_factura, @total, @cod_cliente, @cod_estadia);
 		END			
 			
-		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_estadia     
+		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_cliente, @cod_estadia     
 
   END
 

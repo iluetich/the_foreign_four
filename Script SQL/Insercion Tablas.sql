@@ -93,10 +93,14 @@ FROM gd_esquema.Maestra m
 
 --***FACTURAS***************************************
 
-INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_estadia)
+INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_cliente, cod_estadia)
 SELECT DISTINCT	m.Factura_Nro,
 				m.Factura_Fecha,
 				m.Factura_Total,
+				(SELECT cod_cliente
+				FROM THE_FOREIGN_FOUR.Clientes c
+				WHERE	c.mail = m.Cliente_Mail
+				AND		c.nro_doc = m.Cliente_Pasaporte_Nro),
 				(SELECT cod_estadia
 				FROM THE_FOREIGN_FOUR.Estadias e
 				WHERE	e.cod_reserva = m.Reserva_Codigo)

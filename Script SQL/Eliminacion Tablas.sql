@@ -48,6 +48,7 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_regimenes_hab
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles
 DROP FUNCTION THE_FOREIGN_FOUR.func_hab_disponibles 
 DROP FUNCTION THE_FOREIGN_FOUR.func_hay_disponibilidad 
+DROP FUNCTION THE_FOREIGN_FOUR.func_clientes_estadia
 DROP FUNCTION THE_FOREIGN_FOUR.login_password 
 DROP FUNCTION THE_FOREIGN_FOUR.login_funcionalidades 
 DROP FUNCTION THE_FOREIGN_FOUR.buscar_clientes 

@@ -235,4 +235,6 @@ CREATE TABLE THE_FOREIGN_FOUR.Consumibles_Estadia (
 	cod_consumible		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Consumibles,
 	cantidad			int,
 )
+GO
+CREATE NONCLUSTERED INDEX idx_fecha_factura ON THE_FOREIGN_FOUR.Facturas (fecha_factura)
 
