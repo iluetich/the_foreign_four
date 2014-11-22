@@ -1588,3 +1588,22 @@ AS
 			ORDER BY 7 DESC)
 GO
 
+
+--**************************************
+
+CREATE PROCEDURE THE_FOREIGN_FOUR.borrar_usuarios_hotel @cod_usuario numeric(18,0)
+AS
+	DELETE THE_FOREIGN_FOUR.UsuariosPorHotel
+	WHERE cod_usuario = @cod_usuario
+GO
+
+--*********************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_insertar_rol_usuario	@cod_usuario numeric(18,0),
+																@cod_hotel numeric(18,0),
+																@cod_rol numeric(18,0)
+AS
+	INSERT INTO THE_FOREIGN_FOUR.UsuariosPorHotel
+	(cod_hotel, cod_usuario, cod_rol)
+	VALUES (@cod_hotel, @cod_usuario, @cod_rol)
+GO
+

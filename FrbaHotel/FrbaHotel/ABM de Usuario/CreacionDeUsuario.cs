@@ -133,7 +133,15 @@ namespace FrbaHotel.ABM_de_Usuario
             DataRow[] matriz = table.Select("rol='"+ rol +"' AND hotel="+ hotel);
             int cantidad = matriz.GetLength(0);
 
-            if(cantidad == 0)
+            //corroborar si la tabla tiene ya tiene un rol para el hotel seleccionado para este rol
+            Boolean soloUnRolPorHotel = true;
+            if(existeRolEnHotel(hotel,table))
+            {
+                MessageBox.Show("ERROR ingreso ya seteo un rol asignado a ese hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                soloUnRolPorHotel = false;
+            }
+
+            if(cantidad == 0 && soloUnRolPorHotel)
             {
                 DataRow row = table.NewRow();
                 row["rol"] = rol;
@@ -143,6 +151,22 @@ namespace FrbaHotel.ABM_de_Usuario
             }
 
             dgvRolesHoteles.DataSource = dataSet.Tables[0];
+        }
+
+        public Boolean existeRolEnHotel(string hotelNuevoRol,DataTable table)
+        {
+
+            for (int i = 0; i <= table.Rows.Count - 1; i++)
+            {
+                DataRow fila = table.Rows[i];
+
+                if (String.Equals(fila.ItemArray[1].ToString(), hotelNuevoRol))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void cancelar_Click(object sender, EventArgs e)
@@ -302,7 +326,7 @@ namespace FrbaHotel.ABM_de_Usuario
             if (constructorMod)
             {
                 //ELMINAS TODOS LOS roles por hotel que tenga
-                string comandoSql = "DELETE FROM THE_FOREIGN_FOUR.UsuariosPorHotel WHERE cod_usuario=" + cod_usuario;
+                string comandoSql = "EXEC THE_FOREIGN_FOUR.borrar_usuarios_hotel "+ cod_usuario;
                 FrbaHotel.Utils.ejecutarConsulta(comandoSql);
             }
 
@@ -316,8 +340,8 @@ namespace FrbaHotel.ABM_de_Usuario
                 int cod_rol = FrbaHotel.Utils.obtenerCod("SELECT cod_rol FROM THE_FOREIGN_FOUR.Roles WHERE nombre='" + fila.ItemArray[0].ToString() + "'");
 
                 //inserta en la tabla
-                string consulta2 = "INSERT INTO THE_FOREIGN_FOUR.UsuariosPorHotel (cod_usuario,cod_hotel,cod_rol)" +
-                    " VALUES (" + cod_usuario + "," + int.Parse(fila.ItemArray[1].ToString()) + "," + cod_rol + ")";
+                string consulta2 = "EXEC THE_FOREIGN_FOUR.proc_insertar_rol_usuario "+cod_usuario+", "+ int.Parse(fila.ItemArray[1].ToString())+","+cod_rol;
+
                 FrbaHotel.Utils.ejecutarConsulta(consulta2);
             }
         }
