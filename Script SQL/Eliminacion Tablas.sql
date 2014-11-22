@@ -82,7 +82,7 @@ DROP PROCEDURE THE_FOREIGN_FOUR.proc_eliminar_habitacion_reservada
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_agregar_hab_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_checkout_migracion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_liberar_habitaciones
-DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumibles
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_inhabilitar_usuario
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_validar_check_in
