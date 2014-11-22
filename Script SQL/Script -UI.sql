@@ -1091,8 +1091,8 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
 AS
 BEGIN
 	SET @nro_factura = (SELECT THE_FOREIGN_FOUR.func_sgte_nro_factura ())
-	INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, cod_estadia, fecha_factura) 
-	VALUES (@nro_factura , @cod_estadia, CAST(GETDATE() AS DATETIME))
+	INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, cod_estadia, cod_cliente, fecha_factura) 
+	VALUES (@nro_factura , @cod_estadia, @cod_cliente, CAST(GETDATE() AS DATETIME))
 	RETURN 
 END
 GO
@@ -1231,7 +1231,7 @@ BEGIN
 					WHERE cod_estadia = @cod_estadia)
 		OR (SELECT checkout
 			FROM THE_FOREIGN_FOUR.Estadias
-			WHERE cod_estadia = @cod_estadia) IS NULL)
+			WHERE cod_estadia = @cod_estadia) IS NOT NULL)
 	BEGIN
 		RETURN -1
 	END
@@ -1317,9 +1317,9 @@ BEGIN
 				WHERE	nro_habitacion = @nro_habitacion
 				AND		cod_hotel = @cod_hotel))
 	BEGIN
-		RETURN 1
+		RETURN -1
 	END
-	RETURN -1
+	RETURN 1
 END
 GO
 --********************************************************
@@ -1587,3 +1587,4 @@ AS
 			GROUP BY c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, f.nro_factura, e.cod_estadia
 			ORDER BY 7 DESC)
 GO
+
