@@ -15,12 +15,9 @@ namespace FrbaHotel.Registrar_Consumible
         frmRegistrarConsumible frmRegistrarConsumiblePadre;
         private long nroFactura;        
         string codigoTipoPago;
-        DataSet dataSetTiposPago;
-        DataRow codRowTipoPago;
-        bool terminoDeCargar = false;
-
+        string nroTarjeta;
+       
         public frmFacturacion(){InitializeComponent();}
-
         public frmFacturacion(frmRegistrarConsumible newForm,long nroFacturaParametro)
         {
             FrbaHotel.ConexionSQL.establecerConexionBD();
@@ -28,21 +25,8 @@ namespace FrbaHotel.Registrar_Consumible
             nroFactura = nroFacturaParametro;
             InitializeComponent();
             frmRegistrarConsumiblePadre = newForm;
-            cargoControles();
-
-            FrbaHotel.Utils.rellenarDataGridView(dgvFacturaDetalle, "SELECT * FROM THE_FOREIGN_FOUR.facturacion ("+ nroFactura +")");
-            cmbTipoPago.Focus();
-            terminoDeCargar = true;
-        }
-
-        private void cargoControles()
-        {
-            //leno tipos de pago
-            string consultaSQL = "select * from THE_FOREIGN_FOUR.TiposPago";
-            string nombreTabla = "THE_FOREIGN_FOUR.TiposPago";
-            string nombreCampo = "descripcion";
-            dataSetTiposPago = FrbaHotel.Utils.rellenarCombo(cmbTipoPago, nombreTabla, nombreCampo, consultaSQL);
-        }
+            FrbaHotel.Utils.rellenarDataGridView(dgvFacturaDetalle, "SELECT * FROM THE_FOREIGN_FOUR.facturacion ("+ nroFactura +")");            
+        }       
 
         private void btnEmitirFactura_Click(object sender, EventArgs e)
         {
@@ -52,15 +36,15 @@ namespace FrbaHotel.Registrar_Consumible
                     string pagoSQL = "exec THE_FOREIGN_FOUR.proc_registrar_pago @nro_factura, @cod_tipo_pago, @nro_tarjeta";
                     SqlCommand cmd = new SqlCommand(pagoSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                     cmd.Parameters.AddWithValue("@nro_factura", nroFactura);
-                    cmd.Parameters.AddWithValue("@cod_tipo_pago", Convert.ToInt32(Convert.ToInt32(codigoTipoPago)));
-                    cmd.Parameters.AddWithValue("@nro_tarjeta", Convert.ToInt32(txtNroTarj.Text));
+                    cmd.Parameters.AddWithValue("@cod_tipo_pago", Convert.ToInt32(codigoTipoPago));
+                    cmd.Parameters.AddWithValue("@nro_tarjeta", Convert.ToInt32(nroTarjeta));
                     cmd.ExecuteNonQuery();
 
                     MessageBox.Show("Felicidades ha pagado la factura", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    volverAlMenu();
+                    volverAlMenu();                    
 
                 }catch(Exception){
-                    MessageBox.Show("Hace foco en el comboBox por mas que tenga una opcion seleccionada","Error");
+                    MessageBox.Show("Hubo un error al facturar","Error");
                 }
             }
         }
@@ -69,38 +53,48 @@ namespace FrbaHotel.Registrar_Consumible
         {
             frmRegistrarConsumiblePadre.Enabled = true;
             frmRegistrarConsumiblePadre.Focus();
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void cmbTipoPago_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (terminoDeCargar)
-            {
-                //obtengo codigo tipo pago
-                codRowTipoPago = dataSetTiposPago.Tables[0].Rows[cmbTipoPago.SelectedIndex];
-                codigoTipoPago = codRowTipoPago["cod_tipo_pago"].ToString();                
-            }
-        }
-
-        //valida campos
-        private bool validarCampos()
-        {
-            return(
-                FrbaHotel.Utils.validarCampoEsteCompleto(cmbTipoPago, "Fecha desde") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(txtNroTarj, "Fecha hasata") 
-                );
-        }
+        }      
 
         //vuelve al menu raiz
         private void volverAlMenu()
         {
             this.Close();
+            this.frmRegistrarConsumiblePadre.setCerrate();
             this.frmRegistrarConsumiblePadre.Close();
-        }       
+        }
+
+        private void rbtnTarjeta_CheckedChanged(object sender, EventArgs e)
+        {
+            txtNroTarj.Enabled = true;
+            codigoTipoPago = "2";
+        }
+
+        private void rbtnContado_CheckedChanged(object sender, EventArgs e)
+        {
+            txtNroTarj.Enabled = false;
+            codigoTipoPago = "1";
+        }
+
+        private bool validarCampos()
+        {
+            if (rbtnContado.Checked || rbtnTarjeta.Checked){
+                if (rbtnTarjeta.Checked){
+                    if (txtNroTarj.Text != ""){
+                        return true;
+                    }else{
+                        MessageBox.Show("Complete el numero de tarjeta", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return false;    
+                    }
+                }else{
+                    nroTarjeta = "0";
+                    return true;
+                }
+            }else{
+                MessageBox.Show("Seleccione un modo de pago", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+        }
+
     }
 }
 

@@ -21,6 +21,8 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         private string user;
         MenuDinamico menuRaiz;
         string codigoCliente;
+        bool seleccionoCliente = false;
+        bool cerrate = false;
 
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
@@ -42,6 +44,7 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         {
             frmInicioEstadiaPadre.Enabled = true;
             frmInicioEstadiaPadre.Focus();
+            if (cerrate) frmInicioEstadiaPadre.Close();
         }
         //----------------------FIN EVENTOS DEL FORM-----------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------
@@ -51,6 +54,11 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         //----------------------BOTONES-----------------------------------------------------------------------         
         private void btnCheckout_Click(object sender, EventArgs e)
         {
+            if (!seleccionoCliente){
+                MessageBox.Show("Seleccione un cliente de la tabla antes de continuar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             //ejecutar el procedure que realiza el checkout
             SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_realizar_checkout", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             cmd.CommandType = CommandType.StoredProcedure;
@@ -84,12 +92,29 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         //----------------------FIN BOTONES--------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------
 
-        private void llenarGridClientes(){
 
 
-
+        //-------------------------OTROS--------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------
+        private void llenarGridClientes(){            
+            string consultaSql = "select * from THE_FOREIGN_FOUR.func_clientes_estadia("+codEstadia+")";
+            FrbaHotel.Utils.rellenarDataGridView(dgvClientes, consultaSql); 
         }
 
+        //evento para cuando se hace click en una celda devuelva la fila correspondiente
+        private void dgvRegimenes_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                DataGridViewRow row = dgvClientes.Rows[e.RowIndex];         
+                //codigo cliente
+                codigoCliente = row.Cells[0].Value.ToString();
+                seleccionoCliente = true;
+            }
+        }
+        //-------------------------FIN OTROS--------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------
 
+        public void setCerrate() { cerrate = true; }
     }
 }
