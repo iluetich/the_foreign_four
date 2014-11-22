@@ -27,7 +27,7 @@ namespace FrbaHotel.Menues_de_los_Roles
         private string hotelSesion;
 
         public MenuDinamico(InicioDelSistema formulario,string userName,string hotelElegido)
-        {
+        {            
             this.ventanaInicio = formulario;
             this.userSesion = userName;
             this.hotelSesion = hotelElegido;
@@ -162,7 +162,7 @@ namespace FrbaHotel.Menues_de_los_Roles
 
         private void botonRegConsumibles_Click(object sender, EventArgs e)
         {
-            frmInicioRegistrarConsumible frmRegConsumible = new frmInicioRegistrarConsumible(this);
+            frmInicioRegistrarConsumible frmRegConsumible = new frmInicioRegistrarConsumible(this, userSesion);
             frmRegConsumible.Show();
             this.Hide();
         }

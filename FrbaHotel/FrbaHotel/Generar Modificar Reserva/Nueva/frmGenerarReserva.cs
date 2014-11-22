@@ -37,8 +37,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         public frmGenerarReserva() { InitializeComponent(); }
 
         public frmGenerarReserva(MenuDinamico menuPadre,string userSesion, string hotelSesion)
-        {
-            FrbaHotel.ConexionSQL.establecerConexionBD();
+        {            
             this.menu = menuPadre;
             InitializeComponent();
 

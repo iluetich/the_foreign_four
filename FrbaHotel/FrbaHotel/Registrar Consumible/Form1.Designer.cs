@@ -36,12 +36,12 @@
             this.txtCodProducto = new System.Windows.Forms.TextBox();
             this.groupConsumible = new System.Windows.Forms.GroupBox();
             this.dgvConsumibles = new System.Windows.Forms.DataGridView();
-            this.bntFacturar = new System.Windows.Forms.Button();
-            this.groupBotonera = new System.Windows.Forms.GroupBox();
-            this.btnCancelar = new System.Windows.Forms.Button();
             this.colCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnFacturar = new System.Windows.Forms.Button();
+            this.groupBotonera = new System.Windows.Forms.GroupBox();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.groupRegConsu.SuspendLayout();
             this.groupConsumible.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsumibles)).BeginInit();
@@ -133,21 +133,37 @@
             this.dgvConsumibles.TabIndex = 0;
             this.dgvConsumibles.TabStop = false;
             // 
-            // bntFacturar
+            // colCodigo
             // 
-            this.bntFacturar.AutoSize = true;
-            this.bntFacturar.Location = new System.Drawing.Point(123, 24);
-            this.bntFacturar.Name = "bntFacturar";
-            this.bntFacturar.Size = new System.Drawing.Size(104, 23);
-            this.bntFacturar.TabIndex = 5;
-            this.bntFacturar.Text = "Iniciar Facturacion";
-            this.bntFacturar.UseVisualStyleBackColor = true;
-            this.bntFacturar.Click += new System.EventHandler(this.bntAceptar_Click);
+            this.colCodigo.HeaderText = "Codigo";
+            this.colCodigo.Name = "colCodigo";
+            // 
+            // colCantidad
+            // 
+            this.colCantidad.HeaderText = "Cantidad";
+            this.colCantidad.Name = "colCantidad";
+            // 
+            // colDescripcion
+            // 
+            this.colDescripcion.HeaderText = "Descripcion";
+            this.colDescripcion.Name = "colDescripcion";
+            this.colDescripcion.ReadOnly = true;
+            // 
+            // btnFacturar
+            // 
+            this.btnFacturar.AutoSize = true;
+            this.btnFacturar.Location = new System.Drawing.Point(123, 24);
+            this.btnFacturar.Name = "btnFacturar";
+            this.btnFacturar.Size = new System.Drawing.Size(104, 23);
+            this.btnFacturar.TabIndex = 5;
+            this.btnFacturar.Text = "Iniciar Facturacion";
+            this.btnFacturar.UseVisualStyleBackColor = true;
+            this.btnFacturar.Click += new System.EventHandler(this.bntAceptar_Click);
             // 
             // groupBotonera
             // 
             this.groupBotonera.Controls.Add(this.btnCancelar);
-            this.groupBotonera.Controls.Add(this.bntFacturar);
+            this.groupBotonera.Controls.Add(this.btnFacturar);
             this.groupBotonera.Location = new System.Drawing.Point(12, 300);
             this.groupBotonera.Name = "groupBotonera";
             this.groupBotonera.Size = new System.Drawing.Size(272, 60);
@@ -164,22 +180,6 @@
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // colCodigo
-            // 
-            this.colCodigo.HeaderText = "Codigo";
-            this.colCodigo.Name = "colCodigo";
-            // 
-            // colCantidad
-            // 
-            this.colCantidad.HeaderText = "Cantidad";
-            this.colCantidad.Name = "colCantidad";
-            // 
-            // colDescripcion
-            // 
-            this.colDescripcion.HeaderText = "Descripcion";
-            this.colDescripcion.Name = "colDescripcion";
-            this.colDescripcion.ReadOnly = true;
             // 
             // frmRegistrarConsumible
             // 
@@ -217,7 +217,7 @@
         private System.Windows.Forms.Button btnRegistrarCons;
         private System.Windows.Forms.GroupBox groupConsumible;
         private System.Windows.Forms.DataGridView dgvConsumibles;
-        private System.Windows.Forms.Button bntFacturar;
+        private System.Windows.Forms.Button btnFacturar;
         private System.Windows.Forms.GroupBox groupBotonera;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCodigo;

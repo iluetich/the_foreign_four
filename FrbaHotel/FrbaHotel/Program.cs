@@ -7,6 +7,7 @@ using FrbaHotel.Registrar_Estadia;
 using FrbaHotel.Registrar_Consumible;
 using FrbaHotel.Listado_Estadistico;
 using FrbaHotel.Cancelar_Reserva;
+using FrbaHotel.Menues_de_los_Roles;
 
 namespace FrbaHotel
 {
@@ -20,8 +21,7 @@ namespace FrbaHotel
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new InicioDelSistema());
-            Application.Run(new frmGenerarReserva(null,"Guest","1"));  
+            Application.Run(new InicioDelSistema());           
         }
     }
 }
