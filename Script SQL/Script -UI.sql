@@ -1090,21 +1090,10 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
 				 @cod_cliente numeric(18,0))
 AS
 BEGIN
-	IF (NOT EXISTS (SELECT cod_cliente
-		FROM THE_FOREIGN_FOUR.ClientePorEstadia 
-		WHERE cod_estadia = @cod_estadia
-		AND cod_cliente = @cod_cliente))
-	BEGIN
-		SET @nro_factura = -1
-	END
-	ELSE
-	BEGIN
 	SET @nro_factura = (SELECT THE_FOREIGN_FOUR.func_sgte_nro_factura ())
 	INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, cod_estadia, fecha_factura) 
 	VALUES (@nro_factura , @cod_estadia, CAST(GETDATE() AS DATETIME))
-	END
 	RETURN 
-	
 END
 GO
 
@@ -1240,10 +1229,9 @@ BEGIN
 	IF( NOT EXISTS(SELECT cod_estadia
 					FROM THE_FOREIGN_FOUR.Estadias
 					WHERE cod_estadia = @cod_estadia)
-		OR EXISTS(SELECT cod_audit
-					FROM THE_FOREIGN_FOUR.AuditoriaEstadias
-					WHERE cod_estadia = @cod_estadia
-					AND cod_operacion = 'O'))
+		OR (SELECT checkout
+			FROM THE_FOREIGN_FOUR.Estadias
+			WHERE cod_estadia = @cod_estadia) IS NULL)
 	BEGIN
 		RETURN -1
 	END
@@ -1252,6 +1240,16 @@ BEGIN
 END
 GO	
 
+--*******************************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_clientes_estadia (@cod_estadia numeric(18,0))
+RETURNS TABLE
+AS
+RETURN(
+	SELECT ce.cod_cliente, c.nombre, c.apellido
+	FROM THE_FOREIGN_FOUR.ClientePorEstadia ce, THE_FOREIGN_FOUR.Clientes c 
+	WHERE ce.cod_cliente = c.cod_cliente
+	AND ce.cod_estadia = @cod_estadia)
+GO
 --**********************************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
 				(@fecha_uno datetime,
