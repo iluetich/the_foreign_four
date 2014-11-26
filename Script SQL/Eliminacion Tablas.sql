@@ -93,6 +93,7 @@ DROP PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_cliente
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_huesped 
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia 
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_registrar_pago
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_modificar_reserva 
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_generar_reserva

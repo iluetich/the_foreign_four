@@ -1,4 +1,11 @@
+-----------------------------------------------------------------------------------------
+--------------------------------CREACION ESQUEMA-----------------------------------------
+-----------------------------------------------------------------------------------------
 CREATE SCHEMA THE_FOREIGN_FOUR AUTHORIZATION gd
+
+-----------------------------------------------------------------------------------------
+--------------------------------CREACION TABLAS------------------------------------------
+-----------------------------------------------------------------------------------------
 
 CREATE TABLE THE_FOREIGN_FOUR.Roles (
 	cod_rol				numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
@@ -9,6 +16,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Funcionalidades (
 	cod_funcion			numeric(18,0)			IDENTITY (1,1) PRIMARY KEY,
 	nombre				varchar(60)				UNIQUE,
 )
+
 CREATE TABLE THE_FOREIGN_FOUR.FuncionalidadPorRol (
 	cod_funcion			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Funcionalidades,
 	cod_rol				numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Roles,
@@ -48,7 +56,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Clientes (
 	cod_cliente			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nombre				nvarchar(255),
 	apellido			nvarchar(255),
-	tipo_doc			char(3)					DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
+	tipo_doc			varchar(3)				DEFAULT 'PAS' CHECK(tipo_doc IN ('DNI', 'PAS')),
 	nro_doc				numeric(18,0)			UNIQUE,
 	mail				nvarchar(255)			UNIQUE,
 	telefono			nvarchar(60),
@@ -68,7 +76,7 @@ CREATE TABLE THE_FOREIGN_FOUR.ClientesDefectuosos (
 	cod_cliente			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nombre				nvarchar(255),
 	apellido			nvarchar(255),
-	tipo_doc			char(3)					DEFAULT 'PAS',
+	tipo_doc			varchar(3),
 	nro_doc				numeric(18,0),
 	mail				nvarchar(255),
 	telefono			nvarchar(60),
@@ -169,6 +177,7 @@ CREATE TABLE THE_FOREIGN_FOUR.Facturas (
 	nro_factura			numeric(18,0)			PRIMARY KEY,
 	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
 	cod_pago			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Pagos,
+	cod_cliente			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Clientes,
 	fecha_factura		datetime,
 	total				numeric(18,2),
 )
@@ -229,7 +238,16 @@ CREATE TABLE THE_FOREIGN_FOUR.AuditoriaEstadias (
 	cod_operacion		char(1)					CHECK(cod_operacion IN ('I', 'O')),
 	fecha				datetime				DEFAULT getdate()
 )
+CREATE TABLE THE_FOREIGN_FOUR.Consumibles_Estadia (
+	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
+	cod_consumible		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Consumibles,
+	cantidad			int,
+)
 GO
+
+------------------------------------------------------------------------------------
+-------------------------------CREACION DE TRIGGERS---------------------------------
+------------------------------------------------------------------------------------
 
 CREATE TRIGGER THE_FOREIGN_FOUR.trg_clientes_error
 ON THE_FOREIGN_FOUR.Clientes
@@ -407,16 +425,17 @@ AS
 BEGIN
 
 	DECLARE TrigInsCursor CURSOR FOR
-	SELECT nro_factura, fecha_factura, total, cod_estadia
+	SELECT nro_factura, fecha_factura, total, cod_cliente, cod_estadia
 	FROM inserted
 	DECLARE @nro_factura numeric(18,0),
 			@fecha_factura datetime,
 			@total numeric(18,2),
+			@cod_cliente numeric(18,0),
 			@cod_estadia numeric(18,0)
 
 	OPEN TrigInsCursor;
 
-	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_estadia
+	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_cliente, @cod_estadia
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -424,6 +443,7 @@ BEGIN
 		IF(@nro_factura IS NULL OR
 		   @fecha_factura IS NULL OR
 		   @total IS NULL OR
+		   @cod_cliente IS NULL OR
 		   @cod_estadia IS NULL)
 		   		   
 		BEGIN
@@ -432,11 +452,11 @@ BEGIN
 		END	
 		ELSE
 		BEGIN
-			INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_estadia)
-			VALUES (@nro_factura, @fecha_factura, @total, @cod_estadia);
+			INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_cliente, cod_estadia)
+			VALUES (@nro_factura, @fecha_factura, @total, @cod_cliente, @cod_estadia);
 		END			
 			
-		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_estadia     
+		FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @fecha_factura, @total, @cod_cliente, @cod_estadia     
 
   END
 
@@ -621,6 +641,10 @@ BEGIN
 
 END
 GO
+---------------------------------------------------------------------------------------
+----------------------CREACION FUNCIONES Y PROCEDURES----------------------------------
+---------------------------------------------------------------------------------------
+
 CREATE FUNCTION	THE_FOREIGN_FOUR.func_obtener_cant_huespedes
 				(@cod_reserva numeric(18,0))
 		
@@ -680,25 +704,29 @@ BEGIN
 	
 	
 	
-	DECLARE  @cod_estadia numeric(18,0),
-				@cod_hotel numeric(18,0)
+	DECLARE		@cod_estadia numeric(18,0),
+				@cod_hotel numeric(18,0),
+				@cant_noches numeric(18,0),
+				@cod_habitacion_a_ocupar numeric(18,0)
+				
 	SET @cod_estadia = (SELECT cod_estadia
 						FROM THE_FOREIGN_FOUR.Estadias
-						WHERE cod_reserva = @cod_reserva
-						AND fecha_inicio = @fecha_inicio)
-	SET @cod_hotel = (SELECT DISTINCT cod_hotel
+						WHERE cod_reserva = @cod_reserva)
+	SET @cod_hotel = (SELECT cod_hotel
 					 FROM THE_FOREIGN_FOUR.Reservas
-					 WHERE cod_reserva = @cod_reserva)	
-	
+					 WHERE cod_reserva = @cod_reserva)
+	SET @cant_noches = (SELECT	cant_noches
+						FROM THE_FOREIGN_FOUR.Reservas	
+						WHERE cod_reserva = @cod_reserva)
 	
 	SELECT	cod_tipo_hab
 	INTO THE_FOREIGN_FOUR.#TipoHabReserva
 	FROM THE_FOREIGN_FOUR.TipoHabitacion_Reservas
 	WHERE cod_reserva = @cod_reserva
-	
+
 	--**cursor********
 	DECLARE CursorHabitaciones CURSOR FOR
-	SELECT *
+	SELECT cod_tipo_hab
 	FROM THE_FOREIGN_FOUR.#TipoHabReserva
 	DECLARE @cod_tipo_hab numeric(18,0)
 	OPEN CursorHabitaciones;
@@ -706,10 +734,13 @@ BEGIN
 	
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
+		SET @cod_habitacion_a_ocupar = (SELECT cod_habitacion 
+										FROM THE_FOREIGN_FOUR.Habitaciones h
+										WHERE	h.cod_hotel = @cod_hotel
+										AND		h.nro_habitacion = (SELECT TOP 1 *
+																	FROM THE_FOREIGN_FOUR.func_obtener_hab_disponibles(@fecha_inicio, @cod_tipo_hab, @cod_hotel, @cant_noches)))
 		INSERT INTO THE_FOREIGN_FOUR.Habitaciones_Estadia (cod_estadia, cod_habitacion)
-		VALUES (@cod_estadia, (SELECT MIN(cod_habitacion)
-								FROM THE_FOREIGN_FOUR.func_obtener_hab_disponibles(@fecha_inicio, @cod_tipo_hab, @cod_hotel)))
-		
+		VALUES (@cod_estadia, @cod_habitacion_a_ocupar)
 		FETCH NEXT FROM CursorHabitaciones INTO @cod_tipo_hab
 	END
 	CLOSE CursorHabitaciones;
@@ -766,6 +797,7 @@ BEGIN
 	SET @estadoReserva = (SELECT cod_estado_reserva
 							FROM THE_FOREIGN_FOUR.Reservas
 							WHERE cod_reserva = @cod_reserva)
+	
 	
 	IF( (@codigo = 1) AND (@estadoReserva = 1 OR @estadoReserva = 2))
 	BEGIN
@@ -890,7 +922,21 @@ BEGIN
 	RETURN @cod_reserva_generada
 END
 GO
-
+--***********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_fecha_reserva
+				(@cod_hotel numeric(18,0),
+				 @fecha_desde datetime)
+RETURNS int
+AS
+BEGIN
+	IF ((SELECT fecha_creacion FROM THE_FOREIGN_FOUR.Hoteles WHERE cod_hotel = @cod_hotel) > @fecha_desde OR
+		GETDATE() > @fecha_desde)
+	BEGIN
+		RETURN -1
+	END
+	RETURN 1
+END
+GO
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_hotel_inhabilitable 
 				(@cod_hotel int,
@@ -901,8 +947,9 @@ AS
 BEGIN
 	IF(NOT EXISTS (SELECT cod_reserva
 				   FROM	THE_FOREIGN_FOUR.Reservas
-				   WHERE fecha_desde BETWEEN @fecha_inicio AND @fecha_fin
-				   OR	 fecha_hasta BETWEEN @fecha_inicio AND @fecha_fin))
+				   WHERE	cod_hotel = @cod_hotel
+				   AND		(fecha_desde BETWEEN @fecha_inicio AND @fecha_fin
+				   OR		 fecha_hasta BETWEEN @fecha_inicio AND @fecha_fin)))
 	BEGIN 
 		RETURN 1
 	END
@@ -1069,15 +1116,15 @@ RETURN(
 			nom_calle, nro_calle, nacionalidad, pais_origen, estado, piso
 	FROM THE_FOREIGN_FOUR.Clientes
 	WHERE nombre LIKE 
-		(CASE WHEN @nombre IS NULL  THEN '%' ELSE @nombre END)
+		(CASE WHEN @nombre IS NULL  THEN '%' ELSE @nombre +'%' END)
 	AND apellido LIKE
-		(CASE WHEN @apellido IS NULL THEN '%' ELSE @apellido END)
+		(CASE WHEN @apellido IS NULL THEN '%' ELSE @apellido +'%' END)
 	AND tipo_doc LIKE 
-		(CASE WHEN @tipo_doc IS NULL THEN '%' ELSE  @tipo_doc END)
+		(CASE WHEN @tipo_doc IS NULL THEN '%' ELSE  @tipo_doc +'%' END)
 	AND CAST(nro_doc AS nvarchar(10)) LIKE 
-		(CASE WHEN @nro_doc IS NULL THEN '%' ELSE CAST(@nro_doc AS nvarchar(10)) END)
+		(CASE WHEN @nro_doc IS NULL THEN '%' ELSE CAST(@nro_doc AS nvarchar(10))+'%' END)
 	AND mail LIKE 
-		(CASE WHEN @mail IS NULL THEN '%' ELSE @mail   END)
+		(CASE WHEN @mail IS NULL THEN '%' ELSE @mail+'%' END)
 )
 GO
 --***********************************************************
@@ -1619,13 +1666,11 @@ BEGIN
 	SET @cod_consumible_inclusive = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('descuento all inclusive'))
 	SET @cod_consumible_estadia = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('estadia'))
 	SET @cod_consumible_noches = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('noches no utilizadas'))
-	SET @fecha_check_out = (SELECT fecha
-							FROM THE_FOREIGN_FOUR.AuditoriaEstadias
-							WHERE cod_operacion = 'O'
-							AND cod_estadia = (SELECT cod_estadia
+	SET @fecha_check_out = (SELECT checkout
+							FROM THE_FOREIGN_FOUR.Estadias
+							WHERE cod_estadia = (SELECT cod_estadia
 												FROM THE_FOREIGN_FOUR.Facturas
-												WHERE nro_factura = @nro_factura
-												))
+												WHERE nro_factura = @nro_factura))
 	
 	SET @fecha_ideal = (SELECT r.fecha_hasta
 						FROM THE_FOREIGN_FOUR.Reservas r,
@@ -1693,12 +1738,13 @@ GO
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_crear_factura
 				(@cod_estadia numeric(18,0),
-				 @nro_factura numeric(18,0) OUTPUT)
+				 @nro_factura numeric(18,0) OUTPUT,
+				 @cod_cliente numeric(18,0))
 AS
 BEGIN
 	SET @nro_factura = (SELECT THE_FOREIGN_FOUR.func_sgte_nro_factura ())
-	INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, cod_estadia, fecha_factura) 
-	VALUES (@nro_factura , @cod_estadia, CAST(GETDATE() AS DATETIME))
+	INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, cod_estadia, cod_cliente, fecha_factura) 
+	VALUES (@nro_factura , @cod_estadia, @cod_cliente, CAST(GETDATE() AS DATETIME))
 	RETURN 
 END
 GO
@@ -1835,10 +1881,9 @@ BEGIN
 	IF( NOT EXISTS(SELECT cod_estadia
 					FROM THE_FOREIGN_FOUR.Estadias
 					WHERE cod_estadia = @cod_estadia)
-		OR EXISTS(SELECT cod_audit
-					FROM THE_FOREIGN_FOUR.AuditoriaEstadias
-					WHERE cod_estadia = @cod_estadia
-					AND cod_operacion = 'O'))
+		OR (SELECT checkout
+			FROM THE_FOREIGN_FOUR.Estadias
+			WHERE cod_estadia = @cod_estadia) IS NOT NULL)
 	BEGIN
 		RETURN -1
 	END
@@ -1847,6 +1892,16 @@ BEGIN
 END
 GO	
 
+--*******************************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_clientes_estadia (@cod_estadia numeric(18,0))
+RETURNS TABLE
+AS
+RETURN(
+	SELECT ce.cod_cliente, c.nombre, c.apellido
+	FROM THE_FOREIGN_FOUR.ClientePorEstadia ce, THE_FOREIGN_FOUR.Clientes c 
+	WHERE ce.cod_cliente = c.cod_cliente
+	AND ce.cod_estadia = @cod_estadia)
+GO
 --**********************************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_igual_fecha
 				(@fecha_uno datetime,
@@ -1914,9 +1969,9 @@ BEGIN
 				WHERE	nro_habitacion = @nro_habitacion
 				AND		cod_hotel = @cod_hotel))
 	BEGIN
-		RETURN 1
+		RETURN -1
 	END
-	RETURN -1
+	RETURN 1
 END
 GO
 --********************************************************
@@ -1946,14 +2001,38 @@ BEGIN
 END
 GO
 --********************************************************
-CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumible
-				(@nro_factura numeric(18,0),
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia
+				(@cod_estadia numeric(18,0),
 				 @cod_consumible numeric(18,0),
-				 @cantidad	int)
+				 @cantidad int)
 AS
 BEGIN
-	INSERT INTO THE_FOREIGN_FOUR.view_facturas (nro_factura, cod_consumible, cantidad)
-	VALUES	(@nro_factura, @cod_consumible, @cantidad)
+	IF (@cod_estadia IS NULL OR
+		@cod_consumible IS NULL OR
+		@cantidad <= 0)
+	BEGIN
+		RAISERROR (15600,-1,-1, 'THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia')
+	END
+	INSERT INTO THE_FOREIGN_FOUR.Consumibles_Estadia (cod_estadia, cod_consumible, cantidad)
+	VALUES (@cod_estadia, @cod_consumible, @cantidad)
+END
+GO
+--********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_consumibles
+				(@nro_factura numeric(18,0))
+AS
+BEGIN
+	IF (@nro_factura IS NULL)
+	BEGIN 
+		RAISERROR (15600,-1,-1, 'THE_FOREIGN_FOUR.proc_registrar_consumibles')
+	END
+	ELSE
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.view_facturas (nro_factura, cod_consumible, cantidad)
+		(SELECT	f.nro_factura, ce.cod_consumible, ce.cantidad
+		 FROM	THE_FOREIGN_FOUR.Consumibles_Estadia ce JOIN THE_FOREIGN_FOUR.Facturas f ON(ce.cod_estadia = f.cod_estadia)
+		 WHERE	f.nro_factura = @nro_factura)
+	END
 END
 GO
 --**********************************************************
@@ -1970,7 +2049,6 @@ CREATE VIEW THE_FOREIGN_FOUR.view_habitaciones_disp
 (cod_habitacion, nro_habitacion, piso, cod_hotel, cod_tipo_hab, fecha_desde)
 AS
 SELECT	h.cod_habitacion, h.nro_habitacion, h.piso, h.cod_hotel, h.cod_tipo_hab, e.checkout
-		
 FROM	THE_FOREIGN_FOUR.Habitaciones h,
 		THE_FOREIGN_FOUR.Habitaciones_Estadia he,
 		THE_FOREIGN_FOUR.Estadias e
@@ -1979,15 +2057,37 @@ AND		he.cod_estadia = e.cod_estadia
 GO
 
 --***************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles (@fecha_desde datetime, @cod_tipo_hab numeric(18,0), @cod_hotel numeric(18,0))
+--***
+--**
+--*
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles (@fecha_desde datetime, @cod_tipo_hab numeric(18,0), @cod_hotel numeric(18,0), @cant_noches numeric(18,0))
 RETURNS TABLE
 AS
 RETURN(
-		SELECT  *
+		/*SELECT  *
 		FROM	THE_FOREIGN_FOUR.view_habitaciones_disp d
 		WHERE	d.cod_tipo_hab = @cod_tipo_hab
 		AND		d.cod_hotel = @cod_hotel
-		AND		CAST(d.fecha_desde AS datetime) < @fecha_desde
+		AND		CAST(d.fecha_desde AS datetime) < @fecha_desde*/
+		
+		--habria que agregar las habitaciones de las estadias que fueron checkouteadas
+		--solo si el intervalo en que se necesita la habitacion esta contenido en el intervalo
+		--de las noches que no aprovecho la estadia	
+	
+		SELECT	nro_habitacion
+		FROM	THE_FOREIGN_FOUR.Habitaciones ha
+		WHERE	@cod_hotel = ha.cod_hotel
+		AND		@cod_tipo_hab = ha.cod_tipo_hab
+		
+		EXCEPT
+		
+		SELECT h.nro_habitacion
+		FROM THE_FOREIGN_FOUR.Habitaciones_Estadia he, THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.Estadias e
+		WHERE	he.cod_habitacion = h.cod_habitacion
+		AND		h.cod_tipo_hab = @cod_tipo_hab
+		AND		h.cod_hotel = @cod_hotel
+		AND		DATEADD(DAY, cant_noches, e.fecha_inicio) > @fecha_desde
+		
 )
 GO
 --****************************************************
@@ -2038,6 +2138,37 @@ BEGIN
 								  FROM THE_FOREIGN_FOUR.EstadosReserva
 								  WHERE descripcion = 'modificada')
 	WHERE	cod_reserva = @cod_reserva
+END
+GO
+--**********************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_crear_habitacion
+				(@cod_hotel numeric(18,0),
+				 @nro_habitacion numeric(18,0),
+				 @piso numeric(18,0),
+				 @ubicacion varchar(50),
+				 @cod_tipo_hab numeric(18,0),
+				 @descripcion nvarchar(255))
+AS
+BEGIN
+	INSERT INTO THE_FOREIGN_FOUR.Habitaciones (cod_hotel, nro_habitacion, piso, ubicacion, cod_tipo_hab, descripcion)
+	VALUES (@cod_hotel, @nro_habitacion, @piso, @ubicacion, @cod_tipo_hab, @descripcion)
+END
+GO
+--**********************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_existe_habitacion
+				(@cod_hotel numeric(18,0),
+				 @nro_habitacion numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF (EXISTS (SELECT	@nro_habitacion
+				FROM	THE_FOREIGN_FOUR.Habitaciones
+				WHERE	cod_hotel = @cod_hotel
+				AND		nro_habitacion = @nro_habitacion))
+	BEGIN
+		RETURN 1
+	END
+	RETURN 0
 END
 GO
 --***********************************************************
@@ -2120,17 +2251,39 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, CAST((THE_FOREIGN_FOUR.func_obtener_monto_consumibles (f.nro_factura) / 5) + (THE_FOREIGN_FOUR.calcular_precio_estadia (e.cod_estadia) / 10) AS int) AS 'puntaje'
-			FROM THE_FOREIGN_FOUR.Clientes c JOIN THE_FOREIGN_FOUR.Reservas r ON(c.cod_cliente = r.cod_cliente)
-											 JOIN THE_FOREIGN_FOUR.Estadias e ON(r.cod_reserva = e.cod_reserva)
-											 JOIN THE_FOREIGN_FOUR.Facturas f ON(e.cod_estadia = f.cod_estadia)
+	RETURN (SELECT TOP 5 c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, CAST((THE_FOREIGN_FOUR.func_obtener_monto_consumibles (f.nro_factura) / 5) + (THE_FOREIGN_FOUR.calcular_precio_estadia (f.cod_estadia) / 10) AS int) AS 'puntaje'
+			FROM THE_FOREIGN_FOUR.Clientes c JOIN THE_FOREIGN_FOUR.Facturas f ON(c.cod_cliente = f.cod_cliente)
 											 JOIN THE_FOREIGN_FOUR.ItemsFactura i ON(f.nro_factura = i.nro_factura)
 			WHERE f.fecha_factura BETWEEN @fecha_desde AND @fecha_hasta
-			GROUP BY c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, f.nro_factura, e.cod_estadia
+			GROUP BY c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, f.nro_factura, f.cod_estadia
 			ORDER BY 7 DESC)
 GO
 
+
+--**************************************
+
+CREATE PROCEDURE THE_FOREIGN_FOUR.borrar_usuarios_hotel @cod_usuario numeric(18,0)
+AS
+	DELETE THE_FOREIGN_FOUR.UsuariosPorHotel
+	WHERE cod_usuario = @cod_usuario
+GO
+
+--*********************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_insertar_rol_usuario	@cod_usuario numeric(18,0),
+																@cod_hotel numeric(18,0),
+																@cod_rol numeric(18,0)
+AS
+	INSERT INTO THE_FOREIGN_FOUR.UsuariosPorHotel
+	(cod_hotel, cod_usuario, cod_rol)
+	VALUES (@cod_hotel, @cod_usuario, @cod_rol)
+GO
+
+----------------------------------------------------------------------------------------
+---------------------------------MIGRACION----------------------------------------------
+----------------------------------------------------------------------------------------
+
 EXEC THE_FOREIGN_FOUR.porc_insercion_estados_reserva
+
 --***CLIENTES********************************
 
 INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre, apellido, fecha_nac, nom_calle, nro_calle, piso, depto, nacionalidad, nro_doc, mail)
@@ -2224,10 +2377,14 @@ FROM gd_esquema.Maestra m
 
 --***FACTURAS***************************************
 
-INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_estadia)
+INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, fecha_factura, total, cod_cliente, cod_estadia)
 SELECT DISTINCT	m.Factura_Nro,
 				m.Factura_Fecha,
 				m.Factura_Total,
+				(SELECT cod_cliente
+				FROM THE_FOREIGN_FOUR.Clientes c
+				WHERE	c.mail = m.Cliente_Mail
+				AND		c.nro_doc = m.Cliente_Pasaporte_Nro),
 				(SELECT cod_estadia
 				FROM THE_FOREIGN_FOUR.Estadias e
 				WHERE	e.cod_reserva = m.Reserva_Codigo)
@@ -2302,6 +2459,4 @@ DROP TRIGGER THE_FOREIGN_FOUR.trg_tipohab_reservas
 --** ELIMINACION PROCEDURES MIGRACION**************************
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_juego_datos
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_checkout_migracion
-
-
 
