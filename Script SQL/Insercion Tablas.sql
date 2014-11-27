@@ -163,6 +163,9 @@ EXEC THE_FOREIGN_FOUR.proc_checkout_migracion
 --** JUEGO DE DATOS********************************************
 EXEC THE_FOREIGN_FOUR.proc_juego_datos
 
+--** CAPACIDAD DE HABITACIONES*********************************
+EXEC THE_FOREIGN_FOUR.proc_ins_capacidad_hab
+
 --** ELIMINACION DE LOS TRIGGERS*******************************
 DROP TRIGGER THE_FOREIGN_FOUR.trg_clientes_error
 DROP TRIGGER THE_FOREIGN_FOUR.trg_reservas_error

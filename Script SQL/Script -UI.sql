@@ -298,15 +298,21 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_hotel_inhabilitable
 RETURNS int
 AS
 BEGIN
-	IF(NOT EXISTS (SELECT cod_reserva
+	IF(EXISTS (SELECT cod_reserva
 				   FROM	THE_FOREIGN_FOUR.Reservas
 				   WHERE	cod_hotel = @cod_hotel
 				   AND		(fecha_desde BETWEEN @fecha_inicio AND @fecha_fin
 				   OR		 fecha_hasta BETWEEN @fecha_inicio AND @fecha_fin)))
 	BEGIN 
-		RETURN 1
+		RETURN -1
 	END
-	RETURN -1
+	IF(@fecha_inicio < (SELECT fecha_creacion
+						FROM THE_FOREIGN_FOUR.Hoteles
+						WHERE cod_hotel = @cod_hotel))
+	BEGIN
+		RETURN 0
+	END
+	RETURN 1
 END
 GO
 --***********************************************************
@@ -466,7 +472,7 @@ AS
 RETURN(
 
 	SELECT cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail, telefono, fecha_nac, 
-			nom_calle, nro_calle, nacionalidad, pais_origen, estado, piso
+			nom_calle, nro_calle, nacionalidad, pais_origen, estado, piso, depto
 	FROM THE_FOREIGN_FOUR.Clientes
 	WHERE nombre LIKE 
 		(CASE WHEN @nombre IS NULL  THEN '%' ELSE @nombre +'%' END)
@@ -1630,4 +1636,62 @@ AS
 	(cod_hotel, cod_usuario, cod_rol)
 	VALUES (@cod_hotel, @cod_usuario, @cod_rol)
 GO
+--********************************* NUEVO NUEVO
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_huesped 
+					(@cod_cliente numeric(18,0),
+					 @cod_estadia numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF(EXISTS (SELECT	cod_cliente, cod_estadia
+			   FROM		THE_FOREIGN_FOUR.ClientePorEstadia
+			   WHERE	cod_cliente = @cod_cliente
+			   AND		cod_estadia = @cod_estadia))
+	BEGIN
+		RETURN -1
+	END
+	ELSE 
+	BEGIN
+		RETURN 1 
+	END
+END
+GO
+--*********************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_ins_capacidad_hab
+AS
+BEGIN
+	UPDATE	THE_FOREIGN_FOUR.TipoHabitaciones
+	SET		capacidad = 1
+	WHERE	cod_tipo_hab = 1001
+	
+	UPDATE	THE_FOREIGN_FOUR.TipoHabitaciones
+	SET		capacidad = 2
+	WHERE	cod_tipo_hab = 1002
+	
+	UPDATE	THE_FOREIGN_FOUR.TipoHabitaciones
+	SET		capacidad = 3
+	WHERE	cod_tipo_hab = 1003
+	
+	UPDATE	THE_FOREIGN_FOUR.TipoHabitaciones
+	SET		capacidad = 4
+	WHERE	cod_tipo_hab = 1004
+	
+	UPDATE	THE_FOREIGN_FOUR.TipoHabitaciones
+	SET		capacidad = 5
+	WHERE	cod_tipo_hab = 1005
+END
+GO
+--*********************************************
+create FUNCTION THE_FOREIGN_FOUR.func_max_cant_huespedes
+					(@cod_reserva numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	RETURN (SELECT	SUM(th.capacidad)
+			FROM	THE_FOREIGN_FOUR.TipoHabitacion_Reservas thr JOIN THE_FOREIGN_FOUR.TipoHabitaciones th ON(thr.cod_tipo_hab = th.cod_tipo_hab)
+			WHERE	cod_reserva = @cod_reserva)
+END
+GO
+
+
 

@@ -30,12 +30,12 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void botonInhabilitar_Click(object sender, EventArgs e)
         {
-            Boolean estaOk = true;
+            Boolean camposLlenos = true;
             //primero corrobora que las fechas sean correctas y se halla completado el texto motivo
             Boolean MotivoCompleto = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxMotivo, "Motivo");
-            if (!MotivoCompleto) { estaOk = false;}
+            if (!MotivoCompleto) { return; }
             Boolean fechasCorrectas = FrbaHotel.Utils.validarFechas(dateDesde,dateHasta);
-            if (!fechasCorrectas) { estaOk = false; }
+            if (!fechasCorrectas) { return; }
 
             //segundo validacion que no pueda inhabilitar el hotel cuando halla reservas en esos dias
             SqlCommand cmd = new SqlCommand();
@@ -54,8 +54,25 @@ namespace FrbaHotel.ABM_de_Hotel
             cmd.CommandType = CommandType.Text;
             
             int puedeInhabilitar = (int)cmd.ExecuteScalar();
-            
-            if(puedeInhabilitar < 0)
+
+            switch(puedeInhabilitar) {
+                case -1:
+                    MessageBox.Show("El hotel posee reservas en el período especificado. Por favor, modifique el período de inhabilitación y vuelva a intentarlo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    break;
+                case 0:
+                    MessageBox.Show("No puede inhabilitarse un hotel en una fecha anterior a su fecha de creación. Por favor, modifique el período de inhabilitación y vuelva a intentarlo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); 
+                    break;
+                case 1:
+                    this.ejecutarProcInhabilitarHotel(fechaDesde, fechaHasta);
+                    MessageBox.Show("Se ha inhabilitado el hotel satisfactoriamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //resetear la grid
+                    padre.cargarHoteles();
+                    padre.Show();
+                    this.Close();
+                    break;
+            };
+
+            /*if(puedeInhabilitar < 0)
             {
                 estaOk = false;
                 MessageBox.Show("EL hotel no se puede Inhabilitar ya que se han hecho reservas para ese periodo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -70,7 +87,7 @@ namespace FrbaHotel.ABM_de_Hotel
                 padre.cargarHoteles();
                 padre.Show();
                 this.Close();
-            }
+            }*/
         }
 
         public void ejecutarProcInhabilitarHotel(string fechaDesde, string fechaHasta)

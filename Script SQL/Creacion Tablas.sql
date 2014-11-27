@@ -97,6 +97,7 @@ CREATE TABLE THE_FOREIGN_FOUR.TipoHabitaciones (
 	cod_tipo_hab		numeric(18,0)			PRIMARY KEY,
 	descripcion			nvarchar(255),
 	recargo				numeric (18,2),
+	capacidad			int
 )
 CREATE TABLE THE_FOREIGN_FOUR.Habitaciones (
 	cod_habitacion		numeric(18,0)			PRIMARY KEY IDENTITY(1,1),
@@ -238,4 +239,3 @@ CREATE TABLE THE_FOREIGN_FOUR.Consumibles_Estadia (
 )
 GO
 CREATE NONCLUSTERED INDEX idx_fecha_factura ON THE_FOREIGN_FOUR.Facturas (fecha_factura)
-
