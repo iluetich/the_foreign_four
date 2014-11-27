@@ -84,7 +84,7 @@ namespace FrbaHotel.Registrar_Consumible
                         cmd.Parameters.AddWithValue("@cantidad", int.Parse(fila.Cells[1].Value.ToString()));
                         cmd.ExecuteNonQuery();
                     }catch (Exception){
-                        MessageBox.Show("Codigo consumible invalido", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("El código de consumible " + dgvConsumibles.Rows[i].Cells[0].Value + " ingresado no existe. Por favor, ingrese un código de consumible válido e intente nuevamente", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return;
                     }
                 }
@@ -110,7 +110,7 @@ namespace FrbaHotel.Registrar_Consumible
 
             }else if (frmInicioRegistrarConsumiblePadre != null) {                 
 
-                    MessageBox.Show("Consumibles registrados", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Los consumibles fueron registrados satisfactoriamente.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                     this.frmInicioRegistrarConsumiblePadre.Close();            
             }

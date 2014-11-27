@@ -137,7 +137,7 @@ namespace FrbaHotel.ABM_de_Usuario
             Boolean soloUnRolPorHotel = true;
             if(existeRolEnHotel(hotel,table))
             {
-                MessageBox.Show("ERROR ingreso ya seteo un rol asignado a ese hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Un usuario sólo puede tener un rol por hotel.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 soloUnRolPorHotel = false;
             }
 
@@ -241,7 +241,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 userUnico = this.userNameUnico(userUnico);
             }
             //corroborar que tenga almenos un rol asignado
-            almenosUnRol = FrbaHotel.Utils.almenosUno(almenosUnRol,dgvRolesHoteles,"El usuario debe tener almenos un Rol asignado");
+            almenosUnRol = FrbaHotel.Utils.almenosUno(almenosUnRol,dgvRolesHoteles,"El usuario debe tener, al menos, un Rol asignado");
             //PERSISTIR O MODIFICAR
             if (textosCompletos && passwordIguales && userUnico && almenosUnRol)
             {
@@ -352,7 +352,7 @@ namespace FrbaHotel.ABM_de_Usuario
             //si el password no es unico
             if (resultado == 1)
             {
-                MessageBox.Show("El UserName ingresado ya existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);    
+                MessageBox.Show("El UserName '" + textBoxUsername.Text + "' ingresado ya existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);    
                 ok = false;
             }
             
@@ -364,7 +364,7 @@ namespace FrbaHotel.ABM_de_Usuario
             if (textBoxPassword1.Text != textBoxPassword2.Text)
             {
                 ok = false;
-                MessageBox.Show("Los campos Password y Repetir Password Difieren", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);    
+                MessageBox.Show("Las contraseñas ingresadas no coinciden. Por favor, ingrese correctamente la contraseña.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);    
             }
             return ok;
         }

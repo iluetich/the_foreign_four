@@ -82,7 +82,20 @@ namespace FrbaHotel.Registrar_Estadia
             {
                 object resultado = this.ejecutarConsultaLong("SELECT THE_FOREIGN_FOUR.func_check_out (" + txtCodEstadia.Text + ",'"+ user +"')");
 
-                if (int.Parse(resultado.ToString()) == 1)
+                switch ((int)resultado)
+                {
+                    case -1:
+                        MessageBox.Show("La estadía especificada no existe. Por favor, ingrese un código de estadía válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+                    case 0:
+                        MessageBox.Show("La estadía especificada está registrada como 'check-out'. Por favor, ingrese otra estadía.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+                    case 1:
+                        new frmCheckout(this, txtCodEstadia.Text, user, menu).Show();
+                        break;
+                }
+
+                /*if (int.Parse(resultado.ToString()) == 1)
                 {
                     new frmCheckout(this,txtCodEstadia.Text,user,menu).Show();
                     this.Enabled = false;
@@ -90,7 +103,7 @@ namespace FrbaHotel.Registrar_Estadia
                 else
                 {
                     MessageBox.Show("ERROR no existe la estadia o la estadia ya finalizo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
+                }*/
             }
         }
 

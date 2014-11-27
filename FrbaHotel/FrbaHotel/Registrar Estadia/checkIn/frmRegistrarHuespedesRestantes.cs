@@ -84,7 +84,7 @@ namespace FrbaHotel.Registrar_Estadia
                     cmd.ExecuteNonQuery();
                 }
                 //------------------------------------------------------------------
-                MessageBox.Show("Felicidades ha hecho checkIN", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Felicidades ha hecho checkIN", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
                 frmRegistrarEstadiaPadre.Close();
             }
@@ -144,7 +144,7 @@ namespace FrbaHotel.Registrar_Estadia
             string consultaSQL = "select * from THE_FOREIGN_FOUR.func_obtener_cant_huespedes("+codigoReserva+")";
             SqlCommand cmd = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             txtCantHuespedes.Text = cmd.ExecuteScalar().ToString();
-            Console.WriteLine("la cantidad de huespedes es: " + txtCantHuespedes.Text);
+            //Console.WriteLine("la cantidad de huespedes es: " + txtCantHuespedes.Text);
 
         }
         //----------------------------------------------------------------------------------------------------------------

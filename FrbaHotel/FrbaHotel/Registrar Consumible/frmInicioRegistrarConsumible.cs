@@ -44,13 +44,26 @@ namespace FrbaHotel.Registrar_Consumible
             if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodEstadia, "Codigo estadia")){
                 codigoEstadia = txtCodEstadia.Text;
                 object resultado = this.ejecutarConsultaLong("SELECT THE_FOREIGN_FOUR.func_check_out (" + txtCodEstadia.Text + ",'" + user + "')");
-                
-                if (int.Parse(resultado.ToString()) == 1){
+
+                switch ((int)resultado)
+                {
+                    case -1:
+                        MessageBox.Show("La estadía especificada no existe. Por favor, ingrese un código de estadía válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+                    case 0:
+                        MessageBox.Show("La estadía especificada está registrada como 'check-out'. Por favor, ingrese otra estadía.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+                    case 1:
+                        new frmRegistrarConsumible(this, codigoEstadia).Show();
+                        break;
+                }
+
+                /*if (int.Parse(resultado.ToString()) == 1){
                     new frmRegistrarConsumible(this, codigoEstadia).Show();
                     this.Enabled = false;
                 }else{
                     MessageBox.Show("ERROR no existe la estadia o la estadia ya finalizo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }               
+                } */              
             }
         }
        

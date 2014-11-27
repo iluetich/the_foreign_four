@@ -214,7 +214,7 @@ namespace FrbaHotel.ABM_de_Rol
                     //si encontro uno entonces no es unico y no puede guardar
                     if (esUnico >= 1)
                     {
-                        MessageBox.Show("ERROR el nombre del rol ingresado ya existe, ingrese otro", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("El rol " + textBoxNombre.Text + "ya existe. Por favor, modifique el nombre del rol e intente nuevamente", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         puedeGuardar = false;
                     }
                 }

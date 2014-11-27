@@ -133,14 +133,14 @@ namespace FrbaHotel.ABM_de_Usuario
                 FrbaHotel.Utils.ejecutarConsulta(consulta2);
 
                 //mostrar menaje de todo ok
-                MessageBox.Show("Se Ha inhabilitado satifactoriamente el Usuario seleccionado", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Se ha inhabilitado el usuario '" + celdaFilaSeleccionadaUserName.Value.ToString() + "'", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 //refrezca la tabla
                 this.cargarUsuarios();
             }
             else
             {
-                MessageBox.Show("ERROR no se pudo inhabilitar el usuario seleccionado ya que no trabaja en el hotel logeado", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("El usuario a inhabilitar no pertenece al hotel de esta sesión. Por favor, ingrese en el hotel correspondiente e intente nuevamente.", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 

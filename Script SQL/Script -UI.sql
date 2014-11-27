@@ -173,7 +173,6 @@ BEGIN
 							FROM THE_FOREIGN_FOUR.Reservas
 							WHERE cod_reserva = @cod_reserva)
 	
-	
 	IF( (@codigo = 1) AND (@estadoReserva = 1 OR @estadoReserva = 2))
 	BEGIN
 		RETURN 1
@@ -1237,14 +1236,17 @@ RETURNS int
 AS
 BEGIN
 	
-	IF( NOT EXISTS(SELECT cod_estadia
-					FROM THE_FOREIGN_FOUR.Estadias
-					WHERE cod_estadia = @cod_estadia)
-		OR (SELECT checkout
-			FROM THE_FOREIGN_FOUR.Estadias
-			WHERE cod_estadia = @cod_estadia) IS NOT NULL)
+	IF (NOT EXISTS(SELECT cod_estadia
+				   FROM THE_FOREIGN_FOUR.Estadias
+			   	   WHERE cod_estadia = @cod_estadia))
 	BEGIN
 		RETURN -1
+	END
+	IF ((SELECT checkout
+		FROM THE_FOREIGN_FOUR.Estadias
+		WHERE cod_estadia = @cod_estadia) IS NOT NULL)
+	BEGIN
+		RETURN 0
 	END
 	
 	RETURN 1
@@ -1650,10 +1652,7 @@ BEGIN
 	BEGIN
 		RETURN -1
 	END
-	ELSE 
-	BEGIN
-		RETURN 1 
-	END
+	RETURN 1
 END
 GO
 --*********************************************

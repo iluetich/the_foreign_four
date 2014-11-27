@@ -143,7 +143,7 @@ namespace FrbaHotel.ABM_de_Habitacion
                 if (unicoNroHabEnHotel < 0)
                 {
                     estaOk = false;
-                    MessageBox.Show("ERROR el numero de Habitacion ingresado ya existe para ese hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("El N° de habitación ingresado ya existe. Por favor, modifique el N° de habitación e intente nuevamente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
 

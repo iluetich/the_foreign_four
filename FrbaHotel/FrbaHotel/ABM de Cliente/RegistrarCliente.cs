@@ -308,13 +308,13 @@ namespace FrbaHotel.ABM_de_Cliente
 
                 if (resulDni != 0)
                 {
-                    MessageBox.Show("ERROR el nro de documento ingresado ya existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("El N° de documento " + nroDoc + " ya está registrado. Por favor, modifique el mismo y vuelva a intentarlo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     estaOk = false;
                 }
 
                 if (resulMail != 0)
                 {
-                    MessageBox.Show("ERROR el mail ingresado ya existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("El mail " + mail + "ya está registrado. Por favor, modifique el mismo y vuelva a intentarlo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     estaOk = false;
                 }
             }

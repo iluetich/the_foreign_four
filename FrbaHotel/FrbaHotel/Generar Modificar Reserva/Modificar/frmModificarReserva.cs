@@ -66,8 +66,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //----------------------BOTONES-----------------------------------------------------------------------        
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            if (boolVerificoDisp){
-                if (validarDatosCompletos()){                   
+            if (boolVerificoDisp)
+            {
+                if (validarDatosCompletos())
+                {                   
                         //modifica reserva
                         string fechaDesde = dtpFechaDesde.Value.ToString("yyyy-dd-MM");
                         string fechaHasta = dtpFechaHasta.Value.ToString("yyyy-dd-MM");
@@ -84,11 +86,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         updatearHabitaciones();
                         agregarHabitaciones();
 
-                        MessageBox.Show("Ha modificado la reserva correctamente", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Ha modificado la reserva correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         volverAlMenu();
                 }
-            }else{
-                MessageBox.Show("Cargue los datos de la reserva antes de continuar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                MessageBox.Show("Verifique que todos los campos estén completos.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -105,7 +109,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private bool validarDatosCompletos(){
             return (            
                 FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata")&
+                FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasta")&
                 FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Regimen")&
                 FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)
             );
@@ -233,7 +237,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     dgvHabitaciones.Rows.Add(new[] { codigo, descripcion, capacidad });
                 }
                 else{                   
-                    MessageBox.Show("Modifique su reserva", "Reserva No disponible");
+                    MessageBox.Show("No hay habitaciones "+row.Cells[1].Value.ToString()+" disponibles en el hotel durante el período especificado. Por favor, modifique el período de la reserva y vuelva a intentarlo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     limpiarGridHabitaciones();
                 }
             }

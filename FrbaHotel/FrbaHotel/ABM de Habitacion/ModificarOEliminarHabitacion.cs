@@ -154,7 +154,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             FrbaHotel.Utils.ejecutarConsulta(consulta);
 
             //mostrar menaje de todo ok
-            MessageBox.Show("Se Ha inhabilitado satifactoriamente la Habitacion seleccionada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Se ha inhabilitado la habitacion N° " + celdaFilaNroHabitacion.Value.ToString() + " del hotel N° " + celdaFilaCodHotel.Value.ToString(), "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //refrezca la tabla
             this.cargarHabitaciones(false);     

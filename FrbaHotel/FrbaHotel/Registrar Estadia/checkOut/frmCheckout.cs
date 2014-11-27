@@ -55,7 +55,7 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         private void btnCheckout_Click(object sender, EventArgs e)
         {
             if (!seleccionoCliente){
-                MessageBox.Show("Seleccione un cliente de la tabla antes de continuar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Seleccione el cliente a facturarle la estadía.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
