@@ -1638,7 +1638,7 @@ AS
 	(cod_hotel, cod_usuario, cod_rol)
 	VALUES (@cod_hotel, @cod_usuario, @cod_rol)
 GO
---********************************* NUEVO NUEVO
+--**********************************
 CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_huesped 
 					(@cod_cliente numeric(18,0),
 					 @cod_estadia numeric(18,0))
@@ -1691,6 +1691,22 @@ BEGIN
 			WHERE	cod_reserva = @cod_reserva)
 END
 GO
-
-
+--*********************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_datos_reserva
+					(@cod_reserva numeric(18,0))
+RETURNS TABLE
+AS
+	RETURN (SELECT	cod_reserva, cod_cliente, cod_hotel, cod_regimen, fecha_desde, fecha_hasta
+			FROM	THE_FOREIGN_FOUR.Reservas
+			WHERE	cod_reserva = @cod_reserva)
+GO
+--********************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_tipo_hab_reserva
+					(@cod_reserva numeric(18,0))
+RETURNS TABLE
+AS
+	RETURN (SELECT	cod_tipo_hab
+			FROM	THE_FOREIGN_FOUR.TipoHabitacion_Reservas
+			WHERE	cod_reserva = @cod_reserva)
+GO
 

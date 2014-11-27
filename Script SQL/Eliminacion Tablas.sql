@@ -79,6 +79,8 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_existe_habitacion
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_fecha_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_max_cant_huespedes
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_huesped
+DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_datos_reserva
+DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_tipo_hab_reserva
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_ins_capacidad_hab
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_crear_habitacion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia
