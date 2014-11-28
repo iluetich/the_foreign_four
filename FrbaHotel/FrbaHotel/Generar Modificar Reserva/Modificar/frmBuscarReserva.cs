@@ -16,14 +16,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private MenuDinamico menu;
         string user;
         string codigoHotel;
+        string codigoReserva;
 
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
-        public frmBuscarReserva() { InitializeComponent(); }
-        public frmBuscarReserva(MenuDinamico menuPadre) { this.menu = menuPadre; InitializeComponent(); }
-        
+        public frmBuscarReserva() { InitializeComponent(); }        
         public frmBuscarReserva(MenuDinamico menuPadre,string userSesion,string hotelSesion)
-        {
+        {            
             this.menu = menuPadre;
             InitializeComponent();
           
@@ -52,7 +51,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodRes, "Codigo reserva")){
                 if (validarReserva()){
-                    MessageBox.Show("Para efectuar la modificacion tiene que volver a llenar todos los campos incluso agregar las habitaciones\n No estan seteados por defecto por motivos de seguridad", "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     new frmModificarRerserva(this).Show();
                     this.Enabled = false;
                 }else{
@@ -74,26 +72,25 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private bool validarReserva()
         {
             string consultaSQL;
+            codigoReserva = txtCodRes.Text;
 
             //chequea si la modificacion de la reserva la hace un usuario o un guest
             if (user == "Guest"){
                 //valida existencia
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada(" + txtCodRes.Text + ")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada(" + codigoReserva + ")";
             }else{
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodRes.Text + "," + codigoHotel + ")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + codigoReserva + "," + codigoHotel + ")";
             }
 
             int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
 
             if (resultado == 1){
-
                 if (user == "Guest"){
                     //consulto por el hotel de la reserva
-                    string consultaHotel = "select cod_hotel from THE_FOREIGN_FOUR.Reservas WHERE cod_reserva =" + txtCodRes.Text;
+                    string consultaHotel = "select cod_hotel from THE_FOREIGN_FOUR.Reservas WHERE cod_reserva =" + codigoReserva;
                     SqlCommand cmd = new SqlCommand(consultaHotel, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                     codigoHotel = cmd.ExecuteScalar().ToString();
                 }
-
                 return true;
             }
             return false;
@@ -102,9 +99,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //----------------------FIN OTROS---------------------------------------------------------------------------------
 
         //----------------------GETTERS-----------------------------
-        public string getCodigoReserva(){   return txtCodRes.Text; }
+        public string getCodigoReserva() { return codigoReserva; }
         public string getCodigoHotel() { return codigoHotel; }
-        public string getUsuario() { return user; }
+        public string getUsuario() { return user; }      
         //----------------------------------------------------------
 
     }

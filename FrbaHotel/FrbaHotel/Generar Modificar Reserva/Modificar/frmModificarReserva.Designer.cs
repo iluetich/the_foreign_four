@@ -33,22 +33,22 @@
             this.lblTipoHab = new System.Windows.Forms.Label();
             this.lblTipoReg = new System.Windows.Forms.Label();
             this.groupReserva = new System.Windows.Forms.GroupBox();
+            this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
+            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnHabitaciones = new System.Windows.Forms.Button();
             this.txtRegimen = new System.Windows.Forms.TextBox();
             this.dgvRegimenes = new System.Windows.Forms.DataGridView();
             this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnCancelar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
-            this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.capacidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnCancelar = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupReserva.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegimenes)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             this.SuspendLayout();
             // 
             // lblFechaDesde
@@ -89,6 +89,7 @@
             // 
             // groupReserva
             // 
+            this.groupReserva.Controls.Add(this.label1);
             this.groupReserva.Controls.Add(this.dgvHabitaciones);
             this.groupReserva.Controls.Add(this.btnHabitaciones);
             this.groupReserva.Controls.Add(this.txtRegimen);
@@ -99,12 +100,43 @@
             this.groupReserva.Controls.Add(this.lblFechaDesde);
             this.groupReserva.Controls.Add(this.lblFechaHasta);
             this.groupReserva.Controls.Add(this.lblTipoHab);
-            this.groupReserva.Location = new System.Drawing.Point(23, 13);
+            this.groupReserva.Location = new System.Drawing.Point(14, 13);
             this.groupReserva.Name = "groupReserva";
-            this.groupReserva.Size = new System.Drawing.Size(383, 430);
+            this.groupReserva.Size = new System.Drawing.Size(405, 450);
             this.groupReserva.TabIndex = 8;
             this.groupReserva.TabStop = false;
             this.groupReserva.Text = "Datos Reserva";
+            // 
+            // dgvHabitaciones
+            // 
+            this.dgvHabitaciones.AllowUserToAddRows = false;
+            this.dgvHabitaciones.AllowUserToResizeColumns = false;
+            this.dgvHabitaciones.AllowUserToResizeRows = false;
+            this.dgvHabitaciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvHabitaciones.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvHabitaciones.BackgroundColor = System.Drawing.Color.White;
+            this.dgvHabitaciones.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHabitaciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.codigo,
+            this.Descripcion});
+            this.dgvHabitaciones.Location = new System.Drawing.Point(45, 311);
+            this.dgvHabitaciones.Name = "dgvHabitaciones";
+            this.dgvHabitaciones.ReadOnly = true;
+            this.dgvHabitaciones.Size = new System.Drawing.Size(313, 123);
+            this.dgvHabitaciones.TabIndex = 4;
+            // 
+            // codigo
+            // 
+            this.codigo.HeaderText = "Codigo";
+            this.codigo.Name = "codigo";
+            this.codigo.ReadOnly = true;
+            // 
+            // Descripcion
+            // 
+            this.Descripcion.HeaderText = "Descripcion";
+            this.Descripcion.Name = "Descripcion";
+            this.Descripcion.ReadOnly = true;
             // 
             // btnHabitaciones
             // 
@@ -138,7 +170,7 @@
             this.dgvRegimenes.BackgroundColor = System.Drawing.Color.White;
             this.dgvRegimenes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvRegimenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRegimenes.Location = new System.Drawing.Point(39, 114);
+            this.dgvRegimenes.Location = new System.Drawing.Point(45, 113);
             this.dgvRegimenes.Name = "dgvRegimenes";
             this.dgvRegimenes.ReadOnly = true;
             this.dgvRegimenes.Size = new System.Drawing.Size(313, 123);
@@ -162,18 +194,28 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnCancelar);
             this.groupBox1.Controls.Add(this.btnModificar);
-            this.groupBox1.Location = new System.Drawing.Point(23, 449);
+            this.groupBox1.Controls.Add(this.btnCancelar);
+            this.groupBox1.Location = new System.Drawing.Point(14, 469);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(383, 74);
+            this.groupBox1.Size = new System.Drawing.Size(405, 74);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
+            // 
+            // btnModificar
+            // 
+            this.btnModificar.Location = new System.Drawing.Point(203, 19);
+            this.btnModificar.Name = "btnModificar";
+            this.btnModificar.Size = new System.Drawing.Size(117, 42);
+            this.btnModificar.TabIndex = 7;
+            this.btnModificar.Text = "Modificar";
+            this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnCancelar
             // 
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancelar.Location = new System.Drawing.Point(74, 19);
+            this.btnCancelar.Location = new System.Drawing.Point(80, 19);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(117, 42);
             this.btnCancelar.TabIndex = 6;
@@ -181,62 +223,22 @@
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
-            // btnModificar
+            // label1
             // 
-            this.btnModificar.BackColor = System.Drawing.SystemColors.Control;
-            this.btnModificar.Location = new System.Drawing.Point(197, 19);
-            this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(117, 42);
-            this.btnModificar.TabIndex = 5;
-            this.btnModificar.Text = "Modificar";
-            this.btnModificar.UseVisualStyleBackColor = false;
-            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
-            // 
-            // dgvHabitaciones
-            // 
-            this.dgvHabitaciones.AllowUserToAddRows = false;
-            this.dgvHabitaciones.AllowUserToDeleteRows = false;
-            this.dgvHabitaciones.AllowUserToResizeColumns = false;
-            this.dgvHabitaciones.AllowUserToResizeRows = false;
-            this.dgvHabitaciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvHabitaciones.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvHabitaciones.BackgroundColor = System.Drawing.Color.White;
-            this.dgvHabitaciones.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgvHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHabitaciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.codigo,
-            this.descripcion,
-            this.capacidad});
-            this.dgvHabitaciones.Location = new System.Drawing.Point(39, 285);
-            this.dgvHabitaciones.Name = "dgvHabitaciones";
-            this.dgvHabitaciones.ReadOnly = true;
-            this.dgvHabitaciones.Size = new System.Drawing.Size(313, 123);
-            this.dgvHabitaciones.TabIndex = 4;
-            // 
-            // codigo
-            // 
-            this.codigo.HeaderText = "codigo";
-            this.codigo.Name = "codigo";
-            this.codigo.ReadOnly = true;
-            // 
-            // descripcion
-            // 
-            this.descripcion.HeaderText = "descripcion";
-            this.descripcion.Name = "descripcion";
-            this.descripcion.ReadOnly = true;
-            // 
-            // capacidad
-            // 
-            this.capacidad.HeaderText = "capacidad";
-            this.capacidad.Name = "capacidad";
-            this.capacidad.ReadOnly = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 287);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(386, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "(Para eliminar una habitacion selecciona la fila completa y presiona la tecla Sup" +
+                "r)";
             // 
             // frmModificarRerserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancelar;
-            this.ClientSize = new System.Drawing.Size(431, 529);
+            this.ClientSize = new System.Drawing.Size(431, 565);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupReserva);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -248,9 +250,9 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmModificarReserva_FormClosing);
             this.groupReserva.ResumeLayout(false);
             this.groupReserva.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegimenes)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -266,13 +268,13 @@
         private System.Windows.Forms.DateTimePicker dtpFechaDesde;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.DataGridView dgvRegimenes;
         private System.Windows.Forms.TextBox txtRegimen;
         private System.Windows.Forms.Button btnHabitaciones;
         private System.Windows.Forms.DataGridView dgvHabitaciones;
+        private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn capacidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Descripcion;
+        private System.Windows.Forms.Label label1;
     }
 }

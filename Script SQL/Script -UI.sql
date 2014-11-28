@@ -1705,8 +1705,10 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_tipo_hab_reserva
 					(@cod_reserva numeric(18,0))
 RETURNS TABLE
 AS
-	RETURN (SELECT	cod_tipo_hab
-			FROM	THE_FOREIGN_FOUR.TipoHabitacion_Reservas
-			WHERE	cod_reserva = @cod_reserva)
+	RETURN (SELECT	r.cod_tipo_hab, h.descripcion
+			FROM	THE_FOREIGN_FOUR.TipoHabitacion_Reservas r,
+					THE_FOREIGN_FOUR.TipoHabitaciones h
+			WHERE	cod_reserva = @cod_reserva
+			AND		r.cod_tipo_hab = h.cod_tipo_hab)
 GO
 
