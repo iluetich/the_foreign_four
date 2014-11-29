@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class frmBuscarReserva : Form
-    {
+    {       
         private MenuDinamico menu;
         string user;
         string codigoHotel;
@@ -22,7 +22,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //---------------------CONSTRUCTORES--------------------------------------------------------------
         public frmBuscarReserva() { InitializeComponent(); }        
         public frmBuscarReserva(MenuDinamico menuPadre,string userSesion,string hotelSesion)
-        {            
+        {                    
             this.menu = menuPadre;
             InitializeComponent();
           

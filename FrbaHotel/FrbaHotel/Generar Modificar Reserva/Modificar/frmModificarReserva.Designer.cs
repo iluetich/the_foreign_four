@@ -33,6 +33,7 @@
             this.lblTipoHab = new System.Windows.Forms.Label();
             this.lblTipoReg = new System.Windows.Forms.Label();
             this.groupReserva = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
             this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,7 +45,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupReserva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegimenes)).BeginInit();
@@ -107,6 +107,16 @@
             this.groupReserva.TabStop = false;
             this.groupReserva.Text = "Datos Reserva";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 287);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(386, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "(Para eliminar una habitacion selecciona la fila completa y presiona la tecla Sup" +
+                "r)";
+            // 
             // dgvHabitaciones
             // 
             this.dgvHabitaciones.AllowUserToAddRows = false;
@@ -157,7 +167,6 @@
             this.txtRegimen.TabIndex = 7;
             this.txtRegimen.TabStop = false;
             this.txtRegimen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtRegimen.TextChanged += new System.EventHandler(this.txtRegimen_TextChanged);
             // 
             // dgvRegimenes
             // 
@@ -190,7 +199,6 @@
             this.dtpFechaDesde.Name = "dtpFechaDesde";
             this.dtpFechaDesde.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaDesde.TabIndex = 0;
-            this.dtpFechaDesde.ValueChanged += new System.EventHandler(this.dtpFechaDesde_ValueChanged);
             // 
             // groupBox1
             // 
@@ -222,16 +230,6 @@
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 287);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(386, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "(Para eliminar una habitacion selecciona la fila completa y presiona la tecla Sup" +
-                "r)";
             // 
             // frmModificarRerserva
             // 
