@@ -68,13 +68,22 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 {       
                     //cargo disponibilidades de las habitaciones de la reserva
                     cargarTipoHabitacionesDisponibles();
-                    
+
+                    bool no_hay_disponibles = false;
+
                     //verifica la disponibilidad
                     foreach (DataGridViewRow row in dgvHabitaciones.Rows){
                         if (!verificarDisponibilidad(row)){
                             dgvHabitaciones.Rows[row.Index].DefaultCellStyle.BackColor = Color.Red;
-                            return;
+                            no_hay_disponibles = true;
+                        }else{
+                            dgvHabitaciones.Rows[row.Index].DefaultCellStyle.BackColor = Color.White;
                         }
+                    }
+
+                    if (no_hay_disponibles){
+                        MessageBox.Show("No hay habitaciones disponibles en el hotel durante el período especificado.\nPor favor, modifique el período o borre la(s) habitacion(es) indicada(s) a continuacion y vuelva a intentarlo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
                     }
 
                     //modifica reserva
@@ -138,8 +147,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 cmd = new SqlCommand(updateSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                 cmd.ExecuteNonQuery();
                 return true;
-            }else{
-                MessageBox.Show("No hay habitaciones '"+row.Cells[1].Value.ToString()+"' [Fila: "+ (row.Index+1) +"] disponibles en el hotel durante el período especificado.\nPor favor, modifique el período o borre la habitacion indicada de la reserva y vuelva a intentarlo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }else{                
                 return false;
             }    
         }
