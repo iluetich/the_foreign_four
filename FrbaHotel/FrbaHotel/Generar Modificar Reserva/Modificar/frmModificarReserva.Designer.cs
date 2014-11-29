@@ -45,16 +45,24 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.lblCostoTotal = new System.Windows.Forms.Label();
+            this.txtCostoTotal = new System.Windows.Forms.TextBox();
+            this.groupCostoTotal = new System.Windows.Forms.GroupBox();
+            this.groupRegHab = new System.Windows.Forms.GroupBox();
+            this.lblCostoTotalOriginal = new System.Windows.Forms.Label();
+            this.txtCostoTotalOriginal = new System.Windows.Forms.TextBox();
             this.groupReserva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegimenes)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupCostoTotal.SuspendLayout();
+            this.groupRegHab.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblFechaDesde
             // 
             this.lblFechaDesde.AutoSize = true;
-            this.lblFechaDesde.Location = new System.Drawing.Point(36, 36);
+            this.lblFechaDesde.Location = new System.Drawing.Point(9, 39);
             this.lblFechaDesde.Name = "lblFechaDesde";
             this.lblFechaDesde.Size = new System.Drawing.Size(72, 13);
             this.lblFechaDesde.TabIndex = 0;
@@ -63,7 +71,7 @@
             // lblFechaHasta
             // 
             this.lblFechaHasta.AutoSize = true;
-            this.lblFechaHasta.Location = new System.Drawing.Point(36, 63);
+            this.lblFechaHasta.Location = new System.Drawing.Point(9, 66);
             this.lblFechaHasta.Name = "lblFechaHasta";
             this.lblFechaHasta.Size = new System.Drawing.Size(68, 13);
             this.lblFechaHasta.TabIndex = 1;
@@ -72,7 +80,7 @@
             // lblTipoHab
             // 
             this.lblTipoHab.AutoSize = true;
-            this.lblTipoHab.Location = new System.Drawing.Point(36, 255);
+            this.lblTipoHab.Location = new System.Drawing.Point(376, 24);
             this.lblTipoHab.Name = "lblTipoHab";
             this.lblTipoHab.Size = new System.Drawing.Size(85, 13);
             this.lblTipoHab.TabIndex = 2;
@@ -81,7 +89,7 @@
             // lblTipoReg
             // 
             this.lblTipoReg.AutoSize = true;
-            this.lblTipoReg.Location = new System.Drawing.Point(36, 89);
+            this.lblTipoReg.Location = new System.Drawing.Point(11, 26);
             this.lblTipoReg.Name = "lblTipoReg";
             this.lblTipoReg.Size = new System.Drawing.Size(76, 13);
             this.lblTipoReg.TabIndex = 3;
@@ -89,28 +97,22 @@
             // 
             // groupReserva
             // 
-            this.groupReserva.Controls.Add(this.label1);
-            this.groupReserva.Controls.Add(this.dgvHabitaciones);
-            this.groupReserva.Controls.Add(this.btnHabitaciones);
-            this.groupReserva.Controls.Add(this.txtRegimen);
-            this.groupReserva.Controls.Add(this.dgvRegimenes);
             this.groupReserva.Controls.Add(this.dtpFechaHasta);
             this.groupReserva.Controls.Add(this.dtpFechaDesde);
-            this.groupReserva.Controls.Add(this.lblTipoReg);
             this.groupReserva.Controls.Add(this.lblFechaDesde);
             this.groupReserva.Controls.Add(this.lblFechaHasta);
-            this.groupReserva.Controls.Add(this.lblTipoHab);
             this.groupReserva.Location = new System.Drawing.Point(14, 13);
             this.groupReserva.Name = "groupReserva";
-            this.groupReserva.Size = new System.Drawing.Size(405, 450);
+            this.groupReserva.Size = new System.Drawing.Size(342, 111);
             this.groupReserva.TabIndex = 8;
             this.groupReserva.TabStop = false;
-            this.groupReserva.Text = "Datos Reserva";
+            this.groupReserva.Text = "Fechas";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 287);
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label1.Location = new System.Drawing.Point(349, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(386, 13);
             this.label1.TabIndex = 8;
@@ -130,11 +132,12 @@
             this.dgvHabitaciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.codigo,
             this.Descripcion});
-            this.dgvHabitaciones.Location = new System.Drawing.Point(45, 311);
+            this.dgvHabitaciones.Location = new System.Drawing.Point(386, 76);
             this.dgvHabitaciones.Name = "dgvHabitaciones";
             this.dgvHabitaciones.ReadOnly = true;
-            this.dgvHabitaciones.Size = new System.Drawing.Size(313, 123);
+            this.dgvHabitaciones.Size = new System.Drawing.Size(313, 125);
             this.dgvHabitaciones.TabIndex = 4;
+            this.dgvHabitaciones.TabStop = false;
             // 
             // codigo
             // 
@@ -150,23 +153,24 @@
             // 
             // btnHabitaciones
             // 
-            this.btnHabitaciones.Location = new System.Drawing.Point(135, 250);
+            this.btnHabitaciones.Location = new System.Drawing.Point(475, 19);
             this.btnHabitaciones.Name = "btnHabitaciones";
             this.btnHabitaciones.Size = new System.Drawing.Size(200, 23);
-            this.btnHabitaciones.TabIndex = 3;
+            this.btnHabitaciones.TabIndex = 2;
             this.btnHabitaciones.Text = "Agregar Habitacion";
             this.btnHabitaciones.UseVisualStyleBackColor = true;
             this.btnHabitaciones.Click += new System.EventHandler(this.btnHabitaciones_Click);
             // 
             // txtRegimen
             // 
-            this.txtRegimen.Location = new System.Drawing.Point(158, 85);
+            this.txtRegimen.Location = new System.Drawing.Point(109, 24);
             this.txtRegimen.Name = "txtRegimen";
             this.txtRegimen.ReadOnly = true;
             this.txtRegimen.Size = new System.Drawing.Size(200, 20);
             this.txtRegimen.TabIndex = 7;
             this.txtRegimen.TabStop = false;
             this.txtRegimen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtRegimen.TextChanged += new System.EventHandler(this.txtRegimen_TextChanged);
             // 
             // dgvRegimenes
             // 
@@ -179,43 +183,46 @@
             this.dgvRegimenes.BackgroundColor = System.Drawing.Color.White;
             this.dgvRegimenes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvRegimenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRegimenes.Location = new System.Drawing.Point(45, 113);
+            this.dgvRegimenes.Location = new System.Drawing.Point(14, 76);
             this.dgvRegimenes.Name = "dgvRegimenes";
             this.dgvRegimenes.ReadOnly = true;
-            this.dgvRegimenes.Size = new System.Drawing.Size(313, 123);
+            this.dgvRegimenes.Size = new System.Drawing.Size(313, 125);
             this.dgvRegimenes.TabIndex = 2;
+            this.dgvRegimenes.TabStop = false;
             this.dgvRegimenes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegimenes_CellClick);
             // 
             // dtpFechaHasta
             // 
-            this.dtpFechaHasta.Location = new System.Drawing.Point(158, 58);
+            this.dtpFechaHasta.Location = new System.Drawing.Point(131, 61);
             this.dtpFechaHasta.Name = "dtpFechaHasta";
             this.dtpFechaHasta.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaHasta.TabIndex = 1;
+            this.dtpFechaHasta.ValueChanged += new System.EventHandler(this.dtpFechaHasta_ValueChanged);
             // 
             // dtpFechaDesde
             // 
-            this.dtpFechaDesde.Location = new System.Drawing.Point(158, 32);
+            this.dtpFechaDesde.Location = new System.Drawing.Point(131, 35);
             this.dtpFechaDesde.Name = "dtpFechaDesde";
             this.dtpFechaDesde.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaDesde.TabIndex = 0;
+            this.dtpFechaDesde.ValueChanged += new System.EventHandler(this.dtpFechaDesde_ValueChanged);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnModificar);
             this.groupBox1.Controls.Add(this.btnCancelar);
-            this.groupBox1.Location = new System.Drawing.Point(14, 469);
+            this.groupBox1.Location = new System.Drawing.Point(18, 372);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(405, 74);
+            this.groupBox1.Size = new System.Drawing.Size(742, 74);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(203, 19);
+            this.btnModificar.Location = new System.Drawing.Point(354, 19);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(117, 42);
-            this.btnModificar.TabIndex = 7;
+            this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
             this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
@@ -223,20 +230,93 @@
             // btnCancelar
             // 
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancelar.Location = new System.Drawing.Point(80, 19);
+            this.btnCancelar.Location = new System.Drawing.Point(231, 19);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(117, 42);
-            this.btnCancelar.TabIndex = 6;
+            this.btnCancelar.TabIndex = 4;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
+            // lblCostoTotal
+            // 
+            this.lblCostoTotal.AutoSize = true;
+            this.lblCostoTotal.Location = new System.Drawing.Point(11, 66);
+            this.lblCostoTotal.Name = "lblCostoTotal";
+            this.lblCostoTotal.Size = new System.Drawing.Size(99, 13);
+            this.lblCostoTotal.TabIndex = 9;
+            this.lblCostoTotal.Text = "Nuevo Costo Total:";
+            // 
+            // txtCostoTotal
+            // 
+            this.txtCostoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCostoTotal.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.txtCostoTotal.Location = new System.Drawing.Point(162, 61);
+            this.txtCostoTotal.Name = "txtCostoTotal";
+            this.txtCostoTotal.ReadOnly = true;
+            this.txtCostoTotal.Size = new System.Drawing.Size(200, 21);
+            this.txtCostoTotal.TabIndex = 10;
+            this.txtCostoTotal.TabStop = false;
+            this.txtCostoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // groupCostoTotal
+            // 
+            this.groupCostoTotal.Controls.Add(this.txtCostoTotalOriginal);
+            this.groupCostoTotal.Controls.Add(this.lblCostoTotalOriginal);
+            this.groupCostoTotal.Controls.Add(this.txtCostoTotal);
+            this.groupCostoTotal.Controls.Add(this.lblCostoTotal);
+            this.groupCostoTotal.Location = new System.Drawing.Point(383, 12);
+            this.groupCostoTotal.Name = "groupCostoTotal";
+            this.groupCostoTotal.Size = new System.Drawing.Size(377, 111);
+            this.groupCostoTotal.TabIndex = 11;
+            this.groupCostoTotal.TabStop = false;
+            this.groupCostoTotal.Text = "Detalle";
+            // 
+            // groupRegHab
+            // 
+            this.groupRegHab.Controls.Add(this.txtRegimen);
+            this.groupRegHab.Controls.Add(this.dgvRegimenes);
+            this.groupRegHab.Controls.Add(this.btnHabitaciones);
+            this.groupRegHab.Controls.Add(this.lblTipoReg);
+            this.groupRegHab.Controls.Add(this.lblTipoHab);
+            this.groupRegHab.Controls.Add(this.dgvHabitaciones);
+            this.groupRegHab.Controls.Add(this.label1);
+            this.groupRegHab.Location = new System.Drawing.Point(18, 141);
+            this.groupRegHab.Name = "groupRegHab";
+            this.groupRegHab.Size = new System.Drawing.Size(742, 221);
+            this.groupRegHab.TabIndex = 12;
+            this.groupRegHab.TabStop = false;
+            this.groupRegHab.Text = "Regimenes y Habitaciones";
+            // 
+            // lblCostoTotalOriginal
+            // 
+            this.lblCostoTotalOriginal.AutoSize = true;
+            this.lblCostoTotalOriginal.Location = new System.Drawing.Point(11, 39);
+            this.lblCostoTotalOriginal.Name = "lblCostoTotalOriginal";
+            this.lblCostoTotalOriginal.Size = new System.Drawing.Size(145, 13);
+            this.lblCostoTotalOriginal.TabIndex = 11;
+            this.lblCostoTotalOriginal.Text = "Costo Total Reserva Original:";
+            // 
+            // txtCostoTotalOriginal
+            // 
+            this.txtCostoTotalOriginal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCostoTotalOriginal.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txtCostoTotalOriginal.Location = new System.Drawing.Point(162, 35);
+            this.txtCostoTotalOriginal.Name = "txtCostoTotalOriginal";
+            this.txtCostoTotalOriginal.ReadOnly = true;
+            this.txtCostoTotalOriginal.Size = new System.Drawing.Size(200, 21);
+            this.txtCostoTotalOriginal.TabIndex = 12;
+            this.txtCostoTotalOriginal.TabStop = false;
+            this.txtCostoTotalOriginal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // frmModificarRerserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancelar;
-            this.ClientSize = new System.Drawing.Size(431, 565);
+            this.ClientSize = new System.Drawing.Size(778, 464);
+            this.Controls.Add(this.groupRegHab);
+            this.Controls.Add(this.groupCostoTotal);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupReserva);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -251,6 +331,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegimenes)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.groupCostoTotal.ResumeLayout(false);
+            this.groupCostoTotal.PerformLayout();
+            this.groupRegHab.ResumeLayout(false);
+            this.groupRegHab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -274,5 +358,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Descripcion;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtCostoTotal;
+        private System.Windows.Forms.Label lblCostoTotal;
+        private System.Windows.Forms.GroupBox groupCostoTotal;
+        private System.Windows.Forms.GroupBox groupRegHab;
+        private System.Windows.Forms.TextBox txtCostoTotalOriginal;
+        private System.Windows.Forms.Label lblCostoTotalOriginal;
     }
 }

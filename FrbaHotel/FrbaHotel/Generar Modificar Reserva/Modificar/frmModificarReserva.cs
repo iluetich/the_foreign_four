@@ -22,12 +22,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         string codigoTipoHabitacion;
         bool habitacionesIsOn;
         DataTable dataTableHabitaciones;
+        int costoPorDia;
+        int costoTotal;
+        bool termino_de_cargar_todo;
 
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
         public frmModificarRerserva() { InitializeComponent(); }  
         public frmModificarRerserva(frmBuscarReserva newFrm)
         {
+            termino_de_cargar_todo = false;
+
             InitializeComponent();
             frmBuscarReservaPadre = newFrm;
 
@@ -35,10 +40,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             codigoHotel = frmBuscarReservaPadre.getCodigoHotel(); //obtiene codigo de hotel de la ventana padre
             user = frmBuscarReservaPadre.getUsuario(); //obtiene el user de la ventana padre
             
+            costoPorDia = 0;
+            costoTotal = 0;
+
             habitacionesIsOn = false;            
             cargarDatosReserva();
-            cargarTipoRegimenes();            
-            //dgvHabitaciones.Columns["codigo"].Visible = false;
+            cargarTipoRegimenes();
+
+            termino_de_cargar_todo = true;
         }
         //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------
@@ -118,10 +127,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //----------------------OTROS---------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------------------------           
         private bool validarDatosCompletos(){
-            return (            
-                FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasta")&
-                FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Regimen")&
+            return (               
                 FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)&
                 validarFechas() &
                 cargoHabitaciones()
@@ -223,13 +229,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //tomo la fila seleccionada del form tipo habitaciones
         public void filaSeleccionadaDataGridHabitaciones(DataGridViewRow row)
         {
-            codigoTipoHabitacion = row.Cells[0].Value.ToString();
-            
+            //codigoTipoHabitacion = row.Cells[0].Value.ToString();            
             //agrego las habitaciones a la tabla
             string codigo = row.Cells[0].Value.ToString();
             string descripcion = row.Cells[1].Value.ToString();
-            string capacidad = row.Cells[3].Value.ToString();
-            dgvHabitaciones.Rows.Add(new[] { codigo, descripcion });                     
+            //string capacidad = row.Cells[3].Value.ToString();
+            dgvHabitaciones.Rows.Add(new[] { codigo, descripcion });
+
+            calcularCostoTotal();
         }
 
         //vuelve al menu
@@ -289,13 +296,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             string habitacionesSQL = "select * from THE_FOREIGN_FOUR.func_obtener_tipo_hab_reserva("+codigoReserva+")";
             DataTable dtHabitaciones = FrbaHotel.Utils.obtenerDatosBD(habitacionesSQL);
-
+            
             foreach (DataRow rowHab in dtHabitaciones.Rows)
             {
                 string codigo = rowHab["cod_tipo_hab"].ToString();
                 string descripcion = rowHab["descripcion"].ToString();
-                dgvHabitaciones.Rows.Add(new[] {codigo, descripcion });
-            }                  
+                dgvHabitaciones.Rows.Add(new[] {codigo, descripcion });                
+            }
+
+            //calculo costo total reserva
+            calcularCostoTotal();
+            txtCostoTotalOriginal.Text = txtCostoTotal.Text;
         }
 
         //pregunta si se cargo alguna habitacion
@@ -326,6 +337,27 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             return false;
         }
+
+        private void calcularCostoTotal(){
+            costoPorDia = 0;
+            costoTotal = 0;
+
+            string cod_tipo_hab;
+            int cantDias = (dtpFechaHasta.Value - dtpFechaDesde.Value).Days;
+
+            foreach (DataGridViewRow row in dgvHabitaciones.Rows)
+            {
+                //Calcula costo por dia
+                cod_tipo_hab = row.Cells["codigo"].Value.ToString();
+                string costoPorDiaSQL = "select THE_FOREIGN_FOUR.func_calcular_precio(" + codigoRegimen + "," + codigoHotel + "," + cod_tipo_hab + ")";
+                SqlCommand cmd = new SqlCommand(costoPorDiaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                int resultado = Convert.ToInt32(cmd.ExecuteScalar());
+
+                costoPorDia = resultado;
+                costoTotal += (costoPorDia * cantDias);
+                txtCostoTotal.Text = "USD " + costoTotal.ToString();
+            }     
+        }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------
 
@@ -335,7 +367,28 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //----------------------------------------------------------------------------------
         
         //GETTERS--------------------------------------------------------------------------- 
-        public int getCodigoHotel() { return Convert.ToInt32(codigoHotel); }       
+        public int getCodigoHotel() { return Convert.ToInt32(codigoHotel); }
+
+
+        //CHANGES---------------------------------------------------------------------------
+        private void dtpFechaDesde_ValueChanged(object sender, EventArgs e){
+            if (termino_de_cargar_todo){
+                if (!FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)) return;
+                calcularCostoTotal();
+            }
+        }
+
+        private void dtpFechaHasta_ValueChanged(object sender, EventArgs e){
+            if (termino_de_cargar_todo){
+                if (!FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)) return; 
+                calcularCostoTotal();
+            }
+        }
+
+        private void txtRegimen_TextChanged(object sender, EventArgs e){
+            if (termino_de_cargar_todo) calcularCostoTotal();
+        }      
+ 
     }
 }
 
