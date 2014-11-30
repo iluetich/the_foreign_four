@@ -23,6 +23,7 @@ namespace FrbaHotel.Registrar_Estadia
         public frmInicioEstadia(){  InitializeComponent(); }
         public frmInicioEstadia(MenuDinamico menuPadre, string userSesion, string hotelSesion)
         {
+            FrbaHotel.ConexionSQL.establecerConexionBD();
             this.menu = menuPadre;
             InitializeComponent();           
 
@@ -57,7 +58,7 @@ namespace FrbaHotel.Registrar_Estadia
                 {
                     //REGISTRAR ESTADIA----
                     this.registrarEstadia();
-                    //-------------
+                    //---------------------
                     new frmRegistrarHuespedesRestantes(this).Show();
                     this.Enabled = false;
                 }
@@ -70,8 +71,7 @@ namespace FrbaHotel.Registrar_Estadia
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@cod_reserva", txtCodReserva.Text);
-            cmd.Parameters.AddWithValue("@usuario", user);
-            
+            cmd.Parameters.AddWithValue("@usuario", user);            
             cmd.ExecuteNonQuery();
         }
 
@@ -80,10 +80,11 @@ namespace FrbaHotel.Registrar_Estadia
         {
             if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodEstadia, "Codigo estadia"))
             {
-                object resultado = this.ejecutarConsultaLong("SELECT THE_FOREIGN_FOUR.func_check_out (" + txtCodEstadia.Text + ",'"+ user +"')");
+                string consultaSQL = "SELECT THE_FOREIGN_FOUR.func_check_out (" + txtCodEstadia.Text + ",'" + user + "')";
+                SqlCommand cmd = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                int resultado = Convert.ToInt32(cmd.ExecuteScalar());
 
-                switch ((int)resultado)
-                {
+                switch (resultado){
                     case -1:
                         MessageBox.Show("La estadía especificada no existe. Por favor, ingrese un código de estadía válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         break;
@@ -93,33 +94,11 @@ namespace FrbaHotel.Registrar_Estadia
                     case 1:
                         new frmCheckout(this, txtCodEstadia.Text, user, menu).Show();
                         break;
-                }
-
-                /*if (int.Parse(resultado.ToString()) == 1)
-                {
-                    new frmCheckout(this,txtCodEstadia.Text,user,menu).Show();
-                    this.Enabled = false;
-                }
-                else
-                {
-                    MessageBox.Show("ERROR no existe la estadia o la estadia ya finalizo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }*/
+                }                
             }
         }
 
-        public object ejecutarConsultaLong(string consulta)
-        {
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = consulta;
-
-            cmd.CommandType = CommandType.Text;
-
-            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
-
-            return cmd.ExecuteScalar();
-        }
-
+        
         private void botonVolver_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -133,34 +112,33 @@ namespace FrbaHotel.Registrar_Estadia
         private bool validarReserva()
         {
             //valida existencia
-            string consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodReserva.Text + "," + codigoHotel + ")";
-            
-            int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
+            string consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva(" + txtCodReserva.Text + "," + codigoHotel + ")";
+            SqlCommand comand = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            int resultado = Convert.ToInt32(comand.ExecuteScalar());
+            if (resultado == -1)
+            {
+                MessageBox.Show("La Reserva no existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodReserva.Text + "," + codigoHotel + ")";            
+            resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
+            if (resultado == -1){
+                MessageBox.Show("Se trata de una Reserva Cancelada", "Errors", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
 
             //validar check in si se puede hacer el dia actual
             string consulta = "DECLARE @resultado numeric(18,0); EXEC @resultado = THE_FOREIGN_FOUR.proc_validar_check_in " + txtCodReserva.Text + "," + codigoHotel + ";SELECT @resultado";
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = consulta;
-
-            cmd.CommandType = CommandType.Text;
-
-            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
-
+            SqlCommand cmd = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             int resultadoCheckIn = Convert.ToInt32(cmd.ExecuteScalar());
-            if (resultadoCheckIn != 1)
-            {
-                MessageBox.Show("ERROR el check in no se hizo en el dia que se genero la Reserva", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            if (resultado != 1)
-            {
-                MessageBox.Show("Reserva no valida", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            if (resultadoCheckIn != 1){
+                MessageBox.Show("El CHECK IN se debe realizar el dia en que comienza la estadia", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
             }
 
-            if (resultado == 1 && resultadoCheckIn == 1){
-                return true;
-            }
-            return false;
+            return true;     
+
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------
