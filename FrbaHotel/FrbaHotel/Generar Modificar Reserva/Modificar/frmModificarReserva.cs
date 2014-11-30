@@ -222,7 +222,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 string insertSQL = "INSERT INTO THE_FOREIGN_FOUR.#TipoHabDisponibles (cod_tipo_hab, disponibilidad)VALUES(" + cod_tipo_hab + "," + disponibilidad + ")";
                 cmd = new SqlCommand(insertSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                 cmd.ExecuteNonQuery();
-                Console.WriteLine("Habitacion tipo: " + cod_tipo_hab + " disponibilidad: " + disponibilidad);
+                //Console.WriteLine("Habitacion tipo: " + cod_tipo_hab + " disponibilidad: " + disponibilidad);
             }
         }
 
@@ -387,8 +387,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void txtRegimen_TextChanged(object sender, EventArgs e){
             if (termino_de_cargar_todo) calcularCostoTotal();
-        }      
- 
+        }
+
+        private void dgvHabitaciones_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete){                
+                calcularCostoTotal();
+            }
+        }
     }
 }
 

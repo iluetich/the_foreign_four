@@ -33,6 +33,8 @@
             this.lblTipoHab = new System.Windows.Forms.Label();
             this.lblTipoReg = new System.Windows.Forms.Label();
             this.groupReserva = new System.Windows.Forms.GroupBox();
+            this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
             this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,17 +42,15 @@
             this.btnHabitaciones = new System.Windows.Forms.Button();
             this.txtRegimen = new System.Windows.Forms.TextBox();
             this.dgvRegimenes = new System.Windows.Forms.DataGridView();
-            this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
-            this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.lblCostoTotal = new System.Windows.Forms.Label();
             this.txtCostoTotal = new System.Windows.Forms.TextBox();
             this.groupCostoTotal = new System.Windows.Forms.GroupBox();
-            this.groupRegHab = new System.Windows.Forms.GroupBox();
-            this.lblCostoTotalOriginal = new System.Windows.Forms.Label();
             this.txtCostoTotalOriginal = new System.Windows.Forms.TextBox();
+            this.lblCostoTotalOriginal = new System.Windows.Forms.Label();
+            this.groupRegHab = new System.Windows.Forms.GroupBox();
             this.groupReserva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegimenes)).BeginInit();
@@ -62,7 +62,7 @@
             // lblFechaDesde
             // 
             this.lblFechaDesde.AutoSize = true;
-            this.lblFechaDesde.Location = new System.Drawing.Point(9, 39);
+            this.lblFechaDesde.Location = new System.Drawing.Point(30, 39);
             this.lblFechaDesde.Name = "lblFechaDesde";
             this.lblFechaDesde.Size = new System.Drawing.Size(72, 13);
             this.lblFechaDesde.TabIndex = 0;
@@ -71,7 +71,7 @@
             // lblFechaHasta
             // 
             this.lblFechaHasta.AutoSize = true;
-            this.lblFechaHasta.Location = new System.Drawing.Point(9, 66);
+            this.lblFechaHasta.Location = new System.Drawing.Point(30, 66);
             this.lblFechaHasta.Name = "lblFechaHasta";
             this.lblFechaHasta.Size = new System.Drawing.Size(68, 13);
             this.lblFechaHasta.TabIndex = 1;
@@ -108,6 +108,22 @@
             this.groupReserva.TabStop = false;
             this.groupReserva.Text = "Fechas";
             // 
+            // dtpFechaHasta
+            // 
+            this.dtpFechaHasta.Location = new System.Drawing.Point(125, 61);
+            this.dtpFechaHasta.Name = "dtpFechaHasta";
+            this.dtpFechaHasta.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaHasta.TabIndex = 1;
+            this.dtpFechaHasta.ValueChanged += new System.EventHandler(this.dtpFechaHasta_ValueChanged);
+            // 
+            // dtpFechaDesde
+            // 
+            this.dtpFechaDesde.Location = new System.Drawing.Point(125, 35);
+            this.dtpFechaDesde.Name = "dtpFechaDesde";
+            this.dtpFechaDesde.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaDesde.TabIndex = 0;
+            this.dtpFechaDesde.ValueChanged += new System.EventHandler(this.dtpFechaDesde_ValueChanged);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -135,9 +151,11 @@
             this.dgvHabitaciones.Location = new System.Drawing.Point(386, 76);
             this.dgvHabitaciones.Name = "dgvHabitaciones";
             this.dgvHabitaciones.ReadOnly = true;
+            this.dgvHabitaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvHabitaciones.Size = new System.Drawing.Size(313, 125);
             this.dgvHabitaciones.TabIndex = 4;
             this.dgvHabitaciones.TabStop = false;
+            this.dgvHabitaciones.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvHabitaciones_KeyUp);
             // 
             // codigo
             // 
@@ -191,27 +209,11 @@
             this.dgvRegimenes.TabStop = false;
             this.dgvRegimenes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegimenes_CellClick);
             // 
-            // dtpFechaHasta
-            // 
-            this.dtpFechaHasta.Location = new System.Drawing.Point(131, 61);
-            this.dtpFechaHasta.Name = "dtpFechaHasta";
-            this.dtpFechaHasta.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaHasta.TabIndex = 1;
-            this.dtpFechaHasta.ValueChanged += new System.EventHandler(this.dtpFechaHasta_ValueChanged);
-            // 
-            // dtpFechaDesde
-            // 
-            this.dtpFechaDesde.Location = new System.Drawing.Point(131, 35);
-            this.dtpFechaDesde.Name = "dtpFechaDesde";
-            this.dtpFechaDesde.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaDesde.TabIndex = 0;
-            this.dtpFechaDesde.ValueChanged += new System.EventHandler(this.dtpFechaDesde_ValueChanged);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnModificar);
             this.groupBox1.Controls.Add(this.btnCancelar);
-            this.groupBox1.Location = new System.Drawing.Point(18, 372);
+            this.groupBox1.Location = new System.Drawing.Point(18, 358);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(742, 74);
             this.groupBox1.TabIndex = 9;
@@ -272,31 +274,6 @@
             this.groupCostoTotal.TabStop = false;
             this.groupCostoTotal.Text = "Detalle";
             // 
-            // groupRegHab
-            // 
-            this.groupRegHab.Controls.Add(this.txtRegimen);
-            this.groupRegHab.Controls.Add(this.dgvRegimenes);
-            this.groupRegHab.Controls.Add(this.btnHabitaciones);
-            this.groupRegHab.Controls.Add(this.lblTipoReg);
-            this.groupRegHab.Controls.Add(this.lblTipoHab);
-            this.groupRegHab.Controls.Add(this.dgvHabitaciones);
-            this.groupRegHab.Controls.Add(this.label1);
-            this.groupRegHab.Location = new System.Drawing.Point(18, 141);
-            this.groupRegHab.Name = "groupRegHab";
-            this.groupRegHab.Size = new System.Drawing.Size(742, 221);
-            this.groupRegHab.TabIndex = 12;
-            this.groupRegHab.TabStop = false;
-            this.groupRegHab.Text = "Regimenes y Habitaciones";
-            // 
-            // lblCostoTotalOriginal
-            // 
-            this.lblCostoTotalOriginal.AutoSize = true;
-            this.lblCostoTotalOriginal.Location = new System.Drawing.Point(11, 39);
-            this.lblCostoTotalOriginal.Name = "lblCostoTotalOriginal";
-            this.lblCostoTotalOriginal.Size = new System.Drawing.Size(145, 13);
-            this.lblCostoTotalOriginal.TabIndex = 11;
-            this.lblCostoTotalOriginal.Text = "Costo Total Reserva Original:";
-            // 
             // txtCostoTotalOriginal
             // 
             this.txtCostoTotalOriginal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -309,12 +286,37 @@
             this.txtCostoTotalOriginal.TabStop = false;
             this.txtCostoTotalOriginal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // lblCostoTotalOriginal
+            // 
+            this.lblCostoTotalOriginal.AutoSize = true;
+            this.lblCostoTotalOriginal.Location = new System.Drawing.Point(11, 39);
+            this.lblCostoTotalOriginal.Name = "lblCostoTotalOriginal";
+            this.lblCostoTotalOriginal.Size = new System.Drawing.Size(145, 13);
+            this.lblCostoTotalOriginal.TabIndex = 11;
+            this.lblCostoTotalOriginal.Text = "Costo Total Reserva Original:";
+            // 
+            // groupRegHab
+            // 
+            this.groupRegHab.Controls.Add(this.txtRegimen);
+            this.groupRegHab.Controls.Add(this.dgvRegimenes);
+            this.groupRegHab.Controls.Add(this.btnHabitaciones);
+            this.groupRegHab.Controls.Add(this.lblTipoReg);
+            this.groupRegHab.Controls.Add(this.lblTipoHab);
+            this.groupRegHab.Controls.Add(this.dgvHabitaciones);
+            this.groupRegHab.Controls.Add(this.label1);
+            this.groupRegHab.Location = new System.Drawing.Point(18, 131);
+            this.groupRegHab.Name = "groupRegHab";
+            this.groupRegHab.Size = new System.Drawing.Size(742, 221);
+            this.groupRegHab.TabIndex = 12;
+            this.groupRegHab.TabStop = false;
+            this.groupRegHab.Text = "Regimenes y Habitaciones";
+            // 
             // frmModificarRerserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancelar;
-            this.ClientSize = new System.Drawing.Size(778, 464);
+            this.ClientSize = new System.Drawing.Size(778, 448);
             this.Controls.Add(this.groupRegHab);
             this.Controls.Add(this.groupCostoTotal);
             this.Controls.Add(this.groupBox1);
