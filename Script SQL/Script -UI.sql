@@ -362,7 +362,8 @@ BEGIN
 	SET		@cant_hab_por_tipo = (SELECT	COUNT(nro_habitacion)
 								  FROM		THE_FOREIGN_FOUR.Habitaciones ha
 								  WHERE		@cod_hotel = ha.cod_hotel
-								  AND		@cod_tipo_hab = ha.cod_tipo_hab) 
+								  AND		@cod_tipo_hab = ha.cod_tipo_hab
+								  AND		ha.estado = 'H') 
 								  
 	SET		@cant_hab_reservadas = (SELECT	COUNT(thr.cod_reserva)
 									FROM	THE_FOREIGN_FOUR.Reservas r JOIN THE_FOREIGN_FOUR.TipoHabitacion_Reservas thr ON(r.cod_reserva = thr.cod_reserva)
@@ -437,6 +438,7 @@ RETURN(
 	AND		h.cod_hotel = uh.cod_hotel
 	AND		u.user_name = @user_name
 	AND		u.password = @password
+	AND		u.estado = 'H'
 )
 GO
 --***********************************************************
@@ -457,6 +459,7 @@ RETURN(
 	AND   fr.cod_funcion = f.cod_funcion
 	AND   uh.cod_hotel = @cod_hotel	
 	AND   u.user_name = @user_name
+	AND	  u.estado = 'H'
 )
 GO
 --***********************************************************
@@ -495,12 +498,23 @@ AS
 BEGIN
 	IF(EXISTS (SELECT cod_cliente
 			   FROM THE_FOREIGN_FOUR.Clientes
-			   WHERE nro_doc = @nro_doc
+			   WHERE ((nro_doc = @nro_doc
+			   AND	 tipo_doc = @tipo_doc)
+			   OR	 mail = @mail)
+			   AND	 estado = 'I'))
+	BEGIN
+		RETURN 0 --el cliente existe y esta inhabilidato
+	END
+	ELSE
+	IF(EXISTS (SELECT cod_cliente
+			   FROM THE_FOREIGN_FOUR.Clientes
+			   WHERE (nro_doc = @nro_doc
+			   AND	 tipo_doc = @tipo_doc)
 			   OR	 mail = @mail))
-		BEGIN
-			RETURN -1
-		END
-	RETURN 1
+	BEGIN
+		RETURN -1 --el cliente existe
+	END
+	RETURN 1 --el cliente no existe
 END
 GO
 --***********************************************************
