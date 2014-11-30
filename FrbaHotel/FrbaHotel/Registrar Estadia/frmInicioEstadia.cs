@@ -102,7 +102,7 @@ namespace FrbaHotel.Registrar_Estadia
             int resultado = Convert.ToInt32(comand.ExecuteScalar());
             if (resultado == -1)
             {
-                MessageBox.Show("La Reserva no existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("La Reserva no existe, o no tiene autorizacion en este hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
