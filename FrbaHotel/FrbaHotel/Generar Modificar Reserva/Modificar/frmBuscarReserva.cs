@@ -22,7 +22,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //---------------------CONSTRUCTORES--------------------------------------------------------------
         public frmBuscarReserva() { InitializeComponent(); }        
         public frmBuscarReserva(MenuDinamico menuPadre,string userSesion,string hotelSesion)
-        {                    
+        {               
             this.menu = menuPadre;
             InitializeComponent();
           
@@ -75,11 +75,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             codigoReserva = txtCodRes.Text;
 
             //chequea si la modificacion de la reserva la hace un usuario o un guest
-            if (user == "Guest"){
+            if (user != "Guest"){
                 //valida existencia
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada(" + codigoReserva + ")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user(" + codigoReserva + ")";
             }else{
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + codigoReserva + "," + codigoHotel + ")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest(" + codigoReserva + "," + codigoHotel + ")";
             }
 
             int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);

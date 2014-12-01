@@ -137,7 +137,7 @@ BEGIN
 END
 GO
 --*****************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada 
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest 
 				(@cod_reserva numeric(18,0),
 				 @cod_hotel int)
 RETURNS int
@@ -152,7 +152,7 @@ BEGIN
 							WHERE cod_reserva = @cod_reserva)
 	
 	
-	IF( (@codigo = 1) AND (@estadoReserva = 1 OR @estadoReserva = 2))
+	IF( (@codigo = 1) AND (@estadoReserva = 1 OR @estadoReserva = 2 OR @estadoReserva = 6))
 	BEGIN
 		RETURN 1
 	END
@@ -160,7 +160,7 @@ BEGIN
 END
 GO
 --**********************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_existe_reserva_no_cancelada 
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user 
 				(@cod_reserva numeric(18,0))
 RETURNS int
 AS
@@ -173,7 +173,7 @@ BEGIN
 							FROM THE_FOREIGN_FOUR.Reservas
 							WHERE cod_reserva = @cod_reserva)
 	
-	IF( (@codigo = 1) AND (@estadoReserva = 1 OR @estadoReserva = 2))
+	IF( (@codigo = 1) AND (@estadoReserva = 1 OR @estadoReserva = 2 OR @estadoReserva = 6))
 	BEGIN
 		RETURN 1
 	END
@@ -1295,7 +1295,7 @@ BEGIN
 			@fecha_inicio_reserva datetime,
 			@puede_check_in int
 			
-	SET		@validacion_reserva = THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada (@cod_reserva, @cod_hotel)
+	SET		@validacion_reserva = THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest (@cod_reserva, @cod_hotel)
 	SET		@fecha_inicio_reserva = (SELECT fecha_desde FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva)
 	SET		@validacion_fechas = THE_FOREIGN_FOUR.func_igual_fecha(@fecha_inicio_reserva, GETDATE())
 	
