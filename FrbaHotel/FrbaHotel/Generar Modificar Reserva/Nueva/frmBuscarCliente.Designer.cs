@@ -148,6 +148,7 @@
             this.dgvResultCltes.Location = new System.Drawing.Point(29, 150);
             this.dgvResultCltes.Name = "dgvResultCltes";
             this.dgvResultCltes.ReadOnly = true;
+            this.dgvResultCltes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvResultCltes.Size = new System.Drawing.Size(474, 169);
             this.dgvResultCltes.TabIndex = 3;
             this.dgvResultCltes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResultCltes_CellClick);

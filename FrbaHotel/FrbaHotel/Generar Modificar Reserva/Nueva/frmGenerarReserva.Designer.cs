@@ -237,7 +237,7 @@
             // 
             // txtResul
             // 
-            this.txtResul.Location = new System.Drawing.Point(157, 22);
+            this.txtResul.Location = new System.Drawing.Point(145, 22);
             this.txtResul.Name = "txtResul";
             this.txtResul.ReadOnly = true;
             this.txtResul.Size = new System.Drawing.Size(156, 20);
@@ -261,7 +261,7 @@
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(65, 29);
+            this.lblEstado.Location = new System.Drawing.Point(53, 29);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(86, 13);
             this.lblEstado.TabIndex = 16;
@@ -271,7 +271,7 @@
             // 
             this.txtCostoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCostoTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.txtCostoTotal.Location = new System.Drawing.Point(157, 46);
+            this.txtCostoTotal.Location = new System.Drawing.Point(145, 46);
             this.txtCostoTotal.Name = "txtCostoTotal";
             this.txtCostoTotal.ReadOnly = true;
             this.txtCostoTotal.Size = new System.Drawing.Size(156, 21);
@@ -282,7 +282,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(65, 52);
+            this.label2.Location = new System.Drawing.Point(53, 52);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(60, 13);
             this.label2.TabIndex = 15;

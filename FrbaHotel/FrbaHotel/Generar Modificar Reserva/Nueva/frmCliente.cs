@@ -118,11 +118,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         public void filaSeleccionadaDataGridClientes(DataGridViewRow row)
         {
             //tipo documento
-            txtTipoIden.Text = row.Cells[2].Value.ToString();
+            txtTipoIden.Text = row.Cells[3].Value.ToString();
             //documento            
-            txtIden.Text = row.Cells[3].Value.ToString();            
+            txtIden.Text = row.Cells[4].Value.ToString();            
             //mail
-            txtMail.Text = row.Cells[4].Value.ToString();
+            txtMail.Text = row.Cells[5].Value.ToString();
         }
 
         //agrega las habitaciones a la tabla de ruptura

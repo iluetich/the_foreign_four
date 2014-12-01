@@ -45,6 +45,7 @@
             this.dgvRegimenes.Location = new System.Drawing.Point(1, 1);
             this.dgvRegimenes.Name = "dgvRegimenes";
             this.dgvRegimenes.ReadOnly = true;
+            this.dgvRegimenes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvRegimenes.Size = new System.Drawing.Size(313, 116);
             this.dgvRegimenes.TabIndex = 2;
             this.dgvRegimenes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegimenes_CellClick);

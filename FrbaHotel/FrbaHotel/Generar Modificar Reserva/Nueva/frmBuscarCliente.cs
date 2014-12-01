@@ -85,7 +85,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 if (mail == "") mail = "null"; else mail = "'" + mail + "'";                
                
                 try{
-                    consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc from THE_FOREIGN_FOUR.buscar_clientes(null,null," + tipoDoc + "," + doc + "," + mail + ")";
+                    consultaSQL = "select cod_cliente, nombre, apellido, tipo_doc, nro_doc, mail from THE_FOREIGN_FOUR.buscar_clientes(null,null," + tipoDoc + "," + doc + "," + mail + ")";
                     FrbaHotel.Utils.rellenarDataGridView(dgvResultCltes, consultaSQL);
                     dgvResultCltes.Columns["cod_cliente"].Visible = false;
                     codigoCliente = Convert.ToInt32(dgvResultCltes.Rows[0].Cells["cod_cliente"].Value);

@@ -18,12 +18,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private MenuDinamico menu;             
         bool regimenesIsOn;
         bool habitacionesIsOn;
-        bool boolVerificoDisp;
-        bool boolPasaAClientes;
+        bool boolVerificoDisponibilidad;
+        bool boolPasaAVentanaClientes;
         bool cargaDevueltaDispTipoHab;
         bool terminoDeCargarTodo = false; 
         string codigoHotel;        
-        int costoPorDia;
         int costoTotal;
         string codigoRegimen;
         string codigoTipoHabitacion;
@@ -58,9 +57,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             //seteo de booleanos
             regimenesIsOn = false;
             habitacionesIsOn = false;
-            boolVerificoDisp = false;
+            boolVerificoDisponibilidad = false;
             cargaDevueltaDispTipoHab = false;         
             
+            //pregunta si es Guest o no y carga los hoteles
             if (user != "Guest"){
                 cmbHotel.Enabled = false;
             }else{
@@ -85,15 +85,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             if (user != "Guest"){
                 return (                    
-                    FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
-                    FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata") &
                     FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen")
                 );
             }else{
                 return (
-                    FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &
-                    FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaDesde, "Fecha desde") &
-                    FrbaHotel.Utils.validarCampoEsteCompleto(dtpFechaHasta, "Fecha hasata") &
+                    FrbaHotel.Utils.validarCampoEsteCompleto(cmbHotel, "Hotel") &                    
                     FrbaHotel.Utils.validarCampoEsteCompleto(txtRegimen, "Tipo Regimen")
                 );
             }
@@ -108,6 +104,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             //llena el combo
             dataSetHotel = FrbaHotel.Utils.rellenarCombo(cmbHotel, nombreTabla, nombreCampo, consultaSql);
+
+            //asigno al primer hotel
+            cmbHotel.SelectedIndex = 0;
+            DataRow codRowHotel = dataSetHotel.Tables[0].Rows[cmbHotel.SelectedIndex];
+            codigoHotel = codRowHotel["cod_hotel"].ToString();           
          }
         //----------------------FIN EVENTOS DEL FORM----------------------------------------------------------
         //----------------------------------------------------------------------------------------------------
@@ -118,7 +119,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //muestra ventana regimenes
         private void btnRegimenes_Click(object sender, EventArgs e)
         {
-            if (!regimenesIsOn){
+            if (!regimenesIsOn){                
                     new frmRegimenes(this, regimenesIsOn, codigoHotel).Show();
                     regimenesIsOn = true;
             }           
@@ -127,8 +128,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //boton a la siguiente ventana
         private void btnSiguietne_Click(object sender, EventArgs e)
         {
-            if (boolVerificoDisp){
-                if (boolPasaAClientes){
+            if (boolVerificoDisponibilidad){
+                if (boolPasaAVentanaClientes){
                     new frmCliente(this).Show();
                     this.Enabled = false;
                 }else{
@@ -166,12 +167,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //-------------------------------------------------------------------------------------------------------- 
         //pone en false el booleano cuando se cambia de valor en los cotroles para verificar la diponibilidad nuevamente
         private void dtpFechaDesde_ValueChanged(object sender, EventArgs e) { 
-            boolVerificoDisp = false;
+            boolVerificoDisponibilidad = false;
             cargaDevueltaDispTipoHab = false;
             limpiar();
         }
         private void dtpFechaHasta_ValueChanged(object sender, EventArgs e){
-            boolVerificoDisp = false;
+            boolVerificoDisponibilidad = false;
             cargaDevueltaDispTipoHab = false;
             limpiar();
         }
@@ -181,7 +182,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             limpiar();
             
-            boolVerificoDisp = false;
+            boolVerificoDisponibilidad = false;
             cargaDevueltaDispTipoHab = false;
             
             if (terminoDeCargarTodo)
@@ -195,7 +196,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //muestra costo por dia
         private void txtRegimen_TextChanged(object sender, EventArgs e)
         {
-            boolVerificoDisp = false;
+            boolVerificoDisponibilidad = false;
             cargaDevueltaDispTipoHab = false;
             limpiar();
         }
@@ -232,11 +233,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 cmd = new SqlCommand(updateSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                 cmd.ExecuteNonQuery();
 
-                boolPasaAClientes = true;
+                boolPasaAVentanaClientes = true;
                 return true; 
             }else{
 
-                boolPasaAClientes = false;
+                boolPasaAVentanaClientes = false;
                 return false; 
             }
         }
@@ -245,16 +246,20 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void calcularCostoTotal()
         {
             int cantDias = (dtpFechaHasta.Value - dtpFechaDesde.Value).Days;
+            string costoPorDiaSQL;
+            int resultado = 0;
 
             //Calcula costo por dia
-            string costoPorDiaSQL = "select THE_FOREIGN_FOUR.func_calcular_precio("+codigoRegimen+","+codigoHotel+","+codigoTipoHabitacion+")";
-            SqlCommand cmd = new SqlCommand(costoPorDiaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            int resultado = Convert.ToInt32(cmd.ExecuteScalar());
-
-            costoPorDia = resultado;
-            txtCostoXDia.Text = "USD " + costoPorDia.ToString();
-
-            costoTotal += (costoPorDia * cantDias);
+            foreach (DataGridViewRow row in dgvHabitaciones.Rows)
+            {
+                codigoTipoHabitacion = row.Cells["codigo"].Value.ToString();
+                costoPorDiaSQL = "select THE_FOREIGN_FOUR.func_calcular_precio("+codigoRegimen+","+codigoHotel+","+codigoTipoHabitacion+")";
+                SqlCommand cmd = new SqlCommand(costoPorDiaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                resultado = Convert.ToInt32(cmd.ExecuteScalar());
+                costoTotal += resultado;                
+            }
+            txtCostoXDia.Text = "USD " + costoTotal.ToString();
+            costoTotal += (costoTotal * cantDias) - costoTotal;             
             txtCostoTotal.Text = "USD " + costoTotal.ToString();
         }        
        
@@ -266,7 +271,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             if (validarDatosCompletos() & FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)
                 & validarFechaContraHotel()){
 
-                boolVerificoDisp = true;
+                boolVerificoDisponibilidad = true;
                 
                 if (verificarDisponibilidad()){
                     //agrego las habitaciones a la tabla
@@ -280,9 +285,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     calcularCostoTotal();
 
                 }else{
+                    string descripcion_ = row.Cells[1].Value.ToString();
                     txtResul.BackColor = Color.Red;
                     txtResul.Text = "NO Disponible";
-                    MessageBox.Show("Agoto las habitaciones disponibles, modifique su reserva","Reserva No disponible");
+                    MessageBox.Show("Agoto las habitaciones disponibles para '"+descripcion_+"', modifique su reserva","Reserva No disponible");
                     limpiarGridHabitaciones();
                 }
             }                  
@@ -332,8 +338,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             dgvHabitaciones.Rows.Clear();
             cargarTipoHabitacionesDisponibles();
             txtCostoTotal.Text = "";
-            txtCostoXDia.Text = "";
-            costoPorDia = 0;
+            txtCostoXDia.Text = "";            
             costoTotal = 0;
         }
         private void limpiar()
@@ -342,8 +347,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             txtCostoTotal.Text = "";
             txtCostoXDia.Text = "";
             txtResul.Text = "";
-            txtResul.BackColor = Color.Empty;
-            costoPorDia = 0;
+            txtResul.BackColor = Color.Empty;           
             costoTotal = 0;
         }
 

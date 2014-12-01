@@ -121,7 +121,7 @@
             // lblMail
             // 
             this.lblMail.AutoSize = true;
-            this.lblMail.Location = new System.Drawing.Point(41, 65);
+            this.lblMail.Location = new System.Drawing.Point(43, 61);
             this.lblMail.Name = "lblMail";
             this.lblMail.Size = new System.Drawing.Size(29, 13);
             this.lblMail.TabIndex = 3;
