@@ -970,6 +970,7 @@ BEGIN
 END
 GO									
 --****************************************************************
+--DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS
 BEGIN
@@ -995,6 +996,31 @@ BEGIN
 	UPDATE THE_FOREIGN_FOUR.Facturas
 	SET total = @total
 	WHERE nro_factura = @nro_factura
+	
+	
+	DECLARE CursorTotalItem CURSOR FOR
+	SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, @cod_estadia), c.cod_consumible
+	FROM THE_FOREIGN_FOUR.Consumibles c, THE_FOREIGN_FOUR.ItemsFactura i
+	WHERE c.cod_consumible = i.cod_consumible
+	AND i.nro_factura = @nro_factura
+	
+	DECLARE @precioItem int,
+			@cod_consumible numeric(18,0)
+	
+	OPEN CursorTotalItem;
+	
+	FETCH NEXT FROM CursorTotalItem INTO @precioItem, @cod_consumible
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		UPDATE THE_FOREIGN_FOUR.ItemsFactura
+		SET total_item = @precioItem
+		WHERE nro_factura = @nro_factura
+		AND cod_consumible = @cod_consumible
+		FETCH NEXT FROM CursorTotalItem INTO @precioItem, @cod_consumible
+	END 
+	 
+	CLOSE CursorTotalItem;
+	DEALLOCATE CursorTotalItem;
 	
 	DROP TABLE THE_FOREIGN_FOUR.#subtotales
 	

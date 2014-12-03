@@ -195,7 +195,8 @@ CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nro_factura			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Facturas,
 	cod_consumible		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Consumibles,
-	cantidad			int			
+	cantidad			int,
+	total_item			numeric(18,2)			
 )
 CREATE TABLE THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (
 	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
