@@ -18,6 +18,7 @@ namespace FrbaHotel.ABM_de_Habitacion
         private string hotelDeHabitacion;
         private Boolean constructorMod;
         private ModificarOEliminarHabitacion padre;
+        private int cod_habitacion;
 
         public RegistrarHabitacion(ModificarOEliminarHabitacion frmPadre,DataGridViewRow fila)
         {
@@ -38,6 +39,7 @@ namespace FrbaHotel.ABM_de_Habitacion
 
         public void cargarDatos(DataGridViewRow fila)
         {
+            cod_habitacion = int.Parse(fila.Cells["cod_habitacion"].Value.ToString());
             textBoxDescripcion.Text = fila.Cells["descripcion"].Value.ToString();
             textBoxHotelEncuentra.Text = fila.Cells["cod_hotel"].Value.ToString();
             textBoxNumHabitacion.Text = fila.Cells["nro_habitacion"].Value.ToString();
@@ -152,17 +154,41 @@ namespace FrbaHotel.ABM_de_Habitacion
             {
                 if (constructorMod)
                 {
-                    this.actualizaHabitacion();
-                    padre.Show();
-                    padre.cargarHabitaciones(true);
+                    Boolean sePuedeInhabilitar = true;
+                    if (comboBoxEstado.Text == "I")
+                    {
+                        sePuedeInhabilitar = this.corroborarSiSePuedeInhabilitar();
+                    }
+
+                    if (sePuedeInhabilitar)
+                    {
+                        this.actualizaHabitacion();
+                        padre.Show();
+                        padre.cargarHabitaciones(true);
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("ERROR no se puede, ya que actualmente la habitacion se encuentra ocupada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
                 }
                 else
                 {
                     this.guardadHabitacion(sender, e);
                     menu.Show();
+                    this.Close();
                 }
-                this.Close();
             }
+        }
+
+        public Boolean corroborarSiSePuedeInhabilitar()
+        {
+            string consultaHayClientes = "SELECT THE_FOREIGN_FOUR.func_hay_clientes(" + cod_habitacion + ")";
+            SqlCommand cmd = new SqlCommand(consultaHayClientes, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+
+            //si hay clientes en la fecha del sistema que se quiere inhabilitar entonces debuelve 1 sino 0
+            int noHayClientes = (int)cmd.ExecuteScalar();
+            return noHayClientes < 1;
         }
 
         public void actualizaHabitacion()

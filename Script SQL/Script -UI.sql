@@ -1764,5 +1764,20 @@ AS
 	AND		descripcion NOT LIKE 'descuento all inclusive'
 	AND		descripcion NOT LIKE 'noches no utilizadas'
 GO
-
+--*******************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_hay_clientes (@cod_habitacion int)
+RETURNS int
+AS
+BEGIN
+	IF((SELECT COUNT(*) 
+		FROM THE_FOREIGN_FOUR.Habitaciones_Estadia he,THE_FOREIGN_FOUR.Estadias e 
+		WHERE he.cod_habitacion=@cod_habitacion AND
+			he.cod_estadia = e.cod_estadia AND
+			GETDATE() BETWEEN e.fecha_inicio AND DATEADD(day,e.cant_noches,e.fecha_inicio)) >= 1)
+	BEGIN
+		RETURN 1
+	END
+	RETURN 0		
+END
+GO
 

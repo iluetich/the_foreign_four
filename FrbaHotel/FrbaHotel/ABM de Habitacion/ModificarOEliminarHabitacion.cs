@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menues_de_los_Roles;
+using System.Data.SqlClient;
 
 namespace FrbaHotel.ABM_de_Habitacion
 {
@@ -146,18 +147,32 @@ namespace FrbaHotel.ABM_de_Habitacion
             //obtener la celda de la fila seleccionada
             DataGridViewCell celdaFilaCodHotel = dgvHabitaciones.CurrentRow.Cells[1];
             DataGridViewCell celdaFilaNroHabitacion = dgvHabitaciones.CurrentRow.Cells[3];
+            DataGridViewCell celdaFilaCodHabitacion = dgvHabitaciones.CurrentRow.Cells[0];
 
-            //prepara la consulta para ejecutar
-            string consulta = "UPDATE THE_FOREIGN_FOUR.Habitaciones SET estado ='I' WHERE cod_hotel ="+ int.Parse(celdaFilaCodHotel.Value.ToString()) +" AND nro_habitacion=" + int.Parse(celdaFilaNroHabitacion.Value.ToString());
+            string consultaHayClientes = "SELECT THE_FOREIGN_FOUR.func_hay_clientes("+ int.Parse(celdaFilaCodHabitacion.Value.ToString()) +")";
+            SqlCommand cmd = new SqlCommand(consultaHayClientes,FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            
+            //si hay clientes en la fecha del sistema que se quiere inhabilitar entonces debuelve 1 sino 0
+            int noHayClientes = (int)cmd.ExecuteScalar();
 
-            //ejecuta la consulta
-            FrbaHotel.Utils.ejecutarConsulta(consulta);
+            if (noHayClientes < 1)
+            {
+                //prepara la consulta para ejecutar
+                string consulta = "UPDATE THE_FOREIGN_FOUR.Habitaciones SET estado ='I' WHERE cod_hotel =" + int.Parse(celdaFilaCodHotel.Value.ToString()) + " AND nro_habitacion=" + int.Parse(celdaFilaNroHabitacion.Value.ToString());
 
-            //mostrar menaje de todo ok
-            MessageBox.Show("Se ha inhabilitado la habitacion N° " + celdaFilaNroHabitacion.Value.ToString() + " del hotel N° " + celdaFilaCodHotel.Value.ToString(), "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //ejecuta la consulta
+                FrbaHotel.Utils.ejecutarConsulta(consulta);
 
-            //refrezca la tabla
-            this.cargarHabitaciones(false);     
+                //mostrar menaje de todo ok
+                MessageBox.Show("Se ha inhabilitado la habitacion N° " + celdaFilaNroHabitacion.Value.ToString() + " del hotel N° " + celdaFilaCodHotel.Value.ToString(), "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                //refrezca la tabla
+                this.cargarHabitaciones(false);
+            }
+            else
+            {
+                MessageBox.Show("ERROR no se puede, ya que actualmente la habitacion se encuentra ocupada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
         private void botonModificar_Click(object sender, EventArgs e)
