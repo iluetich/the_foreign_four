@@ -103,6 +103,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void btnSelec_Click(object sender, EventArgs e)
         {
             if (seleccionoCliente){
+                String consulta = "SELECT THE_FOREIGN_FOUR.func_obtener_estado_cliente (" + codigoCliente + " )";
+                SqlCommand command = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                int resultado = (int)command.ExecuteScalar();
+                if (resultado == 0)
+                {
+                    MessageBox.Show("El cliente seleccionado se encuentra inhabilitado.\n Por favor, seleccione otro cliente e intente nuevamente", "Cliente Inhabilitado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
                 if (frmClientePadre != null){
                     frmClientePadre.setBandClienteRegistrado();
                     frmClientePadre.setCodigoCliente(codigoCliente);
@@ -114,6 +122,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }else{
                 MessageBox.Show("Seleccione un cliente antes de continuar \n(haga click en la tabla por mas que haya obtenido resultados)", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);            
             }
+
         }
 
         //boton volver

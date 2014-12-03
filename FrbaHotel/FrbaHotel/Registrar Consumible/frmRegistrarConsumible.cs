@@ -20,7 +20,10 @@ namespace FrbaHotel.Registrar_Consumible
         int fila;
         private long nroFactura;
         string codigoEstadia;
+        string consumibleElegido;
+        int codConsumibleElegido;
         bool cerrate = false;
+
 
         //---------------------------------------------------------------------------------------------------------------------
         public frmRegistrarConsumible(){InitializeComponent();}
@@ -30,6 +33,9 @@ namespace FrbaHotel.Registrar_Consumible
             frmInicioRegistrarConsumiblePadre = newForm;
             this.codigoEstadia = codEstadia;
             btnFacturar.Text = "Aceptar";
+
+            String obtencion_consumibles = "SELECT descripcion FROM THE_FOREIGN_FOUR.view_consumibles";
+            FrbaHotel.Utils.rellenarCombo(comboBoxConsumibles, "descripcion", obtencion_consumibles); 
         }
 
         public frmRegistrarConsumible(frmCheckout newForm, frmInicioEstadia newFormInicioEstadia,long nroFacturaParametro, string codEstadia)
@@ -40,6 +46,9 @@ namespace FrbaHotel.Registrar_Consumible
             frmInicioEstadiaPadre = newFormInicioEstadia;
             btnVolver.Enabled = false;
             this.codigoEstadia = codEstadia;
+
+            String obtencion_consumibles = "SELECT descripcion FROM THE_FOREIGN_FOUR.view_consumibles";
+            FrbaHotel.Utils.rellenarCombo(comboBoxConsumibles, "descripcion", obtencion_consumibles); 
         }
         //---------------------------------------------------------------------------------------------------------------------
 
@@ -118,26 +127,26 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void btnRegistrarCons_Click(object sender, EventArgs e)
         {
-            if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodProducto, "Codigo producto") &
-                FrbaHotel.Utils.validarCampoEsteCompleto(txtCantidad, "Cantidad") )
+            this.comboBoxConsumibles_SelectedIndexChanged(sender, e);
+            if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCantidad, "Cantidad") )
             {
-                agregarConsumible(txtCodProducto.Text, txtCantidad.Text);
+                agregarConsumible(consumibleElegido, txtCantidad.Text);
             }
         }
 
-        private void agregarConsumible(string codigo, string cantidad)
+        private void agregarConsumible(string descripcionConsumible, string cantidad)
         {
             fila = dgvConsumibles.Rows.Count - 1;
             dgvConsumibles.Rows.Add(1);
 
-            string consumibleSQL = "SELECT descripcion FROM THE_FOREIGN_FOUR.Consumibles WHERE cod_consumible = @cod_consumible";
+            string consumibleSQL = "SELECT cod_consumible FROM THE_FOREIGN_FOUR.Consumibles WHERE descripcion = @descripcion";
             SqlCommand cmd = new SqlCommand(consumibleSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            cmd.Parameters.AddWithValue("cod_consumible", codigo);
-            string descripcion = cmd.ExecuteScalar().ToString();
+            cmd.Parameters.AddWithValue("descripcion", descripcionConsumible);
+            string codigo = cmd.ExecuteScalar().ToString();
             
             dgvConsumibles.Rows[fila].Cells[0].Value = codigo;
             dgvConsumibles.Rows[fila].Cells[1].Value = cantidad; 
-            dgvConsumibles.Rows[fila].Cells[2].Value = descripcion;
+            dgvConsumibles.Rows[fila].Cells[2].Value = descripcionConsumible;
         }     
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -147,6 +156,16 @@ namespace FrbaHotel.Registrar_Consumible
         //---------------------------------------------------------------------------------------------------------------------
 
         public void setCerrate(){ cerrate = true; }
+
+        private void txtCodProducto_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxConsumibles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            consumibleElegido = comboBoxConsumibles.Text;
+        }
  
     }
 }
