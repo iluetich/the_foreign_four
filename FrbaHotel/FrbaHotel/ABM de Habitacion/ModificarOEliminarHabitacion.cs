@@ -144,8 +144,8 @@ namespace FrbaHotel.ABM_de_Habitacion
         private void botonInhabilitar_Click(object sender, EventArgs e)
         {
             //obtener la celda de la fila seleccionada
-            DataGridViewCell celdaFilaCodHotel = dgvHabitaciones.CurrentRow.Cells[0];
-            DataGridViewCell celdaFilaNroHabitacion = dgvHabitaciones.CurrentRow.Cells[2];
+            DataGridViewCell celdaFilaCodHotel = dgvHabitaciones.CurrentRow.Cells[1];
+            DataGridViewCell celdaFilaNroHabitacion = dgvHabitaciones.CurrentRow.Cells[3];
 
             //prepara la consulta para ejecutar
             string consulta = "UPDATE THE_FOREIGN_FOUR.Habitaciones SET estado ='I' WHERE cod_hotel ="+ int.Parse(celdaFilaCodHotel.Value.ToString()) +" AND nro_habitacion=" + int.Parse(celdaFilaNroHabitacion.Value.ToString());

@@ -136,7 +136,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             estaOk = this.camposCompletos(estaOk);
 
             // corroborar numero de habitacion unico en el hotel que se crea
-            if(!constructorMod)
+            if(!constructorMod && estaOk)
             {
                 string consulta = "SELECT THE_FOREIGN_FOUR.func_validar_hab_hotel (" + int.Parse(comboBoxHotel.Text) + ","+ int.Parse(textBoxNumHabitacion.Text) +")";
                 int unicoNroHabEnHotel = FrbaHotel.Utils.ejecutarConsultaResulInt(consulta);
