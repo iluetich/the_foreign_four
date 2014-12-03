@@ -970,7 +970,6 @@ BEGIN
 END
 GO									
 --****************************************************************
---DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura @nro_factura numeric(18,0)
 AS
 BEGIN

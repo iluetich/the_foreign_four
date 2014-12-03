@@ -107,13 +107,38 @@ SELECT DISTINCT	m.Factura_Nro,
 FROM gd_esquema.Maestra m
 
 --***ITEMS FACTURAS***************************************
-INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, nro_factura)
+INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, nro_factura, total_item)
 SELECT m.Item_Factura_Cantidad, 
 	   m.Consumible_Codigo,
 	   (SELECT nro_factura
 		FROM THE_FOREIGN_FOUR.Facturas f
-		WHERE	m.Factura_Nro = f.nro_factura)
+		WHERE	m.Factura_Nro = f.nro_factura),
+		m.Item_Factura_Monto
+	   --(SELECT THE_FOREIGN_FOUR.func_get_precio(m.Consumible_Codigo, (SELECT cod_estadia
+				--														FROM THE_FOREIGN_FOUR.Estadias e
+				--														WHERE	e.cod_reserva = m.Reserva_Codigo)))
 FROM gd_esquema.Maestra m
+
+--DECLARE CursorItems CURSOR FOR
+--SELECT nro_factura
+--FROM THE_FOREIGN_FOUR.ItemsFactura 
+
+--DECLARE @nro_factura numeric(18,0)
+
+--OPEN CursorItems;
+--FETCH NEXT FROM CursorItems INTO @nro_factura;
+
+--WHILE @@FETCH_STATUS = 0
+--BEGIN
+--INSERT INTO THE_FOREIGN_FOUR.ItemsFactura
+--(nro_factura, cod_consumible, cantidad, total_item)
+--VALUES (@nro_factura, 1, 1, (SELECT THE_FOREIGN_FOUR.func_get_precio(1, (SELECT cod_estadia
+--																		FROM THE_FOREIGN_FOUR.Facturas f
+--																		WHERE	f.nro_factura = @nro_factura))))
+--FETCH NEXT FROM CursorItems INTO @nro_factura;
+--END
+--CLOSE CursorItems;
+--DEALLOCATE CursorItems;
 
 
 --***CLIENTES POR ESTADIA***************************************
