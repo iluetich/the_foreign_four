@@ -97,6 +97,7 @@
             this.txtCodReserva.Name = "txtCodReserva";
             this.txtCodReserva.Size = new System.Drawing.Size(200, 20);
             this.txtCodReserva.TabIndex = 4;
+            this.txtCodReserva.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodReserva_KeyPress);
             // 
             // lblMotivo
             // 
