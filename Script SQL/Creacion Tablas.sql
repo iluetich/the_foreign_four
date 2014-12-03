@@ -195,13 +195,15 @@ CREATE TABLE THE_FOREIGN_FOUR.ItemsFactura (
 	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nro_factura			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Facturas,
 	cod_consumible		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Consumibles,
-	cantidad			int			
+	cantidad			int,
+	importe				decimal(8,2)
 )
 CREATE TABLE THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (
 	nro_item			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	nro_factura			numeric(18,0),
 	cod_consumible		numeric(18,0),
 	cantidad			int,
+	importe				decimal(8,2)
 )
 CREATE TABLE THE_FOREIGN_FOUR.RegimenPorHotel (
 	cod_hotel			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Hoteles,

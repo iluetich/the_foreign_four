@@ -28,8 +28,18 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_huesped
 				(@cod_cliente numeric(18,0),
 				 @cod_estadia numeric(18,0))
 AS
+	BEGIN TRANSACTION
+	IF(EXISTS (SELECT	cod_cliente
+			   FROM		THE_FOREIGN_FOUR.Clientes
+			   WHERE	cod_cliente = @cod_cliente
+			   AND	   (estado = 'I'
+			   OR	    baja_logica = 'S')))
+	BEGIN
+		ROLLBACK
+	END		
 	INSERT INTO THE_FOREIGN_FOUR.ClientePorEstadia (cod_cliente, cod_estadia)
 	VALUES	(@cod_cliente, @cod_estadia)
+	COMMIT
 GO
 
 
@@ -40,6 +50,7 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia
 AS
 BEGIN
 
+	BEGIN TRANSACTION
 	DECLARE @fecha_inicio datetime
 	SET @fecha_inicio = CAST(GETDATE() AS DATETIME)
 	
@@ -101,7 +112,7 @@ BEGIN
 	--**cursor********
 	
 	DROP TABLE THE_FOREIGN_FOUR.#TipoHabReserva
-	
+	COMMIT
 END
 GO
 --***********************************************************
@@ -225,28 +236,29 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reserva
 				 @usuario varchar(255))
 AS				
 BEGIN
-	DECLARE @estado varchar(30),
-			@fecha_sistema datetime
+	BEGIN TRANSACTION
+		DECLARE @estado varchar(30)
 	
-	IF(@usuario IS NULL) 
-	BEGIN
-		SET @estado = 'cancelacion_cliente'
-	END
-	ELSE
-	BEGIN
-		SET @estado = 'cancelacion_recepcion'
-	END
-	
-	UPDATE	THE_FOREIGN_FOUR.Reservas
-	SET		cod_estado_reserva = (SELECT cod_estado
-								  FROM THE_FOREIGN_FOUR.EstadosReserva
-								  WHERE descripcion = @estado)
-	WHERE	cod_reserva = @cod_reserva
-	
-	EXEC THE_FOREIGN_FOUR.proc_liberar_habitaciones @cod_reserva
-	
-	INSERT INTO THE_FOREIGN_FOUR.Cancelaciones (cod_reserva, motivo, usuario, fecha_operacion)
-	VALUES (@cod_reserva, @motivo, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), GETDATE())
+		IF(@usuario IS NULL) 
+		BEGIN
+			SET @estado = 'cancelacion_cliente'
+		END
+		ELSE
+		BEGIN
+			SET @estado = 'cancelacion_recepcion'
+		END
+		
+		UPDATE	THE_FOREIGN_FOUR.Reservas
+		SET		cod_estado_reserva = (SELECT cod_estado
+									  FROM THE_FOREIGN_FOUR.EstadosReserva
+									  WHERE descripcion = @estado)
+		WHERE	cod_reserva = @cod_reserva
+		
+		EXEC THE_FOREIGN_FOUR.proc_liberar_habitaciones @cod_reserva
+		
+		INSERT INTO THE_FOREIGN_FOUR.Cancelaciones (cod_reserva, motivo, usuario, fecha_operacion)
+		VALUES (@cod_reserva, @motivo, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), GETDATE())
+	COMMIT
 END
 GO
 
@@ -303,15 +315,15 @@ BEGIN
 				   AND		(fecha_desde BETWEEN @fecha_inicio AND @fecha_fin
 				   OR		 fecha_hasta BETWEEN @fecha_inicio AND @fecha_fin)))
 	BEGIN 
-		RETURN -1
+		RETURN -1 --existen reservas en el período especificado
 	END
 	IF(@fecha_inicio < (SELECT fecha_creacion
 						FROM THE_FOREIGN_FOUR.Hoteles
 						WHERE cod_hotel = @cod_hotel))
 	BEGIN
-		RETURN 0
+		RETURN 0 --la fecha de inicio es menor que la fecha de creacion del hotel
 	END
-	RETURN 1
+	RETURN 1 --no hay reservas y las fechas estan ok
 END
 GO
 --***********************************************************
@@ -389,7 +401,7 @@ BEGIN
 				AND		(@fecha_inicio BETWEEN fecha_desde AND fecha_hasta
 				OR		 @fecha_fin BETWEEN fecha_desde AND fecha_hasta)))	
 	BEGIN
-		SET @cant_hab_disponibles = -33
+		SET @cant_hab_disponibles = -33 --El hotel está inhabilitado para tener reservas en dicho período
 	END	
 	ELSE
 	BEGIN		
@@ -412,17 +424,17 @@ BEGIN
 				     FROM THE_FOREIGN_FOUR.func_obtener_regimenes_hab (@cod_hotel)
 				     WHERE @cod_regimen = cod_regimen))
 	BEGIN
-		RETURN -1
+		RETURN -1 --No existe el regimen
 	END
 	IF	(THE_FOREIGN_FOUR.func_hab_disponibles (@cod_hotel,
 											    @cod_tipo_hab,
 											    @fecha_desde,
 											    @fecha_hasta) <= 0)
 	BEGIN
-		RETURN 0
+		RETURN 0 --No hay habitaciones libres
 	END				
 	
-	RETURN 1
+	RETURN 1 --hay habitaciones libres y el regimen existe
 END
 GO
 --***********************************************************
@@ -503,7 +515,7 @@ BEGIN
 			   OR	 mail = @mail)
 			   AND	 estado = 'I'))
 	BEGIN
-		RETURN 0 --el cliente existe y esta inhabilidato
+		RETURN 0 --el cliente existe pero esta inhabilitado
 	END
 	ELSE
 	IF(EXISTS (SELECT cod_cliente
@@ -599,7 +611,6 @@ RETURN(
 	FROM THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.TipoHabitaciones th
 	WHERE h.cod_tipo_hab = th.cod_tipo_hab
 	AND  h.cod_hotel = @cod_hotel
-	
 )
 GO
 --***********************************************************
@@ -1013,6 +1024,7 @@ GO
 CREATE PROCEDURE THE_FOREIGN_FOUR.confirmar_factura (@nro_factura numeric(18,0))
 AS
 BEGIN
+	BEGIN TRANSACTION
 	DECLARE @cod_regimen numeric(18,0),
 			@cod_all_inclusive numeric(18,0),
 			@cod_consumible_inclusive numeric(18,0),
@@ -1086,8 +1098,7 @@ BEGIN
 	WHERE cod_estadia = (SELECT cod_estadia
 						FROM THE_FOREIGN_FOUR.Facturas
 						WHERE nro_factura = @nro_factura)
-												
-	
+	COMMIT
 END
 GO
 
@@ -1621,6 +1632,29 @@ BEGIN
 			WHERE	cod_consumible > 2000)
 END
 GO
+--**************************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_puntaje_facturas
+					(@cod_cliente numeric(18,0),
+					 @fecha_desde datetime,
+					 @fecha_hasta datetime)
+RETURNS int
+AS
+BEGIN
+	DECLARE @puntos_consumibles int,
+			@puntos_estadias int
+			
+	SET		@puntos_consumibles = (SELECT	SUM(i.importe) / 5
+								   FROM		THE_FOREIGN_FOUR.Facturas f JOIN THE_FOREIGN_FOUR.ItemsFactura i ON(f.nro_factura = i.nro_factura)
+								   WHERE	f.cod_cliente = @cod_cliente
+								   AND		f.fecha_factura BETWEEN @fecha_desde AND @fecha_hasta
+								   AND		i.cod_consumible > 2000)
+	SET		@puntos_estadias = (SELECT	SUM(i.importe) / 10
+								FROM	THE_FOREIGN_FOUR.Facturas f JOIN THE_FOREIGN_FOUR.ItemsFactura i ON(f.nro_factura = i.nro_factura)
+								WHERE	f.cod_cliente = @cod_cliente
+								AND		f.fecha_factura BETWEEN @fecha_desde AND @fecha_hasta
+								AND		i.cod_consumible = 1)
+	RETURN	@puntos_consumibles + @puntos_estadias
+END
 
 --TOP 5 CLIENTES
 CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente

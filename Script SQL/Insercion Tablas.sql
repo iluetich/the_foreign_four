@@ -107,14 +107,14 @@ SELECT DISTINCT	m.Factura_Nro,
 FROM gd_esquema.Maestra m
 
 --***ITEMS FACTURAS***************************************
-INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, nro_factura)
+INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (cantidad, cod_consumible, nro_factura, importe)
 SELECT m.Item_Factura_Cantidad, 
 	   m.Consumible_Codigo,
 	   (SELECT nro_factura
 		FROM THE_FOREIGN_FOUR.Facturas f
-		WHERE	m.Factura_Nro = f.nro_factura)
+		WHERE	m.Factura_Nro = f.nro_factura),
+	   m.Item_Factura_Monto
 FROM gd_esquema.Maestra m
-
 
 --***CLIENTES POR ESTADIA***************************************
 
