@@ -1681,46 +1681,29 @@ AS
 GO
 
 --**************************************************************
-ALTER FUNCTION THE_FOREIGN_FOUR.func_obtener_puntaje_factura
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_puntaje_factura
 					(@nro_factura numeric(18,0))
 RETURNS int
 AS
 BEGIN
 
-	DECLARE @cod_consumible numeric(18,0),
-			@total_item decimal,
-			@puntos_consumibles decimal,
-			@puntos_estadias decimal
+	DECLARE	@puntos_consumibles int,
+			@puntos_estadias int
 			
-	SET @puntos_consumibles = 0
-	SET	@puntos_estadias = 0
-	
-	DECLARE cursorItems CURSOR FOR
-	SELECT		cod_consumible, total_item
-	FROM		THE_FOREIGN_FOUR.ItemsFactura
-	WHERE		nro_factura = @nro_factura
-	
-	OPEN cursorItems
-	FETCH NEXT FROM cursorItems INTO @cod_consumible, @total_item
-	
-	WHILE @@FETCH_STATUS = 0 
-	BEGIN
-		IF (@cod_consumible > 2000)
-		BEGIN
-			SET @puntos_consumibles += @total_item
-		END
-		ELSE
-		BEGIN
-			SET @puntos_estadias += @total_item
-		END
-	END
-	
-	RETURN	CAST((@puntos_estadias / 10) + (@puntos_consumibles / 5) AS int)
+	SET @puntos_consumibles = (SELECT SUM(total_item)
+							   FROM THE_FOREIGN_FOUR.ItemsFactura
+							   WHERE nro_factura = @nro_factura
+							   AND cod_consumible > 2000) / 5
+	SET	@puntos_estadias = (SELECT total_item		
+							FROM THE_FOREIGN_FOUR.ItemsFactura
+							WHERE nro_factura = @nro_factura
+							AND	cod_consumible = 1) / 10
+	RETURN @puntos_consumibles + @puntos_estadias
 END
 GO
 
 --TOP 5 CLIENTES
-ALTER FUNCTION THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente
+CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente
 					(@fecha_desde datetime,
 					 @fecha_hasta datetime)
 RETURNS TABLE
@@ -1865,4 +1848,6 @@ BEGIN
 	RETURN 0		
 END
 GO
+
+SELECT * FROM THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente('20140101', '20140401')
 
