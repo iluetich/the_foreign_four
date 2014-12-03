@@ -221,7 +221,7 @@
             this.guardar.Location = new System.Drawing.Point(14, 361);
             this.guardar.Name = "guardar";
             this.guardar.Size = new System.Drawing.Size(75, 23);
-            this.guardar.TabIndex = 16;
+            this.guardar.TabIndex = 13;
             this.guardar.Text = "Guardar";
             this.guardar.UseVisualStyleBackColor = true;
             this.guardar.Click += new System.EventHandler(this.guardar_Click);
@@ -232,6 +232,7 @@
             this.limpiar.Name = "limpiar";
             this.limpiar.Size = new System.Drawing.Size(75, 23);
             this.limpiar.TabIndex = 17;
+            this.limpiar.TabStop = false;
             this.limpiar.Text = "Limpiar";
             this.limpiar.UseVisualStyleBackColor = true;
             this.limpiar.Click += new System.EventHandler(this.limpiar_Click);
@@ -242,6 +243,7 @@
             this.cancelar.Name = "cancelar";
             this.cancelar.Size = new System.Drawing.Size(75, 23);
             this.cancelar.TabIndex = 18;
+            this.cancelar.TabStop = false;
             this.cancelar.Text = "Cancelar";
             this.cancelar.UseVisualStyleBackColor = true;
             this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
@@ -251,28 +253,30 @@
             this.textBoxUsername.Location = new System.Drawing.Point(86, 70);
             this.textBoxUsername.Name = "textBoxUsername";
             this.textBoxUsername.Size = new System.Drawing.Size(100, 20);
-            this.textBoxUsername.TabIndex = 19;
+            this.textBoxUsername.TabIndex = 0;
             // 
             // textBoxPassword1
             // 
             this.textBoxPassword1.Location = new System.Drawing.Point(125, 99);
             this.textBoxPassword1.Name = "textBoxPassword1";
+            this.textBoxPassword1.PasswordChar = '*';
             this.textBoxPassword1.Size = new System.Drawing.Size(100, 20);
-            this.textBoxPassword1.TabIndex = 20;
+            this.textBoxPassword1.TabIndex = 1;
             // 
             // textBoxPassword2
             // 
             this.textBoxPassword2.Location = new System.Drawing.Point(125, 128);
             this.textBoxPassword2.Name = "textBoxPassword2";
+            this.textBoxPassword2.PasswordChar = '*';
             this.textBoxPassword2.Size = new System.Drawing.Size(100, 20);
-            this.textBoxPassword2.TabIndex = 21;
+            this.textBoxPassword2.TabIndex = 2;
             // 
             // dateTimePickFechaNac
             // 
             this.dateTimePickFechaNac.Location = new System.Drawing.Point(390, 319);
             this.dateTimePickFechaNac.Name = "dateTimePickFechaNac";
             this.dateTimePickFechaNac.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePickFechaNac.TabIndex = 22;
+            this.dateTimePickFechaNac.TabIndex = 11;
             this.dateTimePickFechaNac.ValueChanged += new System.EventHandler(this.fechaDeNac_ValueChanged);
             // 
             // textBoxTelefono
@@ -281,7 +285,7 @@
             this.textBoxTelefono.MaxLength = 20;
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(100, 20);
-            this.textBoxTelefono.TabIndex = 23;
+            this.textBoxTelefono.TabIndex = 9;
             this.textBoxTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTelefono_KeyPress);
             // 
             // textBoxNumeroDeDoc
@@ -290,7 +294,7 @@
             this.textBoxNumeroDeDoc.MaxLength = 8;
             this.textBoxNumeroDeDoc.Name = "textBoxNumeroDeDoc";
             this.textBoxNumeroDeDoc.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNumeroDeDoc.TabIndex = 24;
+            this.textBoxNumeroDeDoc.TabIndex = 7;
             this.textBoxNumeroDeDoc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumeroDeDoc_KeyPress);
             // 
             // textBoxMail
@@ -298,14 +302,14 @@
             this.textBoxMail.Location = new System.Drawing.Point(55, 285);
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(100, 20);
-            this.textBoxMail.TabIndex = 25;
+            this.textBoxMail.TabIndex = 8;
             // 
             // textBoxNombre
             // 
             this.textBoxNombre.Location = new System.Drawing.Point(76, 220);
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(149, 20);
-            this.textBoxNombre.TabIndex = 27;
+            this.textBoxNombre.TabIndex = 4;
             this.textBoxNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNombre_KeyPress);
             // 
             // textBoxApellido
@@ -313,7 +317,7 @@
             this.textBoxApellido.Location = new System.Drawing.Point(317, 219);
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(144, 20);
-            this.textBoxApellido.TabIndex = 28;
+            this.textBoxApellido.TabIndex = 5;
             this.textBoxApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxApellido_KeyPress);
             // 
             // textBoxDireccion
@@ -321,14 +325,14 @@
             this.textBoxDireccion.Location = new System.Drawing.Point(83, 319);
             this.textBoxDireccion.Name = "textBoxDireccion";
             this.textBoxDireccion.Size = new System.Drawing.Size(199, 20);
-            this.textBoxDireccion.TabIndex = 29;
+            this.textBoxDireccion.TabIndex = 10;
             // 
             // botonAgregarRol
             // 
             this.botonAgregarRol.Location = new System.Drawing.Point(402, 68);
             this.botonAgregarRol.Name = "botonAgregarRol";
             this.botonAgregarRol.Size = new System.Drawing.Size(75, 23);
-            this.botonAgregarRol.TabIndex = 32;
+            this.botonAgregarRol.TabIndex = 12;
             this.botonAgregarRol.Text = "Agregar Rol";
             this.botonAgregarRol.UseVisualStyleBackColor = true;
             this.botonAgregarRol.Click += new System.EventHandler(this.botonAgregarRol_Click);
@@ -353,7 +357,7 @@
             this.comboBoxEstado.Location = new System.Drawing.Point(65, 155);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(44, 21);
-            this.comboBoxEstado.TabIndex = 35;
+            this.comboBoxEstado.TabIndex = 3;
             this.comboBoxEstado.SelectedIndexChanged += new System.EventHandler(this.comboBoxEstado_SelectedIndexChanged);
             // 
             // comboBoxTipoDoc
@@ -366,11 +370,15 @@
             this.comboBoxTipoDoc.Location = new System.Drawing.Point(100, 255);
             this.comboBoxTipoDoc.Name = "comboBoxTipoDoc";
             this.comboBoxTipoDoc.Size = new System.Drawing.Size(86, 21);
-            this.comboBoxTipoDoc.TabIndex = 40;
+            this.comboBoxTipoDoc.TabIndex = 6;
             this.comboBoxTipoDoc.SelectedIndexChanged += new System.EventHandler(this.comboBoxTipoDoc_SelectedIndexChanged);
             // 
             // dgvRolesHoteles
             // 
+            this.dgvRolesHoteles.AllowUserToAddRows = false;
+            this.dgvRolesHoteles.AllowUserToDeleteRows = false;
+            this.dgvRolesHoteles.AllowUserToResizeColumns = false;
+            this.dgvRolesHoteles.AllowUserToResizeRows = false;
             this.dgvRolesHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRolesHoteles.Location = new System.Drawing.Point(277, 100);
             this.dgvRolesHoteles.Name = "dgvRolesHoteles";
@@ -383,6 +391,7 @@
             this.botonQuitarRol.Name = "botonQuitarRol";
             this.botonQuitarRol.Size = new System.Drawing.Size(75, 23);
             this.botonQuitarRol.TabIndex = 42;
+            this.botonQuitarRol.TabStop = false;
             this.botonQuitarRol.Text = "Quitar Rol";
             this.botonQuitarRol.UseVisualStyleBackColor = true;
             this.botonQuitarRol.Click += new System.EventHandler(this.botonQuitarRol_Click);

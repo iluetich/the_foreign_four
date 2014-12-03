@@ -191,7 +191,7 @@
             this.botonRegistrar.Location = new System.Drawing.Point(11, 348);
             this.botonRegistrar.Name = "botonRegistrar";
             this.botonRegistrar.Size = new System.Drawing.Size(75, 23);
-            this.botonRegistrar.TabIndex = 14;
+            this.botonRegistrar.TabIndex = 15;
             this.botonRegistrar.Text = "Registrar";
             this.botonRegistrar.UseVisualStyleBackColor = true;
             this.botonRegistrar.Click += new System.EventHandler(this.botonRegistrar_Click);
@@ -201,7 +201,7 @@
             this.botonLimpiar.Location = new System.Drawing.Point(118, 348);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.botonLimpiar.TabIndex = 13;
+            this.botonLimpiar.TabIndex = 16;
             this.botonLimpiar.TabStop = false;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
@@ -212,7 +212,7 @@
             this.botonVolver.Location = new System.Drawing.Point(355, 348);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
-            this.botonVolver.TabIndex = 14;
+            this.botonVolver.TabIndex = 17;
             this.botonVolver.TabStop = false;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
@@ -371,7 +371,7 @@
             this.comboBoxEstado.Location = new System.Drawing.Point(293, 313);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(47, 21);
-            this.comboBoxEstado.TabIndex = 13;
+            this.comboBoxEstado.TabIndex = 14;
             this.comboBoxEstado.SelectedIndexChanged += new System.EventHandler(this.comboBoxEstado_SelectedIndexChanged);
             // 
             // labelPaisOrigen
@@ -389,7 +389,7 @@
             this.textBoxPaisOrigen.Location = new System.Drawing.Point(104, 315);
             this.textBoxPaisOrigen.Name = "textBoxPaisOrigen";
             this.textBoxPaisOrigen.Size = new System.Drawing.Size(100, 20);
-            this.textBoxPaisOrigen.TabIndex = 34;
+            this.textBoxPaisOrigen.TabIndex = 13;
             this.textBoxPaisOrigen.TextChanged += new System.EventHandler(this.textBoxPaisOrigen_TextChanged);
             this.textBoxPaisOrigen.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPaisOrigen_KeyPress);
             // 
