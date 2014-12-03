@@ -141,7 +141,7 @@ BEGIN
 END
 GO
 --*****************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest 
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user 
 				(@cod_reserva numeric(18,0),
 				 @cod_hotel int)
 RETURNS int
@@ -164,7 +164,7 @@ BEGIN
 END
 GO
 --**********************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user 
+CREATE FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest
 				(@cod_reserva numeric(18,0))
 RETURNS int
 AS
@@ -1681,31 +1681,56 @@ AS
 GO
 
 --**************************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_monto_consumibles
+ALTER FUNCTION THE_FOREIGN_FOUR.func_obtener_puntaje_factura
 					(@nro_factura numeric(18,0))
 RETURNS int
 AS
 BEGIN
-	RETURN (SELECT SUM(total_factura)
-			FROM THE_FOREIGN_FOUR.facturacion (@nro_factura)
-			WHERE	cod_consumible > 2000)
+
+	DECLARE @cod_consumible numeric(18,0),
+			@total_item decimal,
+			@puntos_consumibles decimal,
+			@puntos_estadias decimal
+			
+	SET @puntos_consumibles = 0
+	SET	@puntos_estadias = 0
+	
+	DECLARE cursorItems CURSOR FOR
+	SELECT		cod_consumible, total_item
+	FROM		THE_FOREIGN_FOUR.ItemsFactura
+	WHERE		nro_factura = @nro_factura
+	
+	OPEN cursorItems
+	FETCH NEXT FROM cursorItems INTO @cod_consumible, @total_item
+	
+	WHILE @@FETCH_STATUS = 0 
+	BEGIN
+		IF (@cod_consumible > 2000)
+		BEGIN
+			SET @puntos_consumibles += @total_item
+		END
+		ELSE
+		BEGIN
+			SET @puntos_estadias += @total_item
+		END
+	END
+	
+	RETURN	CAST((@puntos_estadias / 10) + (@puntos_consumibles / 5) AS int)
 END
 GO
 
 --TOP 5 CLIENTES
-CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente
+ALTER FUNCTION THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente
 					(@fecha_desde datetime,
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, CAST((THE_FOREIGN_FOUR.func_obtener_monto_consumibles (f.nro_factura) / 5) + (THE_FOREIGN_FOUR.calcular_precio_estadia (f.cod_estadia) / 10) AS int) AS 'puntaje'
+	RETURN (SELECT top 5 c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, THE_FOREIGN_FOUR.func_obtener_puntaje_factura(f.nro_factura) AS 'puntaje'
 			FROM THE_FOREIGN_FOUR.Clientes c JOIN THE_FOREIGN_FOUR.Facturas f ON(c.cod_cliente = f.cod_cliente)
-											 JOIN THE_FOREIGN_FOUR.ItemsFactura i ON(f.nro_factura = i.nro_factura)
 			WHERE f.fecha_factura BETWEEN @fecha_desde AND @fecha_hasta
-			GROUP BY c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, f.nro_factura, f.cod_estadia
+			GROUP BY c.cod_cliente, c.nombre, c.apellido, c.mail, c.tipo_doc, c.nro_doc, f.nro_factura
 			ORDER BY 7 DESC)
 GO
-
 
 --**************************************
 
