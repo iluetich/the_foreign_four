@@ -254,8 +254,18 @@ namespace FrbaHotel.ABM_de_Hotel
                 }
                 else
                 {
-                     consulta = "INSERT INTO THE_FOREIGN_FOUR.Hoteles (nombre,mail,telefono,nro_calle,nom_calle,cant_estrellas,ciudad,pais,fecha_creacion,recarga_estrellas) " +
-                            " VALUES ('" + textBoxNombreHotel.Text + "','" + textBoxMail.Text + "','" + textBoxTelefono.Text + "'," + int.Parse(textBoxNroCalle.Text) + ",'" + textBoxCalle.Text + "'," + int.Parse(cantEstrellas) + ",'" + textBoxCiudad.Text + "','" + textBoxPais.Text + "',@fechaCreacion," + int.Parse(textBoxRecEstrellas.Text) + ")";
+                    string nombreHotel = textBoxNombreHotel.Text;
+                    string mail = textBoxMail.Text;
+                    string telefono = textBoxTelefono.Text;
+                    int nroDeCalle = int.Parse(textBoxNroCalle.Text);
+                    string calle = textBoxCalle.Text;
+                    int cantidadEstrellas = int.Parse(cantEstrellas);
+                    string ciudad = textBoxCiudad.Text;
+                    string pais = textBoxPais.Text;
+                    int recargoEstrellas = int.Parse(textBoxRecEstrellas.Text);
+
+                    consulta = "INSERT INTO THE_FOREIGN_FOUR.Hoteles (nombre,mail,telefono,nro_calle,nom_calle,cant_estrellas,ciudad,pais,fecha_creacion,recarga_estrellas) " +
+                            " VALUES ('" + nombreHotel + "','" + mail + "','" + telefono + "'," + nroDeCalle + ",'" + calle + "'," + cantidadEstrellas + ",'" + ciudad + "','" + pais + "',@fechaCreacion," + recargoEstrellas + ")";
                 }
                
                 cmd.CommandText = consulta;
@@ -316,6 +326,10 @@ namespace FrbaHotel.ABM_de_Hotel
             if (!mailCompleto) { ok = false;}
             Boolean recEstrellaCompleto = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxRecEstrellas, "Recargo Estrellas");
             if (!recEstrellaCompleto) { ok = false;}
+            Boolean completoNomCalle = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxCalle, "Calle");
+            if (!completoNomCalle) { ok = false;}
+            Boolean completoNroCalle = FrbaHotel.Utils.validarCampoEsteCompleto(textBoxNroCalle, "Numero de Calle");
+            if (!completoNomCalle) { ok = false;}
 
             return ok;
         }
