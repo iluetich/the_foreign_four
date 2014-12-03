@@ -107,8 +107,11 @@
             this.Column4});
             this.dgvDatosHuespedes.Location = new System.Drawing.Point(27, 91);
             this.dgvDatosHuespedes.Name = "dgvDatosHuespedes";
+            this.dgvDatosHuespedes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDatosHuespedes.Size = new System.Drawing.Size(377, 150);
             this.dgvDatosHuespedes.TabIndex = 5;
+            this.dgvDatosHuespedes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvDatosHuespedes_KeyDown);
+            this.dgvDatosHuespedes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvDatosHuespedes_KeyUp);
             // 
             // Column1
             // 

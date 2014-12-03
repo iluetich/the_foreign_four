@@ -18,6 +18,7 @@ namespace FrbaHotel.Registrar_Estadia
         string codigoCliente;
         string codigoReserva;
         string user;
+        int cantidadHuespedesDGV;
 
         //----------------------------------------------------------------------------------------------------
         //----------------------CONSTRUCTORES-----------------------------------------------------------------       
@@ -203,12 +204,26 @@ namespace FrbaHotel.Registrar_Estadia
             cmd.ExecuteNonQuery();
         }
 
+        //cuando se suprime un cliente de la tabla aumenta el contado de maxima cantidad restante de huespedes a registrar
+        private void dgvDatosHuespedes_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete){
+                if (dgvDatosHuespedes.Rows.Count < cantidadHuespedesDGV )
+                    txtCantHuespedes.Text = (Convert.ToInt32(txtCantHuespedes.Text) + 1).ToString();
+            }
+        }
+        private void dgvDatosHuespedes_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete){
+                cantidadHuespedesDGV = dgvDatosHuespedes.Rows.Count;
+            }
+        }  
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------
 
       
         //----SETTERS------------------------------------------------------------------
-        public void setCodigoCliente(int codigo) { codigoCliente = codigo.ToString(); }       
+        public void setCodigoCliente(int codigo) { codigoCliente = codigo.ToString(); }                
         //-----------------------------------------------------------------------------
 
     }

@@ -22,8 +22,7 @@ namespace FrbaHotel.Registrar_Estadia
         //---------------------CONSTRUCTORES--------------------------------------------------------------
         public frmInicioEstadia(){  InitializeComponent(); }
         public frmInicioEstadia(MenuDinamico menuPadre, string userSesion, string hotelSesion)
-        {
-            FrbaHotel.ConexionSQL.establecerConexionBD();  
+        {             
             this.menu = menuPadre;
             InitializeComponent();           
 
@@ -128,8 +127,18 @@ namespace FrbaHotel.Registrar_Estadia
             string consulta = "DECLARE @resultado numeric(18,0); EXEC @resultado = THE_FOREIGN_FOUR.proc_validar_check_in " + txtCodReserva.Text + "," + codigoHotel + ";SELECT @resultado";
             SqlCommand cmd3 = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             int resultadoCheckIn = Convert.ToInt32(cmd3.ExecuteScalar());
-            if (resultadoCheckIn != 1){
+            if (resultadoCheckIn == -1){
                 MessageBox.Show("El CHECK IN se debe realizar el dia en que comienza la estadia", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+            if (resultadoCheckIn == 0){
+                consulta = "SELECT fecha_desde FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva =" + txtCodReserva.Text;
+                cmd3 = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                string fecha = cmd3.ExecuteScalar().ToString();
+                fecha = fecha.Substring(0,10);
+                MessageBox.Show("Se vencio el plazo para realizar CHECK IN, la fecha para realizarlo era el dia '" 
+                                + fecha + "' la reserva queda sin efecto.\nNo se cobrara recargo por la misma,"+
+                                " si desea hospedarse de todas formas realice una nueva reserva", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
