@@ -172,11 +172,20 @@ namespace FrbaHotel.ABM_de_Cliente
             }
             calle = textBoxCalle.Text;
             departamento = textBoxDepto.Text;
-            nroDoc = int.Parse(textBoxNroDoc.Text);
+            if (textBoxNroDoc.Text != "")
+            {
+                nroDoc = int.Parse(textBoxNroDoc.Text);
+            }
+            if (textBoxTelefono.Text != "")
+            {
+                telefono = int.Parse(textBoxTelefono.Text);
+            }
+            if (textBoxNroCalle.Text != "")
+            {
+                nroCalle = int.Parse(textBoxNroCalle.Text);
+            }
             mail = textBoxMail.Text;
-            telefono = int.Parse(textBoxTelefono.Text);
             nacionalidad = textBoxNacionalidad.Text;
-            nroCalle = int.Parse(textBoxNroCalle.Text);
             localidad = textBoxLocalidad.Text;
             estado = comboBoxEstado.Text;
 
@@ -237,17 +246,8 @@ namespace FrbaHotel.ABM_de_Cliente
                                     " WHERE cod_cliente=" + codCliente;
                         }
                     }
-                    else
-                    {
-                    //    cmd.CommandText = "INSERT INTO THE_FOREIGN_FOUR.Clientes (nombre,apellido,tipo_doc,nro_doc,mail,telefono,nom_calle,nro_calle,pais_origen,nacionalidad,piso,depto,fecha_nac,estado) " +
-                    //            "VALUES (@nombre,@apellido,@tipo_doc,@nro_doc,@mail,@telefono,@nom_calle,@nro_calle,@pais_origen,@nacionalidad,@piso,@depto,@fecha_nac,@estado)";	
-                        // try catch de funcion validar_cliente USAR!!!!!!!!!!!!!!!!!!!!!!!!
-                        
-                    }
-                    int codigo_cliente = Convert.ToInt32(cmd.ExecuteScalar());
-	                //cmd.ExecuteNonQuery(); COMENTADO X IVAN
-                    //cnn.Close();
 
+                    int codigo_cliente = Convert.ToInt32(cmd.ExecuteScalar());
 
                     if (frmClientePadre != null)//vuelve al flujo de generar reserva(agregado por ian)
                     {

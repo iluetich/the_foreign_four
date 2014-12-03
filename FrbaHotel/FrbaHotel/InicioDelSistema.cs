@@ -37,6 +37,7 @@ namespace FrbaHotel
 
         private void BotonIngresar_Click(object sender, EventArgs e)
         {
+            this.comboBoxEleccionRol_SelectedIndexChanged(sender, e);
             if (rolElegido == "Guest")
             {
                 //si seleccionaste guest abri el menu de guest

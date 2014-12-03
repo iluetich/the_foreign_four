@@ -109,7 +109,7 @@ namespace FrbaHotel.ABM_de_Cliente
             FrbaHotel.Utils.ejecutarConsulta(consulta);
 
             //mostrar menaje de todo ok
-            MessageBox.Show("Se ha inhabilitado el cliente " + datGridViewClientes.CurrentRow.Cells[0], "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Se ha inhabilitado el cliente " + datGridViewClientes.CurrentRow.Cells[0].Value.ToString(), "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //refrezca la tabla
             this.cargarClientes();
