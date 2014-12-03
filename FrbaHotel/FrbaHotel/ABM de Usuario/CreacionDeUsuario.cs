@@ -252,6 +252,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 }
                 else
                 {
+                    this.fechaDeNac_ValueChanged(sender, e);
                     this.guardarUsuario();
                     menu.Show();
                 }
