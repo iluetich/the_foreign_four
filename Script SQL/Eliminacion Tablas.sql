@@ -81,6 +81,10 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_max_cant_huespedes
 DROP FUNCTION THE_FOREIGN_FOUR.func_validar_huesped
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_datos_reserva
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_tipo_hab_reserva
+DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_estado_cliente
+DROP FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest
+DROP FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user
+DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_puntaje_factura
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_ins_capacidad_hab
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_crear_habitacion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia
@@ -120,6 +124,7 @@ DROP VIEW THE_FOREIGN_FOUR.view_funcionalidades
 DROP VIEW THE_FOREIGN_FOUR.view_facturas
 DROP VIEW THE_FOREIGN_FOUR.view_habitaciones_disp
 DROP VIEW THE_FOREIGN_FOUR.view_tipos_pago
+DROP VIEW THE_FOREIGN_FOUR.view_consumibles
 DROP FUNCTION THE_FOREIGN_FOUR.facturacion
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_actualizar_total_factura
 DROP FUNCTION THE_FOREIGN_FOUR.func_hay_clientes

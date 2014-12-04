@@ -1340,7 +1340,7 @@ BEGIN
 			@cant_noches int,
 			@puede_check_in int
 			
-	SET		@validacion_reserva = THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest (@cod_reserva, @cod_hotel)
+	SET		@validacion_reserva = THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user (@cod_reserva, @cod_hotel)
 	SET		@fecha_inicio_reserva = (SELECT fecha_desde FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva)
 	SET		@cant_noches = (SELECT cant_noches FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva)
 	SET		@validacion_fechas = THE_FOREIGN_FOUR.func_igual_fecha(@fecha_inicio_reserva, GETDATE())

@@ -280,21 +280,14 @@ BEGIN
 	FETCH NEXT FROM TrigInsCursor INTO @nro_factura, @cantidad, @cod_consumible, @total_item
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-	
 		IF(@nro_factura IS NULL OR
 		   @cantidad IS NULL)
-		   --NOT EXISTS (SELECT cod_consumible
-					--   FROM THE_FOREIGN_FOUR.Consumibles
-					--   WHERE cod_consumible = @cod_consumible))
-		   
 		BEGIN
 			INSERT INTO THE_FOREIGN_FOUR.ItemsFacturaDefectuosos (nro_factura, cantidad, cod_consumible)
-			VALUES (@nro_factura, @cantidad, @cod_consumible);
+			VALUES (@nro_factura, @cantidad, @cod_consumible)
 		END	
-		
 		ELSE
 		BEGIN
-			
 			IF(EXISTS(SELECT cod_consumible
 					   FROM THE_FOREIGN_FOUR.Consumibles
 					   WHERE cod_consumible = @cod_consumible))
@@ -304,9 +297,8 @@ BEGIN
 			END
 			ELSE
 			BEGIN
-			
-			INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, cod_consumible, total_item)
-			VALUES (@nro_factura, @cantidad, 1, @total_item)
+				INSERT INTO THE_FOREIGN_FOUR.ItemsFactura (nro_factura, cantidad, cod_consumible, total_item)
+				VALUES (@nro_factura, @cantidad, 1, @total_item)
 			END
 		END			
 			

@@ -1,3 +1,4 @@
+--** JUEGO DE DATOS********************************************
 EXEC THE_FOREIGN_FOUR.porc_insercion_estados_reserva
 
 --***CLIENTES********************************
@@ -31,6 +32,8 @@ SELECT DISTINCT Consumible_Codigo, Consumible_Descripcion, Consumible_Precio
 FROM gd_esquema.Maestra
 WHERE Consumible_Codigo IS NOT NULL
 AND Consumible_Descripcion IS NOT NULL
+
+EXEC THE_FOREIGN_FOUR.proc_juego_datos
 
 --***HABITACIONES**************************************
 
@@ -184,9 +187,6 @@ FROM gd_esquema.Maestra m
 
 --** CHECKOUT MIGRACION ESTADIAS ******************************
 EXEC THE_FOREIGN_FOUR.proc_checkout_migracion
-
---** JUEGO DE DATOS********************************************
-EXEC THE_FOREIGN_FOUR.proc_juego_datos
 
 --** CAPACIDAD DE HABITACIONES*********************************
 EXEC THE_FOREIGN_FOUR.proc_ins_capacidad_hab

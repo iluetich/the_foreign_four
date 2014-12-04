@@ -239,4 +239,4 @@ CREATE TABLE THE_FOREIGN_FOUR.Consumibles_Estadia (
 	cantidad			int,
 )
 GO
-CREATE NONCLUSTERED INDEX idx_fecha_factura ON THE_FOREIGN_FOUR.Facturas (fecha_factura)
+CREATE NONCLUSTERED INDEX idx_nro_factura ON THE_FOREIGN_FOUR.ItemsFactura (nro_factura)
