@@ -44,6 +44,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             user = userSesion; 
             costoTotal = 0;
             dgvHabitaciones.Columns["codigo"].Visible = false;
+            
+            //cancelo toda reserva vieja que no se le haya hecho el check-in {Iván}
+            string cancelar_reservas = "EXEC THE_FOREIGN_FOUR.proc_cancelar_reservas_no_efectivizadas()";
+            SqlCommand command = new SqlCommand(cancelar_reservas, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            command.ExecuteNonQuery();
         }
         //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------

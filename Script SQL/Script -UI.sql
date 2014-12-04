@@ -280,15 +280,6 @@ BEGIN
 	INSERT INTO THE_FOREIGN_FOUR.AuditoriaReservas (cod_reserva, cod_usuario, cod_operacion)
 	VALUES (@cod_reserva_generada, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), 'G')
 	
-	UPDATE THE_FOREIGN_FOUR.Reservas
-	SET		cod_estado_reserva = (SELECT cod_estado
-								  FROM THE_FOREIGN_FOUR.EstadosReserva
-								  WHERE descripcion LIKE 'cancelacion_noshow')
-	WHERE	fecha_desde < GETDATE() 
-	AND		cod_estado_reserva IN (SELECT cod_estado
-								   FROM THE_FOREIGN_FOUR.EstadosReserva
-								   WHERE descripcion LIKE 'correcta'
-								   OR	 descripcion LIKE 'modificada')
 	RETURN @cod_reserva_generada
 END
 GO
@@ -1860,6 +1851,21 @@ BEGIN
 		RETURN 1
 	END
 	RETURN 0		
+END
+GO
+--*****************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reservas_no_efectivizadas
+AS
+BEGIN
+	UPDATE THE_FOREIGN_FOUR.Reservas
+	SET		cod_estado_reserva = (SELECT cod_estado
+								  FROM THE_FOREIGN_FOUR.EstadosReserva
+								  WHERE descripcion LIKE 'cancelacion_noshow')
+	WHERE	fecha_desde < GETDATE() 
+	AND		cod_estado_reserva IN (SELECT cod_estado
+								   FROM THE_FOREIGN_FOUR.EstadosReserva
+								   WHERE descripcion LIKE 'correcta'
+								   OR	 descripcion LIKE 'modificada')
 END
 GO
 
