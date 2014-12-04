@@ -1849,5 +1849,3 @@ BEGIN
 END
 GO
 
-SELECT * FROM THE_FOREIGN_FOUR.func_estadistica_puntaje_cliente('20140101', '20140401')
-
