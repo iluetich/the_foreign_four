@@ -1629,11 +1629,11 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_cancelaciones_hotel
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 ho.cod_hotel, COUNT(ca.cod_cancelacion) AS 'cancelaciones'
+	RETURN (SELECT TOP 5 ho.nombre, COUNT(ca.cod_cancelacion) AS 'cancelaciones'
 			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.Reservas res ON(ho.cod_hotel = res.cod_hotel)
 											 JOIN THE_FOREIGN_FOUR.Cancelaciones ca ON(res.cod_reserva = ca.cod_reserva)
 			WHERE ca.fecha_operacion BETWEEN @fecha_desde AND @fecha_hasta
-			GROUP BY ho.cod_hotel
+			GROUP BY ho.nombre
 			ORDER BY 2 DESC)
 GO
 --TOP 5 HOTELES MAS CONSUMIBLES FACTURADOS
@@ -1642,14 +1642,14 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 ho.cod_hotel, SUM(cantidad) AS 'consumibles'
+	RETURN (SELECT TOP 5 ho.nombre, SUM(cantidad) AS 'consumibles'
 			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.Reservas res ON(ho.cod_hotel = res.cod_hotel)
 											 JOIN THE_FOREIGN_FOUR.Estadias es ON(res.cod_reserva = es.cod_estadia)
 											 JOIN THE_FOREIGN_FOUR.Facturas fa ON(es.cod_estadia = fa.cod_estadia)
 											 JOIN THE_FOREIGN_FOUR.ItemsFactura itf ON(fa.nro_factura = itf.nro_factura)
 			WHERE	cod_consumible > 1000
 			AND		fa.fecha_factura BETWEEN @fecha_desde AND @fecha_hasta
-			GROUP BY ho.cod_hotel
+			GROUP BY ho.nombre
 			ORDER BY 2 DESC)
 GO
 --TOP 5 HOTELES MAS INACTIVOS
@@ -1658,11 +1658,11 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_inactividad_hotel
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 ho.cod_hotel, SUM(DATEDIFF(day, ih.fecha_desde, ih.fecha_hasta)) AS 'dias inactivos'
+	RETURN (SELECT TOP 5 ho.nombre, SUM(DATEDIFF(day, ih.fecha_desde, ih.fecha_hasta)) AS 'dias inactivos'
 			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.InactividadHoteles ih ON(ho.cod_hotel = ih.cod_hotel)
 			WHERE	ih.fecha_desde >= @fecha_desde
 			AND		ih.fecha_hasta <= @fecha_hasta
-			GROUP BY ho.cod_hotel
+			GROUP BY ho.nombre
 			ORDER BY 2 DESC)
 GO
 --TOP 5 HABITACIONES MAS ACTIVAS
@@ -1671,13 +1671,14 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_ocupacion_habitacion
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT	TOP 5 ha.cod_habitacion, ha.cod_hotel, ha.nro_habitacion, COUNT(he.cod_estadia) 'veces ocupada', SUM(e.cant_noches) 'noches ocupada'
+	RETURN (SELECT	TOP 5 ha.nro_habitacion, h.nombre, COUNT(he.cod_estadia) 'veces ocupada', SUM(e.cant_noches) 'noches ocupada'
 			FROM	THE_FOREIGN_FOUR.Habitaciones ha JOIN THE_FOREIGN_FOUR.Habitaciones_Estadia he ON(ha.cod_habitacion = he.cod_habitacion)
 													 JOIN THE_FOREIGN_FOUR.Estadias e ON(he.cod_estadia = e.cod_estadia)
+													 JOIN THE_FOREIGN_FOUR.Hoteles h ON(ha.cod_hotel = h.cod_hotel)
 			WHERE	e.fecha_inicio BETWEEN @fecha_desde AND @fecha_hasta
 			OR		e.checkout BETWEEN @fecha_desde AND @fecha_hasta
-			GROUP BY ha.cod_habitacion, ha.cod_hotel, ha.nro_habitacion
-			ORDER BY 4 DESC, 5 DESC)
+			GROUP BY ha.nro_habitacion, h.nombre
+			ORDER BY 3 DESC, 4 DESC)
 GO
 
 --**************************************************************

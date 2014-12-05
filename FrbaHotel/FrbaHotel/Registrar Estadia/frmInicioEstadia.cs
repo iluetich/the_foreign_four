@@ -116,7 +116,7 @@ namespace FrbaHotel.Registrar_Estadia
             }
 
             //valida si no esta cancelada
-            consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest(" + txtCodReserva.Text + "," + codigoHotel + ")";            
+            consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user(" + txtCodReserva.Text + "," + codigoHotel + ")";            
             resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
             if (resultado == -1){
                 MessageBox.Show("Se trata de una Reserva Cancelada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
