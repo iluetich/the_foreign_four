@@ -213,7 +213,7 @@ AS
 	WHERE @cod_reserva = cod_reserva
 	
 	INSERT INTO THE_FOREIGN_FOUR.AuditoriaReservas(cod_reserva, cod_usuario, cod_operacion)
-	VALUES (@cod_reserva, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), 'I')
+	VALUES (@cod_reserva, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), 'M')
 GO
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_liberar_habitaciones
