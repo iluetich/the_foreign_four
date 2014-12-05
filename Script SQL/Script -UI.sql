@@ -1894,5 +1894,4 @@ BEGIN
 	RETURN 0
 END
 GO
-SELECT DATEDIFF(day, '20170101', GETDATE())
 --***************************************************
