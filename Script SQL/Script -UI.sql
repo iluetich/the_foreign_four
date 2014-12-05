@@ -1868,4 +1868,31 @@ BEGIN
 								   OR	 descripcion LIKE 'modificada')
 END
 GO
-
+--*******************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_reserva_cancelable
+					(@cod_reserva numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	IF((SELECT cod_estado_reserva 
+	    FROM THE_FOREIGN_FOUR.Reservas 
+	    WHERE cod_reserva = @cod_reserva) IN (SELECT cod_estado
+											  FROM THE_FOREIGN_FOUR.EstadosReserva
+											  WHERE descripcion LIKE 'cancelacion%'
+											  OR	descripcion LIKE 'efectivizada'))
+	BEGIN
+		RETURN -1
+	END
+	DECLARE @fecha_inicio_reserva datetime
+	SET	@fecha_inicio_reserva = (SELECT fecha_desde
+								 FROM THE_FOREIGN_FOUR.Reservas
+								 WHERE cod_reserva = @cod_reserva)
+	IF (DATEDIFF(day, @fecha_inicio_reserva, GETDATE()) <= 1)
+	BEGIN
+		RETURN 1
+	END
+	RETURN 0
+END
+GO
+SELECT DATEDIFF(day, '20170101', GETDATE())
+--***************************************************

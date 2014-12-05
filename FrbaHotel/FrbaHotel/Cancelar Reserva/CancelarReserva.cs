@@ -105,7 +105,20 @@ namespace FrbaHotel.Cancelar_Reserva
                 MessageBox.Show("No se ha encontrado la reserva \no se trata de una reserva ya cancelada \no esta intentando con un usuario que no esta registrado para este hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
-            
+
+            string validacion = "SELECT THE_FOREIGN_FOUR.func_reserva_cancelable(" + txtCodReserva.Text + ")";
+            SqlCommand command = new SqlCommand(validacion, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            resultado = (int)command.ExecuteScalar();
+
+            switch (resultado)
+            {
+                case -1:
+                    MessageBox.Show("La reserva ya está cancelada o efectivizada", "Error cancelacion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+                case 0:
+                    MessageBox.Show("No se pudo cancelar la reserva.\n Recuerde que sólo puede cancelar hasta un día antes del inicio de la misma", "Error cancelacion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+            }
             return true;
         }
 
