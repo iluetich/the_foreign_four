@@ -39,7 +39,9 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia
 				 @usuario nvarchar(255))
 AS
 BEGIN
-
+	
+	BEGIN TRANSACTION
+	
 	DECLARE @fecha_inicio datetime
 	SET @fecha_inicio = CAST(GETDATE() AS DATETIME)
 	
@@ -92,6 +94,12 @@ BEGIN
 										WHERE	h.cod_hotel = @cod_hotel
 										AND		h.nro_habitacion = (SELECT TOP 1 *
 																	FROM THE_FOREIGN_FOUR.func_obtener_hab_disponibles(@fecha_inicio, @cod_tipo_hab, @cod_hotel, @cant_noches)))
+		
+		IF (@cod_habitacion_a_ocupar IS NULL) 
+		BEGIN
+			ROLLBACK
+		END	
+		
 		INSERT INTO THE_FOREIGN_FOUR.Habitaciones_Estadia (cod_estadia, cod_habitacion)
 		VALUES (@cod_estadia, @cod_habitacion_a_ocupar)
 		FETCH NEXT FROM CursorHabitaciones INTO @cod_tipo_hab
@@ -101,6 +109,8 @@ BEGIN
 	--**cursor********
 	
 	DROP TABLE THE_FOREIGN_FOUR.#TipoHabReserva
+	
+	COMMIT
 	
 END
 GO
@@ -1727,4 +1737,32 @@ AS
 			WHERE	cod_reserva = @cod_reserva
 			AND		r.cod_tipo_hab = h.cod_tipo_hab)
 GO
+
+--*******************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_estado_cliente
+					(@cod_cliente numeric(18,0))
+RETURNS int
+AS
+BEGIN
+	DECLARE @estado varchar
+	SET @estado = (SELECT estado
+			FROM THE_FOREIGN_FOUR.Clientes
+			WHERE cod_cliente = @cod_cliente)
+	IF (@estado = 'H')
+	BEGIN
+		RETURN 1
+	END
+	RETURN 0
+END
+GO
+--*******************************************
+CREATE VIEW THE_FOREIGN_FOUR.view_consumibles
+AS
+	SELECT descripcion
+	FROM THE_FOREIGN_FOUR.Consumibles
+	WHERE	descripcion NOT LIKE 'estadia'
+	AND		descripcion NOT LIKE 'descuento all inclusive'
+	AND		descripcion NOT LIKE 'noches no utilizadas'
+GO
+
 
