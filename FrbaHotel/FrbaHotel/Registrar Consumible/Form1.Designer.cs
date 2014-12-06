@@ -33,7 +33,6 @@
             this.lblCantidad = new System.Windows.Forms.Label();
             this.txtCantidad = new System.Windows.Forms.TextBox();
             this.lblCodProducto = new System.Windows.Forms.Label();
-            this.txtCodProducto = new System.Windows.Forms.TextBox();
             this.groupConsumible = new System.Windows.Forms.GroupBox();
             this.dgvConsumibles = new System.Windows.Forms.DataGridView();
             this.colCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,6 +41,7 @@
             this.btnFacturar = new System.Windows.Forms.Button();
             this.groupBotonera = new System.Windows.Forms.GroupBox();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.comboBoxConsumibles = new System.Windows.Forms.ComboBox();
             this.groupRegConsu.SuspendLayout();
             this.groupConsumible.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsumibles)).BeginInit();
@@ -50,11 +50,11 @@
             // 
             // groupRegConsu
             // 
+            this.groupRegConsu.Controls.Add(this.comboBoxConsumibles);
             this.groupRegConsu.Controls.Add(this.btnRegistrarCons);
             this.groupRegConsu.Controls.Add(this.lblCantidad);
             this.groupRegConsu.Controls.Add(this.txtCantidad);
             this.groupRegConsu.Controls.Add(this.lblCodProducto);
-            this.groupRegConsu.Controls.Add(this.txtCodProducto);
             this.groupRegConsu.Location = new System.Drawing.Point(12, 12);
             this.groupRegConsu.Name = "groupRegConsu";
             this.groupRegConsu.Size = new System.Drawing.Size(273, 282);
@@ -98,14 +98,6 @@
             this.lblCodProducto.Size = new System.Drawing.Size(129, 13);
             this.lblCodProducto.TabIndex = 1;
             this.lblCodProducto.Text = "Codigo producto/servicio:";
-            // 
-            // txtCodProducto
-            // 
-            this.txtCodProducto.Location = new System.Drawing.Point(16, 59);
-            this.txtCodProducto.Name = "txtCodProducto";
-            this.txtCodProducto.Size = new System.Drawing.Size(100, 20);
-            this.txtCodProducto.TabIndex = 0;
-            this.txtCodProducto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodProducto_KeyPress);
             // 
             // groupConsumible
             // 
@@ -181,6 +173,16 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
+            // comboBoxConsumibles
+            // 
+            this.comboBoxConsumibles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxConsumibles.FormattingEnabled = true;
+            this.comboBoxConsumibles.Location = new System.Drawing.Point(16, 68);
+            this.comboBoxConsumibles.Name = "comboBoxConsumibles";
+            this.comboBoxConsumibles.Size = new System.Drawing.Size(140, 21);
+            this.comboBoxConsumibles.TabIndex = 5;
+            this.comboBoxConsumibles.SelectedIndexChanged += new System.EventHandler(this.comboBoxConsumibles_SelectedIndexChanged);
+            // 
             // frmRegistrarConsumible
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,7 +215,6 @@
         private System.Windows.Forms.Label lblCantidad;
         private System.Windows.Forms.TextBox txtCantidad;
         private System.Windows.Forms.Label lblCodProducto;
-        private System.Windows.Forms.TextBox txtCodProducto;
         private System.Windows.Forms.Button btnRegistrarCons;
         private System.Windows.Forms.GroupBox groupConsumible;
         private System.Windows.Forms.DataGridView dgvConsumibles;
@@ -223,5 +224,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescripcion;
+        private System.Windows.Forms.ComboBox comboBoxConsumibles;
     }
 }
