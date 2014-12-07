@@ -21,19 +21,21 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         string codigoRegimen;
         string codigoTipoHabitacion;
         bool habitacionesIsOn;
-        DataTable dataTableHabitaciones;
+        DataTable dataTableHabitaciones;        
         int costoPorDia;
         int costoTotal;
         bool termino_de_cargar_todo;
+        int cantidadHabitacionesDGV;
+        bool haceRollBack;
 
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
         public frmModificarRerserva() { InitializeComponent(); }  
         public frmModificarRerserva(frmBuscarReserva newFrm)
         {
-            termino_de_cargar_todo = false;
-
             InitializeComponent();
+            
+            termino_de_cargar_todo = false;
             frmBuscarReservaPadre = newFrm;
 
             codigoReserva = frmBuscarReservaPadre.getCodigoReserva(); //obtiene codigo de reserva de la ventana padre
@@ -44,9 +46,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             costoTotal = 0;
 
             habitacionesIsOn = false;            
-            cargarDatosReserva();
-            cargarTipoRegimenes();
+            cargarDatosReserva();            
+            cargarTablaHabsAuxiliar();
 
+            haceRollBack = true;
             termino_de_cargar_todo = true;
         }
         //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
@@ -61,6 +64,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string checkTablaSQL = "IF OBJECT_ID('tempdb.THE_FOREIGN_FOUR.#TipoHabDisponibles', 'U') IS NOT NULL DROP TABLE THE_FOREIGN_FOUR.#TipoHabDisponibles";
             SqlCommand cmd = new SqlCommand(checkTablaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             cmd.ExecuteNonQuery();
+
+            //hace rollback de la tabla auxiliar
+            if(haceRollBack){                
+                rollBack();
+            }
+
+            //elimina la tabla auxiliar temporal
+            checkTablaSQL = "IF OBJECT_ID('tempdb.THE_FOREIGN_FOUR.#Auxiliar', 'U') IS NOT NULL DROP TABLE THE_FOREIGN_FOUR.#Auxiliar";
+            SqlCommand cmd2 = new SqlCommand(checkTablaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd2.ExecuteNonQuery();
 
             frmBuscarReservaPadre.Enabled = true;
             frmBuscarReservaPadre.Focus();
@@ -108,10 +121,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     cmd.Parameters.AddWithValue("@usuario", user);
                     cmd.ExecuteNonQuery();
 
-                    updatearHabitaciones();
+                    //updatearHabitaciones();
                     agregarHabitaciones();
 
                     MessageBox.Show("Ha modificado la reserva correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    haceRollBack = false;
                     volverAlMenu();
                 }            
         }
@@ -296,12 +310,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string habitacionesSQL = "select * from THE_FOREIGN_FOUR.func_obtener_tipo_hab_reserva("+codigoReserva+")";
             DataTable dtHabitaciones = FrbaHotel.Utils.obtenerDatosBD(habitacionesSQL);
             
+            //cargo la grid de habitaciones
             foreach (DataRow rowHab in dtHabitaciones.Rows)
             {
                 string codigo = rowHab["cod_tipo_hab"].ToString();
                 string descripcion = rowHab["descripcion"].ToString();
                 dgvHabitaciones.Rows.Add(new[] {codigo, descripcion });                
             }
+
+            //cargo la grid de regimenes
+            cargarTipoRegimenes();
 
             //calculo costo total reserva
             calcularCostoTotal();
@@ -337,6 +355,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             return false;
         }
 
+        //recalcula el costo total de la reserva al hacer alguna modificacion
         private void calcularCostoTotal(){
             costoPorDia = 0;
             costoTotal = 0;
@@ -356,6 +375,37 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 costoTotal += (costoPorDia * cantDias);
                 txtCostoTotal.Text = "USD " + costoTotal.ToString();
             }     
+        }
+
+        //Carga en una tabla auxiliar los tipos de habs que tiene la reserva para que en caso de que no se hagan
+        //modificaciones en la reserva pueda hacer rollback
+        private void cargarTablaHabsAuxiliar(){
+
+            //chequea si existe la tabla temporal
+            string checkTablaSQL = "IF OBJECT_ID('tempdb.THE_FOREIGN_FOUR.#Auxiliar', 'U') IS NOT NULL DROP TABLE THE_FOREIGN_FOUR.#Auxiliar";
+            SqlCommand cmd = new SqlCommand(checkTablaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd.ExecuteNonQuery();
+
+            //crea tabla temporal
+            string crearTablaTemporalSQL = "SELECT * INTO THE_FOREIGN_FOUR.#Auxiliar FROM THE_FOREIGN_FOUR.func_obtener_tipo_hab_reserva(" + codigoReserva + ")";
+            SqlCommand cmd2 = new SqlCommand(crearTablaTemporalSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd2.ExecuteNonQuery();          
+ 
+            //elimina las relaciones posta de la tabla TipoHabitacion_Reservas
+            string eliminarSQL = "exec THE_FOREIGN_FOUR.proc_liberar_habitaciones @cod_reserva";
+            SqlCommand cmd3 = new SqlCommand(eliminarSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd3.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
+            cmd3.ExecuteNonQuery();          
+
+        }
+
+        //"Rollbackea" las habitaciones de la reserva si se cancela la modificacion de la misma
+        private void rollBack(){
+            //rollback
+            string rollbackSQL = "INSERT INTO THE_FOREIGN_FOUR.TipoHabitacion_Reservas SELECT cod_reserva, cod_tipo_hab FROM THE_FOREIGN_FOUR.#Auxiliar, THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva";
+            SqlCommand cmd = new SqlCommand(rollbackSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
+            cmd.ExecuteNonQuery();            
         }
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------
@@ -390,10 +440,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void dgvHabitaciones_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete){                
-                calcularCostoTotal();
+            if (e.KeyCode == Keys.Delete){
+                if (dgvHabitaciones.Rows.Count < cantidadHabitacionesDGV)
+                    calcularCostoTotal();
             }
         }
+        private void dgvHabitaciones_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+                cantidadHabitacionesDGV = dgvHabitaciones.Rows.Count;            
+        }       
+
     }
 }
 

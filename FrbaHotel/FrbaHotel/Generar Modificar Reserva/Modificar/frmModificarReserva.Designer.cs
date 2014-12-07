@@ -141,10 +141,8 @@
             this.dgvHabitaciones.AllowUserToResizeColumns = false;
             this.dgvHabitaciones.AllowUserToResizeRows = false;
             this.dgvHabitaciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvHabitaciones.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvHabitaciones.BackgroundColor = System.Drawing.Color.White;
             this.dgvHabitaciones.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgvHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHabitaciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.codigo,
             this.Descripcion});
@@ -155,6 +153,7 @@
             this.dgvHabitaciones.Size = new System.Drawing.Size(313, 125);
             this.dgvHabitaciones.TabIndex = 4;
             this.dgvHabitaciones.TabStop = false;
+            this.dgvHabitaciones.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvHabitaciones_KeyDown);
             this.dgvHabitaciones.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvHabitaciones_KeyUp);
             // 
             // codigo
@@ -197,10 +196,8 @@
             this.dgvRegimenes.AllowUserToResizeColumns = false;
             this.dgvRegimenes.AllowUserToResizeRows = false;
             this.dgvRegimenes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvRegimenes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvRegimenes.BackgroundColor = System.Drawing.Color.White;
             this.dgvRegimenes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgvRegimenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRegimenes.Location = new System.Drawing.Point(14, 76);
             this.dgvRegimenes.Name = "dgvRegimenes";
             this.dgvRegimenes.ReadOnly = true;
