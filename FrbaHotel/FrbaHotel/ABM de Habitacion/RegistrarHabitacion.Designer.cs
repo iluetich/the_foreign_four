@@ -128,6 +128,7 @@
             this.botonCancelar.Name = "botonCancelar";
             this.botonCancelar.Size = new System.Drawing.Size(75, 23);
             this.botonCancelar.TabIndex = 8;
+            this.botonCancelar.TabStop = false;
             this.botonCancelar.Text = "Cancelar";
             this.botonCancelar.UseVisualStyleBackColor = true;
             this.botonCancelar.Click += new System.EventHandler(this.botonCancelar_Click);
@@ -138,6 +139,7 @@
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.botonLimpiar.TabIndex = 9;
+            this.botonLimpiar.TabStop = false;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
             this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
@@ -147,7 +149,7 @@
             this.botonRegistrar.Location = new System.Drawing.Point(12, 285);
             this.botonRegistrar.Name = "botonRegistrar";
             this.botonRegistrar.Size = new System.Drawing.Size(75, 23);
-            this.botonRegistrar.TabIndex = 10;
+            this.botonRegistrar.TabIndex = 7;
             this.botonRegistrar.Text = "Registrar";
             this.botonRegistrar.UseVisualStyleBackColor = true;
             this.botonRegistrar.Click += new System.EventHandler(this.botonRegistrar_Click);
@@ -157,7 +159,7 @@
             this.textBoxNumHabitacion.Location = new System.Drawing.Point(152, 80);
             this.textBoxNumHabitacion.Name = "textBoxNumHabitacion";
             this.textBoxNumHabitacion.Size = new System.Drawing.Size(53, 20);
-            this.textBoxNumHabitacion.TabIndex = 13;
+            this.textBoxNumHabitacion.TabIndex = 0;
             this.textBoxNumHabitacion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumHabitacion_KeyPress);
             // 
             // comboBoxTipoHabitacion
@@ -175,7 +177,7 @@
             this.textBoxPiso.Location = new System.Drawing.Point(153, 112);
             this.textBoxPiso.Name = "textBoxPiso";
             this.textBoxPiso.Size = new System.Drawing.Size(52, 20);
-            this.textBoxPiso.TabIndex = 15;
+            this.textBoxPiso.TabIndex = 2;
             this.textBoxPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
             // textBoxDescripcion
@@ -183,7 +185,7 @@
             this.textBoxDescripcion.Location = new System.Drawing.Point(180, 219);
             this.textBoxDescripcion.Name = "textBoxDescripcion";
             this.textBoxDescripcion.Size = new System.Drawing.Size(177, 20);
-            this.textBoxDescripcion.TabIndex = 16;
+            this.textBoxDescripcion.TabIndex = 5;
             // 
             // labelEstado
             // 
@@ -205,7 +207,7 @@
             this.comboBoxEstado.Location = new System.Drawing.Point(303, 78);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(54, 21);
-            this.comboBoxEstado.TabIndex = 18;
+            this.comboBoxEstado.TabIndex = 1;
             // 
             // comboBoxVista
             // 
@@ -217,7 +219,7 @@
             this.comboBoxVista.Location = new System.Drawing.Point(54, 145);
             this.comboBoxVista.Name = "comboBoxVista";
             this.comboBoxVista.Size = new System.Drawing.Size(109, 21);
-            this.comboBoxVista.TabIndex = 19;
+            this.comboBoxVista.TabIndex = 3;
             // 
             // labelHotel
             // 
@@ -244,14 +246,14 @@
             this.textBoxTipoHabitacion.Location = new System.Drawing.Point(132, 181);
             this.textBoxTipoHabitacion.Name = "textBoxTipoHabitacion";
             this.textBoxTipoHabitacion.Size = new System.Drawing.Size(121, 20);
-            this.textBoxTipoHabitacion.TabIndex = 22;
+            this.textBoxTipoHabitacion.TabIndex = 4;
             // 
             // textBoxHotelEncuentra
             // 
             this.textBoxHotelEncuentra.Location = new System.Drawing.Point(178, 251);
             this.textBoxHotelEncuentra.Name = "textBoxHotelEncuentra";
             this.textBoxHotelEncuentra.Size = new System.Drawing.Size(55, 20);
-            this.textBoxHotelEncuentra.TabIndex = 23;
+            this.textBoxHotelEncuentra.TabIndex = 6;
             // 
             // RegistrarHabitacion
             // 

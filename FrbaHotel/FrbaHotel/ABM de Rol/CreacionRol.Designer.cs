@@ -72,7 +72,7 @@ namespace FrbaHotel.ABM_de_Rol
             this.textBoxNombre.Location = new System.Drawing.Point(109, 58);
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNombre.TabIndex = 3;
+            this.textBoxNombre.TabIndex = 0;
             this.textBoxNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNombre_KeyPress);
             // 
             // comboBoxFuncionalidad
@@ -82,7 +82,7 @@ namespace FrbaHotel.ABM_de_Rol
             this.comboBoxFuncionalidad.Location = new System.Drawing.Point(109, 125);
             this.comboBoxFuncionalidad.Name = "comboBoxFuncionalidad";
             this.comboBoxFuncionalidad.Size = new System.Drawing.Size(168, 21);
-            this.comboBoxFuncionalidad.TabIndex = 4;
+            this.comboBoxFuncionalidad.TabIndex = 2;
             this.comboBoxFuncionalidad.SelectedIndexChanged += new System.EventHandler(this.comboBoxFuncionalidad_SelectedIndexChanged);
             // 
             // BotonAceptar
@@ -91,7 +91,7 @@ namespace FrbaHotel.ABM_de_Rol
             this.BotonAceptar.Location = new System.Drawing.Point(12, 341);
             this.BotonAceptar.Name = "BotonAceptar";
             this.BotonAceptar.Size = new System.Drawing.Size(89, 26);
-            this.BotonAceptar.TabIndex = 10;
+            this.BotonAceptar.TabIndex = 5;
             this.BotonAceptar.Text = "Guardar";
             this.BotonAceptar.UseVisualStyleBackColor = true;
             this.BotonAceptar.Click += new System.EventHandler(this.BotonAceptar_Click);
@@ -114,7 +114,7 @@ namespace FrbaHotel.ABM_de_Rol
             this.button1.Location = new System.Drawing.Point(120, 341);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(89, 26);
-            this.button1.TabIndex = 12;
+            this.button1.TabIndex = 6;
             this.button1.Text = "Limpiar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -134,7 +134,7 @@ namespace FrbaHotel.ABM_de_Rol
             this.Cancelar.Location = new System.Drawing.Point(288, 341);
             this.Cancelar.Name = "Cancelar";
             this.Cancelar.Size = new System.Drawing.Size(89, 26);
-            this.Cancelar.TabIndex = 15;
+            this.Cancelar.TabIndex = 7;
             this.Cancelar.Text = "Cancelar";
             this.Cancelar.UseVisualStyleBackColor = true;
             this.Cancelar.Click += new System.EventHandler(this.Cancelar_Click);
@@ -144,7 +144,7 @@ namespace FrbaHotel.ABM_de_Rol
             this.BotonAgregarFuncionalidad.Location = new System.Drawing.Point(288, 125);
             this.BotonAgregarFuncionalidad.Name = "BotonAgregarFuncionalidad";
             this.BotonAgregarFuncionalidad.Size = new System.Drawing.Size(77, 23);
-            this.BotonAgregarFuncionalidad.TabIndex = 16;
+            this.BotonAgregarFuncionalidad.TabIndex = 3;
             this.BotonAgregarFuncionalidad.Text = "Agregar";
             this.BotonAgregarFuncionalidad.UseVisualStyleBackColor = true;
             this.BotonAgregarFuncionalidad.Click += new System.EventHandler(this.BotonAgregarFuncionalidad_Click);
@@ -161,18 +161,25 @@ namespace FrbaHotel.ABM_de_Rol
             // 
             // dgvFuncionalidades
             // 
+            this.dgvFuncionalidades.AllowUserToAddRows = false;
+            this.dgvFuncionalidades.AllowUserToDeleteRows = false;
+            this.dgvFuncionalidades.AllowUserToResizeColumns = false;
+            this.dgvFuncionalidades.AllowUserToResizeRows = false;
+            this.dgvFuncionalidades.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvFuncionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFuncionalidades.Location = new System.Drawing.Point(120, 166);
             this.dgvFuncionalidades.Name = "dgvFuncionalidades";
+            this.dgvFuncionalidades.ReadOnly = true;
             this.dgvFuncionalidades.Size = new System.Drawing.Size(240, 150);
             this.dgvFuncionalidades.TabIndex = 27;
+            this.dgvFuncionalidades.TabStop = false;
             // 
             // botonQuitar
             // 
             this.botonQuitar.Location = new System.Drawing.Point(12, 205);
             this.botonQuitar.Name = "botonQuitar";
             this.botonQuitar.Size = new System.Drawing.Size(75, 23);
-            this.botonQuitar.TabIndex = 28;
+            this.botonQuitar.TabIndex = 4;
             this.botonQuitar.Text = "Quitar";
             this.botonQuitar.UseVisualStyleBackColor = true;
             this.botonQuitar.Click += new System.EventHandler(this.botonQuitar_Click);
@@ -187,7 +194,7 @@ namespace FrbaHotel.ABM_de_Rol
             this.comboBoxEstado.Location = new System.Drawing.Point(295, 58);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(60, 21);
-            this.comboBoxEstado.TabIndex = 29;
+            this.comboBoxEstado.TabIndex = 1;
             this.comboBoxEstado.SelectedIndexChanged += new System.EventHandler(this.comboBoxEstado_SelectedIndexChanged);
             // 
             // CreacionRol

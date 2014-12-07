@@ -167,7 +167,7 @@
             this.botonRegistrar.Location = new System.Drawing.Point(12, 292);
             this.botonRegistrar.Name = "botonRegistrar";
             this.botonRegistrar.Size = new System.Drawing.Size(75, 23);
-            this.botonRegistrar.TabIndex = 11;
+            this.botonRegistrar.TabIndex = 13;
             this.botonRegistrar.Text = "Registrar";
             this.botonRegistrar.UseVisualStyleBackColor = true;
             this.botonRegistrar.Click += new System.EventHandler(this.botonRegistrar_Click);
@@ -178,6 +178,7 @@
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.botonLimpiar.TabIndex = 12;
+            this.botonLimpiar.TabStop = false;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
             this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
@@ -188,6 +189,7 @@
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 13;
+            this.botonVolver.TabStop = false;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
@@ -197,7 +199,7 @@
             this.botonAgregarRegimen.Location = new System.Drawing.Point(581, 80);
             this.botonAgregarRegimen.Name = "botonAgregarRegimen";
             this.botonAgregarRegimen.Size = new System.Drawing.Size(75, 23);
-            this.botonAgregarRegimen.TabIndex = 14;
+            this.botonAgregarRegimen.TabIndex = 11;
             this.botonAgregarRegimen.Text = "Agregar";
             this.botonAgregarRegimen.UseVisualStyleBackColor = true;
             this.botonAgregarRegimen.Click += new System.EventHandler(this.botonAgregarRegimen_Click);
@@ -207,7 +209,7 @@
             this.textBoxNombreHotel.Location = new System.Drawing.Point(123, 82);
             this.textBoxNombreHotel.Name = "textBoxNombreHotel";
             this.textBoxNombreHotel.Size = new System.Drawing.Size(161, 20);
-            this.textBoxNombreHotel.TabIndex = 15;
+            this.textBoxNombreHotel.TabIndex = 0;
             // 
             // comboBoxCantEstrellas
             // 
@@ -222,7 +224,7 @@
             this.comboBoxCantEstrellas.Location = new System.Drawing.Point(143, 105);
             this.comboBoxCantEstrellas.Name = "comboBoxCantEstrellas";
             this.comboBoxCantEstrellas.Size = new System.Drawing.Size(45, 21);
-            this.comboBoxCantEstrellas.TabIndex = 16;
+            this.comboBoxCantEstrellas.TabIndex = 1;
             this.comboBoxCantEstrellas.SelectedIndexChanged += new System.EventHandler(this.comboBoxCantEstrellas_SelectedIndexChanged);
             // 
             // textBoxMail
@@ -230,14 +232,14 @@
             this.textBoxMail.Location = new System.Drawing.Point(51, 134);
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(158, 20);
-            this.textBoxMail.TabIndex = 17;
+            this.textBoxMail.TabIndex = 3;
             // 
             // textBoxTelefono
             // 
             this.textBoxTelefono.Location = new System.Drawing.Point(75, 160);
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(100, 20);
-            this.textBoxTelefono.TabIndex = 18;
+            this.textBoxTelefono.TabIndex = 4;
             this.textBoxTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTelefono_KeyPress);
             // 
             // textBoxCiudad
@@ -245,7 +247,7 @@
             this.textBoxCiudad.Location = new System.Drawing.Point(65, 220);
             this.textBoxCiudad.Name = "textBoxCiudad";
             this.textBoxCiudad.Size = new System.Drawing.Size(100, 20);
-            this.textBoxCiudad.TabIndex = 19;
+            this.textBoxCiudad.TabIndex = 7;
             this.textBoxCiudad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxCiudad_KeyPress);
             // 
             // dateFechaCreacion
@@ -253,7 +255,7 @@
             this.dateFechaCreacion.Location = new System.Drawing.Point(128, 258);
             this.dateFechaCreacion.Name = "dateFechaCreacion";
             this.dateFechaCreacion.Size = new System.Drawing.Size(224, 20);
-            this.dateFechaCreacion.TabIndex = 20;
+            this.dateFechaCreacion.TabIndex = 9;
             this.dateFechaCreacion.ValueChanged += new System.EventHandler(this.dateFechaCreacion_ValueChanged);
             // 
             // comboBoxTipoRegimen
@@ -263,7 +265,7 @@
             this.comboBoxTipoRegimen.Location = new System.Drawing.Point(454, 82);
             this.comboBoxTipoRegimen.Name = "comboBoxTipoRegimen";
             this.comboBoxTipoRegimen.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxTipoRegimen.TabIndex = 21;
+            this.comboBoxTipoRegimen.TabIndex = 10;
             this.comboBoxTipoRegimen.SelectedIndexChanged += new System.EventHandler(this.comboBoxTipoRegimen_SelectedIndexChanged);
             // 
             // textBoxPais
@@ -271,7 +273,7 @@
             this.textBoxPais.Location = new System.Drawing.Point(244, 225);
             this.textBoxPais.Name = "textBoxPais";
             this.textBoxPais.Size = new System.Drawing.Size(96, 20);
-            this.textBoxPais.TabIndex = 24;
+            this.textBoxPais.TabIndex = 8;
             this.textBoxPais.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPais_KeyPress);
             // 
             // botonQuitar
@@ -279,16 +281,22 @@
             this.botonQuitar.Location = new System.Drawing.Point(661, 80);
             this.botonQuitar.Name = "botonQuitar";
             this.botonQuitar.Size = new System.Drawing.Size(75, 23);
-            this.botonQuitar.TabIndex = 25;
+            this.botonQuitar.TabIndex = 12;
             this.botonQuitar.Text = "Quitar";
             this.botonQuitar.UseVisualStyleBackColor = true;
             this.botonQuitar.Click += new System.EventHandler(this.botonQuitar_Click);
             // 
             // dgvRegimen
             // 
+            this.dgvRegimen.AllowUserToAddRows = false;
+            this.dgvRegimen.AllowUserToDeleteRows = false;
+            this.dgvRegimen.AllowUserToResizeColumns = false;
+            this.dgvRegimen.AllowUserToResizeRows = false;
+            this.dgvRegimen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRegimen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRegimen.Location = new System.Drawing.Point(454, 123);
             this.dgvRegimen.Name = "dgvRegimen";
+            this.dgvRegimen.ReadOnly = true;
             this.dgvRegimen.Size = new System.Drawing.Size(282, 118);
             this.dgvRegimen.TabIndex = 26;
             // 
@@ -317,14 +325,14 @@
             this.textBoxCalle.Location = new System.Drawing.Point(57, 194);
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(100, 20);
-            this.textBoxCalle.TabIndex = 29;
+            this.textBoxCalle.TabIndex = 5;
             // 
             // textBoxNroCalle
             // 
             this.textBoxNroCalle.Location = new System.Drawing.Point(281, 193);
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNroCalle.TabIndex = 30;
+            this.textBoxNroCalle.TabIndex = 6;
             this.textBoxNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNroCalle_KeyPress);
             // 
             // labelRecargoEstrallas
@@ -342,7 +350,7 @@
             this.textBoxRecEstrellas.Location = new System.Drawing.Point(346, 107);
             this.textBoxRecEstrellas.Name = "textBoxRecEstrellas";
             this.textBoxRecEstrellas.Size = new System.Drawing.Size(82, 20);
-            this.textBoxRecEstrellas.TabIndex = 32;
+            this.textBoxRecEstrellas.TabIndex = 2;
             this.textBoxRecEstrellas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxRecEstrellas_KeyPress);
             // 
             // RegistrarHotel

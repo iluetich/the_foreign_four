@@ -53,6 +53,7 @@
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 35;
+            this.botonVolver.TabStop = false;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
@@ -63,6 +64,7 @@
             this.botonInhabilitar.Name = "botonInhabilitar";
             this.botonInhabilitar.Size = new System.Drawing.Size(75, 23);
             this.botonInhabilitar.TabIndex = 34;
+            this.botonInhabilitar.TabStop = false;
             this.botonInhabilitar.Text = "Inhabilitar";
             this.botonInhabilitar.UseVisualStyleBackColor = true;
             this.botonInhabilitar.Click += new System.EventHandler(this.botonInhabilitar_Click);
@@ -72,7 +74,7 @@
             this.botonModificar.Location = new System.Drawing.Point(12, 336);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(75, 23);
-            this.botonModificar.TabIndex = 33;
+            this.botonModificar.TabIndex = 6;
             this.botonModificar.Text = "Modificar";
             this.botonModificar.UseVisualStyleBackColor = true;
             this.botonModificar.Click += new System.EventHandler(this.botonModificar_Click);
@@ -82,7 +84,7 @@
             this.botonLimpiar.Location = new System.Drawing.Point(376, 159);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.botonLimpiar.TabIndex = 32;
+            this.botonLimpiar.TabIndex = 5;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
             this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
@@ -92,7 +94,7 @@
             this.botonBuscar.Location = new System.Drawing.Point(238, 159);
             this.botonBuscar.Name = "botonBuscar";
             this.botonBuscar.Size = new System.Drawing.Size(75, 23);
-            this.botonBuscar.TabIndex = 31;
+            this.botonBuscar.TabIndex = 4;
             this.botonBuscar.Text = "Buscar";
             this.botonBuscar.UseVisualStyleBackColor = true;
             this.botonBuscar.Click += new System.EventHandler(this.botonBuscar_Click);
@@ -102,7 +104,7 @@
             this.textBoxBuscadorPais.Location = new System.Drawing.Point(275, 80);
             this.textBoxBuscadorPais.Name = "textBoxBuscadorPais";
             this.textBoxBuscadorPais.Size = new System.Drawing.Size(118, 20);
-            this.textBoxBuscadorPais.TabIndex = 28;
+            this.textBoxBuscadorPais.TabIndex = 1;
             this.textBoxBuscadorPais.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorPais_KeyPress);
             // 
             // comboBoxBusCantEstrellas
@@ -119,21 +121,21 @@
             this.comboBoxBusCantEstrellas.Location = new System.Drawing.Point(144, 118);
             this.comboBoxBusCantEstrellas.Name = "comboBoxBusCantEstrellas";
             this.comboBoxBusCantEstrellas.Size = new System.Drawing.Size(90, 21);
-            this.comboBoxBusCantEstrellas.TabIndex = 27;
+            this.comboBoxBusCantEstrellas.TabIndex = 3;
             // 
             // textBoxBuscadorCiudad
             // 
             this.textBoxBuscadorCiudad.Location = new System.Drawing.Point(491, 80);
             this.textBoxBuscadorCiudad.Name = "textBoxBuscadorCiudad";
             this.textBoxBuscadorCiudad.Size = new System.Drawing.Size(98, 20);
-            this.textBoxBuscadorCiudad.TabIndex = 26;
+            this.textBoxBuscadorCiudad.TabIndex = 2;
             // 
             // textBoxBuscadorNombre
             // 
             this.textBoxBuscadorNombre.Location = new System.Drawing.Point(72, 80);
             this.textBoxBuscadorNombre.Name = "textBoxBuscadorNombre";
             this.textBoxBuscadorNombre.Size = new System.Drawing.Size(118, 20);
-            this.textBoxBuscadorNombre.TabIndex = 25;
+            this.textBoxBuscadorNombre.TabIndex = 0;
             // 
             // labelPais
             // 
@@ -198,9 +200,16 @@
             // 
             // dgvHoteles
             // 
+            this.dgvHoteles.AllowUserToAddRows = false;
+            this.dgvHoteles.AllowUserToDeleteRows = false;
+            this.dgvHoteles.AllowUserToResizeColumns = false;
+            this.dgvHoteles.AllowUserToResizeRows = false;
+            this.dgvHoteles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvHoteles.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgvHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHoteles.Location = new System.Drawing.Point(12, 188);
             this.dgvHoteles.Name = "dgvHoteles";
+            this.dgvHoteles.ReadOnly = true;
             this.dgvHoteles.Size = new System.Drawing.Size(661, 130);
             this.dgvHoteles.TabIndex = 36;
             // 

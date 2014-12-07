@@ -53,7 +53,7 @@
             this.ModificarRol.Location = new System.Drawing.Point(12, 234);
             this.ModificarRol.Name = "ModificarRol";
             this.ModificarRol.Size = new System.Drawing.Size(75, 23);
-            this.ModificarRol.TabIndex = 2;
+            this.ModificarRol.TabIndex = 1;
             this.ModificarRol.Text = "Modificar";
             this.ModificarRol.UseVisualStyleBackColor = true;
             this.ModificarRol.Click += new System.EventHandler(this.ModificarRol_Click);
@@ -64,6 +64,7 @@
             this.InhabilitarRol.Name = "InhabilitarRol";
             this.InhabilitarRol.Size = new System.Drawing.Size(75, 23);
             this.InhabilitarRol.TabIndex = 3;
+            this.InhabilitarRol.TabStop = false;
             this.InhabilitarRol.Text = "Inhabilitar";
             this.InhabilitarRol.UseVisualStyleBackColor = true;
             this.InhabilitarRol.Click += new System.EventHandler(this.InhabilitarRol_Click);
@@ -73,7 +74,7 @@
             this.cancelar.Location = new System.Drawing.Point(324, 234);
             this.cancelar.Name = "cancelar";
             this.cancelar.Size = new System.Drawing.Size(75, 23);
-            this.cancelar.TabIndex = 4;
+            this.cancelar.TabIndex = 2;
             this.cancelar.Text = "Cancelar";
             this.cancelar.UseVisualStyleBackColor = true;
             this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
@@ -91,11 +92,17 @@
             // 
             // dgvBuscarRol
             // 
+            this.dgvBuscarRol.AllowUserToAddRows = false;
+            this.dgvBuscarRol.AllowUserToDeleteRows = false;
+            this.dgvBuscarRol.AllowUserToResizeColumns = false;
+            this.dgvBuscarRol.AllowUserToResizeRows = false;
+            this.dgvBuscarRol.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvBuscarRol.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBuscarRol.Location = new System.Drawing.Point(12, 74);
             this.dgvBuscarRol.Name = "dgvBuscarRol";
+            this.dgvBuscarRol.ReadOnly = true;
             this.dgvBuscarRol.Size = new System.Drawing.Size(387, 139);
-            this.dgvBuscarRol.TabIndex = 6;
+            this.dgvBuscarRol.TabIndex = 0;
             // 
             // ModificarYBorrarRol
             // 

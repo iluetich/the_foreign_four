@@ -86,7 +86,7 @@
             this.botonInhabilitar.Location = new System.Drawing.Point(15, 175);
             this.botonInhabilitar.Name = "botonInhabilitar";
             this.botonInhabilitar.Size = new System.Drawing.Size(75, 23);
-            this.botonInhabilitar.TabIndex = 4;
+            this.botonInhabilitar.TabIndex = 3;
             this.botonInhabilitar.Text = "Inhabilitar";
             this.botonInhabilitar.UseVisualStyleBackColor = true;
             this.botonInhabilitar.Click += new System.EventHandler(this.botonInhabilitar_Click);
@@ -96,7 +96,7 @@
             this.botonCancelar.Location = new System.Drawing.Point(210, 175);
             this.botonCancelar.Name = "botonCancelar";
             this.botonCancelar.Size = new System.Drawing.Size(75, 23);
-            this.botonCancelar.TabIndex = 5;
+            this.botonCancelar.TabIndex = 4;
             this.botonCancelar.Text = "Cancelar";
             this.botonCancelar.UseVisualStyleBackColor = true;
             this.botonCancelar.Click += new System.EventHandler(this.botonCancelar_Click);
@@ -106,21 +106,21 @@
             this.dateDesde.Location = new System.Drawing.Point(65, 51);
             this.dateDesde.Name = "dateDesde";
             this.dateDesde.Size = new System.Drawing.Size(220, 20);
-            this.dateDesde.TabIndex = 6;
+            this.dateDesde.TabIndex = 0;
             // 
             // dateHasta
             // 
             this.dateHasta.Location = new System.Drawing.Point(65, 89);
             this.dateHasta.Name = "dateHasta";
             this.dateHasta.Size = new System.Drawing.Size(220, 20);
-            this.dateHasta.TabIndex = 7;
+            this.dateHasta.TabIndex = 1;
             // 
             // textBoxMotivo
             // 
             this.textBoxMotivo.Location = new System.Drawing.Point(65, 125);
             this.textBoxMotivo.Name = "textBoxMotivo";
             this.textBoxMotivo.Size = new System.Drawing.Size(220, 20);
-            this.textBoxMotivo.TabIndex = 8;
+            this.textBoxMotivo.TabIndex = 2;
             // 
             // InHabilitarHotel
             // 

@@ -130,7 +130,7 @@
             this.textBoxBuscadorNombre.Location = new System.Drawing.Point(73, 80);
             this.textBoxBuscadorNombre.Name = "textBoxBuscadorNombre";
             this.textBoxBuscadorNombre.Size = new System.Drawing.Size(118, 20);
-            this.textBoxBuscadorNombre.TabIndex = 7;
+            this.textBoxBuscadorNombre.TabIndex = 0;
             this.textBoxBuscadorNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorNombre_KeyPress);
             // 
             // textBoxBuscadorApellido
@@ -138,7 +138,7 @@
             this.textBoxBuscadorApellido.Location = new System.Drawing.Point(278, 79);
             this.textBoxBuscadorApellido.Name = "textBoxBuscadorApellido";
             this.textBoxBuscadorApellido.Size = new System.Drawing.Size(132, 20);
-            this.textBoxBuscadorApellido.TabIndex = 8;
+            this.textBoxBuscadorApellido.TabIndex = 1;
             this.textBoxBuscadorApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorApellido_KeyPress);
             // 
             // comboBoxBuscadorTipoDoc
@@ -151,7 +151,7 @@
             this.comboBoxBuscadorTipoDoc.Location = new System.Drawing.Point(97, 121);
             this.comboBoxBuscadorTipoDoc.Name = "comboBoxBuscadorTipoDoc";
             this.comboBoxBuscadorTipoDoc.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxBuscadorTipoDoc.TabIndex = 9;
+            this.comboBoxBuscadorTipoDoc.TabIndex = 3;
             this.comboBoxBuscadorTipoDoc.SelectedIndexChanged += new System.EventHandler(this.comboBoxBuscadorTipoDoc_SelectedIndexChanged);
             // 
             // textBoxBuscadorNroDoc
@@ -160,7 +160,7 @@
             this.textBoxBuscadorNroDoc.MaxLength = 8;
             this.textBoxBuscadorNroDoc.Name = "textBoxBuscadorNroDoc";
             this.textBoxBuscadorNroDoc.Size = new System.Drawing.Size(118, 20);
-            this.textBoxBuscadorNroDoc.TabIndex = 10;
+            this.textBoxBuscadorNroDoc.TabIndex = 4;
             this.textBoxBuscadorNroDoc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorNroDoc_KeyPress);
             // 
             // textBoxBuscadorMail
@@ -168,14 +168,14 @@
             this.textBoxBuscadorMail.Location = new System.Drawing.Point(520, 79);
             this.textBoxBuscadorMail.Name = "textBoxBuscadorMail";
             this.textBoxBuscadorMail.Size = new System.Drawing.Size(138, 20);
-            this.textBoxBuscadorMail.TabIndex = 11;
+            this.textBoxBuscadorMail.TabIndex = 2;
             // 
             // botonBuscar
             // 
             this.botonBuscar.Location = new System.Drawing.Point(264, 158);
             this.botonBuscar.Name = "botonBuscar";
             this.botonBuscar.Size = new System.Drawing.Size(75, 23);
-            this.botonBuscar.TabIndex = 13;
+            this.botonBuscar.TabIndex = 5;
             this.botonBuscar.Text = "Buscar";
             this.botonBuscar.UseVisualStyleBackColor = true;
             this.botonBuscar.Click += new System.EventHandler(this.botonBuscar_Click);
@@ -185,7 +185,7 @@
             this.botonLimpiar.Location = new System.Drawing.Point(409, 158);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.botonLimpiar.TabIndex = 14;
+            this.botonLimpiar.TabIndex = 6;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
             this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
@@ -195,7 +195,7 @@
             this.botonModificar.Location = new System.Drawing.Point(12, 424);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(75, 23);
-            this.botonModificar.TabIndex = 15;
+            this.botonModificar.TabIndex = 7;
             this.botonModificar.Text = "Modificar";
             this.botonModificar.UseVisualStyleBackColor = true;
             this.botonModificar.Click += new System.EventHandler(this.botonModificar_Click);
@@ -206,6 +206,7 @@
             this.botonInhabilitar.Name = "botonInhabilitar";
             this.botonInhabilitar.Size = new System.Drawing.Size(75, 23);
             this.botonInhabilitar.TabIndex = 16;
+            this.botonInhabilitar.TabStop = false;
             this.botonInhabilitar.Text = "Inhabilitar";
             this.botonInhabilitar.UseVisualStyleBackColor = true;
             this.botonInhabilitar.Click += new System.EventHandler(this.botonInhabilitar_Click);
@@ -216,6 +217,7 @@
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 17;
+            this.botonVolver.TabStop = false;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
@@ -232,11 +234,18 @@
             // 
             // datGridViewClientes
             // 
+            this.datGridViewClientes.AllowUserToAddRows = false;
+            this.datGridViewClientes.AllowUserToDeleteRows = false;
+            this.datGridViewClientes.AllowUserToResizeColumns = false;
+            this.datGridViewClientes.AllowUserToResizeRows = false;
+            this.datGridViewClientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.datGridViewClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.datGridViewClientes.Location = new System.Drawing.Point(15, 195);
             this.datGridViewClientes.Name = "datGridViewClientes";
+            this.datGridViewClientes.ReadOnly = true;
             this.datGridViewClientes.Size = new System.Drawing.Size(708, 210);
             this.datGridViewClientes.TabIndex = 18;
+            this.datGridViewClientes.TabStop = false;
             // 
             // ModificarOBorrarCliente
             // 

@@ -379,9 +379,11 @@
             this.dgvRolesHoteles.AllowUserToDeleteRows = false;
             this.dgvRolesHoteles.AllowUserToResizeColumns = false;
             this.dgvRolesHoteles.AllowUserToResizeRows = false;
+            this.dgvRolesHoteles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRolesHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRolesHoteles.Location = new System.Drawing.Point(277, 100);
             this.dgvRolesHoteles.Name = "dgvRolesHoteles";
+            this.dgvRolesHoteles.ReadOnly = true;
             this.dgvRolesHoteles.Size = new System.Drawing.Size(281, 90);
             this.dgvRolesHoteles.TabIndex = 41;
             // 

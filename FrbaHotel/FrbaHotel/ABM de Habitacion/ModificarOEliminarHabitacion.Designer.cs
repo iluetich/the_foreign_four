@@ -53,6 +53,7 @@
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 51;
+            this.botonVolver.TabStop = false;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
@@ -62,7 +63,7 @@
             this.botonInhabilitar.Location = new System.Drawing.Point(93, 338);
             this.botonInhabilitar.Name = "botonInhabilitar";
             this.botonInhabilitar.Size = new System.Drawing.Size(75, 23);
-            this.botonInhabilitar.TabIndex = 50;
+            this.botonInhabilitar.TabIndex = 7;
             this.botonInhabilitar.Text = "Inhabilitar";
             this.botonInhabilitar.UseVisualStyleBackColor = true;
             this.botonInhabilitar.Click += new System.EventHandler(this.botonInhabilitar_Click);
@@ -72,7 +73,7 @@
             this.botonModificar.Location = new System.Drawing.Point(12, 338);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(75, 23);
-            this.botonModificar.TabIndex = 49;
+            this.botonModificar.TabIndex = 6;
             this.botonModificar.Text = "Modificar";
             this.botonModificar.UseVisualStyleBackColor = true;
             this.botonModificar.Click += new System.EventHandler(this.botonModificar_Click);
@@ -82,7 +83,7 @@
             this.botonLimpiar.Location = new System.Drawing.Point(270, 157);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.botonLimpiar.TabIndex = 48;
+            this.botonLimpiar.TabIndex = 5;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
             this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
@@ -92,7 +93,7 @@
             this.botonBuscar.Location = new System.Drawing.Point(158, 157);
             this.botonBuscar.Name = "botonBuscar";
             this.botonBuscar.Size = new System.Drawing.Size(75, 23);
-            this.botonBuscar.TabIndex = 47;
+            this.botonBuscar.TabIndex = 4;
             this.botonBuscar.Text = "Buscar";
             this.botonBuscar.UseVisualStyleBackColor = true;
             this.botonBuscar.Click += new System.EventHandler(this.botonBuscar_Click);
@@ -102,7 +103,7 @@
             this.texBoxPiso.Location = new System.Drawing.Point(429, 88);
             this.texBoxPiso.Name = "texBoxPiso";
             this.texBoxPiso.Size = new System.Drawing.Size(62, 20);
-            this.texBoxPiso.TabIndex = 45;
+            this.texBoxPiso.TabIndex = 2;
             this.texBoxPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorPais_KeyPress);
             // 
             // texBoxNroHab
@@ -110,7 +111,7 @@
             this.texBoxNroHab.Location = new System.Drawing.Point(90, 84);
             this.texBoxNroHab.Name = "texBoxNroHab";
             this.texBoxNroHab.Size = new System.Drawing.Size(68, 20);
-            this.texBoxNroHab.TabIndex = 42;
+            this.texBoxNroHab.TabIndex = 0;
             this.texBoxNroHab.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBuscadorNombre_KeyPress);
             // 
             // labelPiso
@@ -175,15 +176,22 @@
             this.comboBoxUbicacion.Location = new System.Drawing.Point(250, 86);
             this.comboBoxUbicacion.Name = "comboBoxUbicacion";
             this.comboBoxUbicacion.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxUbicacion.TabIndex = 52;
+            this.comboBoxUbicacion.TabIndex = 1;
             // 
             // dgvHabitaciones
             // 
+            this.dgvHabitaciones.AllowUserToAddRows = false;
+            this.dgvHabitaciones.AllowUserToDeleteRows = false;
+            this.dgvHabitaciones.AllowUserToResizeColumns = false;
+            this.dgvHabitaciones.AllowUserToResizeRows = false;
+            this.dgvHabitaciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHabitaciones.Location = new System.Drawing.Point(12, 186);
             this.dgvHabitaciones.Name = "dgvHabitaciones";
+            this.dgvHabitaciones.ReadOnly = true;
             this.dgvHabitaciones.Size = new System.Drawing.Size(478, 146);
             this.dgvHabitaciones.TabIndex = 53;
+            this.dgvHabitaciones.TabStop = false;
             // 
             // labelHotel
             // 
@@ -202,7 +210,7 @@
             this.comboBoxHotel.Location = new System.Drawing.Point(154, 123);
             this.comboBoxHotel.Name = "comboBoxHotel";
             this.comboBoxHotel.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxHotel.TabIndex = 55;
+            this.comboBoxHotel.TabIndex = 3;
             this.comboBoxHotel.SelectedIndexChanged += new System.EventHandler(this.comboBoxHotel_SelectedIndexChanged);
             // 
             // ModificarOEliminarHabitacion
