@@ -1883,15 +1883,23 @@ BEGIN
 	BEGIN
 		RETURN -1
 	END
+	RETURN (SELECT THE_FOREIGN_FOUR.func_operacion_en_fecha (@cod_reserva))
+END
+GO
+--***************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_operacion_en_fecha
+					(@cod_reserva numeric(18,0))
+RETURNS int
+AS
+BEGIN
 	DECLARE @fecha_inicio_reserva datetime
 	SET	@fecha_inicio_reserva = (SELECT fecha_desde
 								 FROM THE_FOREIGN_FOUR.Reservas
 								 WHERE cod_reserva = @cod_reserva)
-	IF (DATEDIFF(day, @fecha_inicio_reserva, GETDATE()) <= 1)
+	IF (DATEDIFF(day, @fecha_inicio_reserva, GETDATE()) <= 1) --fecha_inicio es mayor a la actual en, por lo menos 1 o mas dias
 	BEGIN
 		RETURN 1
 	END
 	RETURN 0
 END
 GO
---***************************************************
