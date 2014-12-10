@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBotonera = new System.Windows.Forms.GroupBox();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvClientes = new System.Windows.Forms.DataGridView();
             this.btnCheckout = new System.Windows.Forms.Button();
@@ -38,6 +39,7 @@
             // 
             // groupBotonera
             // 
+            this.groupBotonera.Controls.Add(this.btnVolver);
             this.groupBotonera.Controls.Add(this.label1);
             this.groupBotonera.Controls.Add(this.dgvClientes);
             this.groupBotonera.Controls.Add(this.btnCheckout);
@@ -46,6 +48,16 @@
             this.groupBotonera.Size = new System.Drawing.Size(407, 279);
             this.groupBotonera.TabIndex = 0;
             this.groupBotonera.TabStop = false;
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.Location = new System.Drawing.Point(80, 223);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(119, 34);
+            this.btnVolver.TabIndex = 4;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // label1
             // 
@@ -75,7 +87,7 @@
             // btnCheckout
             // 
             this.btnCheckout.AutoSize = true;
-            this.btnCheckout.Location = new System.Drawing.Point(142, 223);
+            this.btnCheckout.Location = new System.Drawing.Point(205, 223);
             this.btnCheckout.Name = "btnCheckout";
             this.btnCheckout.Size = new System.Drawing.Size(119, 34);
             this.btnCheckout.TabIndex = 1;
@@ -109,5 +121,6 @@
         private System.Windows.Forms.Button btnCheckout;
         private System.Windows.Forms.DataGridView dgvClientes;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

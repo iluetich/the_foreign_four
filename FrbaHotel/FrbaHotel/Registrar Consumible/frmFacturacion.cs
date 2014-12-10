@@ -16,7 +16,8 @@ namespace FrbaHotel.Registrar_Consumible
         private long nroFactura;        
         string codigoTipoPago;
         string nroTarjeta;
-       
+        
+        //---------------------------CONSTRUCTORES-----------------------------------------------------------------------------------
         public frmFacturacion(){InitializeComponent();}
         public frmFacturacion(frmRegistrarConsumible newForm,long nroFacturaParametro)
         {
@@ -26,8 +27,11 @@ namespace FrbaHotel.Registrar_Consumible
             InitializeComponent();
             frmRegistrarConsumiblePadre = newForm;
             FrbaHotel.Utils.rellenarDataGridView(dgvFacturaDetalle, "SELECT * FROM THE_FOREIGN_FOUR.facturacion ("+ nroFactura +")");            
-        }       
+        }
+        //-----------------------------------------------------------------------------------------------------------------------------
 
+
+        //---------------------------BOTONES-------------------------------------------------------------------------------------------
         private void btnEmitirFactura_Click(object sender, EventArgs e)
         {
             if (validarCampos())
@@ -48,7 +52,12 @@ namespace FrbaHotel.Registrar_Consumible
                 }
             }
         }
+        //-----------------------------------------------------------------------------------------------------------------------------
 
+
+        //---------------------------------OTROS---------------------------------------------------------------------------------------
+
+        //manejo el evento del cierre del form
         private void frmFacturacion_FormClosing(object sender, FormClosingEventArgs e)
         {
             frmRegistrarConsumiblePadre.Enabled = true;
@@ -63,18 +72,17 @@ namespace FrbaHotel.Registrar_Consumible
             this.frmRegistrarConsumiblePadre.Close();
         }
 
-        private void rbtnTarjeta_CheckedChanged(object sender, EventArgs e)
-        {
+        //manejo el changued del control
+        private void rbtnTarjeta_CheckedChanged(object sender, EventArgs e){
             txtNroTarj.Enabled = true;
             codigoTipoPago = "2";
         }
-
-        private void rbtnContado_CheckedChanged(object sender, EventArgs e)
-        {
+        private void rbtnContado_CheckedChanged(object sender, EventArgs e){
             txtNroTarj.Enabled = false;
             codigoTipoPago = "1";
         }
 
+        //valida los inputs
         private bool validarCampos()
         {
             if (rbtnContado.Checked || rbtnTarjeta.Checked){
@@ -95,6 +103,10 @@ namespace FrbaHotel.Registrar_Consumible
             }
         }
 
+        //only numbers
+        private void txtNroTarj_KeyPress(object sender, KeyPressEventArgs e) { FrbaHotel.Utils.allowNumbers(e); }
+
+        //-----------------------------------------------------------------------------------------------------------------------------
     }
 }
 

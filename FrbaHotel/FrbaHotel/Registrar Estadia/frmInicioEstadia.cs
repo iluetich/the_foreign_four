@@ -79,6 +79,7 @@ namespace FrbaHotel.Registrar_Estadia
                         break;
                     case 1:
                         new frmCheckout(this, txtCodEstadia.Text, user, menu).Show();
+                        this.Enabled = false;
                         break;
                 }                
             }

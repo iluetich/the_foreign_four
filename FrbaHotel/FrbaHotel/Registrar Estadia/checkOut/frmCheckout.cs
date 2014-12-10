@@ -112,6 +112,6 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         //-------------------------FIN OTROS--------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------
 
-        public void setCerrate() { cerrate = true; }
+        public void setCerrate() { cerrate = true; }        
     }
 }

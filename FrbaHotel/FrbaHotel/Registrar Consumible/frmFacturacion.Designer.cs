@@ -125,6 +125,7 @@
             this.txtNroTarj.Name = "txtNroTarj";
             this.txtNroTarj.Size = new System.Drawing.Size(121, 20);
             this.txtNroTarj.TabIndex = 7;
+            this.txtNroTarj.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNroTarj_KeyPress);
             // 
             // btnEmitirFactura
             // 
