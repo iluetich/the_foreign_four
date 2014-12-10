@@ -33,5 +33,14 @@ namespace FrbaHotel.Properties {
                 return ((string)(this["GD2C2014ConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("01/08/2015 20:30:00")]
+        public global::System.DateTime Fecha {
+            get {
+                return ((global::System.DateTime)(this["Fecha"]));
+            }
+        }
     }
 }

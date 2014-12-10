@@ -37,6 +37,7 @@ namespace FrbaHotel
 
         private void BotonIngresar_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("La fecha es: " + FrbaHotel.DateConfig.GetDate());
             this.comboBoxEleccionRol_SelectedIndexChanged(sender, e);
             if (rolElegido == "Guest")
             {
