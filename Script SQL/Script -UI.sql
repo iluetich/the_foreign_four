@@ -436,8 +436,7 @@ END
 GO
 --***********************************************************
 CREATE FUNCTION THE_FOREIGN_FOUR.login_password 
-				(@user_name nvarchar(30), 
-				 @password nvarchar(255))
+				(@user_name nvarchar(30))
 RETURNS TABLE  
 AS
 RETURN(
@@ -446,8 +445,6 @@ RETURN(
 	WHERE	u.cod_usuario = uh.cod_usuario
 	AND		h.cod_hotel = uh.cod_hotel
 	AND		u.user_name = @user_name
-	AND		u.password = @password
-	AND		u.estado = 'H'
 )
 GO
 --***********************************************************

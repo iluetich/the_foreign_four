@@ -67,7 +67,7 @@ namespace FrbaHotel.IniciarSecion
                 Boolean userNameValido = this.corroborarUserNameValido();
                 if (!userNameValido) {estaOk = false;}
 
-                //si existe el user name corroborar que el password este correcto y el tenga ese hotel asociado
+                //si existe el user name corroborar que el password este correcto
                 if (userNameValido)
                 {
                     Boolean passwordCorrecto = this.corroborarPassword();
@@ -79,7 +79,7 @@ namespace FrbaHotel.IniciarSecion
                         this.sumarFallos();
                     }
 
-                    //si el usuario tiene ese hotel para ese rol
+                    //corroborar si el usuario tiene ese hotel para ese rol
                     Boolean hotelEstaAsociado = this.tieneElHotel();
                     if (!hotelEstaAsociado)
                     {
@@ -132,8 +132,7 @@ namespace FrbaHotel.IniciarSecion
         public Boolean tieneElHotel()
         {
             string contraseñaEncriptada = FrbaHotel.Utils.encriptarContraseña(this.password);
-            string consultaCmd3 = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('" + this.user_name + "','" + contraseñaEncriptada + "')"
-                                + " WHERE cod_hotel = " + this.codHotelElegido;
+            string consultaCmd3 = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('" + this.user_name + "') WHERE cod_hotel =" + this.codHotelElegido;
 
             SqlCommand cmd3 = new SqlCommand();
             cmd3.CommandText = consultaCmd3;
@@ -159,7 +158,7 @@ namespace FrbaHotel.IniciarSecion
             nroFallos++;
 
             //si ingreso 3 veces mal el password se inhabilita el usuario
-            if (nroFallos > 3)
+            if (nroFallos > 2)
             {
                 SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_inhabilitar_usuario", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -175,7 +174,7 @@ namespace FrbaHotel.IniciarSecion
         public Boolean corroborarPassword()
         {
             string contraseña = FrbaHotel.Utils.encriptarContraseña(this.password);
-            string consultaSql = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[login_password] ('" + this.user_name + "','"+ contraseña +"')";
+            string consultaSql = "SELECT COUNT(*) FROM [THE_FOREIGN_FOUR].[Usuarios] WHERE user_name='" + this.user_name + "' AND password='"+ contraseña +"'";
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = consultaSql;
             cmd.CommandType = CommandType.Text;

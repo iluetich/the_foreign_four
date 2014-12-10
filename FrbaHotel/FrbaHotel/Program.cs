@@ -8,6 +8,7 @@ using FrbaHotel.Registrar_Consumible;
 using FrbaHotel.Listado_Estadistico;
 using FrbaHotel.Cancelar_Reserva;
 using FrbaHotel.Menues_de_los_Roles;
+using System.Configuration;
 
 namespace FrbaHotel
 {
