@@ -1158,10 +1158,12 @@ GO
 
 --******************************************************
 CREATE VIEW THE_FOREIGN_FOUR.view_facturas
-(nro_factura, cod_estadia, cod_consumible, descripcion, precio_unitario, cantidad, total_factura)
+(nro_factura, cod_estadia, cod_consumible, descripcion, precio_unitario, cantidad, subtotal, total_factura)
 AS
+
 SELECT f.nro_factura, f.cod_estadia, c.cod_consumible, c.descripcion, 
-		(SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, f.cod_estadia)), i.cantidad, f.total
+		(SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, f.cod_estadia)),
+		 i.cantidad, (SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, f.cod_estadia)), f.total
 FROM	THE_FOREIGN_FOUR.Facturas f, 
 		THE_FOREIGN_FOUR.ItemsFactura i,
 		THE_FOREIGN_FOUR.Consumibles c
