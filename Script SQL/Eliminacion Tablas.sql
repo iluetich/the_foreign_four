@@ -32,6 +32,7 @@ DROP TABLE THE_FOREIGN_FOUR.Hoteles
 DROP TABLE THE_FOREIGN_FOUR.FuncionalidadPorRol 
 DROP TABLE THE_FOREIGN_FOUR.Funcionalidades 
 DROP TABLE THE_FOREIGN_FOUR.Roles 
+DROP TABLE THE_FOREIGN_FOUR.VarGlobal
 
 --*******FUNC / PROC / VIEWS *****************
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_monto_consumibles
@@ -88,6 +89,8 @@ DROP FUNCTION THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user
 DROP FUNCTION THE_FOREIGN_FOUR.func_obtener_puntaje_factura
 DROP FUNCTION THE_FOREIGN_FOUR.func_reserva_cancelable
 DROP FUNCTION THE_FOREIGN_FOUR.func_operacion_en_fecha
+DROP FUNCTION THE_FOREIGN_FOUR.func_get_fecha_sistema
+DROP PROCEDURE THE_FOREIGN_FOUR.proc_set_fecha_sistema
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_cancelar_reservas_no_efectivizadas
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_ins_capacidad_hab
 DROP PROCEDURE THE_FOREIGN_FOUR.proc_crear_habitacion

@@ -724,6 +724,10 @@ BEGIN
 	
 	INSERT INTO THE_FOREIGN_FOUR.TiposPago (descripcion)
 	VALUES ('Contado'), ('Tarjeta de Credito')
+	
+	CREATE TABLE THE_FOREIGN_FOUR.VarGlobal (
+	fecha_sistema		datetime				NOT NULL
+	)
 
 END	
 GO
@@ -1901,5 +1905,30 @@ BEGIN
 		RETURN 1
 	END
 	RETURN 0
+END
+GO
+--***************************************************
+CREATE PROCEDURE THE_FOREIGN_FOUR.proc_set_fecha_sistema 
+					(@nueva_fecha_sistema datetime)
+AS
+BEGIN
+	IF(EXISTS (SELECT * FROM THE_FOREIGN_FOUR.VarGlobal))
+	BEGIN
+		UPDATE THE_FOREIGN_FOUR.VarGlobal
+		SET	fecha_sistema = @nueva_fecha_sistema
+	END
+	ELSE
+	BEGIN
+		INSERT INTO THE_FOREIGN_FOUR.VarGlobal (fecha_sistema)
+		VALUES (@nueva_fecha_sistema)
+	END
+END
+GO
+--****************************************************
+CREATE FUNCTION THE_FOREIGN_FOUR.func_get_fecha_sistema ()
+RETURNS datetime
+AS
+BEGIN
+	RETURN (SELECT fecha_sistema FROM THE_FOREIGN_FOUR.VarGlobal)
 END
 GO
