@@ -7,7 +7,7 @@ namespace FrbaHotel
 {
     class DateConfig{        
 
-        internal static String GetTime(){
+        internal static String GetDate(){
             
             //Devuele la fecha seteada en el app.config
             return Properties.Settings.Default.SystemDate.ToString("yyyy-dd-MM");

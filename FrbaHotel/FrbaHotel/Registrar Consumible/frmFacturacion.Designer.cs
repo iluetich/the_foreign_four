@@ -119,7 +119,7 @@
             // txtNroTarj
             // 
             this.txtNroTarj.Location = new System.Drawing.Point(101, 106);
-            this.txtNroTarj.MaxLength = 30;
+            this.txtNroTarj.MaxLength = 10;
             this.txtNroTarj.Name = "txtNroTarj";
             this.txtNroTarj.Size = new System.Drawing.Size(121, 20);
             this.txtNroTarj.TabIndex = 7;
