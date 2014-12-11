@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
 using System.Security.Cryptography;
+using System.Globalization;
 
 namespace FrbaHotel
 {
@@ -183,9 +184,7 @@ namespace FrbaHotel
 
         internal static DateTime getFechaSistema()
         {
-            string fecha_sistema = "SELECT THE_FOREIGN_FOUR.func_get_fecha_sistema ()";
-            SqlCommand cmd = new SqlCommand(fecha_sistema, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            return (DateTime)cmd.ExecuteScalar();
+            return DateTime.ParseExact(DateConfig.GetDate(), "yyyyMMdd", CultureInfo.InvariantCulture);
         }
 
         internal static void actualizarDTP(DateTimePicker dtp)
