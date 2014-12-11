@@ -1636,7 +1636,7 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_cancelaciones_hotel
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 ho.nombre, COUNT(ca.cod_cancelacion) AS 'cancelaciones'
+	RETURN (SELECT TOP 5 ho.nombre, COUNT(ca.cod_cancelacion) AS 'Cancelaciones efectuadas'
 			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.Reservas res ON(ho.cod_hotel = res.cod_hotel)
 											 JOIN THE_FOREIGN_FOUR.Cancelaciones ca ON(res.cod_reserva = ca.cod_reserva)
 			WHERE ca.fecha_operacion BETWEEN @fecha_desde AND @fecha_hasta
@@ -1649,7 +1649,7 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 ho.nombre, SUM(cantidad) AS 'consumibles'
+	RETURN (SELECT TOP 5 ho.nombre, SUM(cantidad) AS 'Consumibles facturados'
 			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.Reservas res ON(ho.cod_hotel = res.cod_hotel)
 											 JOIN THE_FOREIGN_FOUR.Estadias es ON(res.cod_reserva = es.cod_estadia)
 											 JOIN THE_FOREIGN_FOUR.Facturas fa ON(es.cod_estadia = fa.cod_estadia)
@@ -1665,7 +1665,7 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_inactividad_hotel
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 ho.nombre, SUM(DATEDIFF(day, ih.fecha_desde, ih.fecha_hasta)) AS 'dias inactivos'
+	RETURN (SELECT TOP 5 ho.nombre, SUM(DATEDIFF(day, ih.fecha_desde, ih.fecha_hasta)) AS 'Días inactivo'
 			FROM THE_FOREIGN_FOUR.Hoteles ho JOIN THE_FOREIGN_FOUR.InactividadHoteles ih ON(ho.cod_hotel = ih.cod_hotel)
 			WHERE	ih.fecha_desde >= @fecha_desde
 			AND		ih.fecha_hasta <= @fecha_hasta
@@ -1678,7 +1678,7 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_ocupacion_habitacion
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT	TOP 5 ha.nro_habitacion, h.nombre, COUNT(he.cod_estadia) 'veces ocupada', SUM(e.cant_noches) 'noches ocupada'
+	RETURN (SELECT	TOP 5 h.nombre, h.nro_habitacion, COUNT(he.cod_estadia) 'Veces ocupada', SUM(e.cant_noches) 'Noches ocupada'
 			FROM	THE_FOREIGN_FOUR.Habitaciones ha JOIN THE_FOREIGN_FOUR.Habitaciones_Estadia he ON(ha.cod_habitacion = he.cod_habitacion)
 													 JOIN THE_FOREIGN_FOUR.Estadias e ON(he.cod_estadia = e.cod_estadia)
 													 JOIN THE_FOREIGN_FOUR.Hoteles h ON(ha.cod_hotel = h.cod_hotel)
