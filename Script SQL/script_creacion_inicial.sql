@@ -1823,13 +1823,14 @@ AS
 
 SELECT f.nro_factura, f.cod_estadia, c.cod_consumible, c.descripcion, 
 		(SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, f.cod_estadia)),
-		 i.cantidad, (SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, f.cod_estadia)), f.total
+		 i.cantidad, (SELECT THE_FOREIGN_FOUR.func_get_precio(c.cod_consumible, f.cod_estadia))*i.cantidad, f.total
 FROM	THE_FOREIGN_FOUR.Facturas f, 
 		THE_FOREIGN_FOUR.ItemsFactura i,
 		THE_FOREIGN_FOUR.Consumibles c
 WHERE f.nro_factura = i.nro_factura
 AND c.cod_consumible = i.cod_consumible
 GO
+
 
 
 --***********************************************************

@@ -90,7 +90,7 @@ namespace FrbaHotel.Registrar_Estadia
                     cmd.ExecuteNonQuery();
                 }
                 //------------------------------------------------------------------
-                MessageBox.Show("Felicidades ha hecho checkIN", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Felicidades ha hecho checkIN \n Su código de Estadía es: "+ cod_estadia +".", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
                 frmRegistrarEstadiaPadre.Close();
             }
