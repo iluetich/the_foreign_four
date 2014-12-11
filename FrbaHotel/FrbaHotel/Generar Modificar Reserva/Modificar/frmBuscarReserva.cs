@@ -87,7 +87,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 resultado = Convert.ToInt32(cmdExistenciaUser.ExecuteScalar());
             }
             if (resultado == -1){
-                MessageBox.Show("La Reserva no existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("El código de reserva especificado no se corresponde con ninguna reserva en el hotel de esta sesión.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
@@ -96,7 +96,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             SqlCommand cmdCheckIN = new SqlCommand(hizoCheckIn, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             cmdCheckIN.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
             if (Convert.ToInt32(cmdCheckIN.ExecuteScalar()) == 6){
-                MessageBox.Show("No puede modificar una reserva que ya se le hizo CHECK IN ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("El código de reserva especificado se corresponde con una reserva efectivizada.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 

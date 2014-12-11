@@ -48,6 +48,7 @@ namespace FrbaHotel.ABM_de_Cliente
             comboBoxEstado.SelectedIndex = 0;//marca que el estado de entrada es H
             labelEstado.Visible = false;
             comboBoxEstado.Visible = false;
+            FrbaHotel.Utils.actualizarDTP(dateTimePickerFechaNac);
         }
 
         //contructor de formulario de MODIFICAR cliente
@@ -61,6 +62,7 @@ namespace FrbaHotel.ABM_de_Cliente
             
             //setear los datos a los controles
             this.setearDatos(dgvr);
+            FrbaHotel.Utils.actualizarDTP(dateTimePickerFechaNac);
         }
 
         //constructor que viene del flujo de generar reserva
@@ -73,6 +75,7 @@ namespace FrbaHotel.ABM_de_Cliente
             comboBoxEstado.SelectedIndex = 0;//marca que el estado de entrada es H
             labelEstado.Visible = false;
             comboBoxEstado.Visible = false;
+            FrbaHotel.Utils.actualizarDTP(dateTimePickerFechaNac);
         }
 
         //constructor de formulario registrar huespedes restantes
@@ -84,6 +87,7 @@ namespace FrbaHotel.ABM_de_Cliente
             labelEstado.Visible = false;
             comboBoxEstado.Visible = false;
             frmRegistrarHuespedesRestantesPadre = newForm;
+            FrbaHotel.Utils.actualizarDTP(dateTimePickerFechaNac);
         }
 
         public void setearDatos(DataGridViewRow dgvr)

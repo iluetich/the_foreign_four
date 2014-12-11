@@ -31,6 +31,7 @@ namespace FrbaHotel.ABM_de_Hotel
             this.crearDataSet();
             this.cargarComboBoxRegimen();
             this.comboBoxCantEstrellas.SelectedIndex = 0;
+            FrbaHotel.Utils.actualizarDTP(dateFechaCreacion);
         }
 
         public RegistrarHotel(ModificarOEliminarHotel frmPadre,DataGridViewRow filaSelec)
@@ -43,6 +44,7 @@ namespace FrbaHotel.ABM_de_Hotel
             this.cargarComboBoxRegimen();
             this.labelTitulo.Text = "Modificar Hotel";
             this.cargarDatos(filaSelec);
+            FrbaHotel.Utils.actualizarDTP(dateFechaCreacion);
         }
 
         public void cargarDatos(DataGridViewRow fila)

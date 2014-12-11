@@ -49,6 +49,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string cancelar_reservas = "EXEC THE_FOREIGN_FOUR.proc_cancelar_reservas_no_efectivizadas";
             SqlCommand command = new SqlCommand(cancelar_reservas, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             command.ExecuteNonQuery();
+
+            FrbaHotel.Utils.actualizarDTP(dtpFechaDesde, dtpFechaHasta);
         }
         //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------

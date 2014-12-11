@@ -33,6 +33,7 @@ namespace FrbaHotel.ABM_de_Usuario
             labelEstado.Visible = false;
             comboBoxEstado.Visible = false;
             comboBoxEstado.SelectedIndex = 0;
+            FrbaHotel.Utils.actualizarDTP(dateTimePickFechaNac);
         }
 
         public CreacionDeUsuario(ModificarYBorrarUsuario padre,DataGridViewRow fila)
@@ -45,6 +46,7 @@ namespace FrbaHotel.ABM_de_Usuario
             textBoxUsername.ReadOnly = true;
             dgvRolesHoteles.ReadOnly = true;
             this.setearDatos(fila);
+            FrbaHotel.Utils.actualizarDTP(dateTimePickFechaNac);
         }
 
         public void setearDatos(DataGridViewRow fila)

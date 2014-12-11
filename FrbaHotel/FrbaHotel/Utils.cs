@@ -180,5 +180,23 @@ namespace FrbaHotel
 
             return sBuilder.ToString();
         }
+
+        internal static DateTime getFechaSistema()
+        {
+            string fecha_sistema = "SELECT THE_FOREIGN_FOUR.func_get_fecha_sistema ()";
+            SqlCommand cmd = new SqlCommand(fecha_sistema, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            return (DateTime)cmd.ExecuteScalar();
+        }
+
+        internal static void actualizarDTP(DateTimePicker dtp)
+        {
+            dtp.Value = getFechaSistema();
+        }
+
+        internal static void actualizarDTP(DateTimePicker dtp_desde, DateTimePicker dtp_hasta)
+        {
+            actualizarDTP(dtp_desde);
+            dtp_hasta.Value = dtp_desde.Value.AddDays(1);
+        }
     }
 }

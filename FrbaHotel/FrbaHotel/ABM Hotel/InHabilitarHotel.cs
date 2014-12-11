@@ -20,6 +20,7 @@ namespace FrbaHotel.ABM_de_Hotel
             cod_hotel = int.Parse(fila.Cells["cod_hotel"].Value.ToString());
             this.padre = frmPadre;
             InitializeComponent();
+            FrbaHotel.Utils.actualizarDTP(dateDesde, dateHasta);
         }
 
         private void botonCancelar_Click(object sender, EventArgs e)
@@ -71,23 +72,6 @@ namespace FrbaHotel.ABM_de_Hotel
                     this.Close();
                     break;
             };
-
-            /*if(puedeInhabilitar < 0)
-            {
-                estaOk = false;
-                MessageBox.Show("EL hotel no se puede Inhabilitar ya que se han hecho reservas para ese periodo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-
-            if (estaOk)
-            {
-                //tercero inhabilitar hotel
-                this.ejecutarProcInhabilitarHotel(fechaDesde, fechaHasta);
-
-                //resetear la grid
-                padre.cargarHoteles();
-                padre.Show();
-                this.Close();
-            }*/
         }
 
         public void ejecutarProcInhabilitarHotel(string fechaDesde, string fechaHasta)

@@ -78,7 +78,7 @@
             this.labelTitulo.Name = "labelTitulo";
             this.labelTitulo.Size = new System.Drawing.Size(161, 24);
             this.labelTitulo.TabIndex = 3;
-            this.labelTitulo.Text = "Inhabilatar Hotel";
+            this.labelTitulo.Text = "Inhabilitar Hotel";
             // 
             // botonInhabilitar
             // 

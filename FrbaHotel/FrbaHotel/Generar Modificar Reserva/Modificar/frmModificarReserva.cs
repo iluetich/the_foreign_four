@@ -30,7 +30,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         //------------------------------------------------------------------------------------------------
         //---------------------CONSTRUCTORES--------------------------------------------------------------
-        public frmModificarRerserva() { InitializeComponent(); }  
+        public frmModificarRerserva() 
+        { 
+            InitializeComponent();
+            FrbaHotel.Utils.actualizarDTP(dtpFechaDesde, dtpFechaHasta);
+        }  
         public frmModificarRerserva(frmBuscarReserva newFrm)
         {
             InitializeComponent();
@@ -51,6 +55,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             haceRollBack = true;
             termino_de_cargar_todo = true;
+            FrbaHotel.Utils.actualizarDTP(dtpFechaDesde, dtpFechaHasta);
         }
         //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------
