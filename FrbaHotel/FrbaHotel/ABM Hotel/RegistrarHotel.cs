@@ -189,12 +189,36 @@ namespace FrbaHotel.ABM_de_Hotel
             this.agregaAlDataSet(comboBoxTipoRegimen.Text);
         }
 
+        private bool regimenYaEstaRegistrado(string regimen)
+        {
+            if (dataSet.Tables[0].Rows.Count <= 0) return false;
+            foreach (DataRow fila in dataSet.Tables[0].Rows)
+            {
+                if (String.Equals(fila["regimen"].ToString(), regimen))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void agregaAlDataSet(string regimen)
         {
             DataTable table = dataSet.Tables[0];
 
-            //si la tabla no tiene esa combinacion estonces agregalo           
-            DataRow[] matriz = table.Select("regimen='" + regimen + "'");
+            //si la tabla no tiene esa combinacion estonces agregalo   
+            if(regimenYaEstaRegistrado(regimen)) 
+            {
+                MessageBox.Show("El régimen seleccionado ya esta cargado.", "Régimen duplicado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            DataRow row = table.NewRow();
+            row["regimen"] = regimen;
+            table.Rows.Add(row);
+            dgvRegimen.DataSource = dataSet.Tables[0];
+
+            /*DataRow[] matriz = table.Select("regimen='" + regimen + "'");
             int cantidad = matriz.GetLength(0);
 
             if (cantidad == 0)
@@ -205,7 +229,7 @@ namespace FrbaHotel.ABM_de_Hotel
                 table.Rows.Add(row);
             }
 
-            dgvRegimen.DataSource = dataSet.Tables[0];
+            dgvRegimen.DataSource = dataSet.Tables[0];*/
         }
 
         private void botonQuitar_Click(object sender, EventArgs e)
@@ -291,7 +315,7 @@ namespace FrbaHotel.ABM_de_Hotel
         public void persistirRegimenes()
         {
             //obtener el codigo del usuario generado
-            int cod_hotel = FrbaHotel.Utils.obtenerCod("SELECT SUM(cod_hotel) FROM THE_FOREIGN_FOUR.Hoteles WHERE nombre='" + textBoxNombreHotel.Text + "'");
+            int cod_hotel = FrbaHotel.Utils.obtenerCod("SELECT cod_hotel FROM THE_FOREIGN_FOUR.Hoteles WHERE nombre='" + textBoxNombreHotel.Text + "'");
 
             //si es una ventana de modificacion
             if (constructorMod)
