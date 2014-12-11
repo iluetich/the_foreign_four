@@ -41,7 +41,7 @@ AS
 BEGIN
 	
 	DECLARE @fecha_inicio datetime
-	SET @fecha_inicio = CAST(GETDATE() AS DATETIME)
+	SET @fecha_inicio = CAST(THE_FOREIGN_FOUR.func_get_fecha_sistema() AS DATETIME)
 	
 	INSERT INTO THE_FOREIGN_FOUR.Estadias (cod_reserva, fecha_inicio)
 	VALUES	(@cod_reserva, @fecha_inicio)
@@ -252,7 +252,7 @@ BEGIN
 	EXEC THE_FOREIGN_FOUR.proc_liberar_habitaciones @cod_reserva
 	
 	INSERT INTO THE_FOREIGN_FOUR.Cancelaciones (cod_reserva, motivo, usuario, fecha_operacion)
-	VALUES (@cod_reserva, @motivo, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), GETDATE())
+	VALUES (@cod_reserva, @motivo, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), THE_FOREIGN_FOUR.func_get_fecha_sistema())
 END
 GO
 
@@ -275,7 +275,7 @@ BEGIN
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
 	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, CAST(GETDATE() AS DATETIME), CONVERT(int, @fecha_hasta - @fecha_desde))
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, CAST(THE_FOREIGN_FOUR.func_get_fecha_sistema() AS DATETIME), CONVERT(int, @fecha_hasta - @fecha_desde))
 	
 	INSERT INTO THE_FOREIGN_FOUR.AuditoriaReservas (cod_reserva, cod_usuario, cod_operacion)
 	VALUES (@cod_reserva_generada, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), 'G')
@@ -291,7 +291,7 @@ RETURNS int
 AS
 BEGIN
 	IF ((SELECT fecha_creacion FROM THE_FOREIGN_FOUR.Hoteles WHERE cod_hotel = @cod_hotel) > @fecha_desde OR
-		GETDATE() > @fecha_desde)
+		THE_FOREIGN_FOUR.func_get_fecha_sistema() > @fecha_desde)
 	BEGIN
 		RETURN -1
 	END
@@ -1151,7 +1151,7 @@ AS
 BEGIN
 	SET @nro_factura = (SELECT THE_FOREIGN_FOUR.func_sgte_nro_factura ())
 	INSERT INTO THE_FOREIGN_FOUR.Facturas (nro_factura, cod_estadia, cod_cliente, fecha_factura) 
-	VALUES (@nro_factura , @cod_estadia, @cod_cliente, CAST(GETDATE() AS DATETIME))
+	VALUES (@nro_factura , @cod_estadia, @cod_cliente, CAST(THE_FOREIGN_FOUR.func_get_fecha_sistema() AS DATETIME))
 	RETURN 
 END
 GO
@@ -1274,7 +1274,7 @@ BEGIN
 	VALUES (@cod_usuario, 'O', @cod_estadia)
 	
 	UPDATE THE_FOREIGN_FOUR.Estadias
-	SET checkout = GETDATE()
+	SET checkout = THE_FOREIGN_FOUR.func_get_fecha_sistema()
 	WHERE cod_estadia = @cod_estadia
 
 END
@@ -1351,7 +1351,7 @@ BEGIN
 	SET		@validacion_reserva = THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user (@cod_reserva, @cod_hotel)
 	SET		@fecha_inicio_reserva = (SELECT fecha_desde FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva)
 	SET		@cant_noches = (SELECT cant_noches FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva)
-	SET		@validacion_fechas = THE_FOREIGN_FOUR.func_igual_fecha(@fecha_inicio_reserva, GETDATE())
+	SET		@validacion_fechas = THE_FOREIGN_FOUR.func_igual_fecha(@fecha_inicio_reserva, THE_FOREIGN_FOUR.func_get_fecha_sistema())
 	
 	
 	IF	((@validacion_reserva = 1) AND
@@ -1849,7 +1849,7 @@ BEGIN
 		FROM THE_FOREIGN_FOUR.Habitaciones_Estadia he,THE_FOREIGN_FOUR.Estadias e 
 		WHERE he.cod_habitacion=@cod_habitacion AND
 			he.cod_estadia = e.cod_estadia AND
-			GETDATE() BETWEEN e.fecha_inicio AND DATEADD(day,e.cant_noches,e.fecha_inicio)) >= 1)
+			THE_FOREIGN_FOUR.func_get_fecha_sistema() BETWEEN e.fecha_inicio AND DATEADD(day,e.cant_noches,e.fecha_inicio)) >= 1)
 	BEGIN
 		RETURN 1
 	END
@@ -1864,7 +1864,7 @@ BEGIN
 	SET		cod_estado_reserva = (SELECT cod_estado
 								  FROM THE_FOREIGN_FOUR.EstadosReserva
 								  WHERE descripcion LIKE 'cancelacion_noshow')
-	WHERE	fecha_desde < GETDATE() 
+	WHERE	fecha_desde < THE_FOREIGN_FOUR.func_get_fecha_sistema() 
 	AND		cod_estado_reserva IN (SELECT cod_estado
 								   FROM THE_FOREIGN_FOUR.EstadosReserva
 								   WHERE descripcion LIKE 'correcta'
@@ -1899,7 +1899,7 @@ BEGIN
 	SET	@fecha_inicio_reserva = (SELECT fecha_desde
 								 FROM THE_FOREIGN_FOUR.Reservas
 								 WHERE cod_reserva = @cod_reserva)
-	IF (DATEDIFF(day, @fecha_inicio_reserva, GETDATE()) <= 1) --fecha_inicio es mayor a la actual en, por lo menos 1 o mas dias
+	IF (DATEDIFF(day, @fecha_inicio_reserva, THE_FOREIGN_FOUR.func_get_fecha_sistema()) <= 1) --fecha_inicio es mayor a la actual en, por lo menos 1 o mas dias
 	BEGIN
 		RETURN 1
 	END
