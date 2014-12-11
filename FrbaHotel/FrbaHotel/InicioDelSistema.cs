@@ -26,6 +26,9 @@ namespace FrbaHotel
             //Establece conexion con la BD
             FrbaHotel.ConexionSQL.establecerConexionBD();
 
+            //Establece fecha de sistema a la BD
+            setSystemDate();
+
             this.cargarRolesDisponibles();
         }
 
@@ -61,7 +64,13 @@ namespace FrbaHotel
             rolElegido = comboBoxEleccionRol.Text;
         }
 
-       
+        //establece fecha de sistema a la BD
+        private void setSystemDate(){
+            string systemDateSQL = "exec THE_FOREIGN_FOUR.proc_set_fecha_sistema @fecha";
+            SqlCommand cmd = new SqlCommand(systemDateSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd.Parameters.AddWithValue("@fecha", FrbaHotel.DateConfig.GetDate());
+            cmd.ExecuteNonQuery();
+        }
 
     }
 }
