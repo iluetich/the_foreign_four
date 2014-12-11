@@ -1678,7 +1678,7 @@ CREATE FUNCTION THE_FOREIGN_FOUR.func_estadistica_ocupacion_habitacion
 					 @fecha_hasta datetime)
 RETURNS TABLE
 AS
-	RETURN (SELECT	TOP 5 h.nombre, h.nro_habitacion, COUNT(he.cod_estadia) 'Veces ocupada', SUM(e.cant_noches) 'Noches ocupada'
+	RETURN (SELECT	TOP 5 h.nombre, ha.nro_habitacion, COUNT(he.cod_estadia) 'Veces ocupada', SUM(e.cant_noches) 'Noches ocupada'
 			FROM	THE_FOREIGN_FOUR.Habitaciones ha JOIN THE_FOREIGN_FOUR.Habitaciones_Estadia he ON(ha.cod_habitacion = he.cod_habitacion)
 													 JOIN THE_FOREIGN_FOUR.Estadias e ON(he.cod_estadia = e.cod_estadia)
 													 JOIN THE_FOREIGN_FOUR.Hoteles h ON(ha.cod_hotel = h.cod_hotel)
