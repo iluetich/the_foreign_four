@@ -35,10 +35,10 @@
             this.cmbTrimestre = new System.Windows.Forms.ComboBox();
             this.cmbTipoListado = new System.Windows.Forms.ComboBox();
             this.groupListado = new System.Windows.Forms.GroupBox();
+            this.lblMsg = new System.Windows.Forms.Label();
             this.btnGenerar = new System.Windows.Forms.Button();
             this.dgvListado = new System.Windows.Forms.DataGridView();
             this.btnVolver = new System.Windows.Forms.Button();
-            this.lblMsg = new System.Windows.Forms.Label();
             lblTipoListado = new System.Windows.Forms.Label();
             this.groupListado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
@@ -126,6 +126,14 @@
             this.groupListado.TabIndex = 6;
             this.groupListado.TabStop = false;
             // 
+            // lblMsg
+            // 
+            this.lblMsg.AutoSize = true;
+            this.lblMsg.Location = new System.Drawing.Point(119, 116);
+            this.lblMsg.Name = "lblMsg";
+            this.lblMsg.Size = new System.Drawing.Size(0, 13);
+            this.lblMsg.TabIndex = 7;
+            // 
             // btnGenerar
             // 
             this.btnGenerar.AutoSize = true;
@@ -149,6 +157,7 @@
             this.dgvListado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvListado.Location = new System.Drawing.Point(15, 178);
             this.dgvListado.Name = "dgvListado";
+            this.dgvListado.ReadOnly = true;
             this.dgvListado.Size = new System.Drawing.Size(687, 143);
             this.dgvListado.TabIndex = 7;
             // 
@@ -161,14 +170,6 @@
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
-            // 
-            // lblMsg
-            // 
-            this.lblMsg.AutoSize = true;
-            this.lblMsg.Location = new System.Drawing.Point(119, 116);
-            this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(0, 13);
-            this.lblMsg.TabIndex = 7;
             // 
             // frmListadoEstadistico
             // 

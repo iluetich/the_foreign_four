@@ -87,8 +87,7 @@ namespace FrbaHotel.Listado_Estadistico
         //requerimiento
         private void hotelesConMayorCantidadDeReservas()
         {
-            armarFecha();
-            Console.WriteLine(fechaDesde + " - " + fechaHasta);
+            armarFecha();            
             string consultaSQL = "select * from THE_FOREIGN_FOUR.func_estadistica_cancelaciones_hotel('" + fechaDesde + "','" + fechaHasta + "')";
             FrbaHotel.Utils.rellenarDataGridView(dgvListado,consultaSQL);
         }
@@ -96,24 +95,21 @@ namespace FrbaHotel.Listado_Estadistico
         //requerimiento
         private void hotelesMayorCantidadConsumiblesFacturados()
         {
-            armarFecha();
-            Console.WriteLine(fechaDesde + " - " + fechaHasta);
+            armarFecha();            
             string consultaSQL = "select * from THE_FOREIGN_FOUR.func_estadistica_consumibles_hotel('" + fechaDesde + "','" + fechaHasta + "')";
             FrbaHotel.Utils.rellenarDataGridView(dgvListado, consultaSQL);
         }
 
         //requerimiento
         private void hotelesMayorCantidadDiasFueraDeServicio(){
-            armarFecha();
-            Console.WriteLine(fechaDesde + " - " + fechaHasta);
+            armarFecha();            
             string consultaSQL = "select * from THE_FOREIGN_FOUR.func_estadistica_inactividad_hotel('" + fechaDesde + "','" + fechaHasta + "')";
             FrbaHotel.Utils.rellenarDataGridView(dgvListado, consultaSQL);
         }
 
         //requerimiento
         private void habitacionesMayorCantidadDiasVecesQueFueronOcupadas(){
-            armarFecha();
-            Console.WriteLine(fechaDesde + " - " + fechaHasta);
+            armarFecha();            
             string consultaSQL = "select * from THE_FOREIGN_FOUR.func_estadistica_ocupacion_habitacion('" + fechaDesde + "','" + fechaHasta + "')";
             FrbaHotel.Utils.rellenarDataGridView(dgvListado, consultaSQL);
         }

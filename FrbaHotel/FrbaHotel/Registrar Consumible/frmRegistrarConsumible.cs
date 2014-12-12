@@ -87,7 +87,6 @@ namespace FrbaHotel.Registrar_Consumible
                         DataGridViewRow fila = dgvConsumibles.Rows[i];
                         SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                         cmd.CommandType = CommandType.StoredProcedure;
-                        Console.WriteLine("el codigo de estadia es: " + codigoEstadia);
                         cmd.Parameters.AddWithValue("@cod_estadia", Convert.ToInt32(codigoEstadia));
                         cmd.Parameters.AddWithValue("@cod_consumible", long.Parse(fila.Cells[0].Value.ToString()));
                         cmd.Parameters.AddWithValue("@cantidad", int.Parse(fila.Cells[1].Value.ToString()));
