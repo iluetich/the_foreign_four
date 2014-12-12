@@ -48,7 +48,6 @@ namespace FrbaHotel.ABM_de_Cliente
             comboBoxEstado.SelectedIndex = 0;//marca que el estado de entrada es H
             labelEstado.Visible = false;
             comboBoxEstado.Visible = false;
-            FrbaHotel.Utils.actualizarDTP(dateTimePickerFechaNac);
         }
 
         //contructor de formulario de MODIFICAR cliente
