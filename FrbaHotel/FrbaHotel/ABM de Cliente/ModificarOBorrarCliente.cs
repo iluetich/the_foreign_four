@@ -15,12 +15,14 @@ namespace FrbaHotel.ABM_de_Cliente
     {
         private MenuDinamico menu;
         private string TipoDoc;
+        private Boolean apretoBuscar;
 
         public ModificarOBorrarCliente(MenuDinamico menuPadre)
         {
             this.menu = menuPadre;
             InitializeComponent();
             datGridViewClientes.ReadOnly = true;
+            this.apretoBuscar = false;
         }
 
         private void botonVolver_Click(object sender, EventArgs e)
@@ -65,6 +67,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void botonBuscar_Click(object sender, EventArgs e)
         {
+            this.apretoBuscar = true;
             this.comboBoxBuscadorTipoDoc_SelectedIndexChanged(sender, e);
             this.cargarClientes();
         }
@@ -117,9 +120,12 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void botonModificar_Click(object sender, EventArgs e)
         {
-            RegistrarCliente formModCliente = new RegistrarCliente(datGridViewClientes.CurrentRow, this);
-            formModCliente.Show();
-            this.Hide();
+            if (apretoBuscar)
+            {
+                RegistrarCliente formModCliente = new RegistrarCliente(datGridViewClientes.CurrentRow, this);
+                formModCliente.Show();
+                this.Hide();
+            }
         }
 
     }
