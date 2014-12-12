@@ -21,8 +21,6 @@ namespace FrbaHotel.Registrar_Consumible
         public frmFacturacion(){InitializeComponent();}
         public frmFacturacion(frmRegistrarConsumible newForm,long nroFacturaParametro)
         {
-            FrbaHotel.ConexionSQL.establecerConexionBD();
-
             nroFactura = nroFacturaParametro;
             InitializeComponent();
             frmRegistrarConsumiblePadre = newForm;
