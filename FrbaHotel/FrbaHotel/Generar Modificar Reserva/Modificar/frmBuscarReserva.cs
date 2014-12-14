@@ -71,15 +71,22 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {            
             codigoReserva = txtCodRes.Text;
             string consultaSQL;
+            int resultado;
 
             //valida existencia
-            string consultaSQLExistencia = "select THE_FOREIGN_FOUR.func_validar_reserva(@cod_reserva, @cod_hotel)";
-            SqlCommand cmdExistencia = new SqlCommand(consultaSQLExistencia, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            cmdExistencia.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
-            cmdExistencia.Parameters.AddWithValue("@cod_hotel", Convert.ToInt32(codigoHotel));
-            int resultado = Convert.ToInt32(cmdExistencia.ExecuteScalar());
-            if (resultado == -1)
-            {
+            if (user == "Guest"){
+                string consultaSQLExistenciaGuest = "select THE_FOREIGN_FOUR.func_validar_existe_reserva(@cod_reserva)";
+                SqlCommand cmdExistenciaGuest = new SqlCommand(consultaSQLExistenciaGuest, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                cmdExistenciaGuest.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
+                resultado = Convert.ToInt32(cmdExistenciaGuest.ExecuteScalar());               
+            }else{
+                string consultaSQLExistenciaUser = "select THE_FOREIGN_FOUR.func_validar_reserva(@cod_reserva, @cod_hotel)";
+                SqlCommand cmdExistenciaUser = new SqlCommand(consultaSQLExistenciaUser, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                cmdExistenciaUser.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
+                cmdExistenciaUser.Parameters.AddWithValue("@cod_hotel", Convert.ToInt32(codigoHotel));
+                resultado = Convert.ToInt32(cmdExistenciaUser.ExecuteScalar());
+            }
+            if (resultado == -1){
                 MessageBox.Show("La Reserva no existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
@@ -114,7 +121,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 return true;
             }
 
-            MessageBox.Show("No se ha encontrado la reserva o se trata de una reserva cancelada", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show("Se trata de una reserva cancelada", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return false;
         }
         //----------------------------------------------------------------------------------------------------------------
