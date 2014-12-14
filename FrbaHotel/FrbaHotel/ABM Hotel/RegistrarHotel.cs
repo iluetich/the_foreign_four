@@ -29,7 +29,8 @@ namespace FrbaHotel.ABM_de_Hotel
             InitializeComponent();
             dgvRegimen.ReadOnly = true;
             this.crearDataSet();
-            this.cargarComboBoxRegimen();           
+            this.cargarComboBoxRegimen();
+            this.comboBoxCantEstrellas.SelectedIndex = 0;
         }
 
         public RegistrarHotel(ModificarOEliminarHotel frmPadre,DataGridViewRow filaSelec)
@@ -216,6 +217,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void botonRegistrar_Click(object sender, EventArgs e)
         {
+            this.comboBoxCantEstrellas_SelectedIndexChanged(sender, e);
             Boolean estaOk = true;
             //corroborar que los textbox este llenos
             estaOk = corroborarCamposLlenos(estaOk);
