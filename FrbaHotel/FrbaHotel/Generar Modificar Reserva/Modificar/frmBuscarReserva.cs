@@ -53,8 +53,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 if (validarReserva()){
                     new frmModificarRerserva(this).Show();
                     this.Enabled = false;
-                }else{
-                    MessageBox.Show("No se ha encontrado la reserva o se trata de una reserva cancelada", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -70,9 +68,31 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //----------------------OTROS---------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------------------------           
         private bool validarReserva()
-        {
-            string consultaSQL;
+        {            
             codigoReserva = txtCodRes.Text;
+            string consultaSQL;
+
+            //valida existencia
+            string consultaSQLExistencia = "select THE_FOREIGN_FOUR.func_validar_reserva(@cod_reserva, @cod_hotel)";
+            SqlCommand cmdExistencia = new SqlCommand(consultaSQLExistencia, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmdExistencia.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
+            cmdExistencia.Parameters.AddWithValue("@cod_hotel", Convert.ToInt32(codigoHotel));
+            int resultado = Convert.ToInt32(cmdExistencia.ExecuteScalar());
+            if (resultado == -1)
+            {
+                MessageBox.Show("La Reserva no existe", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            //Valida que no se le haya hecho check in antes
+            string hizoCheckIn = "SELECT cod_estado_reserva FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva";
+            SqlCommand cmdCheckIN = new SqlCommand(hizoCheckIn, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmdCheckIN.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
+            if (Convert.ToInt32(cmdCheckIN.ExecuteScalar()) == 6)
+            {
+                MessageBox.Show("No puede modificar una reserva que ya se le hizo CHECK IN ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
 
             //chequea si la modificacion de la reserva la hace un usuario o un guest
             if (user == "Guest"){
@@ -82,17 +102,19 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user(" + codigoReserva + "," + codigoHotel + ")";
             }
 
-            int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
+            resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
 
             if (resultado == 1){
                 if (user == "Guest"){
                     //consulto por el hotel de la reserva
                     string consultaHotel = "select cod_hotel from THE_FOREIGN_FOUR.Reservas WHERE cod_reserva =" + codigoReserva;
-                    SqlCommand cmd = new SqlCommand(consultaHotel, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-                    codigoHotel = cmd.ExecuteScalar().ToString();
+                    SqlCommand cmdHotel = new SqlCommand(consultaHotel, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+                    codigoHotel = cmdHotel.ExecuteScalar().ToString();
                 }
                 return true;
             }
+
+            MessageBox.Show("No se ha encontrado la reserva o se trata de una reserva cancelada", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return false;
         }
         //----------------------------------------------------------------------------------------------------------------
