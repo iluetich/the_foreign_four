@@ -95,9 +95,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             string hizoCheckIn = "SELECT cod_estado_reserva FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva";
             SqlCommand cmdCheckIN = new SqlCommand(hizoCheckIn, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             cmdCheckIN.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
-            if (Convert.ToInt32(cmdCheckIN.ExecuteScalar()) == 6)
-            {
+            if (Convert.ToInt32(cmdCheckIN.ExecuteScalar()) == 6){
                 MessageBox.Show("No puede modificar una reserva que ya se le hizo CHECK IN ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            //Valida que no se pueda modificar pasada la fecha de inicio de la reserva
+            string puedeModificarAntes = "SELECT THE_FOREIGN_FOUR.func_operacion_en_fecha(@cod_reserva)";
+            SqlCommand cmdModificarAntes = new SqlCommand(puedeModificarAntes, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmdModificarAntes.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
+            if (Convert.ToInt32(cmdModificarAntes.ExecuteScalar()) == 0){
+                MessageBox.Show("Plazo vencido para modificar reserva", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
