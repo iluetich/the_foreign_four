@@ -70,7 +70,16 @@ namespace FrbaHotel.Registrar_Estadia
             if (alMenosUnCliente())
             {
                 //REGISTRAR ESTADIA----
-                registrarEstadia();
+                try
+                {
+                    registrarEstadia();
+                }
+                catch (Exception exc)
+                { // nunca debería suceder, salvo que se genere, a propósito, una inhabilitación que implique que no haya disponibilidad
+                  // al momento de hacer el check-in
+                    MessageBox.Show("No se encontraron habitaciones habilitadas disponibles. Esto fue causado por la inhabilitación de una habitación en el hotel. Consulte a su supervisor", "Falla de disponibilidad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 //---------------------
 
                 //OBTENER EL COD DE ESTADIA GENERADO POR LA RESERVA
@@ -195,13 +204,27 @@ namespace FrbaHotel.Registrar_Estadia
 
         //Registra la nueva  estadia
         public void registrarEstadia()
-        {             
-            SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_registrar_estadia", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            cmd.CommandType = CommandType.StoredProcedure;
+        {   // Armo una transaccion y un try & catch por si sucediera el caso en que al momento de 
+            // hacer el check-in no se encontrasen habitaciones habilitadas disponibles, se agarra 
+            // el error desde la base de datos, la cual genera un RAISERROR; en ese caso, se 
+            // realizará un rollback de la transaccion. Sino, se commitea. {Iván}
+            SqlTransaction transaction = FrbaHotel.ConexionSQL.getSqlInstanceConnection().BeginTransaction();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_registrar_estadia", FrbaHotel.ConexionSQL.getSqlInstanceConnection(), transaction);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
-            cmd.Parameters.AddWithValue("@usuario", user);
-            cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
+                cmd.Parameters.AddWithValue("@usuario", user);
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+            }
+            catch (SqlException se)
+            {
+                if (transaction != null) transaction.Rollback();
+                throw new Exception();
+            }
+            
         }
 
         //cuando se suprime un cliente de la tabla aumenta el contado de maxima cantidad restante de huespedes a registrar

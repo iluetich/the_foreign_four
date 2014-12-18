@@ -40,8 +40,6 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_registrar_estadia
 AS
 BEGIN
 	
-	BEGIN TRANSACTION
-	
 	DECLARE @fecha_inicio datetime
 	SET @fecha_inicio = CAST(GETDATE() AS DATETIME)
 	
@@ -56,8 +54,6 @@ BEGIN
 								FROM THE_FOREIGN_FOUR.EstadosReserva
 								WHERE descripcion = 'efectivizada')
 	WHERE cod_reserva = @cod_reserva
-	
-	
 	
 	DECLARE		@cod_estadia numeric(18,0),
 				@cod_hotel numeric(18,0),
@@ -97,7 +93,7 @@ BEGIN
 		
 		IF (@cod_habitacion_a_ocupar IS NULL) 
 		BEGIN
-			ROLLBACK
+			RAISERROR(13000, -1, -1)
 		END	
 		
 		INSERT INTO THE_FOREIGN_FOUR.Habitaciones_Estadia (cod_estadia, cod_habitacion)
@@ -109,9 +105,7 @@ BEGIN
 	--**cursor********
 	
 	DROP TABLE THE_FOREIGN_FOUR.#TipoHabReserva
-	
-	COMMIT
-	
+
 END
 GO
 --***********************************************************
@@ -1463,6 +1457,7 @@ RETURN(
 		FROM	THE_FOREIGN_FOUR.Habitaciones ha
 		WHERE	@cod_hotel = ha.cod_hotel
 		AND		@cod_tipo_hab = ha.cod_tipo_hab
+		AND		ha.estado = 'H'
 		
 		EXCEPT
 		
