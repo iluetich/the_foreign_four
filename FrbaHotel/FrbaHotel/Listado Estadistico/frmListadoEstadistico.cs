@@ -152,11 +152,7 @@ namespace FrbaHotel.Listado_Estadistico
 
         private void cmbTipoListado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbTipoListado.SelectedIndex == 4){
-                lblMsg.Text = "Esta consulta suele tardar, tenga paciencia oprima el boton una sola vez y espere a que finalice";
-            }else{
-                lblMsg.Text = "";
-            }          
+            lblMsg.Text = "";
         }
     }
 }

@@ -123,7 +123,6 @@ CREATE TABLE THE_FOREIGN_FOUR.Reservas (
 	fecha_desde			datetime,
 	fecha_hasta			datetime,
 	cant_noches			int,
-	usuario				nvarchar(255)
 )
 CREATE TABLE THE_FOREIGN_FOUR.ReservasDefectuosas (
 	cod_reserva			numeric(18,0)			PRIMARY KEY,
@@ -225,12 +224,19 @@ CREATE TABLE THE_FOREIGN_FOUR.TipoHabitacion_Reservas (
 	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
 	cod_tipo_hab		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.TipoHabitaciones,
 )
+CREATE TABLE THE_FOREIGN_FOUR.AuditoriaReservas (
+	cod_audit			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
+	cod_usuario			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Usuarios,
+	cod_reserva			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Reservas,
+	cod_operacion		char(1)					CHECK(cod_operacion IN ('G', 'M')),
+	fecha				datetime				DEFAULT GETDATE()
+)
 CREATE TABLE THE_FOREIGN_FOUR.AuditoriaEstadias (
-	cod_audit			int						IDENTITY(1,1) PRIMARY KEY,
+	cod_audit			numeric(18,0)			IDENTITY(1,1) PRIMARY KEY,
 	cod_usuario			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Usuarios,
 	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
 	cod_operacion		char(1)					CHECK(cod_operacion IN ('I', 'O')),
-	fecha				datetime				DEFAULT getdate()
+	fecha				datetime				DEFAULT GETDATE()
 )
 CREATE TABLE THE_FOREIGN_FOUR.Consumibles_Estadia (
 	cod_cons_estadia	numeric(18,0)			PRIMARY KEY IDENTITY(1,1),

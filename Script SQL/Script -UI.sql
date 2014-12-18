@@ -207,11 +207,13 @@ AS
 		fecha_hasta = @fecha_hasta,
 		cant_noches = DATEDIFF(DAY, @fecha_desde, @fecha_hasta),
 		cod_regimen = @cod_regimen,
-		usuario = (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)),
 		cod_estado_reserva = (SELECT cod_estado
 							  FROM THE_FOREIGN_FOUR.EstadosReserva
 							  WHERE descripcion = 'modificada')
 	WHERE @cod_reserva = cod_reserva
+	
+	INSERT INTO THE_FOREIGN_FOUR.AuditoriaReservas(cod_reserva, cod_usuario, cod_operacion)
+	VALUES (@cod_reserva, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), 'I')
 GO
 --***********************************************************
 CREATE PROCEDURE THE_FOREIGN_FOUR.proc_liberar_habitaciones
@@ -272,18 +274,21 @@ BEGIN
 							   WHERE descripcion = 'correcta')
 	SET @cod_reserva_generada = (SELECT THE_FOREIGN_FOUR.func_sgte_cod_reserva ())
 	
-	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches, usuario)
-	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, CAST(GETDATE() AS DATETIME), CONVERT(int, @fecha_hasta - @fecha_desde), (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)))
+	INSERT INTO THE_FOREIGN_FOUR.Reservas (cod_reserva, cod_hotel, cod_cliente, cod_estado_reserva, cod_regimen, fecha_desde, fecha_hasta, fecha_creacion, cant_noches)
+	VALUES (@cod_reserva_generada, @cod_hotel, @cod_cliente, @cod_estado_reserva, @cod_regimen, @fecha_desde, @fecha_hasta, CAST(GETDATE() AS DATETIME), CONVERT(int, @fecha_hasta - @fecha_desde))
+	
+	INSERT INTO THE_FOREIGN_FOUR.AuditoriaReservas (cod_reserva, cod_usuario, cod_operacion)
+	VALUES (@cod_reserva_generada, (SELECT THE_FOREIGN_FOUR.func_obtener_cod_usuario(@usuario)), 'G')
 	
 	UPDATE THE_FOREIGN_FOUR.Reservas
 	SET		cod_estado_reserva = (SELECT cod_estado
 								  FROM THE_FOREIGN_FOUR.EstadosReserva
 								  WHERE descripcion LIKE 'cancelacion_noshow')
-	WHERE	fecha_desde < GETDATE()
-	AND		cod_estado_reserva = (SELECT cod_estado
-								  FROM THE_FOREIGN_FOUR.EstadosReserva
-								  WHERE descripcion NOT LIKE 'efectivizada')
-								  
+	WHERE	fecha_desde < GETDATE() 
+	AND		cod_estado_reserva IN (SELECT cod_estado
+								   FROM THE_FOREIGN_FOUR.EstadosReserva
+								   WHERE descripcion LIKE 'correcta'
+								   OR	 descripcion LIKE 'modificada')
 	RETURN @cod_reserva_generada
 END
 GO
@@ -1589,8 +1594,7 @@ BEGIN
 	AND		cod_tipo_hab = cod_tipo_hab
 	
 	UPDATE	THE_FOREIGN_FOUR.Reservas
-	SET		usuario = @usuario,		
-			cod_estado_reserva = (SELECT cod_estado
+	SET		cod_estado_reserva = (SELECT cod_estado
 								  FROM THE_FOREIGN_FOUR.EstadosReserva
 								  WHERE descripcion = 'modificada')
 	WHERE	cod_reserva = @cod_reserva
