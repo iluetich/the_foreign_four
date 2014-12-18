@@ -127,6 +127,12 @@ namespace FrbaHotel.Registrar_Estadia
             string consulta = "DECLARE @resultado numeric(18,0); EXEC @resultado = THE_FOREIGN_FOUR.proc_validar_check_in " + txtCodReserva.Text + "," + codigoHotel + ";SELECT @resultado";
             SqlCommand cmd3 = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             int resultadoCheckIn = Convert.ToInt32(cmd3.ExecuteScalar());
+
+            if (resultadoCheckIn == -2)
+            {
+                MessageBox.Show("No se encontraron habitaciones habilitadas disponibles para esta reserva. Consulte con su supervisor.", "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             if (resultadoCheckIn == -1){
                 MessageBox.Show("El CHECK IN se debe realizar el dia en que comienza la estadia", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;

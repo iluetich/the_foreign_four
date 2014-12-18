@@ -1334,19 +1334,59 @@ CREATE PROCEDURE THE_FOREIGN_FOUR.proc_validar_check_in
 				 @cod_hotel int)
 AS
 BEGIN
+
 	DECLARE @validacion_reserva int,
 			@validacion_fechas int,
 			@fecha_inicio_reserva datetime,
+			@cant_noches int,
 			@puede_check_in int
 			
 	SET		@validacion_reserva = THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest (@cod_reserva, @cod_hotel)
 	SET		@fecha_inicio_reserva = (SELECT fecha_desde FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva)
+	SET		@cant_noches = (SELECT cant_noches FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva)
 	SET		@validacion_fechas = THE_FOREIGN_FOUR.func_igual_fecha(@fecha_inicio_reserva, GETDATE())
+	
 	
 	IF	((@validacion_reserva = 1) AND
 		 (@validacion_fechas = 1))
 	BEGIN
-		RETURN 1
+		SELECT	cod_tipo_hab
+		INTO THE_FOREIGN_FOUR.#TipoHabReserva
+		FROM THE_FOREIGN_FOUR.TipoHabitacion_Reservas
+		WHERE cod_reserva = @cod_reserva
+	
+		DECLARE CursorHabitaciones CURSOR FOR
+		SELECT cod_tipo_hab
+		FROM THE_FOREIGN_FOUR.#TipoHabReserva
+		DECLARE @cod_tipo_hab numeric(18,0)
+		OPEN CursorHabitaciones;
+		FETCH NEXT FROM CursorHabitaciones INTO @cod_tipo_hab
+
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+		
+			IF (NOT EXISTS(SELECT cod_habitacion 
+							FROM THE_FOREIGN_FOUR.Habitaciones h
+							WHERE	h.cod_hotel = @cod_hotel
+							AND		h.nro_habitacion = (SELECT TOP 1 *
+														FROM THE_FOREIGN_FOUR.func_obtener_hab_disponibles(@fecha_inicio_reserva, @cod_tipo_hab, @cod_hotel, @cant_noches)))) 
+			BEGIN
+				CLOSE CursorHabitaciones;
+				DEALLOCATE CursorHabitaciones;
+				DROP TABLE THE_FOREIGN_FOUR.#TipoHabReserva
+				RETURN -2 -- no hay habitaciones habilitadas disponibles
+			END	
+
+			FETCH NEXT FROM CursorHabitaciones INTO @cod_tipo_hab
+		END
+		CLOSE CursorHabitaciones;
+		DEALLOCATE CursorHabitaciones;
+		--**cursor********
+	
+		DROP TABLE THE_FOREIGN_FOUR.#TipoHabReserva
+		
+		
+		RETURN 1 -- las fechas estan bien y hay habitaciones habilitadas disponibles
 	END
 	ELSE
 	IF (@validacion_fechas = -1) --El dia actual supera al fecha_desde de la reserva
