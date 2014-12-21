@@ -57,15 +57,20 @@ BEGIN
 	
 	
 	
-	DECLARE  @cod_estadia numeric(18,0),
-				@cod_hotel numeric(18,0)
+	DECLARE		@cod_estadia numeric(18,0),
+				@cod_hotel numeric(18,0),
+				@cant_noches numeric(18,0)
+				
 	SET @cod_estadia = (SELECT cod_estadia
 						FROM THE_FOREIGN_FOUR.Estadias
 						WHERE cod_reserva = @cod_reserva
 						AND fecha_inicio = @fecha_inicio)
 	SET @cod_hotel = (SELECT DISTINCT cod_hotel
 					 FROM THE_FOREIGN_FOUR.Reservas
-					 WHERE cod_reserva = @cod_reserva)	
+					 WHERE cod_reserva = @cod_reserva)
+	SET @cant_noches = (SELECT	cant_noches
+						FROM THE_FOREIGN_FOUR.Reservas	
+						WHERE cod_reserva = @cod_reserva)
 	
 	
 	SELECT	cod_tipo_hab
@@ -84,9 +89,8 @@ BEGIN
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 		INSERT INTO THE_FOREIGN_FOUR.Habitaciones_Estadia (cod_estadia, cod_habitacion)
-		VALUES (@cod_estadia, (SELECT MIN(cod_habitacion)
-								FROM THE_FOREIGN_FOUR.func_obtener_hab_disponibles(@fecha_inicio, @cod_tipo_hab, @cod_hotel)))
-		
+		VALUES (@cod_estadia, (SELECT TOP 1 *
+								FROM THE_FOREIGN_FOUR.func_obtener_hab_disponibles(@fecha_inicio, @cod_tipo_hab, @cod_hotel, @cant_noches)))
 		FETCH NEXT FROM CursorHabitaciones INTO @cod_tipo_hab
 	END
 	CLOSE CursorHabitaciones;
@@ -1012,13 +1016,11 @@ BEGIN
 	SET @cod_consumible_inclusive = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('descuento all inclusive'))
 	SET @cod_consumible_estadia = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('estadia'))
 	SET @cod_consumible_noches = (SELECT THE_FOREIGN_FOUR.buscar_cod_consumible('noches no utilizadas'))
-	SET @fecha_check_out = (SELECT fecha
-							FROM THE_FOREIGN_FOUR.AuditoriaEstadias
-							WHERE cod_operacion = 'O'
-							AND cod_estadia = (SELECT cod_estadia
+	SET @fecha_check_out = (SELECT checkout
+							FROM THE_FOREIGN_FOUR.Estadias
+							WHERE cod_estadia = (SELECT cod_estadia
 												FROM THE_FOREIGN_FOUR.Facturas
-												WHERE nro_factura = @nro_factura
-												))
+												WHERE nro_factura = @nro_factura))
 	
 	SET @fecha_ideal = (SELECT r.fecha_hasta
 						FROM THE_FOREIGN_FOUR.Reservas r,
@@ -1397,7 +1399,6 @@ CREATE VIEW THE_FOREIGN_FOUR.view_habitaciones_disp
 (cod_habitacion, nro_habitacion, piso, cod_hotel, cod_tipo_hab, fecha_desde)
 AS
 SELECT	h.cod_habitacion, h.nro_habitacion, h.piso, h.cod_hotel, h.cod_tipo_hab, e.checkout
-		
 FROM	THE_FOREIGN_FOUR.Habitaciones h,
 		THE_FOREIGN_FOUR.Habitaciones_Estadia he,
 		THE_FOREIGN_FOUR.Estadias e
@@ -1406,15 +1407,37 @@ AND		he.cod_estadia = e.cod_estadia
 GO
 
 --***************************************************
-CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles (@fecha_desde datetime, @cod_tipo_hab numeric(18,0), @cod_hotel numeric(18,0))
+--***
+--**
+--*
+CREATE FUNCTION THE_FOREIGN_FOUR.func_obtener_hab_disponibles (@fecha_desde datetime, @cod_tipo_hab numeric(18,0), @cod_hotel numeric(18,0), @cant_noches numeric(18,0))
 RETURNS TABLE
 AS
 RETURN(
-		SELECT  *
+		/*SELECT  *
 		FROM	THE_FOREIGN_FOUR.view_habitaciones_disp d
 		WHERE	d.cod_tipo_hab = @cod_tipo_hab
 		AND		d.cod_hotel = @cod_hotel
-		AND		CAST(d.fecha_desde AS datetime) < @fecha_desde
+		AND		CAST(d.fecha_desde AS datetime) < @fecha_desde*/
+		
+		--habria que agregar las habitaciones de las estadias que fueron checkouteadas
+		--solo si el intervalo en que se necesita la habitacion esta contenido en el intervalo
+		--de las noches que no aprovecho la estadia	
+	
+		SELECT	nro_habitacion
+		FROM	THE_FOREIGN_FOUR.Habitaciones ha
+		WHERE	@cod_hotel = ha.cod_hotel
+		AND		@cod_tipo_hab = ha.cod_tipo_hab
+		
+		EXCEPT
+		
+		SELECT h.nro_habitacion
+		FROM THE_FOREIGN_FOUR.Habitaciones_Estadia he, THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.Estadias e
+		WHERE	he.cod_habitacion = h.cod_habitacion
+		AND		h.cod_tipo_hab = @cod_tipo_hab
+		AND		h.cod_hotel = @cod_hotel
+		AND		DATEADD(DAY, cant_noches, e.fecha_inicio) > @fecha_desde
+		
 )
 GO
 --****************************************************
