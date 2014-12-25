@@ -148,6 +148,7 @@
     <Compile Include="Cancelar Reserva\CancelarReserva.Designer.cs">
       <DependentUpon>CancelarReserva.cs</DependentUpon>
     </Compile>
+    <Compile Include="DateConfig.cs" />
     <Compile Include="ConexionSQL.cs" />
     <Compile Include="GD2C2014DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
