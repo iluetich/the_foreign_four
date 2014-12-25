@@ -41,6 +41,7 @@
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.groupBotonera = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupHues.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosHuespedes)).BeginInit();
             this.groupBotonera.SuspendLayout();
@@ -49,14 +50,15 @@
             // groupHues
             // 
             this.groupHues.AutoSize = true;
+            this.groupHues.Controls.Add(this.label2);
             this.groupHues.Controls.Add(this.label1);
             this.groupHues.Controls.Add(this.txtCantHuespedes);
             this.groupHues.Controls.Add(this.btnBuscarCliente);
             this.groupHues.Controls.Add(this.dgvDatosHuespedes);
             this.groupHues.Controls.Add(this.btnNuevoCliente);
-            this.groupHues.Location = new System.Drawing.Point(13, 23);
+            this.groupHues.Location = new System.Drawing.Point(13, 16);
             this.groupHues.Name = "groupHues";
-            this.groupHues.Size = new System.Drawing.Size(433, 267);
+            this.groupHues.Size = new System.Drawing.Size(439, 293);
             this.groupHues.TabIndex = 0;
             this.groupHues.TabStop = false;
             this.groupHues.Text = "Huespedes";
@@ -105,7 +107,7 @@
             this.Column2,
             this.Column3,
             this.Column4});
-            this.dgvDatosHuespedes.Location = new System.Drawing.Point(27, 91);
+            this.dgvDatosHuespedes.Location = new System.Drawing.Point(30, 123);
             this.dgvDatosHuespedes.Name = "dgvDatosHuespedes";
             this.dgvDatosHuespedes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDatosHuespedes.Size = new System.Drawing.Size(377, 150);
@@ -173,11 +175,21 @@
             // 
             this.groupBotonera.Controls.Add(this.btnAceptar);
             this.groupBotonera.Controls.Add(this.btnVolver);
-            this.groupBotonera.Location = new System.Drawing.Point(13, 296);
+            this.groupBotonera.Location = new System.Drawing.Point(13, 316);
             this.groupBotonera.Name = "groupBotonera";
-            this.groupBotonera.Size = new System.Drawing.Size(433, 100);
+            this.groupBotonera.Size = new System.Drawing.Size(439, 100);
             this.groupBotonera.TabIndex = 3;
             this.groupBotonera.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label2.Location = new System.Drawing.Point(39, 102);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(362, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "(Para eliminar un cliente selecciona la fila completa y presiona la tecla Supr)";
             // 
             // frmRegistrarHuespedesRestantes
             // 
@@ -185,7 +197,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(458, 413);
+            this.ClientSize = new System.Drawing.Size(464, 431);
             this.Controls.Add(this.groupBotonera);
             this.Controls.Add(this.groupHues);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -219,5 +231,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.TextBox txtCantHuespedes;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }

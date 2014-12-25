@@ -60,9 +60,7 @@
             this.dgvFacturaDetalle.AllowUserToResizeColumns = false;
             this.dgvFacturaDetalle.AllowUserToResizeRows = false;
             this.dgvFacturaDetalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvFacturaDetalle.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvFacturaDetalle.BackgroundColor = System.Drawing.Color.White;
-            this.dgvFacturaDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFacturaDetalle.Location = new System.Drawing.Point(15, 29);
             this.dgvFacturaDetalle.Name = "dgvFacturaDetalle";
             this.dgvFacturaDetalle.ReadOnly = true;

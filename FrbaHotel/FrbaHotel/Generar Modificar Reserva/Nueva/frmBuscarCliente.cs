@@ -120,7 +120,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 }
                 this.Close();
             }else{
-                MessageBox.Show("Seleccione un cliente antes de continuar \n(haga click en la tabla por mas que haya obtenido resultados)", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);            
+                MessageBox.Show("Seleccione un cliente antes de continuar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);            
             }
 
         }
