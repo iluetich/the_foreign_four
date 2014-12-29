@@ -1443,11 +1443,13 @@ RETURN(
 		EXCEPT
 		
 		SELECT h.nro_habitacion
-		FROM THE_FOREIGN_FOUR.Habitaciones_Estadia he, THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.Estadias e
+		FROM THE_FOREIGN_FOUR.Habitaciones_Estadia he, THE_FOREIGN_FOUR.Habitaciones h, THE_FOREIGN_FOUR.Estadias e, THE_FOREIGN_FOUR.Reservas r
 		WHERE	he.cod_habitacion = h.cod_habitacion
+		AND		e.cod_reserva = r.cod_reserva
 		AND		h.cod_tipo_hab = @cod_tipo_hab
 		AND		h.cod_hotel = @cod_hotel
-		AND		DATEADD(DAY, cant_noches, e.fecha_inicio) > @fecha_desde
+		AND		r.cod_hotel = @cod_hotel
+		AND		DATEADD(DAY, e.cant_noches, e.fecha_inicio) > @fecha_desde
 		
 )
 GO
