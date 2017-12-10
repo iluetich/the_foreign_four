@@ -26,7 +26,11 @@ namespace FrbaHotel.Registrar_Consumible
             nroFactura = nroFacturaParametro;
             InitializeComponent();
             frmRegistrarConsumiblePadre = newForm;
-            FrbaHotel.Utils.rellenarDataGridView(dgvFacturaDetalle, "SELECT * FROM THE_FOREIGN_FOUR.facturacion ("+ nroFactura +")");            
+            FrbaHotel.Utils.rellenarDataGridView(dgvFacturaDetalle, "SELECT nro_factura, cod_estadia, cod_consumible, descripcion, precio_unitario, cantidad, subtotal FROM THE_FOREIGN_FOUR.facturacion (" + nroFactura + ")");
+            string consultaSQL = "SELECT DISTINCT total_factura FROM THE_FOREIGN_FOUR.facturacion (" + nroFactura + ")";
+            SqlCommand cmd = new SqlCommand (consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            lblTotalFactura.Text = cmd.ExecuteScalar().ToString();
+            /* magia de total de factura;  */
         }
         //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -105,6 +109,21 @@ namespace FrbaHotel.Registrar_Consumible
 
         //only numbers
         private void txtNroTarj_KeyPress(object sender, KeyPressEventArgs e) { FrbaHotel.Utils.allowNumbers(e); }
+
+        private void dgvFacturaDetalle_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
 
         //-----------------------------------------------------------------------------------------------------------------------------
     }

@@ -83,7 +83,7 @@ namespace FrbaHotel.Registrar_Consumible
                 //registrar consumible
                 for (int i = 0; i < dgvConsumibles.RowCount - 1; i++)
                 {
-                    try{
+                    try {
                         DataGridViewRow fila = dgvConsumibles.Rows[i];
                         SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_aniadir_consumible_estadia", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -92,7 +92,7 @@ namespace FrbaHotel.Registrar_Consumible
                         cmd.Parameters.AddWithValue("@cod_consumible", long.Parse(fila.Cells[0].Value.ToString()));
                         cmd.Parameters.AddWithValue("@cantidad", int.Parse(fila.Cells[1].Value.ToString()));
                         cmd.ExecuteNonQuery();
-                    }catch (Exception){
+                    } catch (Exception) {
                         MessageBox.Show("El código de consumible " + dgvConsumibles.Rows[i].Cells[0].Value + " ingresado no existe. Por favor, ingrese un código de consumible válido e intente nuevamente", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return;
                     }

@@ -37,6 +37,8 @@
             this.txtNroTarj = new System.Windows.Forms.TextBox();
             this.btnEmitirFactura = new System.Windows.Forms.Button();
             this.lbltNroTarj = new System.Windows.Forms.Label();
+            this.lblTotalFactura = new System.Windows.Forms.Label();
+            this.textoFactura = new System.Windows.Forms.Label();
             this.groupFacturaDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturaDetalle)).BeginInit();
             this.groupDetalleDias.SuspendLayout();
@@ -45,10 +47,12 @@
             // 
             // groupFacturaDetalle
             // 
+            this.groupFacturaDetalle.Controls.Add(this.textoFactura);
+            this.groupFacturaDetalle.Controls.Add(this.lblTotalFactura);
             this.groupFacturaDetalle.Controls.Add(this.dgvFacturaDetalle);
-            this.groupFacturaDetalle.Location = new System.Drawing.Point(13, 13);
+            this.groupFacturaDetalle.Location = new System.Drawing.Point(13, 8);
             this.groupFacturaDetalle.Name = "groupFacturaDetalle";
-            this.groupFacturaDetalle.Size = new System.Drawing.Size(680, 256);
+            this.groupFacturaDetalle.Size = new System.Drawing.Size(680, 278);
             this.groupFacturaDetalle.TabIndex = 0;
             this.groupFacturaDetalle.TabStop = false;
             this.groupFacturaDetalle.Text = "Detalle factura";
@@ -66,6 +70,7 @@
             this.dgvFacturaDetalle.ReadOnly = true;
             this.dgvFacturaDetalle.Size = new System.Drawing.Size(639, 204);
             this.dgvFacturaDetalle.TabIndex = 0;
+            this.dgvFacturaDetalle.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFacturaDetalle_CellContentClick);
             // 
             // groupDetalleDias
             // 
@@ -145,6 +150,27 @@
             this.lbltNroTarj.TabIndex = 6;
             this.lbltNroTarj.Text = "Nro tarjeta:";
             // 
+            // lblTotalFactura
+            // 
+            this.lblTotalFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalFactura.Location = new System.Drawing.Point(568, 250);
+            this.lblTotalFactura.Name = "lblTotalFactura";
+            this.lblTotalFactura.Size = new System.Drawing.Size(86, 25);
+            this.lblTotalFactura.TabIndex = 1;
+            this.lblTotalFactura.Text = "label1";
+            this.lblTotalFactura.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTotalFactura.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // textoFactura
+            // 
+            this.textoFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textoFactura.Location = new System.Drawing.Point(479, 253);
+            this.textoFactura.Name = "textoFactura";
+            this.textoFactura.Size = new System.Drawing.Size(100, 18);
+            this.textoFactura.TabIndex = 2;
+            this.textoFactura.Text = "Importe Total: ";
+            this.textoFactura.Click += new System.EventHandler(this.label1_Click_1);
+            // 
             // frmFacturacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,5 +206,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rbtnTarjeta;
         private System.Windows.Forms.RadioButton rbtnContado;
+        private System.Windows.Forms.Label lblTotalFactura;
+        private System.Windows.Forms.Label textoFactura;
     }
 }
