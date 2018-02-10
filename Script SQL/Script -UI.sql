@@ -59,28 +59,27 @@ BEGIN
 	
 	DECLARE		@cod_estadia numeric(18,0),
 				@cod_hotel numeric(18,0),
-				@cant_noches numeric(18,0)
+				@cant_noches numeric(18,0),
+				@cod_habitacion_a_ocupar numeric(18,0)
 				
 	SET @cod_estadia = (SELECT cod_estadia
 						FROM THE_FOREIGN_FOUR.Estadias
-						WHERE cod_reserva = @cod_reserva
-						AND fecha_inicio = @fecha_inicio)
-	SET @cod_hotel = (SELECT DISTINCT cod_hotel
+						WHERE cod_reserva = @cod_reserva)
+	SET @cod_hotel = (SELECT cod_hotel
 					 FROM THE_FOREIGN_FOUR.Reservas
 					 WHERE cod_reserva = @cod_reserva)
 	SET @cant_noches = (SELECT	cant_noches
 						FROM THE_FOREIGN_FOUR.Reservas	
 						WHERE cod_reserva = @cod_reserva)
 	
-	
 	SELECT	cod_tipo_hab
 	INTO THE_FOREIGN_FOUR.#TipoHabReserva
 	FROM THE_FOREIGN_FOUR.TipoHabitacion_Reservas
 	WHERE cod_reserva = @cod_reserva
-	
+
 	--**cursor********
 	DECLARE CursorHabitaciones CURSOR FOR
-	SELECT *
+	SELECT cod_tipo_hab
 	FROM THE_FOREIGN_FOUR.#TipoHabReserva
 	DECLARE @cod_tipo_hab numeric(18,0)
 	OPEN CursorHabitaciones;
@@ -88,9 +87,13 @@ BEGIN
 	
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
+		SET @cod_habitacion_a_ocupar = (SELECT cod_habitacion 
+										FROM THE_FOREIGN_FOUR.Habitaciones h
+										WHERE	h.cod_hotel = @cod_hotel
+										AND		h.nro_habitacion = (SELECT TOP 1 *
+																	FROM THE_FOREIGN_FOUR.func_obtener_hab_disponibles(@fecha_inicio, @cod_tipo_hab, @cod_hotel, @cant_noches)))
 		INSERT INTO THE_FOREIGN_FOUR.Habitaciones_Estadia (cod_estadia, cod_habitacion)
-		VALUES (@cod_estadia, (SELECT TOP 1 *
-								FROM THE_FOREIGN_FOUR.func_obtener_hab_disponibles(@fecha_inicio, @cod_tipo_hab, @cod_hotel, @cant_noches)))
+		VALUES (@cod_estadia, @cod_habitacion_a_ocupar)
 		FETCH NEXT FROM CursorHabitaciones INTO @cod_tipo_hab
 	END
 	CLOSE CursorHabitaciones;
