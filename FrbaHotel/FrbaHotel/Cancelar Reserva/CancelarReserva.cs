@@ -94,7 +94,7 @@ namespace FrbaHotel.Cancelar_Reserva
             }
 
             //validaciones de no cancelada
-            if (user != "Guest"){
+            if (user == "Guest"){
                 consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest(" + txtCodReserva.Text + ")";
             }else{
                 consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user(" + txtCodReserva.Text + "," + codigoHotel + ")";

@@ -75,11 +75,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             codigoReserva = txtCodRes.Text;
 
             //chequea si la modificacion de la reserva la hace un usuario o un guest
-            if (user != "Guest"){
+            if (user == "Guest"){
                 //valida existencia
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user(" + codigoReserva + ")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest(" + codigoReserva + ")";
             }else{
-                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest(" + codigoReserva + "," + codigoHotel + ")";
+                consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_user(" + codigoReserva + "," + codigoHotel + ")";
             }
 
             int resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
