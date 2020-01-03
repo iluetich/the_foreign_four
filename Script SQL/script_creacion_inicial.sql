@@ -239,6 +239,7 @@ CREATE TABLE THE_FOREIGN_FOUR.AuditoriaEstadias (
 	fecha				datetime				DEFAULT getdate()
 )
 CREATE TABLE THE_FOREIGN_FOUR.Consumibles_Estadia (
+	cod_cons_estadia	numeric(18,0)			PRIMARY KEY IDENTITY(1,1),
 	cod_estadia			numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Estadias,
 	cod_consumible		numeric(18,0)			REFERENCES THE_FOREIGN_FOUR.Consumibles,
 	cantidad			int,
