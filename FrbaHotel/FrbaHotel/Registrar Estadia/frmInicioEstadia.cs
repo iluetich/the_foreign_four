@@ -22,8 +22,7 @@ namespace FrbaHotel.Registrar_Estadia
         //---------------------CONSTRUCTORES--------------------------------------------------------------
         public frmInicioEstadia(){  InitializeComponent(); }
         public frmInicioEstadia(MenuDinamico menuPadre, string userSesion, string hotelSesion)
-        {
-            FrbaHotel.ConexionSQL.establecerConexionBD();
+        {            
             this.menu = menuPadre;
             InitializeComponent();           
 
@@ -55,24 +54,11 @@ namespace FrbaHotel.Registrar_Estadia
             if (FrbaHotel.Utils.validarCampoEsteCompleto(txtCodReserva, "Codigo reserva")) //valida text box completo
             {
                 if (validarReserva())
-                {
-                    //REGISTRAR ESTADIA----
-                    this.registrarEstadia();
-                    //---------------------
+                {                    
                     new frmRegistrarHuespedesRestantes(this).Show();
                     this.Enabled = false;
                 }
             }
-        }
-
-        public void registrarEstadia()
-        {
-            SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_registrar_estadia", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@cod_reserva", txtCodReserva.Text);
-            cmd.Parameters.AddWithValue("@usuario", user);            
-            cmd.ExecuteNonQuery();
         }
 
         //evento click boton check  out
@@ -97,7 +83,6 @@ namespace FrbaHotel.Registrar_Estadia
                 }                
             }
         }
-
         
         private void botonVolver_Click(object sender, EventArgs e)
         {
@@ -146,7 +131,7 @@ namespace FrbaHotel.Registrar_Estadia
         //----------------------GETTERS-----------------------------
         public string getCodigoReserva() { return txtCodReserva.Text; }
         //public string getCodigoHotel() { return codigoHotel; }
-        //public string getUsuario() { return user; }
+        public string getUsuario() { return user; }
         //----------------------------------------------------------
     }
 }

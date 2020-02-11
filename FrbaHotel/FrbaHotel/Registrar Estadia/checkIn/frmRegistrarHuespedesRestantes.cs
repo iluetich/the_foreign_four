@@ -17,6 +17,7 @@ namespace FrbaHotel.Registrar_Estadia
         frmInicioEstadia frmRegistrarEstadiaPadre;
         string codigoCliente;
         string codigoReserva;
+        string user;
 
         //----------------------------------------------------------------------------------------------------
         //----------------------CONSTRUCTORES-----------------------------------------------------------------       
@@ -25,6 +26,8 @@ namespace FrbaHotel.Registrar_Estadia
             InitializeComponent();
             frmRegistrarEstadiaPadre = newFrm;
 
+            codigoReserva = frmRegistrarEstadiaPadre.getCodigoReserva();
+            user = frmRegistrarEstadiaPadre.getUsuario();
             obtenerCantHuespedes();
         }
         //----------------------FIN CONSTRUCTORES--------------------------------------------------------------
@@ -55,6 +58,7 @@ namespace FrbaHotel.Registrar_Estadia
             new frmBuscarCliente(this).Show();            
             this.Enabled = false;
         }
+
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -62,25 +66,26 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (validaClientes())
+            if (alMenosUnCliente())
             {
-                //NACHO----------------------(agrega los huespedes a la tabla huespedes por estadia)
-                //OBTENER EL COD DE ESTADIA GENERADO POR LA RESERVA
-                object cod_estadia = this.ejecutarConsultaLong("SELECT THE_FOREIGN_FOUR.func_obtener_estadia (" + codigoReserva + ")");
+                //REGISTRAR ESTADIA----
+                registrarEstadia();
+                //---------------------
 
+                //OBTENER EL COD DE ESTADIA GENERADO POR LA RESERVA
+                int cod_estadia = FrbaHotel.Utils.ejecutarConsultaResulInt("SELECT THE_FOREIGN_FOUR.func_obtener_estadia (" + codigoReserva + ")");
+                
                 //REGISTRA EL HUESPED EN LA ESTADIA
                 for(int i = 0;i < dgvDatosHuespedes.RowCount ;i++)
                 {
                     //obtener el codigo de cliente por cada fila del data grid
                     string consulta = "SELECT cod_cliente FROM THE_FOREIGN_FOUR.buscar_clientes(NULL,NULL,NULL,"+ int.Parse(dgvDatosHuespedes.Rows[i].Cells[1].Value.ToString()) +",NULL)";
-                    object codigoCliente = this.ejecutarConsultaLong(consulta);
-
+                    int codigoCliente = FrbaHotel.Utils.ejecutarConsultaResulInt(consulta);
+                    
                     SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_registrar_huesped", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@cod_cliente",long.Parse(codigoCliente.ToString()));
-                    cmd.Parameters.AddWithValue("@cod_estadia",long.Parse(cod_estadia.ToString())); 
-
+                    cmd.Parameters.AddWithValue("@cod_cliente",codigoCliente);
+                    cmd.Parameters.AddWithValue("@cod_estadia",cod_estadia); 
                     cmd.ExecuteNonQuery();
                 }
                 //------------------------------------------------------------------
@@ -90,18 +95,7 @@ namespace FrbaHotel.Registrar_Estadia
             }
         }
 
-        public object ejecutarConsultaLong(string consulta)
-        {
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = consulta;
-
-            cmd.CommandType = CommandType.Text;
-
-            cmd.Connection = FrbaHotel.ConexionSQL.getSqlInstanceConnection();
-
-            return cmd.ExecuteScalar();
-        }
+        
         //----------------------FIN BOTONES--------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------
 
@@ -116,8 +110,7 @@ namespace FrbaHotel.Registrar_Estadia
             string tipoDocumento = cmd.Parameters["@tipo_doc"].Value.ToString();
             string nroDocumento = cmd.Parameters["@nro_doc"].Value.ToString();
 
-            switch (sePuedeRegistrarHuesped(dgvDatosHuespedes, nroDocumento))
-            {
+            switch (sePuedeRegistrarHuesped(dgvDatosHuespedes, nroDocumento)){
                 case -1:
                     MessageBox.Show("El cliente creado tiene datos identificatorios que posee otro cliente. Consulte a su administrador", "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
@@ -126,15 +119,15 @@ namespace FrbaHotel.Registrar_Estadia
                     break;
                 default:
                     dgvDatosHuespedes.Rows.Add(new[] { tipoDocumento, nroDocumento, apellido, nombre });
+                    txtCantHuespedes.Text = (Convert.ToInt32(txtCantHuespedes.Text) - 1).ToString();
                     break;
             }
-
         }
 
         //valido que se haya ingresa al menos un cliente
-        private bool validaClientes()
+        private bool alMenosUnCliente()
         {
-            if (dgvDatosHuespedes.Rows.Count <= Convert.ToInt32(txtCantHuespedes.Text)){
+            if (dgvDatosHuespedes.Rows.Count <= 0){
                 MessageBox.Show("Te faltan registrar huespedes", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }               
@@ -150,9 +143,7 @@ namespace FrbaHotel.Registrar_Estadia
             string nroDocumento = row.Cells[4].Value.ToString();
 
             //agregado por Iván desde acá
-
-            switch (sePuedeRegistrarHuesped(dgvDatosHuespedes, nroDocumento))
-            {
+            switch (sePuedeRegistrarHuesped(dgvDatosHuespedes, nroDocumento)){
                 case -1: 
                     MessageBox.Show("El cliente " + nombre + " " + apellido + " ya está registrado como huésped. Por favor, seleccione otro cliente e intente nuevamente.", "Huésped ya registrado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     break;
@@ -161,24 +152,18 @@ namespace FrbaHotel.Registrar_Estadia
                     break;
                 default:
                     dgvDatosHuespedes.Rows.Add(new[] { tipoDocumento, nroDocumento, apellido, nombre });
+                    txtCantHuespedes.Text = (Convert.ToInt32(txtCantHuespedes.Text) - 1).ToString();
                     break;
             }
-
-            // hasta acá
-
-            /*dgvDatosHuespedes.Rows.Add(new[] { tipoDocumento, nroDocumento, apellido, nombre });*/
-        
+            // hasta acá      
         }
 
+        //pregunta si el cliente ya esta registrado
         private bool yaEstaRegistrado(DataGridView huespedes, string documento_huesped)
         {
             if (huespedes.Rows.Count <= 0) return false;
-            foreach (DataGridViewRow fila in huespedes.Rows)
-            {
-                Console.Write(fila.Cells[1].Value.ToString());
-                Console.Write(documento_huesped);
-                if (String.Equals(fila.Cells[1].Value.ToString(), documento_huesped))
-                {
+            foreach (DataGridViewRow fila in huespedes.Rows){               
+                if (String.Equals(fila.Cells[1].Value.ToString(), documento_huesped)){
                     return true;
                 }
             }
@@ -187,11 +172,10 @@ namespace FrbaHotel.Registrar_Estadia
 
         //obtengo la cantidad máxima de personas que pueden registrarse como huéspedes de la reserva 
         //aplicación parcial en su ¿máximo? esplendor (?);; agregado por Iván
-
         private int cantidadMaximaHuespedes(int reserva)
         {
             string query = "SELECT THE_FOREIGN_FOUR.func_max_cant_huespedes(" + reserva + ")";
-            return (int)ejecutarConsultaLong(query);
+            return FrbaHotel.Utils.ejecutarConsultaResulInt(query);            
         }
 
         private int sePuedeRegistrarHuesped(DataGridView huespedesRegistrados, string nro_doc)
@@ -201,19 +185,28 @@ namespace FrbaHotel.Registrar_Estadia
             return 1337;
         }
 
-        public void obtenerCantHuespedes(){
-            
-            codigoReserva = frmRegistrarEstadiaPadre.getCodigoReserva();
-            string consultaSQL = "select * from THE_FOREIGN_FOUR.func_obtener_cant_huespedes("+codigoReserva+")";
+        //obtiene la cantidad maxima de huespedes que puede registrar en la estadia
+        public void obtenerCantHuespedes(){            
+            string consultaSQL = "select THE_FOREIGN_FOUR.func_max_cant_huespedes("+codigoReserva+")";
             SqlCommand cmd = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             txtCantHuespedes.Text = cmd.ExecuteScalar().ToString();
-            //Console.WriteLine("la cantidad de huespedes es: " + txtCantHuespedes.Text);
-
         }
+
+        //Registra la nueva  estadia
+        public void registrarEstadia()
+        {             
+            SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_registrar_estadia", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(codigoReserva));
+            cmd.Parameters.AddWithValue("@usuario", user);
+            cmd.ExecuteNonQuery();
+        }
+
         //----------------------------------------------------------------------------------------------------------------
         //----------------------FIN OTROS---------------------------------------------------------------------------------
 
-
+      
         //----SETTERS------------------------------------------------------------------
         public void setCodigoCliente(int codigo) { codigoCliente = codigo.ToString(); }       
         //-----------------------------------------------------------------------------

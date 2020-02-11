@@ -40,6 +40,7 @@
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.groupBotonera = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupHues.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosHuespedes)).BeginInit();
             this.groupBotonera.SuspendLayout();
@@ -48,13 +49,14 @@
             // groupHues
             // 
             this.groupHues.AutoSize = true;
+            this.groupHues.Controls.Add(this.label1);
             this.groupHues.Controls.Add(this.txtCantHuespedes);
             this.groupHues.Controls.Add(this.btnBuscarCliente);
             this.groupHues.Controls.Add(this.dgvDatosHuespedes);
             this.groupHues.Controls.Add(this.btnNuevoCliente);
             this.groupHues.Location = new System.Drawing.Point(13, 23);
             this.groupHues.Name = "groupHues";
-            this.groupHues.Size = new System.Drawing.Size(433, 236);
+            this.groupHues.Size = new System.Drawing.Size(433, 267);
             this.groupHues.TabIndex = 0;
             this.groupHues.TabStop = false;
             this.groupHues.Text = "Huespedes";
@@ -62,7 +64,7 @@
             // txtCantHuespedes
             // 
             this.txtCantHuespedes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCantHuespedes.Location = new System.Drawing.Point(368, 19);
+            this.txtCantHuespedes.Location = new System.Drawing.Point(392, 16);
             this.txtCantHuespedes.Name = "txtCantHuespedes";
             this.txtCantHuespedes.ReadOnly = true;
             this.txtCantHuespedes.Size = new System.Drawing.Size(29, 22);
@@ -73,7 +75,7 @@
             // btnBuscarCliente
             // 
             this.btnBuscarCliente.AutoSize = true;
-            this.btnBuscarCliente.Location = new System.Drawing.Point(133, 32);
+            this.btnBuscarCliente.Location = new System.Drawing.Point(133, 56);
             this.btnBuscarCliente.Name = "btnBuscarCliente";
             this.btnBuscarCliente.Size = new System.Drawing.Size(85, 23);
             this.btnBuscarCliente.TabIndex = 0;
@@ -94,7 +96,7 @@
             this.Column2,
             this.Column3,
             this.Column4});
-            this.dgvDatosHuespedes.Location = new System.Drawing.Point(30, 67);
+            this.dgvDatosHuespedes.Location = new System.Drawing.Point(30, 91);
             this.dgvDatosHuespedes.Name = "dgvDatosHuespedes";
             this.dgvDatosHuespedes.Size = new System.Drawing.Size(377, 150);
             this.dgvDatosHuespedes.TabIndex = 5;
@@ -126,7 +128,7 @@
             // btnNuevoCliente
             // 
             this.btnNuevoCliente.AutoSize = true;
-            this.btnNuevoCliente.Location = new System.Drawing.Point(221, 32);
+            this.btnNuevoCliente.Location = new System.Drawing.Point(221, 56);
             this.btnNuevoCliente.Name = "btnNuevoCliente";
             this.btnNuevoCliente.Size = new System.Drawing.Size(84, 23);
             this.btnNuevoCliente.TabIndex = 1;
@@ -159,11 +161,20 @@
             // 
             this.groupBotonera.Controls.Add(this.btnAceptar);
             this.groupBotonera.Controls.Add(this.btnVolver);
-            this.groupBotonera.Location = new System.Drawing.Point(13, 260);
+            this.groupBotonera.Location = new System.Drawing.Point(13, 296);
             this.groupBotonera.Name = "groupBotonera";
             this.groupBotonera.Size = new System.Drawing.Size(433, 100);
             this.groupBotonera.TabIndex = 3;
             this.groupBotonera.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(176, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(215, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Cantidad restante  de huespedes a registrar:";
             // 
             // frmRegistrarHuespedesRestantes
             // 
@@ -171,7 +182,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(458, 384);
+            this.ClientSize = new System.Drawing.Size(458, 413);
             this.Controls.Add(this.groupBotonera);
             this.Controls.Add(this.groupHues);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -204,5 +215,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.TextBox txtCantHuespedes;
+        private System.Windows.Forms.Label label1;
     }
 }

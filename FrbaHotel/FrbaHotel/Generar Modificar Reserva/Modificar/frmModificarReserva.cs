@@ -228,8 +228,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         //tomo la fila seleccionada del form tipo habitaciones
         public void filaSeleccionadaDataGridHabitaciones(DataGridViewRow row)
-        {
-            //codigoTipoHabitacion = row.Cells[0].Value.ToString();            
+        {                       
             //agrego las habitaciones a la tabla
             string codigo = row.Cells[0].Value.ToString();
             string descripcion = row.Cells[1].Value.ToString();
@@ -373,14 +372,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         //CHANGES---------------------------------------------------------------------------
         private void dtpFechaDesde_ValueChanged(object sender, EventArgs e){
             if (termino_de_cargar_todo){
-                if (!FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)) return;
+                //if (!FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)) return;
                 calcularCostoTotal();
             }
         }
 
         private void dtpFechaHasta_ValueChanged(object sender, EventArgs e){
             if (termino_de_cargar_todo){
-                if (!FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)) return; 
+                //if (!FrbaHotel.Utils.validarFechas(dtpFechaDesde, dtpFechaHasta)) return; 
                 calcularCostoTotal();
             }
         }
