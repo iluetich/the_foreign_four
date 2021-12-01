@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupHues = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.txtCantHuespedes = new System.Windows.Forms.TextBox();
             this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.dgvDatosHuespedes = new System.Windows.Forms.DataGridView();
@@ -40,7 +41,6 @@
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.groupBotonera = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupHues.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosHuespedes)).BeginInit();
             this.groupBotonera.SuspendLayout();
@@ -61,6 +61,15 @@
             this.groupHues.TabStop = false;
             this.groupHues.Text = "Huespedes";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(138, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(250, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Cantidad maxima restante de huespedes a registrar:";
+            // 
             // txtCantHuespedes
             // 
             this.txtCantHuespedes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -75,7 +84,7 @@
             // btnBuscarCliente
             // 
             this.btnBuscarCliente.AutoSize = true;
-            this.btnBuscarCliente.Location = new System.Drawing.Point(133, 56);
+            this.btnBuscarCliente.Location = new System.Drawing.Point(130, 56);
             this.btnBuscarCliente.Name = "btnBuscarCliente";
             this.btnBuscarCliente.Size = new System.Drawing.Size(85, 23);
             this.btnBuscarCliente.TabIndex = 0;
@@ -96,7 +105,7 @@
             this.Column2,
             this.Column3,
             this.Column4});
-            this.dgvDatosHuespedes.Location = new System.Drawing.Point(30, 91);
+            this.dgvDatosHuespedes.Location = new System.Drawing.Point(27, 91);
             this.dgvDatosHuespedes.Name = "dgvDatosHuespedes";
             this.dgvDatosHuespedes.Size = new System.Drawing.Size(377, 150);
             this.dgvDatosHuespedes.TabIndex = 5;
@@ -128,7 +137,7 @@
             // btnNuevoCliente
             // 
             this.btnNuevoCliente.AutoSize = true;
-            this.btnNuevoCliente.Location = new System.Drawing.Point(221, 56);
+            this.btnNuevoCliente.Location = new System.Drawing.Point(218, 56);
             this.btnNuevoCliente.Name = "btnNuevoCliente";
             this.btnNuevoCliente.Size = new System.Drawing.Size(84, 23);
             this.btnNuevoCliente.TabIndex = 1;
@@ -166,15 +175,6 @@
             this.groupBotonera.Size = new System.Drawing.Size(433, 100);
             this.groupBotonera.TabIndex = 3;
             this.groupBotonera.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(176, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(215, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Cantidad restante  de huespedes a registrar:";
             // 
             // frmRegistrarHuespedesRestantes
             // 

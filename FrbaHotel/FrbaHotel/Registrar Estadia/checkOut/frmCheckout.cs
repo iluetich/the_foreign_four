@@ -62,17 +62,14 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
             //ejecutar el procedure que realiza el checkout
             SqlCommand cmd = new SqlCommand("THE_FOREIGN_FOUR.proc_realizar_checkout", FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.AddWithValue("@cod_estadia",int.Parse(codEstadia));
             cmd.Parameters.AddWithValue("@username", user);
-
             cmd.ExecuteNonQuery();
 
             //crear Factura
             string consulta = "DECLARE @output numeric(18,0) EXEC THE_FOREIGN_FOUR.proc_crear_factura "+ codEstadia +", @output OUTPUT,"+ codigoCliente +" SELECT @output";
             SqlCommand cmd2 = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
             cmd2.CommandType = CommandType.Text;
-
             object nroFactura = cmd2.ExecuteScalar();
 
             MessageBox.Show("Se procedera a registrar los consumibles adicionales", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -102,7 +99,7 @@ namespace FrbaHotel.Registrar_Estadia.checkOut
         }
 
         //evento para cuando se hace click en una celda devuelva la fila correspondiente
-        private void dgvRegimenes_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvClientes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex != -1)
             {
