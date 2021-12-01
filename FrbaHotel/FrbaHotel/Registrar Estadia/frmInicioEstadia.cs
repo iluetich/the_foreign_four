@@ -22,7 +22,8 @@ namespace FrbaHotel.Registrar_Estadia
         //---------------------CONSTRUCTORES--------------------------------------------------------------
         public frmInicioEstadia(){  InitializeComponent(); }
         public frmInicioEstadia(MenuDinamico menuPadre, string userSesion, string hotelSesion)
-        {            
+        {
+            FrbaHotel.ConexionSQL.establecerConexionBD();  
             this.menu = menuPadre;
             InitializeComponent();           
 
@@ -96,27 +97,37 @@ namespace FrbaHotel.Registrar_Estadia
         //------------------------------------------------------------------------------------------------------------        
         private bool validarReserva()
         {
+            //Valida que no se le haya hecho check in antes
+            string consultaSQL = "SELECT cod_estado_reserva FROM THE_FOREIGN_FOUR.Reservas WHERE cod_reserva = @cod_reserva";
+            SqlCommand cmd = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            cmd.Parameters.AddWithValue("@cod_reserva", Convert.ToInt32(txtCodReserva.Text));
+            if (Convert.ToInt32(cmd.ExecuteScalar()) == 6){
+                MessageBox.Show("Ya se le hizo Check IN a esta reserva", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+            
             //valida existencia
-            string consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva(" + txtCodReserva.Text + "," + codigoHotel + ")";
-            SqlCommand comand = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            int resultado = Convert.ToInt32(comand.ExecuteScalar());
+            consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva(" + txtCodReserva.Text + "," + codigoHotel + ")";
+            SqlCommand cmd2 = new SqlCommand(consultaSQL, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            int resultado = Convert.ToInt32(cmd2.ExecuteScalar());
             if (resultado == -1)
             {
                 MessageBox.Show("La Reserva no existe, o no tiene autorizacion en este hotel", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
-            consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada(" + txtCodReserva.Text + "," + codigoHotel + ")";            
+            //valida si no esta cancelada
+            consultaSQL = "select THE_FOREIGN_FOUR.func_validar_reserva_no_cancelada_guest(" + txtCodReserva.Text + "," + codigoHotel + ")";            
             resultado = FrbaHotel.Utils.ejecutarConsultaResulInt(consultaSQL);
             if (resultado == -1){
-                MessageBox.Show("Se trata de una Reserva Cancelada", "Errors", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Se trata de una Reserva Cancelada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
             //validar check in si se puede hacer el dia actual
             string consulta = "DECLARE @resultado numeric(18,0); EXEC @resultado = THE_FOREIGN_FOUR.proc_validar_check_in " + txtCodReserva.Text + "," + codigoHotel + ";SELECT @resultado";
-            SqlCommand cmd = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
-            int resultadoCheckIn = Convert.ToInt32(cmd.ExecuteScalar());
+            SqlCommand cmd3 = new SqlCommand(consulta, FrbaHotel.ConexionSQL.getSqlInstanceConnection());
+            int resultadoCheckIn = Convert.ToInt32(cmd3.ExecuteScalar());
             if (resultadoCheckIn != 1){
                 MessageBox.Show("El CHECK IN se debe realizar el dia en que comienza la estadia", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
